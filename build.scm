@@ -112,6 +112,7 @@
                  "      steps {"
                  "        sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'"
                  "        sh 'mkdir -p logs'"
+                 "        stash name: 'tests', includes: 'srfi-test'"
                  "      }"
                  "    }")
     (for-each
@@ -132,6 +133,7 @@
                 "      }"
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
+                (string-append "          unstash 'tests'")
                 (string-append "          sh 'ls'")
                 (string-append "          sh 'cd /workdir && " command " " "srfi-test/" srfi-number ".scm'")
                 (string-append "          sh 'cat *.log'")
