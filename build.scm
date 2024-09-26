@@ -105,7 +105,7 @@
   test-jenkinsfile
   (lambda ()
     (print-lines "pipeline {"
-                 "  agent { any }"
+                 "  agent any"
                  "  options { buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')) }"
                  "  stages {")
     (print-lines "    stage(\"Init\") {"
