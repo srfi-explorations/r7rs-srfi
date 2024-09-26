@@ -109,7 +109,7 @@
                  "    dockerfile {"
                  "      filename 'Dockerfile.jenkins'"
                  "      dir '.'"
-                 "      args '-u root:sudo --privileged -v /var/run/docker.sock:/var/run/docker.sock'"
+                 "      args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'"
                  "    }"
                  "  }"
                  "  options { buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')) }"
