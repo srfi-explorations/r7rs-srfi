@@ -135,6 +135,7 @@
                 (string-append "          unstash 'tests'")
                 (string-append "          sh 'ls'")
                 (string-append "          sh 'ls srfi-test'")
+                (string-append "          sh 'echo \"" name "-srfi-" srfi-number "\" " "> test-prefix.txt'")
                 (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm'")
                 (string-append "          sh 'cat *.log'")
                 (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
