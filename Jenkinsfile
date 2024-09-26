@@ -6,7 +6,7 @@ pipeline {
       steps {
         sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'
         sh 'mkdir -p logs'
-        stash name: 'tests', includes: 'srfi-test'
+        stash name: 'tests', includes: 'srfi-test/*'
       }
     }
 
