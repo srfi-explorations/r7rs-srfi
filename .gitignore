@@ -1,0 +1,16 @@
+*.swp
+*.log
+test-prefix
+*.so
+*.o
+*.c
+*.dep
+*.zo
+*.meta
+compiled
+srfi-*.scm
+srfi-*.sld
+srfi.*.scm
+srfi.*.sld
+test-prefix.txt
+srfi-test
