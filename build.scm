@@ -105,13 +105,7 @@
   test-jenkinsfile
   (lambda ()
     (print-lines "pipeline {"
-                 "  agent {"
-                 "    dockerfile {"
-                 "      filename 'Dockerfile.jenkins'"
-                 "      dir '.'"
-                 "      args '-u root:sudo --privileged -v /var/run/docker.sock:/var/run/docker.sock'"
-                 "    }"
-                 "  }"
+                 "  agent { any }"
                  "  options { buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')) }"
                  "  stages {")
     (print-lines "    stage(\"Init\") {"
