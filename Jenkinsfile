@@ -18,6 +18,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && chibi-scheme -I srfi srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -35,6 +36,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -52,6 +54,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && cyclone -I . srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -69,6 +72,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && gsc -:r7rs,search=. -exe srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -86,6 +90,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && gxi srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -103,6 +108,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && gosh srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -120,6 +126,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -137,6 +144,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && kawa srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -154,6 +162,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && loko -feval -std=r7rs --compile srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -171,6 +180,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && mit-scheme --load srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -188,6 +198,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && racket -I r7rs --make -S . --script srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -205,6 +216,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && sash srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -222,6 +234,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && stklos -I . srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -239,6 +252,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && skint --program srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -256,6 +270,7 @@ pipeline {
       }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'ls
           sh 'cd /workdir && tr7i srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'

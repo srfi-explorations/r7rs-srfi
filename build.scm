@@ -132,6 +132,7 @@
                 "      }"
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
+                (string-append "          sh 'ls")
                 (string-append "          sh 'cd /workdir && " command " " "srfi-test/" srfi-number ".scm'")
                 (string-append "          sh 'cat *.log'")
                 (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
