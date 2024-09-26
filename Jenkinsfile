@@ -14,7 +14,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/chibi'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -22,7 +21,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && chibi-scheme -I srfi srfi-test/64.scm'
+          sh 'chibi-scheme -I srfi srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -34,7 +33,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/chicken'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -42,7 +40,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
+          sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -54,7 +52,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/cyclone'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -62,7 +59,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && cyclone -I . srfi-test/64.scm'
+          sh 'cyclone -I . srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -74,7 +71,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/gambit'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -82,7 +78,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && gsc -:r7rs,search=. -exe srfi-test/64.scm'
+          sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -94,7 +90,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/gerbil'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -102,7 +97,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && gxi srfi-test/64.scm'
+          sh 'gxi srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -114,7 +109,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/gauche'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -122,7 +116,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && gosh srfi-test/64.scm'
+          sh 'gosh srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -134,7 +128,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/guile'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -142,7 +135,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
+          sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -154,7 +147,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/kawa'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -162,7 +154,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && kawa srfi-test/64.scm'
+          sh 'kawa srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -174,7 +166,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/loko'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -182,7 +173,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && loko -feval -std=r7rs --compile srfi-test/64.scm'
+          sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -194,7 +185,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/mit-scheme'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -202,7 +192,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && mit-scheme --load srfi-test/64.scm'
+          sh 'mit-scheme --load srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -214,7 +204,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/racket'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -222,7 +211,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && racket -I r7rs --make -S . --script srfi-test/64.scm'
+          sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -234,7 +223,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/sagittarius'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -242,7 +230,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && sash srfi-test/64.scm'
+          sh 'sash srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -254,7 +242,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/stklos'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -262,7 +249,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && stklos -I . srfi-test/64.scm'
+          sh 'stklos -I . srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -274,7 +261,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/skint'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -282,7 +268,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && skint --program srfi-test/64.scm'
+          sh 'skint --program srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -294,7 +280,6 @@ pipeline {
       agent {
         docker {
           image 'schemers/tr7'
-          args '-v ${PWD}:/workdir'
         }
       }
       steps {
@@ -302,7 +287,7 @@ pipeline {
           unstash 'tests'
           sh 'ls'
           sh 'ls srfi-test'
-          sh 'cd /workdir && tr7i srfi-test/64.scm'
+          sh 'tr7i srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
