@@ -49,7 +49,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chibi-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chibi.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -87,7 +87,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chicken-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chicken.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -125,7 +125,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-cyclone-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-cyclone.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -163,7 +163,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gambit-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gambit.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -201,7 +201,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gerbil-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gerbil.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -239,7 +239,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gauche-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gauche.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -277,7 +277,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-guile-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-guile.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -315,7 +315,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-kawa-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-kawa.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -353,7 +353,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-loko-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-loko.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -391,7 +391,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-mit-scheme-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-mit-scheme.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -429,7 +429,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-racket-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-racket.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -467,7 +467,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-sagittarius-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-sagittarius.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -505,7 +505,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-stklos-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-stklos.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -543,7 +543,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-skint-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-skint.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
@@ -581,7 +581,7 @@ pipeline {
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-tr7-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-tr7.log"; done'
                     sh 'ls reports'
                     archiveArtifacts artifacts: 'reports/*.log'
 
