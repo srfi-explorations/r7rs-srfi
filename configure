@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cp templates/Jenkinsfile Jenkinsfile
+#guile -L . -L ./snow build.scm

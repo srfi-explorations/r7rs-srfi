@@ -11,11 +11,3 @@ pipeline {
               stash name: 'tests', includes: 'srfi-test/*'
             }
         }
-    }
-    post {
-        always {
-            unstash 'reports'
-            archiveArtifacts artifacts: 'reports/*.html'
-        }
-    }
-}

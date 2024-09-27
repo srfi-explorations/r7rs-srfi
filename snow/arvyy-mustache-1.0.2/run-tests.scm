@@ -1,0 +1,13 @@
+(import (rename (arvyy mustache-test) (run-tests run-arvyy-mustache-test-tests)))
+(import (rename (arvyy mustache-test) (run-tests run-arvyy-mustache-test-tests)))
+(import (rename (arvyy mustache-test) (run-tests run-arvyy-mustache-test-tests)))
+(import (rename (arvyy mustache-test) (run-tests run-arvyy-mustache-test-tests)))
+(import (rename (arvyy mustache-test) (run-tests run-arvyy-mustache-test-tests)))
+(import (rename (arvyy mustache-test) (run-tests run-arvyy-mustache-test-tests)))
+
+(run-arvyy-mustache-test-tests)
+(run-arvyy-mustache-test-tests)
+(run-arvyy-mustache-test-tests)
+(run-arvyy-mustache-test-tests)
+(run-arvyy-mustache-test-tests)
+(run-arvyy-mustache-test-tests)
