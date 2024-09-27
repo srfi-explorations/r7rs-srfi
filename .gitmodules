@@ -1,0 +1,3 @@
+[submodule "srfi-test"]
+	path = srfi-test
+	url = https://github.com/srfi-explorations/srfi-test.git

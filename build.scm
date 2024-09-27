@@ -111,6 +111,7 @@
     (print-lines "    stage(\"Init\") {"
                  "      steps {"
                  "        sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'"
+                 "        sh 'mkdir -p reports"
                  "        stash name: 'tests', includes: 'srfi-test/*'"
                  "      }"
                  "    }")
@@ -152,6 +153,7 @@
                   (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm'"))
                 (string-append "          sh 'cat *.log'")
                 (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
+                (string-append "          sh 'grep \"# of\" *.log'")
                 (string-append "          sh 'rm *.log'")
                 "        }"
                 "      }"
