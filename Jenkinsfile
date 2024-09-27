@@ -1,14 +1,20 @@
 pipeline {
+
     agent any
-    options { buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')) }
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    }
+
     stages {
+
         stage("Init") {
             steps {
               sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'
               sh 'mkdir -p reports'
               stash name: 'reports, includes: 'reports/*'
-              sh 'echo \"<h1>Test results</h1>\" > reports/results.html'
-              //stash name: 'tests', includes: 'srfi-test/*'
+              sh 'echo "<h1>Test results</h1>" > reports/results.html'
+              stash name: 'tests', includes: 'srfi-test/*'
             }
         }
 
