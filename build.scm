@@ -113,6 +113,7 @@
       "      steps {"
       "        sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'"
       "        sh 'mkdir -p reports'"
+      "        sh 'echo \"<h1>Test results</h1>\" > reports/results.html'"
       "        stash name: 'tests', includes: 'srfi-test/*'"
       "      }"
       "    }")
@@ -154,7 +155,7 @@
                   (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm && srfi-test/" srfi-number "'")
                   (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm'"))
                 (string-append "          sh 'cat *.log'")
-                (string-append "          sh 'grep \"# of\" *.log'")
+                (string-append "          sh 'grep \"# of\" *.log >> reports/results.html'")
                 ; Dont put things after this line, if any test fails they wont be run
                 (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
                 "        }"
@@ -162,4 +163,11 @@
                 "    }")))
           srfis))
       implementations)
-    (print-lines "  }" "}")))
+    (print-lines
+      "  }"
+      "  post {"
+      "   always {"
+      "     archiveArtifacts artifacts: 'reports/*.html'"
+      "   }"
+      "  }"
+      "}")))

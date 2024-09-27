@@ -6,6 +6,7 @@ pipeline {
       steps {
         sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'
         sh 'mkdir -p reports'
+        sh 'echo "<h1>Test results</h1>" > reports/results.html'
         stash name: 'tests', includes: 'srfi-test/*'
       }
     }
@@ -28,7 +29,7 @@ pipeline {
 
           sh 'chibi-scheme -I srfi srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -52,7 +53,7 @@ pipeline {
 
           sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm && srfi-test/64'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -76,7 +77,7 @@ pipeline {
           sh 'cyclone -I . srfi/64.sld'
           sh 'cyclone -I . srfi-test/64.scm && srfi-test/64'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -100,7 +101,7 @@ pipeline {
           sh 'gsc -:r7rs -dynamic srfi/64.sld'
           sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm && srfi-test/64'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -124,7 +125,7 @@ pipeline {
 
           sh 'gxi srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -148,7 +149,7 @@ pipeline {
 
           sh 'gosh srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -172,7 +173,7 @@ pipeline {
 
           sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -196,7 +197,7 @@ pipeline {
 
           sh 'kawa srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -220,7 +221,7 @@ pipeline {
 
           sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -244,7 +245,7 @@ pipeline {
 
           sh 'mit-scheme --load srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -268,7 +269,7 @@ pipeline {
 
           sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -292,7 +293,7 @@ pipeline {
 
           sh 'sash srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -316,7 +317,7 @@ pipeline {
 
           sh 'stklos -I . srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -340,7 +341,7 @@ pipeline {
 
           sh 'skint --program srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -364,10 +365,15 @@ pipeline {
 
           sh 'tr7i srfi-test/64.scm'
           sh 'cat *.log'
-          sh 'grep "# of" *.log'
+          sh 'grep "# of" *.log >> reports/results.html'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
+  }
+  post {
+   always {
+     archiveArtifacts artifacts: 'reports/*.html'
+   }
   }
 }
