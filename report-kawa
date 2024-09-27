@@ -1,0 +1,5 @@
+#!/bin/sh
+
+java -jar kawa.jar --r7rs -Dkawa.import.path=.:./snow:./snow/*.sld report.scm
+
+

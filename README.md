@@ -1,6 +1,10 @@
 # Building
 
-Run build.scm with any R7RS Scheme implementation. It generates Makefile and Jenkinsfile.
+Use either:
+
+- ./generate-kawa
+- ./generate-gauche
+
 
 # Running tests
 

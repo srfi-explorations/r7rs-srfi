@@ -1,6 +1,12 @@
 pipeline {
 
-    agent any
+    agent {
+        dockerfile {
+            filename 'Dockerfile.jenkins'
+            dir '.'
+            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
@@ -593,6 +599,7 @@ pipeline {
     post {
         always {
             unstash 'reports'
+            sh '
             archiveArtifacts artifacts: 'reports/*.html'
         }
     }
