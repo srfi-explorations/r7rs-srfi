@@ -13,7 +13,6 @@ pipeline {
     }
 
     stage('chibi - srfi-64') {
-      agent { docker { image 'schemers/chibi' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -22,7 +21,6 @@ pipeline {
     }
 
     stage('chicken - srfi-64') {
-      agent { docker { image 'schemers/chicken' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -31,7 +29,6 @@ pipeline {
     }
 
     stage('cyclone - srfi-64') {
-      agent { docker { image 'schemers/cyclone' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -40,7 +37,6 @@ pipeline {
     }
 
     stage('gambit - srfi-64') {
-      agent { docker { image 'schemers/gambit' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -49,7 +45,6 @@ pipeline {
     }
 
     stage('gerbil - srfi-64') {
-      agent { docker { image 'schemers/gerbil' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -58,7 +53,6 @@ pipeline {
     }
 
     stage('gauche - srfi-64') {
-      agent { docker { image 'schemers/gauche' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -67,7 +61,6 @@ pipeline {
     }
 
     stage('guile - srfi-64') {
-      agent { docker { image 'schemers/guile' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -76,7 +69,6 @@ pipeline {
     }
 
     stage('kawa - srfi-64') {
-      agent { docker { image 'schemers/kawa' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -85,7 +77,6 @@ pipeline {
     }
 
     stage('loko - srfi-64') {
-      agent { docker { image 'schemers/loko' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -94,7 +85,6 @@ pipeline {
     }
 
     stage('mit-scheme - srfi-64') {
-      agent { docker { image 'schemers/mit-scheme' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -103,7 +93,6 @@ pipeline {
     }
 
     stage('racket - srfi-64') {
-      agent { docker { image 'schemers/racket' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -112,7 +101,6 @@ pipeline {
     }
 
     stage('sagittarius - srfi-64') {
-      agent { docker { image 'schemers/sagittarius' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -121,7 +109,6 @@ pipeline {
     }
 
     stage('stklos - srfi-64') {
-      agent { docker { image 'schemers/stklos' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -130,7 +117,6 @@ pipeline {
     }
 
     stage('skint - srfi-64') {
-      agent { docker { image 'schemers/skint' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -139,7 +125,6 @@ pipeline {
     }
 
     stage('tr7 - srfi-64') {
-      agent { docker { image 'schemers/tr7' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'

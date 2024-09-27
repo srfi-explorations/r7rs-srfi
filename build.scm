@@ -131,7 +131,7 @@
               (print-lines
                 ""
                 (string-append "    stage('" name " - " "srfi-" srfi-number "') {")
-                (string-append "      agent { docker { image 'schemers/" name "' } }")
+                ;(string-append "      agent { docker { image 'schemers/" name "' } }")
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
                 ;"          unstash 'tests'"
