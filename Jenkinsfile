@@ -43,6 +43,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-chibi.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -71,6 +74,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-chicken.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -99,6 +105,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-cyclone.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -127,6 +136,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-gambit.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -155,6 +167,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-gerbil.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -183,6 +198,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-gauche.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -211,6 +229,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-guile.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -239,6 +260,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-kawa.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -267,6 +291,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-loko.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -295,6 +322,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-mit-scheme.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -323,6 +353,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-racket.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -351,6 +384,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-sagittarius.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -379,6 +415,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-stklos.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -407,6 +446,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-skint.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
@@ -435,6 +477,9 @@ pipeline {
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-tr7.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
                 }
             }
         }
