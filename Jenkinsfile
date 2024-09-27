@@ -47,6 +47,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chibi-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -86,6 +87,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chicken-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -125,6 +127,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-cyclone-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -164,6 +167,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gambit-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -203,6 +207,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gerbil-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -242,6 +247,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gauche-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -281,6 +287,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-guile-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -320,6 +327,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-kawa-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -359,6 +367,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-loko-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -398,6 +407,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-mit-scheme-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -437,6 +447,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-racket-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -476,6 +487,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-sagittarius-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -515,6 +527,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-stklos-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -554,6 +567,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-skint-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -593,6 +607,7 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-tr7-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables

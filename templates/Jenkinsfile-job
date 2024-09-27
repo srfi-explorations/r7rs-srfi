@@ -26,6 +26,7 @@
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-{{number}}-{{name}}-$f"; done'
+                    sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
