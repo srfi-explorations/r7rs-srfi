@@ -45,7 +45,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "chicken-srfi-64" > test-prefix.txt'
-          sh 'cp srfi/64.sld srfi-64.sld
+          sh 'cp srfi/64.sld srfi-64.sld'
           sh 'csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
 
           sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'

@@ -138,7 +138,7 @@
                 (string-append "          sh 'ls srfi-test'")
                 (string-append "          sh 'echo \"" name "-srfi-" srfi-number "\" " "> test-prefix.txt'")
                 (if (string=? name "chicken")
-                  (string-append "          sh 'cp srfi/" srfi-number ".sld" " " "srfi-64.sld")
+                  (string-append "          sh 'cp srfi/" srfi-number ".sld" " " "srfi-64.sld'")
                   "")
                 (if (string=? name "chicken")
                   (string-append "          sh '" (cdr library-command) " " "srfi-" srfi-number ".sld'")
