@@ -36,7 +36,8 @@
             (execute jenkinsfile-job (append implementation (list srfi)) out))
           implementations))
       srfis)
-    (execute jenkinsfile-bottom '() out)))
+    (execute jenkinsfile-bottom '() out)
+    (newline out)))
 
 (define makefile-top (compile (slurp "templates/Makefile-top")))
 (define makefile-job (compile (slurp "templates/Makefile-job")))
@@ -53,4 +54,5 @@
             (execute makefile-job (append implementation (list srfi)) out))
           implementations))
       srfis)
-    (execute makefile-bottom '() out)))
+    (execute makefile-bottom '() out)
+    (newline out)))

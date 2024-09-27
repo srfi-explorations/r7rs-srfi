@@ -59,3 +59,4 @@ clean:
 	rm -rf "srfi-*.import.scm"
 	rm -rf "*.log"
 	rm -rf "test-prefix.txt"
+
