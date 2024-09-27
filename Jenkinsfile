@@ -21,15 +21,14 @@ pipeline {
 
         stage("SRFI-64 - chibi") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=chibi'
+                docker {
+                    image 'schemers/chibi'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -50,15 +49,14 @@ pipeline {
 
         stage("SRFI-64 - chicken") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=chicken'
+                docker {
+                    image 'schemers/chicken'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.sld ; fi'
@@ -79,15 +77,14 @@ pipeline {
 
         stage("SRFI-64 - cyclone") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=cyclone'
+                docker {
+                    image 'schemers/cyclone'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "cyclone -I ." = "" ]; then cyclone -I . srfi/64.sld ; fi'
@@ -108,15 +105,14 @@ pipeline {
 
         stage("SRFI-64 - gambit") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=gambit'
+                docker {
+                    image 'schemers/gambit'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then gsc -:r7rs -dynamic srfi/64.sld ; fi'
@@ -137,15 +133,14 @@ pipeline {
 
         stage("SRFI-64 - gerbil") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=gerbil'
+                docker {
+                    image 'schemers/gerbil'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -166,15 +161,14 @@ pipeline {
 
         stage("SRFI-64 - gauche") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=gauche'
+                docker {
+                    image 'schemers/gauche'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -195,15 +189,14 @@ pipeline {
 
         stage("SRFI-64 - guile") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=guile'
+                docker {
+                    image 'schemers/guile'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -224,15 +217,14 @@ pipeline {
 
         stage("SRFI-64 - kawa") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=kawa'
+                docker {
+                    image 'schemers/kawa'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -253,15 +245,14 @@ pipeline {
 
         stage("SRFI-64 - loko") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=loko'
+                docker {
+                    image 'schemers/loko'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -282,15 +273,14 @@ pipeline {
 
         stage("SRFI-64 - mit-scheme") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=mit-scheme'
+                docker {
+                    image 'schemers/mit-scheme'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -311,15 +301,14 @@ pipeline {
 
         stage("SRFI-64 - racket") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=racket'
+                docker {
+                    image 'schemers/racket'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -340,15 +329,14 @@ pipeline {
 
         stage("SRFI-64 - sagittarius") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=sagittarius'
+                docker {
+                    image 'schemers/sagittarius'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -369,15 +357,14 @@ pipeline {
 
         stage("SRFI-64 - stklos") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=stklos'
+                docker {
+                    image 'schemers/stklos'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -398,15 +385,14 @@ pipeline {
 
         stage("SRFI-64 - skint") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=skint'
+                docker {
+                    image 'schemers/skint'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
@@ -427,15 +413,14 @@ pipeline {
 
         stage("SRFI-64 - tr7") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION=tr7'
+                docker {
+                    image 'schemers/tr7'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'

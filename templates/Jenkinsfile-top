@@ -18,4 +18,3 @@ pipeline {
               stash name: 'tests', includes: 'srfi-test/*'
             }
         }
-

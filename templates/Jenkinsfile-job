@@ -1,14 +1,13 @@
         stage("SRFI-{{number}} - {{name}}") {
             agent {
-                dockerfile {
-                    filename 'Dockerfile.jenkins'
-                    dir '.'
-                    args '--build-arg IMPLEMENTATION={{name}}'
+                docker {
+                    image 'schemers/{{name}}'
+                    reuseNode true
                 }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'make clean'
+                    sh 'rm -rf *.log'
 
                     // If the implementation is compiler then compile the SRFI library
                     //sh 'if [ ! "{{library-command}}" = "" ]; then {{library-command}} srfi/{{number}}.sld ; fi'
