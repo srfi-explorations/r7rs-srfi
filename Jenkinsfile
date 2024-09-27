@@ -38,20 +38,18 @@ pipeline {
 
                     sh 'chibi-scheme -I srfi srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chibi-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -78,20 +76,18 @@ pipeline {
 
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chicken-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -118,20 +114,18 @@ pipeline {
 
                     sh 'cyclone -I . srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "cyclone -I ." = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-cyclone-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -158,20 +152,18 @@ pipeline {
 
                     sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gambit-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -198,20 +190,18 @@ pipeline {
 
                     sh 'gxi srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gerbil-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -238,20 +228,18 @@ pipeline {
 
                     sh 'gosh srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gauche-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -278,20 +266,18 @@ pipeline {
 
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-guile-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -318,20 +304,18 @@ pipeline {
 
                     sh 'kawa srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-kawa-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -358,20 +342,18 @@ pipeline {
 
                     sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-loko-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -398,20 +380,18 @@ pipeline {
 
                     sh 'mit-scheme --load srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-mit-scheme-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -438,20 +418,18 @@ pipeline {
 
                     sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-racket-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -478,20 +456,18 @@ pipeline {
 
                     sh 'sash srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-sagittarius-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -518,20 +494,18 @@ pipeline {
 
                     sh 'stklos -I . srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-stklos-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -558,20 +532,18 @@ pipeline {
 
                     sh 'skint --program srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-skint-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -598,20 +570,18 @@ pipeline {
 
                     sh 'tr7i srfi-test/64.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-tr7-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -624,7 +594,6 @@ pipeline {
         always {
             unstash 'reports'
             archiveArtifacts artifacts: 'reports/*.html'
-            archiveArtifacts artifacts: 'reports/*.log'
         }
     }
 }

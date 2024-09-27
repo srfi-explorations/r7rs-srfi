@@ -17,20 +17,18 @@
 
                     sh '{{command}} srfi-test/{{number}}.scm'
 
-                    sh 'ls'
-
                     // If the implementation makes executable then run it
                     sh 'if [ ! "{{library-command}}" = "" ]; then ./srfi-test/{{number}} ; fi'
-
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-{{number}}-{{name}}-$f"; done'
                     sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/{{number}}'
+
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
