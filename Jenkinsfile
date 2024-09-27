@@ -44,8 +44,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-chibi.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-chibi.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -83,8 +85,10 @@ pipeline {
                     sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-chicken.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-chicken.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -122,8 +126,10 @@ pipeline {
                     sh 'if [ ! "cyclone -I ." = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-cyclone.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-cyclone.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -161,8 +167,10 @@ pipeline {
                     sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-gambit.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-gambit.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -200,8 +208,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-gerbil.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-gerbil.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -239,8 +249,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-gauche.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-gauche.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -278,8 +290,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-guile.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-guile.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -317,8 +331,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-kawa.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-kawa.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -356,8 +372,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-loko.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-loko.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -395,8 +413,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-mit-scheme.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-mit-scheme.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -434,8 +454,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-racket.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-racket.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -473,8 +495,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-sagittarius.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-sagittarius.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -512,8 +536,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-stklos.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-stklos.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -551,8 +577,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-skint.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-skint.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
@@ -590,8 +618,10 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-64-tr7.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-tr7.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 

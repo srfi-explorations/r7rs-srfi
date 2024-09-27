@@ -23,8 +23,10 @@
                     sh 'if [ ! "{{library-command}}" = "" ]; then ./srfi-test/{{number}} ; fi'
 
 
-                    //sh 'find . -iname "*.log" -exec rename _SRFI-{{number}}-{{name}}.log .log '{}' \\;'
+                    // Change any logfiles to identify implementatio nand SRFI
+                    sh 'find . -iname "*.log" -exec rename _SRFI-{{number}}-{{name}}.log .log '{}' \\;'
                     unstash 'reports'
+
                     sh 'cp *.log reports/'
                     stash name: 'reports', includes: 'reports/*'
 
