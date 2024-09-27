@@ -72,8 +72,8 @@
                            (number . ,number)
                            (expected-passes . ,(list-ref results 0))
                            (expected-failures . ,(list-ref results 1))
-                           (unexpected-failures . ,(if (> (length results) 1) (list-ref results 2) ""))
-                           (skipped-tests . ,(if (> (length results) 2) (list-ref results 3) ""))
+                           (unexpected-failures . ,(if (> (length results) 2) (list-ref results 2) ""))
+                           (skipped-tests . ,(if (> (length results) 3) (list-ref results 3) ""))
 
                            )
                          out)
