@@ -3,7 +3,7 @@ pipeline {
     options { buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')) }
     stages {
         stage("Init") {
-            steps {"
+            steps {
               sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'
               sh 'mkdir -p reports'
               stash name: 'reports, includes: 'reports/*'
