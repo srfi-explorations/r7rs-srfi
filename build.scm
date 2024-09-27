@@ -154,9 +154,9 @@
                   (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm && srfi-test/" srfi-number "'")
                   (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm'"))
                 (string-append "          sh 'cat *.log'")
-                (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
                 (string-append "          sh 'grep \"# of\" *.log'")
-                (string-append "          sh 'rm *.log'")
+                ; Dont put things after this line, if any test fails they wont be run
+                (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
                 "        }"
                 "      }"
                 "    }")))
