@@ -30,8 +30,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "chibi" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["chibi" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'chibi-scheme -I srfi srfi-test/64.scm'
 
@@ -61,8 +64,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ] && [ ! "chicken" = "chicken"] ; then csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["chicken" = "chicken"] ; then cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld ; fi'
 
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
 
@@ -92,8 +98,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "cyclone -I ." = "" ]; then cyclone -I . srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "cyclone -I ." = "" ] && [ ! "cyclone" = "chicken"] ; then cyclone -I . srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["cyclone" = "chicken"] ; then cp srfi/64.sld srfi-64.sld && cyclone -I . srfi-64.sld ; fi'
 
                     sh 'cyclone -I . srfi-test/64.scm'
 
@@ -123,8 +132,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then gsc -:r7rs -dynamic srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "gsc -:r7rs -dynamic" = "" ] && [ ! "gambit" = "chicken"] ; then gsc -:r7rs -dynamic srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["gambit" = "chicken"] ; then cp srfi/64.sld srfi-64.sld && gsc -:r7rs -dynamic srfi-64.sld ; fi'
 
                     sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
 
@@ -154,8 +166,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "gerbil" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["gerbil" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'gxi srfi-test/64.scm'
 
@@ -185,8 +200,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "gauche" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["gauche" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'gosh srfi-test/64.scm'
 
@@ -216,8 +234,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "guile" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["guile" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
 
@@ -247,8 +268,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "kawa" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["kawa" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'kawa srfi-test/64.scm'
 
@@ -278,8 +302,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "loko" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["loko" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
 
@@ -309,8 +336,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "mit-scheme" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["mit-scheme" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'mit-scheme --load srfi-test/64.scm'
 
@@ -340,8 +370,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "racket" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["racket" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
 
@@ -371,8 +404,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "sagittarius" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["sagittarius" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'sash srfi-test/64.scm'
 
@@ -402,8 +438,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "stklos" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["stklos" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'stklos -I . srfi-test/64.scm'
 
@@ -433,8 +472,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "skint" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["skint" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'skint --program srfi-test/64.scm'
 
@@ -464,8 +506,11 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'rm -rf *.log'
 
-                    // If the implementation is compiler then compile the SRFI library
-                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler other than chicken then compile the SRFI library
+                    sh 'if [ ! "" = "" ] && [ ! "tr7" = "chicken"] ; then  srfi/64.sld ; fi'
+
+                    // Chicken needs the file to be in same folder and with different name
+                    sh 'if ["tr7" = "chicken"] ; then cp srfi/64.sld srfi-64.sld &&  srfi-64.sld ; fi'
 
                     sh 'tr7i srfi-test/64.scm'
 
