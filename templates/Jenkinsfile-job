@@ -19,7 +19,7 @@
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/{{number}}'
 
-                    sh 'find . -iname "*.log" -exec rename _SRFI-{{number}}-{{name}}.log .log '{}' \;'
+                    //sh 'find . -iname "*.log" -exec rename _SRFI-{{number}}-{{name}}.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
                 }
             }
