@@ -134,16 +134,16 @@
                 (string-append "      agent { docker { image 'schemers/" name "' } }")
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
-                "          unstash 'tests'"
-                (string-append "          sh 'bash run_test.sh \""
+                ;"          unstash 'tests'"
+                #;(string-append "          sh 'bash run_test.sh \""
                                name "\" \""
                                command "\" \""
                                library-command "\" \""
                                srfi-number
                                "\"'")
-                "          sh 'cat *.log'"
+                ;"          sh 'cat *.log'"
                 ;"          unstash 'reports'"
-                (string-append "          sh 'bash jenkins_report.sh \""
+                #;(string-append "          sh 'bash jenkins_report.sh \""
                                name "\" \""
                                command "\" \""
                                library-command "\" \""
