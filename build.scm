@@ -137,8 +137,9 @@
                 (string-append "          sh 'ls'")
                 (string-append "          sh 'ls srfi-test'")
                 (string-append "          sh 'echo \"" name "-srfi-" srfi-number "\" " "> test-prefix.txt'")
-                (when library-command
-                  (string-append "          sh '" (cdr library-command) " " "srfi/" srfi-number ".scm'"))
+                (if library-command
+                  (string-append "          sh '" (cdr library-command) " " "srfi/" srfi-number ".scm'")
+                  "")
                 (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm'")
                 (string-append "          sh 'cat *.log'")
                 (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
