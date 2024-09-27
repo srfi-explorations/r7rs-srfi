@@ -48,7 +48,7 @@ pipeline {
           sh 'cp srfi/64.sld srfi-64.sld'
           sh 'csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
 
-          sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
+          sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm && srfi-test/64'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -71,7 +71,7 @@ pipeline {
 
 
           sh 'cyclone -I . srfi/64.sld'
-          sh 'cyclone -I . srfi-test/64.scm'
+          sh 'cyclone -I . srfi-test/64.scm && srfi-test/64'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
@@ -94,7 +94,7 @@ pipeline {
 
 
           sh 'gsc -:r7rs -dynamic srfi/64.sld'
-          sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
+          sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm && srfi-test/64'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
           sh 'mv *.log logs/'
