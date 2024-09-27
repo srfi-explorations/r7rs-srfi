@@ -124,41 +124,32 @@
           (lambda (srfi)
             (let ((name (symbol->string (cdr (assoc 'name implementation))))
                   (command (cdr (assoc 'command implementation)))
-                  (library-command (assoc 'library-command implementation))
+                  (library-command (if (assoc 'library-command implementation)
+                                     (cdr (assoc 'library-command implementation))
+                                     "NONE"))
                   (srfi-number (number->string (cdr (assoc 'number srfi)))))
               (print-lines
                 ""
                 (string-append "    stage('" name " - " "srfi-" srfi-number "') {")
-                "      agent {"
-                "        docker {"
-                (string-append "          image 'schemers/" name "'")
-                "        }"
-                "      }"
+                (string-append "      agent { docker { image 'schemers/" name "' } }")
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
-                "          unstash 'tests'" 
-                "          sh 'rm -rf *.log'"
-                "          sh 'ls'"
-                "          sh 'ls srfi-test'"
-                (string-append "          sh 'echo \"" name "-srfi-" srfi-number "\" " "> test-prefix.txt'")
-                (if (string=? name "chicken")
-                  (string-append "          sh 'cp srfi/" srfi-number ".sld" " " "srfi-64.sld'")
-                  "")
-                (if (string=? name "chicken")
-                  (string-append "          sh '" (cdr library-command) " " "srfi-" srfi-number ".sld'")
-                  "")
-                (if (and library-command (not (string=? name "chicken")))
-                   (string-append "          sh '" (cdr library-command) " " "srfi/" srfi-number ".sld'")
-                   "")
-                (if (or (string=? name "chicken")
-                        (string=? name "cyclone")
-                        (string=? name "gambit"))
-                  (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm && srfi-test/" srfi-number "'")
-                  (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm'"))
+                "          unstash 'tests'"
+                (string-append "          sh 'bash run_test.sh \""
+                               name "\" \""
+                               command "\" \""
+                               library-command "\" \""
+                               srfi-number
+                               "\"'")
                 "          sh 'cat *.log'"
                 "          unstash 'reports'"
-                (string-append "          sh 'grep \"# of\" *.log >> reports/results.html'")
-                ;"          stash name: 'reports', includes: 'reports/*'"
+                (string-append "          sh 'bash jenkins_report.sh \""
+                               name "\" \""
+                               command "\" \""
+                               library-command "\" \""
+                               srfi-number
+                               "\"'")
+                "          stash name: 'reports', includes: 'reports/*'"
                 ; Dont put things after this line, if any test fails they wont be run
                 (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
                 "        }"

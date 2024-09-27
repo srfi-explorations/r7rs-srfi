@@ -13,375 +13,225 @@ pipeline {
     }
 
     stage('chibi - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/chibi'
-        }
-      }
+      agent { docker { image 'schemers/chibi' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "chibi-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'chibi-scheme -I srfi srfi-test/64.scm'
+          sh 'bash run_test.sh "chibi" "chibi-scheme -I srfi" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "chibi" "chibi-scheme -I srfi" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('chicken - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/chicken'
-        }
-      }
+      agent { docker { image 'schemers/chicken' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "chicken-srfi-64" > test-prefix.txt'
-          sh 'cp srfi/64.sld srfi-64.sld'
-          sh 'csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
-
-          sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm && srfi-test/64'
+          sh 'bash run_test.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('cyclone - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/cyclone'
-        }
-      }
+      agent { docker { image 'schemers/cyclone' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "cyclone-srfi-64" > test-prefix.txt'
-
-
-          sh 'cyclone -I . srfi/64.sld'
-          sh 'cyclone -I . srfi-test/64.scm && srfi-test/64'
+          sh 'bash run_test.sh "cyclone" "cyclone -I ." "cyclone -I ." "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "cyclone" "cyclone -I ." "cyclone -I ." "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('gambit - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/gambit'
-        }
-      }
+      agent { docker { image 'schemers/gambit' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "gambit-srfi-64" > test-prefix.txt'
-
-
-          sh 'gsc -:r7rs -dynamic srfi/64.sld'
-          sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm && srfi-test/64'
+          sh 'bash run_test.sh "gambit" "gsc -:r7rs,search=. -exe" "gsc -:r7rs -dynamic" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "gambit" "gsc -:r7rs,search=. -exe" "gsc -:r7rs -dynamic" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('gerbil - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/gerbil'
-        }
-      }
+      agent { docker { image 'schemers/gerbil' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "gerbil-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'gxi srfi-test/64.scm'
+          sh 'bash run_test.sh "gerbil" "gxi" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "gerbil" "gxi" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('gauche - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/gauche'
-        }
-      }
+      agent { docker { image 'schemers/gauche' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "gauche-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'gosh srfi-test/64.scm'
+          sh 'bash run_test.sh "gauche" "gosh" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "gauche" "gosh" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('guile - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/guile'
-        }
-      }
+      agent { docker { image 'schemers/guile' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "guile-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
+          sh 'bash run_test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('kawa - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/kawa'
-        }
-      }
+      agent { docker { image 'schemers/kawa' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "kawa-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'kawa srfi-test/64.scm'
+          sh 'bash run_test.sh "kawa" "kawa" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "kawa" "kawa" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('loko - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/loko'
-        }
-      }
+      agent { docker { image 'schemers/loko' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "loko-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
+          sh 'bash run_test.sh "loko" "loko -feval -std=r7rs --compile" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "loko" "loko -feval -std=r7rs --compile" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('mit-scheme - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/mit-scheme'
-        }
-      }
+      agent { docker { image 'schemers/mit-scheme' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "mit-scheme-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'mit-scheme --load srfi-test/64.scm'
+          sh 'bash run_test.sh "mit-scheme" "mit-scheme --load" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "mit-scheme" "mit-scheme --load" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('racket - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/racket'
-        }
-      }
+      agent { docker { image 'schemers/racket' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "racket-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
+          sh 'bash run_test.sh "racket" "racket -I r7rs --make -S . --script" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "racket" "racket -I r7rs --make -S . --script" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('sagittarius - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/sagittarius'
-        }
-      }
+      agent { docker { image 'schemers/sagittarius' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "sagittarius-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'sash srfi-test/64.scm'
+          sh 'bash run_test.sh "sagittarius" "sash" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "sagittarius" "sash" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('stklos - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/stklos'
-        }
-      }
+      agent { docker { image 'schemers/stklos' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "stklos-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'stklos -I . srfi-test/64.scm'
+          sh 'bash run_test.sh "stklos" "stklos -I ." "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "stklos" "stklos -I ." "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('skint - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/skint'
-        }
-      }
+      agent { docker { image 'schemers/skint' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "skint-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'skint --program srfi-test/64.scm'
+          sh 'bash run_test.sh "skint" "skint --program" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "skint" "skint --program" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
     }
 
     stage('tr7 - srfi-64') {
-      agent {
-        docker {
-          image 'schemers/tr7'
-        }
-      }
+      agent { docker { image 'schemers/tr7' } }
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm -rf *.log'
-          sh 'ls'
-          sh 'ls srfi-test'
-          sh 'echo "tr7-srfi-64" > test-prefix.txt'
-
-
-
-          sh 'tr7i srfi-test/64.scm'
+          sh 'bash run_test.sh "tr7" "tr7i" "NONE" "64"'
           sh 'cat *.log'
           unstash 'reports'
-          sh 'grep "# of" *.log >> reports/results.html'
+          sh 'bash jenkins_report.sh "tr7" "tr7i" "NONE" "64"'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
