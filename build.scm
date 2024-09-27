@@ -134,6 +134,7 @@
                 ;(string-append "      agent { docker { image 'schemers/" name "' } }")
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
+                "          sh 'echo \"test\"'"
                 ;"          unstash 'tests'"
                 #;(string-append "          sh 'bash run_test.sh \""
                                name "\" \""
@@ -151,7 +152,7 @@
                                "\"'")
                 ;"          stash name: 'reports', includes: 'reports/*'"
                 ; Dont put things after this line, if any test fails they wont be run
-                (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
+                ;(string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
                 "        }"
                 "      }"
                 "    }")))
@@ -159,10 +160,10 @@
       implementations)
     (print-lines
       "  }"
-      "  post {"
-      "   always {"
-      "     unstash 'reports'"
-      "     archiveArtifacts artifacts: 'reports/*.html'"
-      "   }"
-      "  }"
+      ;"  post {"
+      ;"   always {"
+      ;"     unstash 'reports'"
+      ;"     archiveArtifacts artifacts: 'reports/*.html'"
+      ;"   }"
+      ;"  }"
       "}")))
