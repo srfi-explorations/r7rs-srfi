@@ -11,10 +11,10 @@ pipeline {
         stage("Init") {
             steps {
               sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'
-              sh 'mkdir -p reports'
-              sh 'touch reports/placeholder'
-              stash name: 'reports', includes: 'reports/*'
-              sh 'echo "<h1>Test results</h1>" > reports/results.html'
+              //sh 'mkdir -p reports'
+              //sh 'touch reports/placeholder'
+              //stash name: 'reports', includes: 'reports/*'
+              //sh 'echo "<h1>Test results</h1>" > reports/results.html'
               stash name: 'tests', includes: 'srfi-test/*'
             }
         }
