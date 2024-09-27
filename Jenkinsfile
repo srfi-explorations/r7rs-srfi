@@ -22,6 +22,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "chibi-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'chibi-scheme -I srfi srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -42,6 +43,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "chicken-srfi-64" > test-prefix.txt'
+          sh 'csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.scm'
           sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -62,6 +64,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "cyclone-srfi-64" > test-prefix.txt'
+          sh 'cyclone -I . srfi/64.scm'
           sh 'cyclone -I . srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -82,6 +85,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "gambit-srfi-64" > test-prefix.txt'
+          sh 'gsc -:r7rs -dynamic srfi/64.scm'
           sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -102,6 +106,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "gerbil-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'gxi srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -122,6 +127,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "gauche-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'gosh srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -142,6 +148,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "guile-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -162,6 +169,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "kawa-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'kawa srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -182,6 +190,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "loko-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -202,6 +211,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "mit-scheme-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'mit-scheme --load srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -222,6 +232,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "racket-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -242,6 +253,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "sagittarius-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'sash srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -262,6 +274,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "stklos-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'stklos -I . srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -282,6 +295,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "skint-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'skint --program srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -302,6 +316,7 @@ pipeline {
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "tr7-srfi-64" > test-prefix.txt'
+#<unspecified>
           sh 'tr7i srfi-test/64.scm'
           sh 'cat *.log'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
