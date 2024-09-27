@@ -21,9 +21,10 @@ pipeline {
 
         stage("SRFI-64 - chibi") {
             agent {
-                docker {
-                    image 'jenkins-chibi'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-chibi'
                     args '--build-arg IMPLEMENTATION=chibi -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -50,9 +51,10 @@ pipeline {
 
         stage("SRFI-64 - chicken") {
             agent {
-                docker {
-                    image 'jenkins-chicken'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-chicken'
                     args '--build-arg IMPLEMENTATION=chicken -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -79,9 +81,10 @@ pipeline {
 
         stage("SRFI-64 - cyclone") {
             agent {
-                docker {
-                    image 'jenkins-cyclone'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-cyclone'
                     args '--build-arg IMPLEMENTATION=cyclone -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -108,9 +111,10 @@ pipeline {
 
         stage("SRFI-64 - gambit") {
             agent {
-                docker {
-                    image 'jenkins-gambit'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-gambit'
                     args '--build-arg IMPLEMENTATION=gambit -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -137,9 +141,10 @@ pipeline {
 
         stage("SRFI-64 - gerbil") {
             agent {
-                docker {
-                    image 'jenkins-gerbil'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-gerbil'
                     args '--build-arg IMPLEMENTATION=gerbil -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -166,9 +171,10 @@ pipeline {
 
         stage("SRFI-64 - gauche") {
             agent {
-                docker {
-                    image 'jenkins-gauche'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-gauche'
                     args '--build-arg IMPLEMENTATION=gauche -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -195,9 +201,10 @@ pipeline {
 
         stage("SRFI-64 - guile") {
             agent {
-                docker {
-                    image 'jenkins-guile'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-guile'
                     args '--build-arg IMPLEMENTATION=guile -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -224,9 +231,10 @@ pipeline {
 
         stage("SRFI-64 - kawa") {
             agent {
-                docker {
-                    image 'jenkins-kawa'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-kawa'
                     args '--build-arg IMPLEMENTATION=kawa -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -253,9 +261,10 @@ pipeline {
 
         stage("SRFI-64 - loko") {
             agent {
-                docker {
-                    image 'jenkins-loko'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-loko'
                     args '--build-arg IMPLEMENTATION=loko -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -282,9 +291,10 @@ pipeline {
 
         stage("SRFI-64 - mit-scheme") {
             agent {
-                docker {
-                    image 'jenkins-mit-scheme'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-mit-scheme'
                     args '--build-arg IMPLEMENTATION=mit-scheme -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -311,9 +321,10 @@ pipeline {
 
         stage("SRFI-64 - racket") {
             agent {
-                docker {
-                    image 'jenkins-racket'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-racket'
                     args '--build-arg IMPLEMENTATION=racket -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -340,9 +351,10 @@ pipeline {
 
         stage("SRFI-64 - sagittarius") {
             agent {
-                docker {
-                    image 'jenkins-sagittarius'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-sagittarius'
                     args '--build-arg IMPLEMENTATION=sagittarius -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -369,9 +381,10 @@ pipeline {
 
         stage("SRFI-64 - stklos") {
             agent {
-                docker {
-                    image 'jenkins-stklos'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-stklos'
                     args '--build-arg IMPLEMENTATION=stklos -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -398,9 +411,10 @@ pipeline {
 
         stage("SRFI-64 - skint") {
             agent {
-                docker {
-                    image 'jenkins-skint'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-skint'
                     args '--build-arg IMPLEMENTATION=skint -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
@@ -427,9 +441,10 @@ pipeline {
 
         stage("SRFI-64 - tr7") {
             agent {
-                docker {
-                    image 'jenkins-tr7'
+                dockerfile {
                     dockerfile 'Dockerfile.jenkins'
+                    dir '.'
+                    label 'r7rs-pffi-tr7'
                     args '--build-arg IMPLEMENTATION=tr7 -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
