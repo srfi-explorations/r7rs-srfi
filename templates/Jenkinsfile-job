@@ -24,7 +24,7 @@
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "{{number}-{{namer}-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "{{number}-{{name}}-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'

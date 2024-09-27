@@ -45,7 +45,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-chibi.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -86,7 +86,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-chicken.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -127,7 +127,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-cyclone.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -168,7 +168,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-gambit.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -209,7 +209,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-gerbil.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -250,7 +250,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-gauche.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -291,7 +291,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-guile.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -332,7 +332,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-kawa.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -373,7 +373,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-loko.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -414,7 +414,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-mit-scheme.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -455,7 +455,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-racket.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -496,7 +496,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-sagittarius.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -537,7 +537,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-stklos.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -578,7 +578,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-skint.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -619,7 +619,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-64-tr7.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
