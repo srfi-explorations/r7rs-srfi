@@ -32,7 +32,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -58,7 +58,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -84,7 +84,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -110,7 +110,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -136,7 +136,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -162,7 +162,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -188,7 +188,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -214,7 +214,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -240,7 +240,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -266,7 +266,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -292,7 +292,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -318,7 +318,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -344,7 +344,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -370,7 +370,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -396,7 +396,7 @@ pipeline {
           sh 'cat *.log'
           unstash 'reports'
           sh 'grep "# of" *.log >> reports/results.html'
-          stash name: 'reports, includes: 'reports/*'
+          stash name: 'reports', includes: 'reports/*'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
