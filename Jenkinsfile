@@ -610,12 +610,18 @@ pipeline {
             }
         }
 
+
+        stage("Report") {
+            steps {
+                unstash 'reports'
+                sh './report-kawa'
+                archiveArtifacts artifacts: 'reports/*.html'
+            }
+        }
+
     }
     post {
         always {
-            unstash 'reports'
-            sh './report-kawa'
-            archiveArtifacts artifacts: 'reports/*.html'
             deleteDir()
         }
     }
