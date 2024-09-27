@@ -1,7 +1,7 @@
         stage("SRFI-{{number}} - {{name}}") {
             agent {
                 dockerfile {
-                    dockerfile 'Dockerfile.jenkins'
+                    filename 'Dockerfile.jenkins'
                     dir '.'
                     label 'r7rs-pffi-{{name}}'
                     args '--build-arg IMPLEMENTATION={{name}} -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
