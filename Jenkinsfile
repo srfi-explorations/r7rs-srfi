@@ -8,7 +8,7 @@ pipeline {
               sh 'mkdir -p reports'
               stash name: 'reports, includes: 'reports/*'
               sh 'echo \"<h1>Test results</h1>\" > reports/results.html'
-              stash name: 'tests', includes: 'srfi-test/*'
+              //stash name: 'tests', includes: 'srfi-test/*'
             }
         }
 
@@ -356,12 +356,6 @@ pipeline {
                     sh 'rm -rf srfi-test/64'
                 }
             }
-        }
-    }
-    post {
-        always {
-            //unstash 'reports'
-            //archiveArtifacts artifacts: 'reports/*.html'
         }
     }
 }
