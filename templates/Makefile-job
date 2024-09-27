@@ -1,0 +1,3 @@
+test-{{name}}-srfi-{{number}}:
+	docker run -it -v ${PWD}:/workdir:z schemers/{{name}} bash -c "cd workdir && {{command}} srfi-test/{{number}}.scm"
+
