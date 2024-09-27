@@ -1,7 +1,8 @@
         stage("SRFI-{{number}} - {{name}}") {
             agent {
                 docker {
-                    image 'schemers/{{name}}'
+                    dockerfile 'Dockerfile.jenkins'
+                    args '--build-arg IMPLEMENTATION={{name}} -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             steps {

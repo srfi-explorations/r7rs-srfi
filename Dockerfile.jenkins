@@ -1,2 +1,3 @@
 ARG IMPLEMENTATION=guile
-FROM schemers/implementation
+FROM schemers/$IMPLEMENTATION
+RUN apt update && apt install -y make
