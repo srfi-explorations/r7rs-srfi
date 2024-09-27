@@ -23,11 +23,9 @@
                     sh 'if [ ! "{{library-command}}" = "" ]; then ./srfi-test/{{number}} ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-{{number}}-{{name}}-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-{{number}}-{{name}}-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables

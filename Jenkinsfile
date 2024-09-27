@@ -44,11 +44,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-chibi-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chibi-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -85,11 +83,9 @@ pipeline {
                     sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-chicken-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chicken-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -126,11 +122,9 @@ pipeline {
                     sh 'if [ ! "cyclone -I ." = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-cyclone-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-cyclone-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -167,11 +161,9 @@ pipeline {
                     sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-gambit-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gambit-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -208,11 +200,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-gerbil-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gerbil-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -249,11 +239,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-gauche-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gauche-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -290,11 +278,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-guile-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-guile-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -331,11 +317,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-kawa-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-kawa-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -372,11 +356,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-loko-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-loko-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -413,11 +395,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-mit-scheme-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-mit-scheme-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -454,11 +434,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-racket-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-racket-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -495,11 +473,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-sagittarius-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-sagittarius-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -536,11 +512,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-stklos-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-stklos-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -577,11 +551,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-skint-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-skint-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
@@ -618,11 +590,9 @@ pipeline {
                     sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
-                    // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-tr7-$f"; done'
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-
-                    sh 'cp *.log reports/'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-tr7-$f"; done'
                     stash name: 'reports', includes: 'reports/*'
 
                     // Clean up possible executables
