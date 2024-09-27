@@ -23,7 +23,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'chibi-scheme -I srfi srfi-test/64.scm'
 
@@ -32,9 +32,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-chibi.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - chicken") {
             agent {
                 docker {
@@ -46,7 +50,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.sld ; fi'
+                    //sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.sld ; fi'
 
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
 
@@ -55,9 +59,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-chicken.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - cyclone") {
             agent {
                 docker {
@@ -69,7 +77,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "cyclone -I ." = "" ]; then cyclone -I . srfi/64.sld ; fi'
+                    //sh 'if [ ! "cyclone -I ." = "" ]; then cyclone -I . srfi/64.sld ; fi'
 
                     sh 'cyclone -I . srfi-test/64.scm'
 
@@ -78,9 +86,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-cyclone.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - gambit") {
             agent {
                 docker {
@@ -92,7 +104,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then gsc -:r7rs -dynamic srfi/64.sld ; fi'
+                    //sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then gsc -:r7rs -dynamic srfi/64.sld ; fi'
 
                     sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
 
@@ -101,9 +113,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-gambit.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - gerbil") {
             agent {
                 docker {
@@ -115,7 +131,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'gxi srfi-test/64.scm'
 
@@ -124,9 +140,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-gerbil.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - gauche") {
             agent {
                 docker {
@@ -138,7 +158,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'gosh srfi-test/64.scm'
 
@@ -147,9 +167,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-gauche.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - guile") {
             agent {
                 docker {
@@ -161,7 +185,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
 
@@ -170,9 +194,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-guile.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - kawa") {
             agent {
                 docker {
@@ -184,7 +212,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'kawa srfi-test/64.scm'
 
@@ -193,9 +221,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-kawa.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - loko") {
             agent {
                 docker {
@@ -207,7 +239,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
 
@@ -216,9 +248,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-loko.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - mit-scheme") {
             agent {
                 docker {
@@ -230,7 +266,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'mit-scheme --load srfi-test/64.scm'
 
@@ -239,9 +275,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-mit-scheme.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - racket") {
             agent {
                 docker {
@@ -253,7 +293,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
 
@@ -262,9 +302,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-racket.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - sagittarius") {
             agent {
                 docker {
@@ -276,7 +320,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'sash srfi-test/64.scm'
 
@@ -285,9 +329,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-sagittarius.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - stklos") {
             agent {
                 docker {
@@ -299,7 +347,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'stklos -I . srfi-test/64.scm'
 
@@ -308,9 +356,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-stklos.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - skint") {
             agent {
                 docker {
@@ -322,7 +374,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'skint --program srfi-test/64.scm'
 
@@ -331,9 +383,13 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-skint.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
+
         stage("SRFI-64 - tr7") {
             agent {
                 docker {
@@ -345,7 +401,7 @@ pipeline {
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    //sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
                     sh 'tr7i srfi-test/64.scm'
 
@@ -354,8 +410,18 @@ pipeline {
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/64'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-64-tr7.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
+        }
+
+    }
+    post {
+        always {
+            unstash 'reports'
+            archiveArtifacts artifacts: 'reports/*.html'
         }
     }
 }

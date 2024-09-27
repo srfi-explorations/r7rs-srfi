@@ -33,7 +33,8 @@
       (lambda (srfi)
         (for-each
           (lambda (implementation)
-            (execute jenkinsfile-job (append implementation (list srfi)) out))
+            (execute jenkinsfile-job (append implementation (list srfi)) out)
+            (newline out))
           implementations))
       srfis)
     (execute jenkinsfile-bottom '() out)
@@ -51,7 +52,8 @@
       (lambda (srfi)
         (for-each
           (lambda (implementation)
-            (execute makefile-job (append implementation (list srfi)) out))
+            (execute makefile-job (append implementation (list srfi)) out)
+            (newline out))
           implementations))
       srfis)
     (execute makefile-bottom '() out)

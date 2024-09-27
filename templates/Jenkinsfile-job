@@ -9,7 +9,7 @@
                     sh 'make clean'
 
                     // If the implementation is compiler then compile the SRFI library
-                    sh 'if [ ! "{{library-command}}" = "" ]; then {{library-command}} srfi/{{number}}.sld ; fi'
+                    //sh 'if [ ! "{{library-command}}" = "" ]; then {{library-command}} srfi/{{number}}.sld ; fi'
 
                     sh '{{command}} srfi-test/{{number}}.scm'
 
@@ -18,6 +18,9 @@
 
                     // Clean up possible executables
                     sh 'rm -rf srfi-test/{{number}}'
+
+                    sh 'find . -iname "*.log" -exec rename _SRFI-{{number}}-{{name}}.log .log '{}' \;'
+                    archiveArtifacts artifacts: '*.log'
                 }
             }
         }
