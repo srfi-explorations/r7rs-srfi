@@ -134,6 +134,7 @@
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
                 (string-append "          unstash 'tests'")
+                (string-append "          sh 'rm *.log'")
                 (string-append "          sh 'ls'")
                 (string-append "          sh 'ls srfi-test'")
                 (string-append "          sh 'echo \"" name "-srfi-" srfi-number "\" " "> test-prefix.txt'")
