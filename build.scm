@@ -113,6 +113,7 @@
       "      steps {"
       "        sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'"
       "        sh 'mkdir -p reports'"
+      "        stash name: 'reports, includes: 'reports/*'"
       "        sh 'echo \"<h1>Test results</h1>\" > reports/results.html'"
       "        stash name: 'tests', includes: 'srfi-test/*'"
       "      }"
@@ -135,10 +136,10 @@
                 "      }"
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
-                (string-append "          unstash 'tests'")
-                (string-append "          sh 'rm -rf *.log'")
-                (string-append "          sh 'ls'")
-                (string-append "          sh 'ls srfi-test'")
+                "          unstash 'tests'" 
+                "          sh 'rm -rf *.log'"
+                "          sh 'ls'"
+                "          sh 'ls srfi-test'"
                 (string-append "          sh 'echo \"" name "-srfi-" srfi-number "\" " "> test-prefix.txt'")
                 (if (string=? name "chicken")
                   (string-append "          sh 'cp srfi/" srfi-number ".sld" " " "srfi-64.sld'")
@@ -154,8 +155,10 @@
                         (string=? name "gambit"))
                   (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm && srfi-test/" srfi-number "'")
                   (string-append "          sh '" command " " "srfi-test/" srfi-number ".scm'"))
-                (string-append "          sh 'cat *.log'")
+                "          sh 'cat *.log'"
+                "          unstash 'reports'"
                 (string-append "          sh 'grep \"# of\" *.log >> reports/results.html'")
+                "          stash name: 'reports, includes: 'reports/*'"
                 ; Dont put things after this line, if any test fails they wont be run
                 (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
                 "        }"
