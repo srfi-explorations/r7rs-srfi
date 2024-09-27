@@ -609,6 +609,7 @@ pipeline {
         always {
             unstash 'reports'
             archiveArtifacts artifacts: 'reports/*.html'
+            archiveArtifacts artifacts: 'reports/*.log'
         }
     }
 }
