@@ -38,14 +38,17 @@ pipeline {
 
                     sh 'chibi-scheme -I srfi srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-chibi.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -72,14 +75,17 @@ pipeline {
 
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-chicken.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -106,14 +112,17 @@ pipeline {
 
                     sh 'cyclone -I . srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-cyclone.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -140,14 +149,17 @@ pipeline {
 
                     sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-gambit.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -174,14 +186,17 @@ pipeline {
 
                     sh 'gxi srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-gerbil.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -208,14 +223,17 @@ pipeline {
 
                     sh 'gosh srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-gauche.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -242,14 +260,17 @@ pipeline {
 
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-guile.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -276,14 +297,17 @@ pipeline {
 
                     sh 'kawa srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-kawa.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -310,14 +334,17 @@ pipeline {
 
                     sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-loko.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -344,14 +371,17 @@ pipeline {
 
                     sh 'mit-scheme --load srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-mit-scheme.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -378,14 +408,17 @@ pipeline {
 
                     sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-racket.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -412,14 +445,17 @@ pipeline {
 
                     sh 'sash srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-sagittarius.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -446,14 +482,17 @@ pipeline {
 
                     sh 'stklos -I . srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-stklos.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -480,14 +519,17 @@ pipeline {
 
                     sh 'skint --program srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-skint.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
@@ -514,14 +556,17 @@ pipeline {
 
                     sh 'tr7i srfi-test/64.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-tr7.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'

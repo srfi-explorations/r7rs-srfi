@@ -17,14 +17,17 @@
 
                     sh '{{command}} srfi-test/{{number}}.scm'
 
+                    sh 'ls'
+
                     // If the implementation makes executable then run it
                     sh 'test -f srfi-test/{{number}} && ./srfi-test/{{number}}'
 
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/{{number}}'
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-{{number}}-{{name}}.log .log '{}' \\;'
                     archiveArtifacts artifacts: '*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/{{number}}'
 
                     // Check if all tests passed, dont put anything after this on fail it wont be run
                     sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
