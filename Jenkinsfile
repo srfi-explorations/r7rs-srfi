@@ -28,7 +28,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "chibi" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -68,7 +68,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ] && [ ! "chicken" = "chicken"] ; then csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.sld ; fi'
@@ -108,7 +108,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "cyclone -I ." = "" ] && [ ! "cyclone" = "chicken"] ; then cyclone -I . srfi/64.sld ; fi'
@@ -148,7 +148,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "gsc -:r7rs -dynamic" = "" ] && [ ! "gambit" = "chicken"] ; then gsc -:r7rs -dynamic srfi/64.sld ; fi'
@@ -188,7 +188,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "gerbil" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -228,7 +228,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "gauche" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -268,7 +268,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "guile" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -308,7 +308,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "kawa" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -348,7 +348,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "loko" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -388,7 +388,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "mit-scheme" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -428,7 +428,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "racket" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -468,7 +468,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "sagittarius" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -508,7 +508,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "stklos" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -548,7 +548,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "skint" = "chicken"] ; then  srfi/64.sld ; fi'
@@ -588,7 +588,7 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'rm -rf *.log'
+                    sh 'rm -rf "*.log"'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
                     sh 'if [ ! "" = "" ] && [ ! "tr7" = "chicken"] ; then  srfi/64.sld ; fi'
