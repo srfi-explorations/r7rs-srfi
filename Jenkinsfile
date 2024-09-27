@@ -24,7 +24,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=chibi -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-chibi'
+                    args '--build-arg IMPLEMENTATION=chibi --tag=r7rs-srfi-chibi'
                 }
             }
             steps {
@@ -53,7 +53,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=chicken -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-chicken'
+                    args '--build-arg IMPLEMENTATION=chicken --tag=r7rs-srfi-chicken'
                 }
             }
             steps {
@@ -82,7 +82,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=cyclone -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-cyclone'
+                    args '--build-arg IMPLEMENTATION=cyclone --tag=r7rs-srfi-cyclone'
                 }
             }
             steps {
@@ -111,7 +111,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=gambit -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-gambit'
+                    args '--build-arg IMPLEMENTATION=gambit --tag=r7rs-srfi-gambit'
                 }
             }
             steps {
@@ -140,7 +140,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=gerbil -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-gerbil'
+                    args '--build-arg IMPLEMENTATION=gerbil --tag=r7rs-srfi-gerbil'
                 }
             }
             steps {
@@ -169,7 +169,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=gauche -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-gauche'
+                    args '--build-arg IMPLEMENTATION=gauche --tag=r7rs-srfi-gauche'
                 }
             }
             steps {
@@ -198,7 +198,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=guile -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-guile'
+                    args '--build-arg IMPLEMENTATION=guile --tag=r7rs-srfi-guile'
                 }
             }
             steps {
@@ -227,7 +227,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=kawa -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-kawa'
+                    args '--build-arg IMPLEMENTATION=kawa --tag=r7rs-srfi-kawa'
                 }
             }
             steps {
@@ -256,7 +256,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=loko -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-loko'
+                    args '--build-arg IMPLEMENTATION=loko --tag=r7rs-srfi-loko'
                 }
             }
             steps {
@@ -285,7 +285,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=mit-scheme -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-mit-scheme'
+                    args '--build-arg IMPLEMENTATION=mit-scheme --tag=r7rs-srfi-mit-scheme'
                 }
             }
             steps {
@@ -314,7 +314,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=racket -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-racket'
+                    args '--build-arg IMPLEMENTATION=racket --tag=r7rs-srfi-racket'
                 }
             }
             steps {
@@ -343,7 +343,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=sagittarius -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-sagittarius'
+                    args '--build-arg IMPLEMENTATION=sagittarius --tag=r7rs-srfi-sagittarius'
                 }
             }
             steps {
@@ -372,7 +372,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=stklos -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-stklos'
+                    args '--build-arg IMPLEMENTATION=stklos --tag=r7rs-srfi-stklos'
                 }
             }
             steps {
@@ -401,7 +401,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=skint -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-skint'
+                    args '--build-arg IMPLEMENTATION=skint --tag=r7rs-srfi-skint'
                 }
             }
             steps {
@@ -430,7 +430,7 @@ pipeline {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION=tr7 -v ${PWD}:/workdir --privileged -v /var/run/docker.sock:/var/run/docker.sock --tag=r7rs-srfi-tr7'
+                    args '--build-arg IMPLEMENTATION=tr7 --tag=r7rs-srfi-tr7'
                 }
             }
             steps {
