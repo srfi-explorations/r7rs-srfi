@@ -3,7 +3,7 @@
                 dockerfile {
                     filename 'Dockerfile.jenkins'
                     dir '.'
-                    args '--build-arg IMPLEMENTATION={{name}} --tag=r7rs-srfi-{{name}}'
+                    args '--build-arg IMPLEMENTATION={{name}}'
                 }
             }
             steps {
