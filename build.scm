@@ -34,7 +34,14 @@
       (lambda (srfi)
         (for-each
           (lambda (implementation)
-            (execute jenkinsfile-job (append implementation (list srfi)) out)
+            (execute jenkinsfile-job
+                     `((name . ,(cdr (assoc 'name implementation)))
+                       (command . ,(cdr (assoc 'command implementation)))
+                       (library-command . ,(if (assoc 'library-command implementation)
+                                             (cdr (assoc 'library-command implementation))
+                                             ""))
+                       (number . ,(cdr (assoc 'number srfi))))
+                      out)
             (newline out))
           implementations))
       srfis)
