@@ -45,7 +45,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-chibi-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-chibi-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -86,7 +86,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-chicken-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-chicken-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -127,7 +127,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-cyclone-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-cyclone-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -168,7 +168,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-gambit-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-gambit-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -209,7 +209,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-gerbil-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-gerbil-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -250,7 +250,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-gauche-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-gauche-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -291,7 +291,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-guile-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-guile-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -332,7 +332,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-kawa-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-kawa-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -373,7 +373,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-loko-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-loko-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -414,7 +414,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-mit-scheme-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-mit-scheme-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -455,7 +455,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-racket-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-racket-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -496,7 +496,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-sagittarius-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-sagittarius-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -537,7 +537,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-stklos-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-stklos-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -578,7 +578,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-skint-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-skint-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
@@ -619,7 +619,7 @@ pipeline {
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'for f in *.log; do cp -- "$f" "64-tr7-$f"; done'
+                    sh 'for f in *.log; do cp -- "$f" "SRFI-64-tr7-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
