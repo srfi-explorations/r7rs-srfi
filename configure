@@ -1,4 +1,3 @@
 #!/bin/sh
 
-cp templates/Jenkinsfile Jenkinsfile
-#guile -L . -L ./snow build.scm
+gosh -r7 -I . -I ./snow build.scm
