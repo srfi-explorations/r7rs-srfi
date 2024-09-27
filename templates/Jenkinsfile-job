@@ -24,7 +24,7 @@
 
 
                     // Change any logfiles to identify implementatio nand SRFI
-                    sh 'find . -iname "*.log" -exec rename _SRFI-{{number}}-{{name}}.log .log '{}' \\;'
+                    sh 'for f in *.log; do cp -- "$f" "{{number}-{{namer}-$f"; done'
                     unstash 'reports'
 
                     sh 'cp *.log reports/'
