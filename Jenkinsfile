@@ -599,7 +599,6 @@ pipeline {
     post {
         always {
             unstash 'reports'
-            sh '
             archiveArtifacts artifacts: 'reports/*.html'
         }
     }
