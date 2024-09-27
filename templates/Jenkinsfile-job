@@ -20,7 +20,7 @@
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/{{number}} && ./srfi-test/{{number}}'
+                    sh 'if [ ! "{{library-command}}" = "" ]; then ./srfi-test/{{number}} ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-{{number}}-{{name}}.log .log '{}' \\;'

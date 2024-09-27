@@ -41,7 +41,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-chibi.log .log '{}' \\;'
@@ -78,7 +78,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-chicken.log .log '{}' \\;'
@@ -115,7 +115,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "cyclone -I ." = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-cyclone.log .log '{}' \\;'
@@ -152,7 +152,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-gambit.log .log '{}' \\;'
@@ -189,7 +189,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-gerbil.log .log '{}' \\;'
@@ -226,7 +226,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-gauche.log .log '{}' \\;'
@@ -263,7 +263,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-guile.log .log '{}' \\;'
@@ -300,7 +300,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-kawa.log .log '{}' \\;'
@@ -337,7 +337,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-loko.log .log '{}' \\;'
@@ -374,7 +374,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-mit-scheme.log .log '{}' \\;'
@@ -411,7 +411,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-racket.log .log '{}' \\;'
@@ -448,7 +448,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-sagittarius.log .log '{}' \\;'
@@ -485,7 +485,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-stklos.log .log '{}' \\;'
@@ -522,7 +522,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-skint.log .log '{}' \\;'
@@ -559,7 +559,7 @@ pipeline {
                     sh 'ls'
 
                     // If the implementation makes executable then run it
-                    sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    sh 'if [ ! "" = "" ]; then ./srfi-test/64 ; fi'
 
 
                     //sh 'find . -iname "*.log" -exec rename _SRFI-64-tr7.log .log '{}' \\;'
