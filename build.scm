@@ -158,7 +158,7 @@
                 "          sh 'cat *.log'"
                 "          unstash 'reports'"
                 (string-append "          sh 'grep \"# of\" *.log >> reports/results.html'")
-                "          stash name: 'reports', includes: 'reports/*'"
+                ;"          stash name: 'reports', includes: 'reports/*'"
                 ; Dont put things after this line, if any test fails they wont be run
                 (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
                 "        }"
