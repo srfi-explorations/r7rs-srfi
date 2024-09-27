@@ -1,0 +1,14 @@
+<td style="background-color:{{color}}">
+    <p>
+        {{expected-passes}}
+    </p>
+    <p>
+        {{expected-failures}}
+    </p>
+    <p>
+        {{unexpected-failures}}
+    </p>
+    <p>
+        {{skipped-tests}}
+    </p>
+</td>

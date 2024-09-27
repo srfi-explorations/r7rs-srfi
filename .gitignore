@@ -13,3 +13,4 @@ srfi-*.sld
 srfi.*.scm
 srfi.*.sld
 test-prefix.txt
+reports

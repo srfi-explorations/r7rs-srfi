@@ -5,21 +5,9 @@
         (scheme file)
         (arvyy mustache))
 
+(include "util.scm")
 (include "implementations.scm")
 (include "srfis.scm")
-
-(define slurp-loop
-  (lambda (line result)
-    (if (eof-object? line)
-      result
-      (slurp-loop (read-line) (string-append result line (string #\newline))))))
-
-(define slurp
-  (lambda (path)
-    (with-input-from-file
-      path
-      (lambda ()
-        (slurp-loop (read-line) "")))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))

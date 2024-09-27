@@ -599,6 +599,7 @@ pipeline {
     post {
         always {
             unstash 'reports'
+            sh './report-kawa'
             archiveArtifacts artifacts: 'reports/*.html'
             deleteDir()
         }
