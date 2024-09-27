@@ -24,6 +24,7 @@
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-{{number}}-{{name}}.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables

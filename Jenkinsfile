@@ -51,6 +51,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chibi.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -89,6 +90,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chicken.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -127,6 +129,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-cyclone.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -165,6 +168,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gambit.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -203,6 +207,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gerbil.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -241,6 +246,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gauche.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -279,6 +285,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-guile.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -317,6 +324,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-kawa.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -355,6 +363,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-loko.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -393,6 +402,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-mit-scheme.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -431,6 +441,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-racket.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -469,6 +480,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-sagittarius.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -507,6 +519,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-stklos.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -545,6 +558,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-skint.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
@@ -583,6 +597,7 @@ pipeline {
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-tr7.log"; done'
                     sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
 
                     // Clean up possible executables
