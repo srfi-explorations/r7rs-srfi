@@ -135,7 +135,7 @@
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
                 "          unstash 'tests'"
-                (string-append "          sh 'bash run_test.sh \""
+                #;(string-append "          sh 'bash run_test.sh \""
                                name "\" \""
                                command "\" \""
                                library-command "\" \""
@@ -143,7 +143,7 @@
                                "\"'")
                 "          sh 'cat *.log'"
                 "          unstash 'reports'"
-                (string-append "          sh 'bash jenkins_report.sh \""
+                #;(string-append "          sh 'bash jenkins_report.sh \""
                                name "\" \""
                                command "\" \""
                                library-command "\" \""
@@ -159,10 +159,10 @@
       implementations)
     (print-lines
       "  }"
-      ;"  post {"
-      ;"   always {"
-      ;"     unstash 'reports'"
-      ;"     archiveArtifacts artifacts: 'reports/*.html'"
-      ;"   }"
-      ;"  }"
+      "  post {"
+      "   always {"
+      "     unstash 'reports'"
+      "     archiveArtifacts artifacts: 'reports/*.html'"
+      "   }"
+      "  }"
       "}")))
