@@ -159,10 +159,10 @@
       implementations)
     (print-lines
       "  }"
-      "  post {"
-      "   always {"
-      "     unstash 'reports'"
-      "     archiveArtifacts artifacts: 'reports/*.html'"
-      "   }"
-      "  }"
+      ;"  post {"
+      ;"   always {"
+      ;"     unstash 'reports'"
+      ;"     archiveArtifacts artifacts: 'reports/*.html'"
+      ;"   }"
+      ;"  }"
       "}")))

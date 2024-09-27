@@ -237,10 +237,4 @@ pipeline {
       }
     }
   }
-  post {
-   always {
-     unstash 'reports'
-     archiveArtifacts artifacts: 'reports/*.html'
-   }
-  }
 }
