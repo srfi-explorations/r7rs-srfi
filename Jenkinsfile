@@ -5,7 +5,7 @@ pipeline {
     stage("Init") {
       steps {
         sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'
-        sh 'mkdir -p reports
+        sh 'mkdir -p reports'
         stash name: 'tests', includes: 'srfi-test/*'
       }
     }
