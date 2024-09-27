@@ -17,9 +17,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "chibi" "chibi-scheme -I srfi" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "chibi" "chibi-scheme -I srfi" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -30,9 +30,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -43,9 +43,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "cyclone" "cyclone -I ." "cyclone -I ." "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "cyclone" "cyclone -I ." "cyclone -I ." "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -56,9 +56,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "gambit" "gsc -:r7rs,search=. -exe" "gsc -:r7rs -dynamic" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "gambit" "gsc -:r7rs,search=. -exe" "gsc -:r7rs -dynamic" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -69,9 +69,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "gerbil" "gxi" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "gerbil" "gxi" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -82,9 +82,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "gauche" "gosh" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "gauche" "gosh" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -95,9 +95,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -108,9 +108,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "kawa" "kawa" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "kawa" "kawa" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -121,9 +121,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "loko" "loko -feval -std=r7rs --compile" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "loko" "loko -feval -std=r7rs --compile" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -134,9 +134,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "mit-scheme" "mit-scheme --load" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "mit-scheme" "mit-scheme --load" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -147,9 +147,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "racket" "racket -I r7rs --make -S . --script" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "racket" "racket -I r7rs --make -S . --script" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -160,9 +160,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "sagittarius" "sash" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "sagittarius" "sash" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -173,9 +173,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "stklos" "stklos -I ." "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "stklos" "stklos -I ." "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -186,9 +186,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "skint" "skint --program" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "skint" "skint --program" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }
@@ -199,9 +199,9 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
+          sh 'bash run_test.sh "tr7" "tr7i" "NONE" "64"'
           sh 'cat *.log'
-          unstash 'reports'
-          stash name: 'reports', includes: 'reports/*'
+          sh 'bash jenkins_report.sh "tr7" "tr7i" "NONE" "64"'
           sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
         }
       }

@@ -135,21 +135,21 @@
                 "      steps {"
                 "        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {"
                 "          unstash 'tests'"
-                #;(string-append "          sh 'bash run_test.sh \""
+                (string-append "          sh 'bash run_test.sh \""
                                name "\" \""
                                command "\" \""
                                library-command "\" \""
                                srfi-number
                                "\"'")
                 "          sh 'cat *.log'"
-                "          unstash 'reports'"
-                #;(string-append "          sh 'bash jenkins_report.sh \""
+                ;"          unstash 'reports'"
+                (string-append "          sh 'bash jenkins_report.sh \""
                                name "\" \""
                                command "\" \""
                                library-command "\" \""
                                srfi-number
                                "\"'")
-                "          stash name: 'reports', includes: 'reports/*'"
+                ;"          stash name: 'reports', includes: 'reports/*'"
                 ; Dont put things after this line, if any test fails they wont be run
                 (string-append "          sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'")
                 "        }"
