@@ -19,7 +19,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "chibi-srfi-64" > test-prefix.txt'
@@ -43,7 +43,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "chicken-srfi-64" > test-prefix.txt'
@@ -67,7 +67,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "cyclone-srfi-64" > test-prefix.txt'
@@ -91,7 +91,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "gambit-srfi-64" > test-prefix.txt'
@@ -115,7 +115,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "gerbil-srfi-64" > test-prefix.txt'
@@ -139,7 +139,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "gauche-srfi-64" > test-prefix.txt'
@@ -163,7 +163,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "guile-srfi-64" > test-prefix.txt'
@@ -187,7 +187,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "kawa-srfi-64" > test-prefix.txt'
@@ -211,7 +211,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "loko-srfi-64" > test-prefix.txt'
@@ -235,7 +235,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "mit-scheme-srfi-64" > test-prefix.txt'
@@ -259,7 +259,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "racket-srfi-64" > test-prefix.txt'
@@ -283,7 +283,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "sagittarius-srfi-64" > test-prefix.txt'
@@ -307,7 +307,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "stklos-srfi-64" > test-prefix.txt'
@@ -331,7 +331,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "skint-srfi-64" > test-prefix.txt'
@@ -355,7 +355,7 @@ pipeline {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           unstash 'tests'
-          sh 'rm *.log'
+          sh 'rm -rf *.log'
           sh 'ls'
           sh 'ls srfi-test'
           sh 'echo "tr7-srfi-64" > test-prefix.txt'
