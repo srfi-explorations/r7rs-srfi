@@ -19,18 +19,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'chibi-scheme -I srfi srfi-test/64.scm'
+                    sh 'chibi-scheme -I srfi srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - chicken") {
@@ -40,18 +42,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "csc -include-path ./srfi -X r7rs -R r7rs -s -J" = "" ]; then csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.sld ; fi'
 
-                sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - cyclone") {
@@ -61,18 +65,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "cyclone -I ." = "" ]; then cyclone -I . srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "cyclone -I ." = "" ]; then cyclone -I . srfi/64.sld ; fi'
 
-                sh 'cyclone -I . srfi-test/64.scm'
+                    sh 'cyclone -I . srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - gambit") {
@@ -82,18 +88,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then gsc -:r7rs -dynamic srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "gsc -:r7rs -dynamic" = "" ]; then gsc -:r7rs -dynamic srfi/64.sld ; fi'
 
-                sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
+                    sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - gerbil") {
@@ -103,18 +111,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'gxi srfi-test/64.scm'
+                    sh 'gxi srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - gauche") {
@@ -124,18 +134,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'gosh srfi-test/64.scm'
+                    sh 'gosh srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - guile") {
@@ -145,18 +157,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
+                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - kawa") {
@@ -166,18 +180,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'kawa srfi-test/64.scm'
+                    sh 'kawa srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - loko") {
@@ -187,18 +203,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
+                    sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - mit-scheme") {
@@ -208,18 +226,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'mit-scheme --load srfi-test/64.scm'
+                    sh 'mit-scheme --load srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - racket") {
@@ -229,18 +249,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
+                    sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - sagittarius") {
@@ -250,18 +272,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'sash srfi-test/64.scm'
+                    sh 'sash srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - stklos") {
@@ -271,18 +295,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'stklos -I . srfi-test/64.scm'
+                    sh 'stklos -I . srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - skint") {
@@ -292,18 +318,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'skint --program srfi-test/64.scm'
+                    sh 'skint --program srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
         stage("SRFI-64 - tr7") {
@@ -313,18 +341,20 @@ pipeline {
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "" = "" ]; then  srfi/64.sld ; fi'
 
-                sh 'tr7i srfi-test/64.scm'
+                    sh 'tr7i srfi-test/64.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/64 && ./srfi-test/64'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/64 && ./srfi-test/64'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/64'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+                }
             }
         }
     }

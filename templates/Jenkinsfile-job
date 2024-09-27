@@ -5,17 +5,19 @@
                 }
             }
             steps {
-                sh 'make clean'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'make clean'
 
-                // If the implementation is compiler then compile the SRFI library
-                sh 'if [ ! "{{library-command}}" = "" ]; then {{library-command}} srfi/{{number}}.sld ; fi'
+                    // If the implementation is compiler then compile the SRFI library
+                    sh 'if [ ! "{{library-command}}" = "" ]; then {{library-command}} srfi/{{number}}.sld ; fi'
 
-                sh '{{command}} srfi-test/{{number}}.scm'
+                    sh '{{command}} srfi-test/{{number}}.scm'
 
-                // If the implementation makes executable then run it
-                sh 'test -f srfi-test/{{number}} && ./srfi-test/{{number}}'
+                    // If the implementation makes executable then run it
+                    sh 'test -f srfi-test/{{number}} && ./srfi-test/{{number}}'
 
-                // Clean up possible executables
-                sh 'rm -rf srfi-test/{{number}}'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/{{number}}'
+                }
             }
         }
