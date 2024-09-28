@@ -1,4 +1,17 @@
 
         </table>
+        <ul>
+            Numbers
+            <li># of expected passes</li>
+            <li># of expected failures</li>
+            <li># of unexpected failures</li>
+            <li># of skipped tests</li>
+        </ul>
+        <ul>
+            Colors
+            <li>Red: # of unexpected failures > 0</li>
+            <li>Yellow: # of skipped tests > 0</li>
+            <li>Green: none of the above</li>
+        </ul>
     </body>
 </html>

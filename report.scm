@@ -20,7 +20,7 @@
 (call-with-output-file
   "reports/results.html"
   (lambda (out)
-    (execute report-top '() out)
+    (execute report-top `() out)
     (display "<tr>" out)
     (newline out)
     (display "<th>SRFI</th>" out)
@@ -53,29 +53,40 @@
                                         (if (eof-object? line)
                                           results
                                           (read-results (read-line)
-                                                   (if (string-starts-with? line "# of")
-                                                     (append results (list line))
-                                                     results)))))
+                                                        (if (string-starts-with? line "# of")
+                                                          (append results
+                                                                  (list (number-of-line->number line)))
+                                                          results)))))
                         (results (if (not (file-exists? logfile))
                                    (list "" "" "" "")
                                    (with-input-from-file
                                      logfile
                                      (lambda ()
-                                       (read-results (read-line) (list)))))))
+                                       (read-results (read-line) (list))))))
+                        (expected-passes (list-ref results 0))
+                        (expected-failures (list-ref results 1))
+                        (unexpected-failures (if (> (length results) 2) (list-ref results 2) 0))
+                        (skipped-tests (if (> (length results) 3) (list-ref results 3) 0))
+                        (color
+                          (begin
+                            (write skipped-tests)
+                            (newline)
+                            (cond ((string? expected-passes) 'gray) ; No logfile
+                                  ((> unexpected-failures 0) 'red)
+                                  ((> skipped-tests 0) 'yellow)
+                                  (else 'green)))))
                 (execute report-row
                          `((name . ,name)
                            (command . ,command)
-                           (color . red)
+                           (color . ,color)
                            (library-command . ,(if (assoc 'library-command implementation)
                                                  (cdr (assoc 'library-command implementation))
                                                  ""))
                            (number . ,number)
-                           (expected-passes . ,(list-ref results 0))
-                           (expected-failures . ,(list-ref results 1))
-                           (unexpected-failures . ,(if (> (length results) 2) (list-ref results 2) ""))
-                           (skipped-tests . ,(if (> (length results) 3) (list-ref results 3) ""))
-
-                           )
+                           (expected-passes . ,expected-passes)
+                           (expected-failures . ,expected-failures)
+                           (unexpected-failures . ,unexpected-failures)
+                           (skipped-tests . ,skipped-tests))
                          out)
                 (newline out)))
             implementations)
