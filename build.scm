@@ -25,6 +25,14 @@
                             "srfi-" number ".sld"))
             (else (string-append (cdr library-command) " srfi/" number ".sld"))))))
 
+(define full-command
+  (lambda (implementation srfi)
+    (let ((number (number->string (cdr (assoc 'number srfi))))
+          (command (cdr (assoc 'command implementation)))
+          (library-command (assoc 'library-command implementation)))
+      (cond ((not library-command) command)
+            (else (string-append command " ; srfi-test/" number))))))
+
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))
 (define jenkinsfile-bottom (compile (slurp "templates/Jenkinsfile-bottom")))
@@ -40,7 +48,7 @@
           (lambda (implementation)
             (execute jenkinsfile-job
                      `((name . ,(cdr (assoc 'name implementation)))
-                       (command . ,(cdr (assoc 'command implementation)))
+                       (command . ,(full-command implementation srfi))
                        (library-command . ,(full-library-command implementation srfi))
                        (number . ,(cdr (assoc 'number srfi))))
                      out)
@@ -66,7 +74,7 @@
               (let* ((name (symbol->string (cdr (assoc 'name implementation)))))
                 (execute makefile-job
                          `((name . ,name)
-                           (command . ,(cdr (assoc 'command implementation)))
+                           (command . ,(full-command implementation srfi))
                            (library-command . ,(full-library-command implementation srfi))
                            (number . ,number))
                          out))
