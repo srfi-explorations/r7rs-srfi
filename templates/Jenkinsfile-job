@@ -9,8 +9,8 @@
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/{{name}} bash -c "cd workdir && {{library-command}}"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/{{name}} bash -c "cd workdir && {{command}} srfi-test/{{number}}.scm"'
+                    sh '{{library-command}}'
+                    sh '{{command}} srfi-test/{{number}}.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them

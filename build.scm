@@ -9,6 +9,22 @@
 (include "implementations.scm")
 (include "srfis.scm")
 
+(define full-library-command
+  (lambda (implementation srfi)
+    (let ((name (symbol->string (cdr (assoc 'name implementation))))
+          (number (number->string (cdr (assoc 'number srfi))))
+          (library-command (assoc 'library-command implementation)))
+      (cond ((not library-command) "sleep 0")
+            ((string=? name "chicken")
+             (string-append "cp srfi/" number ".sld"
+                            " "
+                            "srfi-" number ".sld"
+                            " ; "
+                            (cdr library-command)
+                            " "
+                            "srfi-" number ".sld"))
+            (else (string-append (cdr library-command) " srfi/" number ".sld"))))))
+
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))
 (define jenkinsfile-bottom (compile (slurp "templates/Jenkinsfile-bottom")))
@@ -25,9 +41,7 @@
             (execute jenkinsfile-job
                      `((name . ,(cdr (assoc 'name implementation)))
                        (command . ,(cdr (assoc 'command implementation)))
-                       (library-command . ,(if (assoc 'library-command implementation)
-                                             (cdr (assoc 'library-command implementation))
-                                             "ls"))
+                       (library-command . ,(full-library-command implementation srfi))
                        (number . ,(cdr (assoc 'number srfi))))
                      out)
             (newline out))
@@ -49,28 +63,11 @@
         (let ((number (number->string (cdr (assoc 'number srfi)))))
           (for-each
             (lambda (implementation)
-              (let* ((name (symbol->string (cdr (assoc 'name implementation))))
-                     (library-command
-                       (let ((library-command (assoc 'library-command implementation)))
-                         (cond ((not library-command) #f)
-                               ((string=? name "chicken")
-                                (string-append "cp srfi/" number ".sld"
-                                               " "
-                                               "srfi-" number ".sld"
-                                               " ; "
-                                               (cdr library-command)
-                                               " "
-                                               "srfi-" number ".sld"))
-                               (else
-                                 (string-append (cdr library-command)
-                                                " srfi/" number ".sld"))))))
-                (when (string=? name "chicken")
-                  (display (string-append "\t cp srfi/" number ".sld srfi-" number ".sld") out)
-                  (newline out))
+              (let* ((name (symbol->string (cdr (assoc 'name implementation)))))
                 (execute makefile-job
                          `((name . ,name)
                            (command . ,(cdr (assoc 'command implementation)))
-                           (library-command . ,library-command)
+                           (library-command . ,(full-library-command implementation srfi))
                            (number . ,number))
                          out))
               (newline out))

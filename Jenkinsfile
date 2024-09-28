@@ -36,8 +36,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/chibi bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/chibi bash -c "cd workdir && chibi-scheme -I srfi srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'chibi-scheme -I srfi srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -68,8 +68,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs -s -J"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm"'
+                    sh 'cp srfi/64.sld srfi-64.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -100,8 +100,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I ."'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/64.scm"'
+                    sh 'cyclone -I . srfi/64.sld'
+                    sh 'cyclone -I . srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -132,8 +132,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -:r7rs -dynamic"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -:r7rs,search=. -exe srfi-test/64.scm"'
+                    sh 'gsc -:r7rs -dynamic srfi/64.sld'
+                    sh 'gsc -:r7rs,search=. -exe srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -164,8 +164,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'gxi srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -196,8 +196,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'gosh srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -228,8 +228,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/guile bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/guile bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -260,8 +260,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && kawa srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'kawa srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -292,8 +292,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -feval -std=r7rs --compile srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -324,8 +324,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'mit-scheme --load srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -356,8 +356,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/racket bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/racket bash -c "cd workdir && racket -I r7rs --make -S . --script srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -388,8 +388,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'sash srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -420,8 +420,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && stklos -I . srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'stklos -I . srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -452,8 +452,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && skint --program srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'skint --program srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -484,8 +484,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && ls"'
-                    sh 'docker run -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && tr7i srfi-test/64.scm"'
+                    sh 'sleep 0'
+                    sh 'tr7i srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
