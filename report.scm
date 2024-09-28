@@ -67,14 +67,10 @@
                         (expected-failures (list-ref results 1))
                         (unexpected-failures (if (> (length results) 2) (list-ref results 2) 0))
                         (skipped-tests (if (> (length results) 3) (list-ref results 3) 0))
-                        (color
-                          (begin
-                            (write skipped-tests)
-                            (newline)
-                            (cond ((string? expected-passes) 'gray) ; No logfile
-                                  ((> unexpected-failures 0) 'red)
-                                  ((> skipped-tests 0) 'yellow)
-                                  (else 'green)))))
+                        (color (cond ((string? expected-passes) 'gray) ; No logfile
+                                     ((> unexpected-failures 0) 'red)
+                                     ((> skipped-tests 0) 'yellow)
+                                     (else 'green))))
                 (execute report-row
                          `((name . ,name)
                            (command . ,command)
