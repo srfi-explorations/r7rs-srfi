@@ -132,45 +132,13 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'gsc -dynamic srfi/64.sld'
+                    sh 'gsc srfi/64.sld'
                     sh 'gsc . -exe srfi-test/64.scm ; srfi-test/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gambit.log"; done'
-                    sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
-                    archiveArtifacts artifacts: 'reports/*.log'
-
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
-
-
-                    // Check if all tests passed, dont put anything after this on fail it wont be run
-                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
-                }
-            }
-        }
-
-        stage("SRFI-64 - gerbil") {
-            agent {
-                docker {
-                    image 'schemers/gerbil'
-                    reuseNode true
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'find . -maxdepth 1 -name "*.log" -delete'
-
-                    
-                    sh 'gxi srfi-test/64.scm'
-
-
-                    // Change any logfiles to identify implementatio nand SRFI and stash them
-                    unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gerbil.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -293,7 +261,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
+                    sh 'loko -std=r7rs -feval --compile srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them

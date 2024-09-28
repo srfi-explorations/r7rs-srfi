@@ -3,6 +3,7 @@
 test-prefix
 *.so
 *.o
+*.o*
 *.c
 *.dep
 *.zo

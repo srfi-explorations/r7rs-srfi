@@ -1,4 +1,4 @@
-test-{{name}}-srfi-{{number}}:
-	{{#library-command}}docker run -v ${PWD}:/workdir:z schemers/{{name}} bash -c "cd workdir && {{library-command}}"{{/library-command}}
-	docker run -v ${PWD}:/workdir:z schemers/{{name}} bash -c "cd workdir && {{command}}"
+test-{{name}}-srfi-{{number}}: clean
+	{{#library-command}}docker run -it -v ${PWD}:/workdir:z schemers/{{name}} bash -c "cd workdir && {{library-command}}"{{/library-command}}
+	docker run -it -v ${PWD}:/workdir:z schemers/{{name}} bash -c "cd workdir && {{command}}"
 

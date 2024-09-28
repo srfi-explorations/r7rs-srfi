@@ -1,92 +1,87 @@
-test-chibi-srfi-64:
+test-chibi-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/chibi bash -c "cd workdir && chibi-scheme -I srfi srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi bash -c "cd workdir && chibi-scheme -I srfi srfi-test/64.scm"
 
 
-test-chicken-srfi-64:
-	docker run -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/64.sld srfi-64.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
-	docker run -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64"
+test-chicken-srfi-64: clean
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/64.sld srfi-64.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64"
 
 
-test-cyclone-srfi-64:
-	docker run -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld"
-	docker run -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/64.scm ; srfi-test/64"
+test-cyclone-srfi-64: clean
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/64.scm ; srfi-test/64"
 
 
-test-gambit-srfi-64:
-	docker run -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -dynamic srfi/64.sld"
-	docker run -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . -exe srfi-test/64.scm ; srfi-test/64"
+test-gambit-srfi-64: clean
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . -exe srfi-test/64.scm ; srfi-test/64"
 
 
-test-gerbil-srfi-64:
+test-gauche-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh srfi-test/64.scm"
 
 
-test-gauche-srfi-64:
+test-guile-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm"
 
 
-test-guile-srfi-64:
+test-kawa-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/guile bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && kawa srfi-test/64.scm"
 
 
-test-kawa-srfi-64:
+test-loko-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && kawa srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/64.scm"
 
 
-test-loko-srfi-64:
+test-mit-scheme-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -feval -std=r7rs --compile srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi-test/64.scm"
 
 
-test-mit-scheme-srfi-64:
+test-racket-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket bash -c "cd workdir && racket -I r7rs --make -S . --script srfi-test/64.scm"
 
 
-test-racket-srfi-64:
+test-sagittarius-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/racket bash -c "cd workdir && racket -I r7rs --make -S . --script srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash srfi-test/64.scm"
 
 
-test-sagittarius-srfi-64:
+test-stklos-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && stklos -I . srfi-test/64.scm"
 
 
-test-stklos-srfi-64:
+test-skint-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && stklos -I . srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && skint --program srfi-test/64.scm"
 
 
-test-skint-srfi-64:
+test-tr7-srfi-64: clean
 	
-	docker run -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && skint --program srfi-test/64.scm"
-
-
-test-tr7-srfi-64:
-	
-	docker run -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && tr7i srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && tr7i srfi-test/64.scm"
 
 
 clean:
-	rm -rf *.so
-	rm -rf "*.c"
-	rm -rf "*.o"
-	rm -rf "*.so"
-	rm -rf "*.dep"
-	rm -rf "*.zo"
-	rm -rf "*.meta"
-	rm -rf "compiled"
-	rm -rf "srfi.*.sld"
-	rm -rf "srfi.*.scm"
-	rm -rf "srfi-*.sld"
-	rm -rf "srfi.*.import.scm"
-	rm -rf "srfi-*.import.scm"
-	rm -rf "*.log"
-	rm -rf "test-prefix.txt"
+	find . -name "*.so" -delete
+	find . -name "*.c" -delete
+	find . -name "*.o*" -delete
+	find . -name "*.so" -delete
+	find . -name "*.dep" -delete
+	find . -name "*.zo" -delete
+	find . -name "*.meta" -delete
+	find . -name "compiled" -delete
+	find . -name "srfi.*.sld" -delete
+	find . -name "srfi.*.scm" -delete
+	find . -name "srfi-*.sld" -delete
+	find . -name "srfi.*.import.scm" -delete
+	find . -name "srfi-*.import.scm" -delete
+	find . -name "*.log" -delete
+	find . -name "test-prefix.txt" -delete
 
