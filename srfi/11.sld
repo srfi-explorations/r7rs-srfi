@@ -1,3 +1,7 @@
+;; Copyright 1999 Lars T Hansen
+;; Copyright 2009 Alex Shinn
+;; Copyright 2017 Marc Nieper-Wißkirchen
+;; SPDX-License-Identifier: MIT
 
 (define-library (srfi 11)
   (export let-values let*-values)
