@@ -10,7 +10,7 @@
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     // If the implementation is compiler other than chicken then compile the SRFI library
-                    sh 'if [ ! "{{library-command}}" = "" ] && [ ! "{{name}}" = "chicken"] ; then {{library-command}} srfi/{{number}}.sld ; fi'
+                    sh 'if [ ! "{{library-command}}" = "" ] && [ ! "{{name}}" = "chicken" ] ; then {{library-command}} srfi/{{number}}.sld ; fi'
 
                     // Chicken needs the file to be in same folder and with different name
                     sh 'if [ "{{name}}" = "chicken" ] ; then cp srfi/64.sld srfi-64.sld && {{library-command}} srfi-64.sld ; fi'
