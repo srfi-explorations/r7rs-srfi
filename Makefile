@@ -5,17 +5,17 @@ test-chibi-srfi-64:
 
 test-chicken-srfi-64:
 	docker run -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/64.sld srfi-64.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
-	docker run -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs ; srfi-test/64 srfi-test/64.scm"
+	docker run -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64"
 
 
 test-cyclone-srfi-64:
 	docker run -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld"
-	docker run -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . ; srfi-test/64 srfi-test/64.scm"
+	docker run -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/64.scm ; srfi-test/64"
 
 
 test-gambit-srfi-64:
-	docker run -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -:r7rs -dynamic srfi/64.sld"
-	docker run -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -:r7rs,search=. -exe ; srfi-test/64 srfi-test/64.scm"
+	docker run -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -dynamic srfi/64.sld"
+	docker run -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . -exe srfi-test/64.scm ; srfi-test/64"
 
 
 test-gerbil-srfi-64:

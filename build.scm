@@ -27,8 +27,12 @@
 
 (define full-command
   (lambda (implementation srfi)
-    (let ((number (number->string (cdr (assoc 'number srfi))))
-          (command (cdr (assoc 'command implementation)))
+    (let* ((number (number->string (cdr (assoc 'number srfi))))
+          (command (string-append (cdr (assoc 'command implementation))
+                                  " "
+                                  "srfi-test/"
+                                  number
+                                  ".scm"))
           (library-command (assoc 'library-command implementation)))
       (cond ((not library-command) command)
             (else (string-append command " ; srfi-test/" number))))))
