@@ -54,8 +54,9 @@
                                           results
                                           (read-results (read-line)
                                                         (if (string-starts-with? line "# of")
-                                                          (append results
-                                                                  (list (number-of-line->number line)))
+                                                          (begin
+                                                            (append results
+                                                                    (list (number-of-line->number line))))
                                                           results)))))
                         (results (if (not (file-exists? logfile))
                                    (list "" "" "" "")
