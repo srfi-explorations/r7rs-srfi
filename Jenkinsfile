@@ -69,7 +69,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     sh 'cp srfi/64.sld srfi-64.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
-                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -101,7 +101,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     sh 'cyclone -I . srfi/64.sld'
-                    sh 'cyclone -I . srfi-test/64.scm ; srfi-test/64'
+                    sh 'cyclone -I . srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -132,8 +132,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'gsc srfi/64.sld'
-                    sh 'gsc . -exe srfi-test/64.scm ; srfi-test/64'
+                    sh 'gsc -:r7rs -dynamic srfi/64.sld'
+                    sh 'gsi -:r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -293,7 +293,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'mit-scheme --load srfi-test/64.scm'
+                    sh 'mit-scheme --load srfi/64.sld --load srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -395,6 +395,38 @@ pipeline {
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-stklos.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/64'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-64 - skint") {
+            agent {
+                docker {
+                    image 'schemers/skint'
+                    reuseNode true
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+
+                    
+                    sh 'skint --program srfi-test/64.scm'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-skint.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'

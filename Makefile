@@ -5,17 +5,17 @@ test-chibi-srfi-64:
 
 test-chicken-srfi-64:
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/64.sld srfi-64.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64"
 
 
 test-cyclone-srfi-64:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/64.scm ; srfi-test/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64"
 
 
 test-gambit-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . -exe srfi-test/64.scm ; srfi-test/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -:r7rs -dynamic srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64"
 
 
 test-gauche-srfi-64:
@@ -40,7 +40,7 @@ test-loko-srfi-64:
 
 test-mit-scheme-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi/64.sld --load srfi-test/64.scm"
 
 
 test-racket-srfi-64:
@@ -56,6 +56,11 @@ test-sagittarius-srfi-64:
 test-stklos-srfi-64:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && stklos -I . srfi-test/64.scm"
+
+
+test-skint-srfi-64:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && skint --program srfi-test/64.scm"
 
 
 test-tr7-srfi-64:
