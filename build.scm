@@ -14,7 +14,7 @@
     (let ((name (symbol->string (cdr (assoc 'name implementation))))
           (number (number->string (cdr (assoc 'number srfi))))
           (library-command (assoc 'library-command implementation)))
-      (cond ((not library-command) "sleep 0")
+      (cond ((not library-command) #f)
             ((string=? name "chicken")
              (string-append "cp srfi/" number ".sld"
                             " "

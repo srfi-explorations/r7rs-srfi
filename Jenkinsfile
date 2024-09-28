@@ -36,7 +36,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'chibi-scheme -I srfi srfi-test/64.scm'
 
 
@@ -164,7 +164,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'gxi srfi-test/64.scm'
 
 
@@ -196,7 +196,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'gosh srfi-test/64.scm'
 
 
@@ -228,7 +228,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
 
 
@@ -260,7 +260,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'kawa srfi-test/64.scm'
 
 
@@ -292,7 +292,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'loko -feval -std=r7rs --compile srfi-test/64.scm'
 
 
@@ -324,7 +324,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'mit-scheme --load srfi-test/64.scm'
 
 
@@ -356,7 +356,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
 
 
@@ -388,7 +388,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'sash srfi-test/64.scm'
 
 
@@ -420,7 +420,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'stklos -I . srfi-test/64.scm'
 
 
@@ -452,7 +452,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'skint --program srfi-test/64.scm'
 
 
@@ -484,7 +484,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'sleep 0'
+                    
                     sh 'tr7i srfi-test/64.scm'
 
 
