@@ -27,7 +27,7 @@
                        (command . ,(cdr (assoc 'command implementation)))
                        (library-command . ,(if (assoc 'library-command implementation)
                                              (cdr (assoc 'library-command implementation))
-                                             ""))
+                                             "ls"))
                        (number . ,(cdr (assoc 'number srfi))))
                      out)
             (newline out))

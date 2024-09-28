@@ -78,7 +78,7 @@
                            (color . ,color)
                            (library-command . ,(if (assoc 'library-command implementation)
                                                  (cdr (assoc 'library-command implementation))
-                                                 ""))
+                                                 #f))
                            (number . ,number)
                            (expected-passes . ,expected-passes)
                            (expected-failures . ,expected-failures)
