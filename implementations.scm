@@ -18,5 +18,4 @@
     ((name . racket) (command . "racket -I r7rs --make -S . --script"))
     ((name . sagittarius) (command . "sash"))
     ((name . stklos) (command . "stklos -I ."))
-    ((name . skint) (command . "skint --program"))
     ((name . tr7) (command . "tr7i"))))

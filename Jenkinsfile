@@ -409,38 +409,6 @@ pipeline {
             }
         }
 
-        stage("SRFI-64 - skint") {
-            agent {
-                docker {
-                    image 'schemers/skint'
-                    reuseNode true
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'find . -maxdepth 1 -name "*.log" -delete'
-
-                    
-                    sh 'skint --program srfi-test/64.scm'
-
-
-                    // Change any logfiles to identify implementatio nand SRFI and stash them
-                    unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-skint.log"; done'
-                    sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
-                    archiveArtifacts artifacts: 'reports/*.log'
-
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
-
-
-                    // Check if all tests passed, dont put anything after this on fail it wont be run
-                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
-                }
-            }
-        }
-
         stage("SRFI-64 - tr7") {
             agent {
                 docker {
