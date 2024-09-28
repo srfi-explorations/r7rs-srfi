@@ -49,16 +49,28 @@
         (let ((number (number->string (cdr (assoc 'number srfi)))))
           (for-each
             (lambda (implementation)
-              (let ((name (symbol->string (cdr (assoc 'name implementation)))))
+              (let* ((name (symbol->string (cdr (assoc 'name implementation))))
+                     (library-command
+                       (let ((library-command (assoc 'library-command implementation)))
+                         (cond ((not library-command) #f)
+                               ((string=? name "chicken")
+                                (string-append "cp srfi/" number ".sld"
+                                               " "
+                                               "srfi-" number ".sld"
+                                               " ; "
+                                               (cdr library-command)
+                                               " "
+                                               "srfi-" number ".sld"))
+                               (else
+                                 (string-append (cdr library-command)
+                                                " srfi/" number ".sld"))))))
                 (when (string=? name "chicken")
                   (display (string-append "\t cp srfi/" number ".sld srfi-" number ".sld") out)
                   (newline out))
                 (execute makefile-job
                          `((name . ,name)
                            (command . ,(cdr (assoc 'command implementation)))
-                           (library-command . ,(if (assoc 'library-command implementation)
-                                                 (cdr (assoc 'library-command implementation))
-                                                 #f))
+                           (library-command . ,library-command)
                            (number . ,number))
                          out))
               (newline out))
