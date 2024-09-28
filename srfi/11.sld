@@ -5,7 +5,7 @@
 
 (define-library (srfi 11)
   (export let-values let*-values)
-  (import (chibi))
+  (import (scheme base))
   (begin
 
     (define-syntax let*-values
