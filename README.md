@@ -35,6 +35,9 @@ Add the implementation data into implementations.scm.
 
 ## Code origins, notes, articles and misc.
 
+- SRFI-11
+    - https://github.com/ashinn/chibi-scheme/blob/master/lib/srfi/11.sld
+
 - SRFI-64
     - https://github.com/fisherro/snow-srfi-64
     - https://mdhughes.tech/2020/02/27/scheme-test-unit/
