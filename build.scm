@@ -9,6 +9,21 @@
 (include "implementations.scm")
 (include "srfis.scm")
 
+(define s-a string-append)
+
+(define (srfi-number srfi)
+  (cdr (assoc 'number srfi)))
+
+(define (implementation-symbol impl)
+  (cdr (assoc 'name impl)))
+
+(define (implementation-command impl)
+  (cdr (assoc 'command impl)))
+
+(define (implementation-library-command impl)
+  (let ((entry (assoc 'library-command impl)))
+    (and entry (cdr entry))))
+
 (define full-library-command
   (lambda (implementation srfi)
     (let ((name (symbol->string (cdr (assoc 'name implementation))))
@@ -27,18 +42,18 @@
 
 (define full-command
   (lambda (implementation srfi)
-    (let* ((name (symbol->string (cdr (assoc 'name implementation))))
-           (number (number->string (cdr (assoc 'number srfi))))
-           (command
-             (string-append
-               (cdr (assoc 'command implementation))
-               " "
-               "srfi-test/"
-               number
-               ".scm"))
-           (library-command (assoc 'library-command implementation)))
-      (cond ((not library-command) command)
-        (else (string-append command " ; srfi-test/" number))))))
+    (let* ((impname (symbol->string (implementation-symbol implementation)))
+           (command (implementation-command implementation))
+           (number (number->string (srfi-number srfi)))
+           (convert-file "srfi-test/convert.scm")
+           (convert-command (s-a command " " convert-file))
+           (test-file (s-a "srfi-test/" impname "/" number ".scm"))
+           (test-command (s-a command " " test-file))
+           (library-file (s-a "srfi-test/" number))
+           (library-command (implementation-library-command implementation)))
+      (if library-command
+          (s-a library-command " srfi-test/" number)
+          (s-a convert-command " && " test-command)))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))

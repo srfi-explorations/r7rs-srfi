@@ -1,6 +1,6 @@
 
 (define implementations
-  '(((name . chibi) (command . "chibi-scheme -I srfi"))
+  '(((name . chibi) (command . "chibi-scheme -I ."))
     ((name . chicken)
      (command . "csc -include-path ./srfi -X r7rs -R r7rs")
      (library-command . "csc -include-path ./srfi -X r7rs -R r7rs -s -J"))
