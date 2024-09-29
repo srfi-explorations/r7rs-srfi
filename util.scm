@@ -22,7 +22,8 @@
     (letrec
       ((looper
          (lambda (chars result)
-           (if (and (char-whitespace? (car chars)))
+           (if (and (not (null? chars))
+                    (char-whitespace? (car chars)))
              (begin
                (string->number result))
              (looper (cdr chars) (string-append (string (car chars)) result ))))))

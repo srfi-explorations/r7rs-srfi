@@ -1,6 +1,7 @@
 (import (scheme base)
         (scheme write)
         (scheme file)
+        (scheme char)
         (scheme process-context)
         (scheme file)
         (arvyy mustache))

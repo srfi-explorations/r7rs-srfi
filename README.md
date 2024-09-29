@@ -31,7 +31,9 @@ Add the SRFI data into srfis.scm.
 
 # Adding new implementation
 
-Add the implementation data into implementations.scm.
+Add the implementation data into implementations.scm, keep the order alphabetical.
+The first SRFI you port to any new implementation should be SRFI-64. As it's the test suite used
+in SRFI tests.
 
 ## Code origins, notes, articles and misc.
 
