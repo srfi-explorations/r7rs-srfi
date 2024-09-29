@@ -37,8 +37,9 @@
                number
                ".scm"))
            (library-command (assoc 'library-command implementation)))
-      (cond ((not library-command) command)
-        (else (string-append command " ; srfi-test/" number))))))
+      (cond
+        ((not library-command) command)
+        (else (string-append command " ; srfi-test/" number " ; rm srfi-test/" number))))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))
