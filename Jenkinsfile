@@ -36,16 +36,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'chibi-scheme -I srfi srfi-test/64.scm'
 
-                        
-                        sh 'chibi-scheme -I srfi srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chibi.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -72,16 +68,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    sh 'cp srfi/64.sld srfi-64.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
 
-                        sh 'cp srfi/64.sld srfi-64.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
-                        sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-chicken.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -108,16 +100,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    sh 'cyclone -I . srfi/64.sld'
+                    sh 'cyclone -I . srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
 
-                        sh 'cyclone -I . srfi/64.sld'
-                        sh 'cyclone -I . srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-cyclone.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -144,16 +132,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    sh 'gsc -:r7rs -dynamic srfi/64.sld'
+                    sh 'gsi -:r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
 
-                        sh 'gsc -:r7rs -dynamic srfi/64.sld'
-                        sh 'gsi -:r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gambit.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -180,16 +164,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'gosh srfi-test/64.scm'
 
-                        
-                        sh 'gosh srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-gauche.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -216,16 +196,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
 
-                        
-                        sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-guile.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -252,16 +228,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/64.scm'
 
-                        
-                        sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-kawa.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -288,16 +260,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'loko -std=r7rs -feval --compile srfi-test/64.scm'
 
-                        
-                        sh 'loko -std=r7rs -feval --compile srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-loko.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -324,16 +292,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'mit-scheme --load srfi-test/64.scm'
 
-                        
-                        sh 'mit-scheme --load srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-mit-scheme.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -360,16 +324,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'sash srfi-test/64.scm'
 
-                        
-                        sh 'sash srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-sagittarius.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -396,16 +356,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'STKLOS_FRAMES=1 stklos -I . -f srfi-test/64.scm'
 
-                        
-                        sh 'STKLOS_FRAMES=1 stklos -I . -f srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-stklos.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -432,16 +388,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'skint --program srfi-test/64.scm'
 
-                        
-                        sh 'skint --program srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-skint.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -468,16 +420,12 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    catchError {
+                    
+                    sh 'tr7i srfi-test/64.scm'
 
-                        
-                        sh 'tr7i srfi-test/64.scm'
-
-                    }
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
                     unstash 'reports'
-                    sh 'cat *.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-tr7.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -508,6 +456,7 @@ pipeline {
     post {
         always {
             deleteDir()
+            archiveArtifacts artifacts: 'reports/*.log'
         }
     }
 }
