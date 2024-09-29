@@ -389,7 +389,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'STKLOS_FRAMES=1 stklos --compiler-flags='+line-info,unroll-iterations=3' -I . -f srfi-test/64.scm'
+                    sh 'STKLOS_FRAMES=1 stklos -I . -f srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them

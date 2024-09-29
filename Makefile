@@ -55,7 +55,7 @@ test-sagittarius-srfi-64:
 
 test-stklos-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && STKLOS_FRAMES=1 stklos --compiler-flags='+line-info,unroll-iterations=3' -I . -f srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && STKLOS_FRAMES=1 stklos -I . -f srfi-test/64.scm"
 
 
 test-skint-srfi-64:
