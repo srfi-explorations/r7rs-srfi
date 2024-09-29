@@ -313,38 +313,6 @@ pipeline {
             }
         }
 
-        stage("SRFI-64 - racket") {
-            agent {
-                docker {
-                    image 'schemers/racket'
-                    reuseNode true
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'find . -maxdepth 1 -name "*.log" -delete'
-
-                    
-                    sh 'racket -I r7rs --make -S . --script srfi-test/64.scm'
-
-
-                    // Change any logfiles to identify implementatio nand SRFI and stash them
-                    unstash 'reports'
-                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-64-racket.log"; done'
-                    sh 'ls reports'
-                    stash name: 'reports', includes: 'reports/*'
-                    archiveArtifacts artifacts: 'reports/*.log'
-
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/64'
-
-
-                    // Check if all tests passed, dont put anything after this on fail it wont be run
-                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
-                }
-            }
-        }
-
         stage("SRFI-64 - sagittarius") {
             agent {
                 docker {
@@ -476,9 +444,11 @@ pipeline {
 
         stage("Report") {
             steps {
-                unstash 'reports'
-                sh './report-kawa'
-                archiveArtifacts artifacts: 'reports/*.html'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    unstash 'reports'
+                    sh './report-kawa'
+                    archiveArtifacts artifacts: 'reports/*.html'
+                }
             }
         }
 

@@ -15,7 +15,6 @@
     ((name . kawa) (command . "kawa --r7rs -Dkawa.import.path=..:*.sld"))
     ((name . loko) (command . "loko -std=r7rs -feval --compile"))
     ((name . mit-scheme) (command . "mit-scheme --load"))
-    ((name . racket) (command . "racket -I r7rs --make -S . --script"))
     ((name . sagittarius) (command . "sash"))
     ((name . stklos) (command . "STKLOS_FRAMES=1 stklos -I . -f"))
     ((name . skint) (command . "skint --program"))

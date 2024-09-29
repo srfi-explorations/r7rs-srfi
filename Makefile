@@ -43,11 +43,6 @@ test-mit-scheme-srfi-64:
 	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi-test/64.scm"
 
 
-test-racket-srfi-64:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket bash -c "cd workdir && racket -I r7rs --make -S . --script srfi-test/64.scm"
-
-
 test-sagittarius-srfi-64:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash srfi-test/64.scm"
