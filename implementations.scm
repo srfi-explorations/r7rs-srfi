@@ -17,6 +17,6 @@
     ((name . mit-scheme) (command . "mit-scheme --load"))
     ((name . racket) (command . "racket -I r7rs --make -S . --script"))
     ((name . sagittarius) (command . "sash"))
-    ((name . stklos) (command . "STKLOS_FRAMES=1 stklos --compiler-flags='+line-info,unroll-iterations=3' -I . -f"))
+    ((name . stklos) (command . "STKLOS_FRAMES=1 stklos -I . -f"))
     ((name . skint) (command . "skint --program"))
     ((name . tr7) (command . "tr7i"))))
