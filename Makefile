@@ -1,3 +1,68 @@
+test-chibi-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi bash -c "cd workdir && chibi-scheme -I srfi srfi-test/11.scm"
+
+
+test-chicken-srfi-11:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/11.sld srfi-11.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-11.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/11.scm ; srfi-test/11"
+
+
+test-cyclone-srfi-11:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/11.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/11.scm ; srfi-test/11"
+
+
+test-gambit-srfi-11:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc srfi/11.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . -exe srfi-test/11.scm ; srfi-test/11"
+
+
+test-gauche-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh srfi-test/11.scm"
+
+
+test-guile-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/11.scm"
+
+
+test-kawa-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && kawa srfi-test/11.scm"
+
+
+test-loko-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/11.scm"
+
+
+test-mit-scheme-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi-test/11.scm"
+
+
+test-racket-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket bash -c "cd workdir && racket -I r7rs --make -S . --script srfi-test/11.scm"
+
+
+test-sagittarius-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash srfi-test/11.scm"
+
+
+test-stklos-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && stklos -I . srfi-test/11.scm"
+
+
+test-tr7-srfi-11:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && tr7i srfi-test/11.scm"
+
+
 test-chibi-srfi-64:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi bash -c "cd workdir && chibi-scheme -I srfi srfi-test/64.scm"
