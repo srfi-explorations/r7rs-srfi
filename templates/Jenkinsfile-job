@@ -10,7 +10,7 @@
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     {{#library-command}}sh '{{library-command}}'{{/library-command}}
-                    sh '{{command}}'
+                    sh '{{{command}}}'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
