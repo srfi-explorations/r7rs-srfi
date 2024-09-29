@@ -37,7 +37,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'chibi-scheme -I . srfi-test/convert.scm && chibi-scheme -I . srfi-test/chibi/11.scm'
+                    sh '(cd srfi-test && chibi-scheme -I . convert.scm) && chibi-scheme -I . srfi-test/chibi/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -165,7 +165,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'gosh srfi-test/convert.scm && gosh srfi-test/gauche/11.scm'
+                    sh '(cd srfi-test && gosh convert.scm) && gosh srfi-test/gauche/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -197,7 +197,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/convert.scm && guile --fresh-auto-compile --r7rs -L . srfi-test/guile/11.scm'
+                    sh '(cd srfi-test && guile --fresh-auto-compile --r7rs -L . convert.scm) && guile --fresh-auto-compile --r7rs -L . srfi-test/guile/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -229,7 +229,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'kawa srfi-test/convert.scm && kawa srfi-test/kawa/11.scm'
+                    sh '(cd srfi-test && kawa convert.scm) && kawa srfi-test/kawa/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -261,7 +261,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'loko -std=r7rs -feval --compile srfi-test/convert.scm && loko -std=r7rs -feval --compile srfi-test/loko/11.scm'
+                    sh '(cd srfi-test && loko -std=r7rs -feval --compile convert.scm) && loko -std=r7rs -feval --compile srfi-test/loko/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -293,7 +293,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'mit-scheme --load srfi-test/convert.scm && mit-scheme --load srfi-test/mit-scheme/11.scm'
+                    sh '(cd srfi-test && mit-scheme --load convert.scm) && mit-scheme --load srfi-test/mit-scheme/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -325,7 +325,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'racket -I r7rs --make -S . --script srfi-test/convert.scm && racket -I r7rs --make -S . --script srfi-test/racket/11.scm'
+                    sh '(cd srfi-test && racket -I r7rs --make -S . --script convert.scm) && racket -I r7rs --make -S . --script srfi-test/racket/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -357,7 +357,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'sash srfi-test/convert.scm && sash srfi-test/sagittarius/11.scm'
+                    sh '(cd srfi-test && sash convert.scm) && sash srfi-test/sagittarius/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -389,7 +389,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'stklos -I . srfi-test/convert.scm && stklos -I . srfi-test/stklos/11.scm'
+                    sh '(cd srfi-test && stklos -I . convert.scm) && stklos -I . srfi-test/stklos/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -421,7 +421,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'tr7i srfi-test/convert.scm && tr7i srfi-test/tr7/11.scm'
+                    sh '(cd srfi-test && tr7i convert.scm) && tr7i srfi-test/tr7/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -453,7 +453,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'chibi-scheme -I . srfi-test/convert.scm && chibi-scheme -I . srfi-test/chibi/64.scm'
+                    sh '(cd srfi-test && chibi-scheme -I . convert.scm) && chibi-scheme -I . srfi-test/chibi/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -581,7 +581,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'gosh srfi-test/convert.scm && gosh srfi-test/gauche/64.scm'
+                    sh '(cd srfi-test && gosh convert.scm) && gosh srfi-test/gauche/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -613,7 +613,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/convert.scm && guile --fresh-auto-compile --r7rs -L . srfi-test/guile/64.scm'
+                    sh '(cd srfi-test && guile --fresh-auto-compile --r7rs -L . convert.scm) && guile --fresh-auto-compile --r7rs -L . srfi-test/guile/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -645,7 +645,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'kawa srfi-test/convert.scm && kawa srfi-test/kawa/64.scm'
+                    sh '(cd srfi-test && kawa convert.scm) && kawa srfi-test/kawa/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -677,7 +677,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'loko -std=r7rs -feval --compile srfi-test/convert.scm && loko -std=r7rs -feval --compile srfi-test/loko/64.scm'
+                    sh '(cd srfi-test && loko -std=r7rs -feval --compile convert.scm) && loko -std=r7rs -feval --compile srfi-test/loko/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -709,7 +709,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'mit-scheme --load srfi-test/convert.scm && mit-scheme --load srfi-test/mit-scheme/64.scm'
+                    sh '(cd srfi-test && mit-scheme --load convert.scm) && mit-scheme --load srfi-test/mit-scheme/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -741,7 +741,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'racket -I r7rs --make -S . --script srfi-test/convert.scm && racket -I r7rs --make -S . --script srfi-test/racket/64.scm'
+                    sh '(cd srfi-test && racket -I r7rs --make -S . --script convert.scm) && racket -I r7rs --make -S . --script srfi-test/racket/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -773,7 +773,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'sash srfi-test/convert.scm && sash srfi-test/sagittarius/64.scm'
+                    sh '(cd srfi-test && sash convert.scm) && sash srfi-test/sagittarius/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -805,7 +805,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'stklos -I . srfi-test/convert.scm && stklos -I . srfi-test/stklos/64.scm'
+                    sh '(cd srfi-test && stklos -I . convert.scm) && stklos -I . srfi-test/stklos/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -837,7 +837,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'tr7i srfi-test/convert.scm && tr7i srfi-test/tr7/64.scm'
+                    sh '(cd srfi-test && tr7i convert.scm) && tr7i srfi-test/tr7/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
