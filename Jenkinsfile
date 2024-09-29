@@ -229,7 +229,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh '(cd srfi-test && kawa convert.scm) && kawa srfi-test/kawa/11.scm'
+                    sh '(cd srfi-test && kawa --r7rs convert.scm) && kawa --r7rs srfi-test/kawa/11.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -645,7 +645,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh '(cd srfi-test && kawa convert.scm) && kawa srfi-test/kawa/64.scm'
+                    sh '(cd srfi-test && kawa --r7rs convert.scm) && kawa --r7rs srfi-test/kawa/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them

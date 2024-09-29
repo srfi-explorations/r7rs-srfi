@@ -12,7 +12,7 @@
      (library-command .  "gsc"))
     ((name . gauche) (command . "gosh"))
     ((name . guile) (command . "guile --fresh-auto-compile --r7rs -L ."))
-    ((name . kawa) (command . "kawa"))
+    ((name . kawa) (command . "kawa --r7rs"))
     ((name . loko) (command . "loko -std=r7rs -feval --compile"))
     ((name . mit-scheme) (command . "mit-scheme --load"))
     ((name . racket) (command . "racket -I r7rs --make -S . --script"))

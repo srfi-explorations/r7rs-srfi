@@ -24,7 +24,7 @@ test-guile-srfi-11:
 
 test-kawa-srfi-11:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && (cd srfi-test && kawa convert.scm) && kawa srfi-test/kawa/11.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && (cd srfi-test && kawa --r7rs convert.scm) && kawa --r7rs srfi-test/kawa/11.scm"
 
 test-loko-srfi-11:
 	
@@ -76,7 +76,7 @@ test-guile-srfi-64:
 
 test-kawa-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && (cd srfi-test && kawa convert.scm) && kawa srfi-test/kawa/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && (cd srfi-test && kawa --r7rs convert.scm) && kawa --r7rs srfi-test/kawa/64.scm"
 
 test-loko-srfi-64:
 	
