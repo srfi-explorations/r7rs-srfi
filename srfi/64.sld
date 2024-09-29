@@ -70,6 +70,6 @@
       (racket (compile-enforce-module-constants #f))
       (else))
     (cond-expand
-      (chibi (include "srfi/64.scm"))
+      (chibi (include "64.scm"))
       (cyclone (include "srfi/64.scm"))
       (else (include "64.scm")))))
