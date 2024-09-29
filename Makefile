@@ -40,7 +40,7 @@ test-loko-srfi-64:
 
 test-mit-scheme-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi/64.sld --load srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi-test/64.scm"
 
 
 test-racket-srfi-64:
@@ -55,7 +55,7 @@ test-sagittarius-srfi-64:
 
 test-stklos-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && stklos -I . srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && STKLOS_FRAMES=1 stklos --compiler-flags='+line-info,unroll-iterations=3' -I . -f srfi-test/64.scm"
 
 
 test-skint-srfi-64:

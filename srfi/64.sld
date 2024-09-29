@@ -59,6 +59,7 @@
           test-runner-xfail-count test-runner-skip-count test-runner-test-name
           test-runner-group-path test-runner-group-stack test-runner-aux-value
           test-runner-aux-value! test-runner-reset
+          test-on-final-simple
           ; test-log-to-file is not a part of the spec
           test-log-to-file)
   (begin
@@ -72,4 +73,5 @@
     (cond-expand
       (chibi (include "srfi/64.scm"))
       (cyclone (include "srfi/64.scm"))
+      (stklos (include "srfi/64.scm"))
       (else (include "64.scm")))))
