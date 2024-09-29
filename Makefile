@@ -30,7 +30,7 @@ test-guile-srfi-64:
 
 test-kawa-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && kawa srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/64.scm"
 
 
 test-loko-srfi-64:

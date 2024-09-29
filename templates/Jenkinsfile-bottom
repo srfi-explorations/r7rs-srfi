@@ -1,9 +1,11 @@
 
         stage("Report") {
             steps {
-                unstash 'reports'
-                sh './report-kawa'
-                archiveArtifacts artifacts: 'reports/*.html'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    unstash 'reports'
+                    sh './report-kawa'
+                    archiveArtifacts artifacts: 'reports/*.html'
+                }
             }
         }
 

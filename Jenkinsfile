@@ -229,7 +229,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'kawa srfi-test/64.scm'
+                    sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
