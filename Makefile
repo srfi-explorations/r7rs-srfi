@@ -45,7 +45,7 @@ test-mit-scheme-srfi-64:
 
 test-sagittarius-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash srfi-test/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -L . -r7 srfi-test/64.scm"
 
 
 test-stklos-srfi-64:

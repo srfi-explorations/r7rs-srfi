@@ -325,7 +325,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'sash srfi-test/64.scm'
+                    sh 'sash -L . -r7 srfi-test/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
