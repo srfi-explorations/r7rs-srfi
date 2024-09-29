@@ -40,41 +40,42 @@
        runner?
        (name getter setter) ...))))
 
-(internal-test-record-define test-runner
-                     internal-test-runner-alloc test-runner?
-                     ;; Cumulate count of all tests that have passed and were expected to.
-                     (pass-count 1 test-runner-pass-count test-runner-pass-count!)
-                     (fail-count 2 test-runner-fail-count test-runner-fail-count!)
-                     (xpass-count 3 test-runner-xpass-count test-runner-xpass-count!)
-                     (xfail-count 4 test-runner-xfail-count test-runner-xfail-count!)
-                     (skip-count 5 test-runner-skip-count test-runner-skip-count!)
-                     (skip-list 6 internal-test-runner-skip-list internal-test-runner-skip-list!)
-                     (fail-list 7 internal-test-runner-fail-list internal-test-runner-fail-list!)
-                     ;; Normally #t, except when in a test-apply.
-                     (run-list 8 internal-test-runner-run-list internal-test-runner-run-list!)
-                     (skip-save 9 internal-test-runner-skip-save internal-test-runner-skip-save!)
-                     (fail-save 10 internal-test-runner-fail-save internal-test-runner-fail-save!)
-                     (group-stack 11 test-runner-group-stack test-runner-group-stack!)
-                     (on-test-begin 12 test-runner-on-test-begin test-runner-on-test-begin!)
-                     (on-test-end 13 test-runner-on-test-end test-runner-on-test-end!)
-                     ;; Call-back when entering a group. Takes (runner suite-name count).
-                     (on-group-begin 14 test-runner-on-group-begin test-runner-on-group-begin!)
-                     ;; Call-back when leaving a group.
-                     (on-group-end 15 test-runner-on-group-end test-runner-on-group-end!)
-                     ;; Call-back when leaving the outermost group.
-                     (on-final 16 test-runner-on-final test-runner-on-final!)
-                     ;; Call-back when expected number of tests was wrong.
-                     (on-bad-count 17 test-runner-on-bad-count test-runner-on-bad-count!)
-                     ;; Call-back when name in test=end doesn't match test-begin.
-                     (on-bad-end-name 18 test-runner-on-bad-end-name test-runner-on-bad-end-name!)
-                     ;; Cumulate count of all tests that have been done.
-                     (total-count 19 internal-test-runner-total-count internal-test-runner-total-count!)
-                     ;; Stack (list) of (count-at-start . expected-count):
-                     (count-list 20 internal-test-runner-count-list internal-test-runner-count-list!)
-                     (result-alist 21 test-result-alist test-result-alist!)
-                     ;; Field can be used by test-runner for any purpose.
-                     ;; test-runner-simple uses it for a log file.
-                     (aux-value 22 test-runner-aux-value test-runner-aux-value!))
+(internal-test-record-define
+  test-runner
+  internal-test-runner-alloc test-runner?
+  ;; Cumulate count of all tests that have passed and were expected to.
+  (pass-count 1 test-runner-pass-count test-runner-pass-count!)
+  (fail-count 2 test-runner-fail-count test-runner-fail-count!)
+  (xpass-count 3 test-runner-xpass-count test-runner-xpass-count!)
+  (xfail-count 4 test-runner-xfail-count test-runner-xfail-count!)
+  (skip-count 5 test-runner-skip-count test-runner-skip-count!)
+  (skip-list 6 internal-test-runner-skip-list internal-test-runner-skip-list!)
+  (fail-list 7 internal-test-runner-fail-list internal-test-runner-fail-list!)
+  ;; Normally #t, except when in a test-apply.
+  (run-list 8 internal-test-runner-run-list internal-test-runner-run-list!)
+  (skip-save 9 internal-test-runner-skip-save internal-test-runner-skip-save!)
+  (fail-save 10 internal-test-runner-fail-save internal-test-runner-fail-save!)
+  (group-stack 11 test-runner-group-stack test-runner-group-stack!)
+  (on-test-begin 12 test-runner-on-test-begin test-runner-on-test-begin!)
+  (on-test-end 13 test-runner-on-test-end test-runner-on-test-end!)
+  ;; Call-back when entering a group. Takes (runner suite-name count).
+  (on-group-begin 14 test-runner-on-group-begin test-runner-on-group-begin!)
+  ;; Call-back when leaving a group.
+  (on-group-end 15 test-runner-on-group-end test-runner-on-group-end!)
+  ;; Call-back when leaving the outermost group.
+  (on-final 16 test-runner-on-final test-runner-on-final!)
+  ;; Call-back when expected number of tests was wrong.
+  (on-bad-count 17 test-runner-on-bad-count test-runner-on-bad-count!)
+  ;; Call-back when name in test=end doesn't match test-begin.
+  (on-bad-end-name 18 test-runner-on-bad-end-name test-runner-on-bad-end-name!)
+  ;; Cumulate count of all tests that have been done.
+  (total-count 19 internal-test-runner-total-count internal-test-runner-total-count!)
+  ;; Stack (list) of (count-at-start . expected-count):
+  (count-list 20 internal-test-runner-count-list internal-test-runner-count-list!)
+  (result-alist 21 test-result-alist test-result-alist!)
+  ;; Field can be used by test-runner for any purpose.
+  ;; test-runner-simple uses it for a log file.
+  (aux-value 22 test-runner-aux-value test-runner-aux-value!))
 
 (define (test-runner-reset runner)
   (test-result-alist! runner '())
@@ -292,12 +293,11 @@
 ;; Returns #f, #t, or 'xfail.
 (define (internal-test-should-execute runner)
   (let ((run (internal-test-runner-run-list runner)))
-    (cond ((or
-             (not (or (eqv? run #t)
-                      (internal-test-any-specifier-matches run runner)))
-             (internal-test-any-specifier-matches
-               (internal-test-runner-skip-list runner)
-               runner))
+    (cond ((or (not (or (eqv? run #t)
+                        (internal-test-any-specifier-matches run runner)))
+               (internal-test-any-specifier-matches
+                 (internal-test-runner-skip-list runner)
+                 runner))
            (test-result-set! runner 'result-kind 'skip)
            #f)
           ((internal-test-any-specifier-matches
@@ -308,32 +308,29 @@
           (else #t))))
 
 (define (internal-test-begin suite-name count)
-  (if (not (test-runner-current))
+  (when (not (test-runner-current))
     (test-runner-current (test-runner-create)))
   (let ((runner (test-runner-current)))
     ((test-runner-on-group-begin runner) runner suite-name count)
     (internal-test-runner-skip-save! runner
-                             (cons (internal-test-runner-skip-list runner)
-                                   (internal-test-runner-skip-save runner)))
+                                     (cons (internal-test-runner-skip-list runner)
+                                           (internal-test-runner-skip-save runner)))
     (internal-test-runner-fail-save! runner
-                             (cons (internal-test-runner-fail-list runner)
-                                   (internal-test-runner-fail-save runner)))
+                                     (cons (internal-test-runner-fail-list runner)
+                                           (internal-test-runner-fail-save runner)))
     (internal-test-runner-count-list! runner
-                              (cons (cons (internal-test-runner-total-count runner)
-                                          count)
-                                    (internal-test-runner-count-list runner)))
+                                      (cons (cons (internal-test-runner-total-count runner)
+                                                  count)
+                                            (internal-test-runner-count-list runner)))
     (test-runner-group-stack! runner (cons suite-name
                                            (test-runner-group-stack runner)))))
+
 (define-syntax test-begin
   (syntax-rules ()
     ((test-begin suite-name)
      (internal-test-begin suite-name #f))
     ((test-begin suite-name count)
      (internal-test-begin suite-name count))))
-
-
-
-
 
 (define (internal-test-on-bad-count-write runner count expected-count port)
   (display "*** Total number of tests was " port)
@@ -345,11 +342,6 @@
   (display "*** Discrepancy indicates testsuite error or exceptions. ***" port)
   (newline port))
 
-
-
-
-
-
 (define (internal-test-final-report1 value label port)
   (if (> value 0)
     (begin
@@ -359,17 +351,15 @@
 
 (define (internal-test-final-report-simple runner port)
   (internal-test-final-report1 (test-runner-pass-count runner)
-                       "# of expected passes      " port)
+                               "# of expected passes      " port)
   (internal-test-final-report1 (test-runner-xfail-count runner)
-                       "# of expected failures    " port)
+                               "# of expected failures    " port)
   (internal-test-final-report1 (test-runner-xpass-count runner)
-                       "# of unexpected successes " port)
+                               "# of unexpected successes " port)
   (internal-test-final-report1 (test-runner-fail-count runner)
-                       "# of unexpected failures  " port)
+                               "# of unexpected failures  " port)
   (internal-test-final-report1 (test-runner-skip-count runner)
-                       "# of skipped tests        " port))
-
-
+                               "# of skipped tests        " port))
 
 (define (internal-test-format-line runner)
   (let* ((line-info (test-result-alist runner))
@@ -433,8 +423,6 @@
     ((test-group-with-cleanup suite-name form1 form2 form3 . rest)
      (test-group-with-cleanup suite-name (begin form1 form2) form3 . rest))))
 
-
-
 (define (internal-test-write-result1 pair port)
   (display "  " port)
   (display (car pair) port)
@@ -493,17 +481,16 @@
     ((test-runner-on-test-end r) r)))
 
 (define-syntax internal-test-evaluate-with-catch
-      (syntax-rules ()
-        ((internal-test-evaluate-with-catch test-expression)
-         (guard (err (else #f)) test-expression))))
+  (syntax-rules ()
+    ((internal-test-evaluate-with-catch test-expression)
+     (guard (err (else #f)) test-expression))))
 
 (define (internal-test-source-line2 form) '())
-
 
 (define (internal-test-on-test-begin r)
   (internal-test-should-execute r)
   ((test-runner-on-test-begin r) r)
-  (not (eq? 'skip (test-result-ref r 'result-kind))))
+  (not (equal? 'skip (test-result-ref r 'result-kind))))
 
 (define (internal-test-on-test-end r result)
   (test-result-set! r 'result-kind
@@ -602,24 +589,24 @@
      (internal-test-comp2 (internal-test-approximate= error) expected expr))))
 
 (define-syntax internal-test-error
-      (syntax-rules ()
-        ((internal-test-error r etype expr)
-         (internal-test-comp1body r (guard (ex (else #t)) expr #f)))))
+  (syntax-rules ()
+    ((internal-test-error r etype expr)
+     (internal-test-comp1body r (guard (ex (else #t)) expr #f)))))
 
 (define-syntax test-error
-      (syntax-rules ()
-        ((test-error name etype expr)
-         (let ((r (test-runner-get)))
-           (test-result-alist! r `((test-name . ,name)))
-           (internal-test-error r etype expr)))
-        ((test-error etype expr)
-         (let ((r (test-runner-get)))
-           (test-result-alist! r '())
-           (internal-test-error r etype expr)))
-        ((test-error expr)
-         (let ((r (test-runner-get)))
-           (test-result-alist! r '())
-           (internal-test-error r #t expr)))))
+  (syntax-rules ()
+    ((test-error name etype expr)
+     (let ((r (test-runner-get)))
+       (test-result-alist! r `((test-name . ,name)))
+       (internal-test-error r etype expr)))
+    ((test-error etype expr)
+     (let ((r (test-runner-get)))
+       (test-result-alist! r '())
+       (internal-test-error r etype expr)))
+    ((test-error expr)
+     (let ((r (test-runner-get)))
+       (test-result-alist! r '())
+       (internal-test-error r #t expr)))))
 
 (define-syntax test-with-runner
   (syntax-rules ()
@@ -709,16 +696,16 @@
     ((test-skip pred ...)
      (let ((runner (test-runner-get)))
        (internal-test-runner-skip-list! runner
-                                (cons (test-match-all (internal-test-as-specifier pred)  ...)
-                                      (internal-test-runner-skip-list runner)))))))
+                                        (cons (test-match-all (internal-test-as-specifier pred)  ...)
+                                              (internal-test-runner-skip-list runner)))))))
 
 (define-syntax test-expect-fail
   (syntax-rules ()
     ((test-expect-fail pred ...)
      (let ((runner (test-runner-get)))
        (internal-test-runner-fail-list! runner
-                                (cons (test-match-all (internal-test-as-specifier pred)  ...)
-                                      (internal-test-runner-fail-list runner)))))))
+                                        (cons (test-match-all (internal-test-as-specifier pred)  ...)
+                                              (internal-test-runner-fail-list runner)))))))
 
 (define (test-match-name name)
   (lambda (runner)
@@ -729,7 +716,7 @@
          (form (read port)))
     (if (eof-object? (read-char port))
       (cond-expand
-        (cyclone (eval form (create-environment)))
+        (cyclone (eval form (create-environment '(scheme base))))
         (else (eval form (environment '(scheme base)))))
       (error "(not at eof)"))))
 

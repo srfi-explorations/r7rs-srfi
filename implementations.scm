@@ -6,7 +6,9 @@
      (library-command . "csc -include-path ./srfi -X r7rs -R r7rs -s -J"))
     ((name . cyclone)
      (command . "cyclone -I .")
-     (library-command . "cyclone -I ."))
+     (library-command . "cyclone -I .")
+
+     )
     ((name . gambit)
      (command . "gsi -:r7rs")
      (library-command . "gsc -:r7rs -dynamic"))
