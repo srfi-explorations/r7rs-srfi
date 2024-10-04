@@ -448,8 +448,9 @@ pipeline {
     }
     post {
         always {
-            deleteDir()
+            archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'reports/*.log'
+            deleteDir()
         }
         failure {
             deleteDir()
