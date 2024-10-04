@@ -45,6 +45,12 @@ pipeline {
                     
                     sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/8.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -67,6 +73,12 @@ pipeline {
                     sh 'cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  && cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld'
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -89,6 +101,12 @@ pipeline {
                     sh 'cyclone -A . srfi/64.sld  && cyclone -A . srfi/8.sld'
                     sh 'cyclone -A . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -111,6 +129,12 @@ pipeline {
                     sh 'gsc . srfi/64.sld  && gsc . srfi/8.sld'
                     sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -133,6 +157,12 @@ pipeline {
                     
                     sh 'gosh srfi-test/r7rs-programs/8.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -155,6 +185,12 @@ pipeline {
                     
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -177,6 +213,12 @@ pipeline {
                     
                     sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/8.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -199,6 +241,12 @@ pipeline {
                     sh 'ls srfi/64.sld  && ls srfi/8.sld'
                     sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -221,6 +269,12 @@ pipeline {
                     
                     sh 'mit-scheme --load srfi-test/r7rs-programs/8.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -243,6 +297,12 @@ pipeline {
                     
                     sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log '
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -265,6 +325,12 @@ pipeline {
                     
                     sh 'stklos -I . srfi-test/r7rs-programs/8.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -287,6 +353,12 @@ pipeline {
                     
                     sh 'skint --program srfi-test/r7rs-programs/8.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
@@ -309,6 +381,12 @@ pipeline {
                     
                     sh 'tr7i srfi-test/r7rs-programs/8.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/-$f.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/'
+
                 }
             }
         }
