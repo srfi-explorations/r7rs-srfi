@@ -5,6 +5,11 @@
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '{{number}}'
+                }
+            }
             steps {
                 when {
                     expression {
