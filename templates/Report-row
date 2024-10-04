@@ -1,6 +1,8 @@
-<td style="background-color:red">
-    {{expected-passes}}
-    {{expected-failures}}
-    {{unexpected-failures}}
-    {{skipped-tests}}
+<td>
+    <p style="background-color:red">
+        {{expected-passes}}
+        {{expected-failures}}
+        {{unexpected-failures}}
+        {{skipped-tests}}
+    </p>
 </td>
