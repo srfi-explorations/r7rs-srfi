@@ -20,7 +20,7 @@
              (string-append "cp srfi/64.sld srfi-64.sld"
                             " && " (cdr library-command) " srfi-64.sld "
                             " && cp srfi/" number ".sld srfi-" number ".sld"
-                            " && " (cdr library-command) "srfi-" number ".sld"))
+                            " && " (cdr library-command) " srfi-" number ".sld"))
             (else (string-append (string-append (cdr library-command) " srfi/64.sld ")
                                  " && " (cdr library-command) " srfi/" number ".sld"))))))
 
