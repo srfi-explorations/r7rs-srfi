@@ -13,10 +13,7 @@
   (lambda (implementation srfi)
     (let* ((name (symbol->string (cdr (assoc 'name implementation))))
            (number (number->string (cdr (assoc 'number srfi))))
-           (library-command (assoc 'library-command implementation))
-           ; SRFI-64 is used for testing so it needs always to be compiled
-           (srfi-64-command (lambda (library-command)
-                              (string-append (cdr library-command) " srfi/64.sld && "))))
+           (library-command (assoc 'library-command implementation)))
       (cond ((not library-command) #f)
             ; Note that Chicken needs to have the SRFI library as srfi-N.scm in same folder
             ((string=? name "chicken")
@@ -24,9 +21,8 @@
                             " && " (cdr library-command) " srfi-64.sld "
                             " && cp srfi/" number ".sld srfi-" number ".sld"
                             " && " (cdr library-command) "srfi-" number ".sld"))
-            (else (string-append (srfi-64-command library-command)
-                                 (cdr library-command)
-                                 " srfi/" number ".sld"))))))
+            (else (string-append (string-append (cdr library-command) " srfi/64.sld ")
+                                 " && " (cdr library-command) " srfi/" number ".sld"))))))
 
 (define full-command
   (lambda (implementation srfi)
