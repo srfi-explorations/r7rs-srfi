@@ -491,7 +491,7 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'skint --program srfi-test/r7rs-programs/8.scm'
+                    sh 'skint -I ${PWD}/srfi  srfi-test/r7rs-programs/8.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -1011,7 +1011,7 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'skint --program srfi-test/r7rs-programs/64.scm'
+                    sh 'skint -I ${PWD}/srfi  srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them

@@ -55,7 +55,7 @@ test-stklos-srfi-8:
 
 test-skint-srfi-8:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && skint --program srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && skint -I ${PWD}/srfi  srfi-test/r7rs-programs/8.scm"
 
 
 test-tr7-srfi-8:
@@ -120,7 +120,7 @@ test-stklos-srfi-64:
 
 test-skint-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && skint --program srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && skint -I ${PWD}/srfi  srfi-test/r7rs-programs/64.scm"
 
 
 test-tr7-srfi-64:
