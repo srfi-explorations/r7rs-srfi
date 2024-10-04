@@ -1,4 +1,4 @@
-<td color="{{color}}">
+<td style="background-color:{{color}}">
     {{expected-passes}}
     {{expected-failures}}
     {{unexpected-failures}}
