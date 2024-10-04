@@ -9,7 +9,7 @@ test-chicken-srfi-8:
 
 
 test-cyclone-srfi-8:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld  &amp;&amp; cyclone -I . srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . -COPT -I./srfi srfi/64.sld  &amp;&amp; cyclone -I . -COPT -I./srfi srfi/8.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/8.scm &amp;&amp; srfi-test/r7rs-programs/8 &amp;&amp; rm srfi-test/r7rs-programs/8"
 
 
@@ -74,7 +74,7 @@ test-chicken-srfi-64:
 
 
 test-cyclone-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld  &amp;&amp; cyclone -I . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . -COPT -I./srfi srfi/64.sld  &amp;&amp; cyclone -I . -COPT -I./srfi srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm &amp;&amp; srfi-test/r7rs-programs/64 &amp;&amp; rm srfi-test/r7rs-programs/64"
 
 
