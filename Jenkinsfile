@@ -12,6 +12,10 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
+    parameters {
+        string(name: 'ONLY_IMPLEMENTATION', defaultValue: '', description: 'Build only implementation, leave empty to build all')
+    }
+
     stages {
 
         stage("Init") {
@@ -32,6 +36,11 @@ pipeline {
                 docker {
                     image 'schemers/chibi'
                     reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'chibi'
                 }
             }
             steps {
@@ -60,6 +69,11 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'chicken'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -84,6 +98,11 @@ pipeline {
                 docker {
                     image 'schemers/cyclone'
                     reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'cyclone'
                 }
             }
             steps {
@@ -112,6 +131,11 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'gambit'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -136,6 +160,11 @@ pipeline {
                 docker {
                     image 'schemers/gauche'
                     reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'gauche'
                 }
             }
             steps {
@@ -164,6 +193,11 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'guile'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -188,6 +222,11 @@ pipeline {
                 docker {
                     image 'schemers/kawa'
                     reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'kawa'
                 }
             }
             steps {
@@ -216,6 +255,11 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'loko'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -240,6 +284,11 @@ pipeline {
                 docker {
                     image 'schemers/mit-scheme'
                     reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'mit-scheme'
                 }
             }
             steps {
@@ -268,6 +317,11 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'sagittarius'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -292,6 +346,11 @@ pipeline {
                 docker {
                     image 'schemers/stklos'
                     reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'stklos'
                 }
             }
             steps {
@@ -320,6 +379,11 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'skint'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -344,6 +408,11 @@ pipeline {
                 docker {
                     image 'schemers/tr7'
                     reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'tr7'
                 }
             }
             steps {

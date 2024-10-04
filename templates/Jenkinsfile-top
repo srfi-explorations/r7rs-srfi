@@ -12,6 +12,10 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
+    parameters {
+        string(name: 'ONLY_IMPLEMENTATION', defaultValue: '', description: 'Build only implementation, leave empty to build all')
+    }
+
     stages {
 
         stage("Init") {
