@@ -37,6 +37,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm'
@@ -69,6 +72,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     sh 'cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
@@ -101,6 +107,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     sh 'cyclone -I . srfi/64.sld'
                     sh 'cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
@@ -133,6 +142,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     sh 'gsc -:r7rs -dynamic srfi/64.sld'
                     sh 'gsi -:r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
@@ -165,6 +177,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'gosh srfi-test/r7rs-programs/64.scm'
@@ -197,6 +212,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm'
@@ -229,6 +247,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/64.scm'
@@ -261,6 +282,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'loko -std=r7rs -feval --compile srfi-test/r7rs-programs/64.scm'
@@ -293,6 +317,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'mit-scheme --load srfi-test/r7rs-programs/64.scm'
@@ -325,6 +352,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'sash -r7 -I  ./srfi srfi-test/r7rs-programs/64.scm'
@@ -357,6 +387,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'STKLOS_FRAMES=1 stklos -I . -f srfi-test/r7rs-programs/64.scm'
@@ -389,6 +422,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'skint --program srfi-test/r7rs-programs/64.scm'
@@ -421,6 +457,9 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
                     sh 'tr7i srfi-test/r7rs-programs/64.scm'
