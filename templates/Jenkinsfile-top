@@ -12,6 +12,10 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
+    parameters {
+        string(name: 'ONLY_SRFI_NUMBER', defaultValue: '64', description: 'Build only SRFI of given number')
+    }
+
     stages {
 
         stage("Init") {

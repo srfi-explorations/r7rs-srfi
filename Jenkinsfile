@@ -12,6 +12,10 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
+    parameters {
+        string(name: 'ONLY_SRFI_NUMBER', defaultValue: '64', description: 'Build only SRFI of given number')
+    }
+
     stages {
 
         stage("Init") {
@@ -35,6 +39,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -70,6 +82,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -105,6 +125,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -140,6 +168,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -175,6 +211,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -210,6 +254,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -245,6 +297,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -280,6 +340,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -315,6 +383,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -350,6 +426,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -385,6 +469,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -420,6 +512,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -455,6 +555,14 @@ pipeline {
                 }
             }
             steps {
+                anyOf {
+                    expression {
+                        params.ONLY_SRFI_NUMBER == ""
+                    }
+                    expression {
+                        params.ONLY_SRFI_NUMBER == "64"
+                    }
+                }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
