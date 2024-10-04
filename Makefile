@@ -45,7 +45,7 @@ test-mit-scheme-srfi-8:
 
 test-sagittarius-srfi-8:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log "
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log && cat srfi-8.log"
 
 
 test-stklos-srfi-8:
@@ -110,7 +110,7 @@ test-mit-scheme-srfi-64:
 
 test-sagittarius-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log "
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log && cat srfi-64.log"
 
 
 test-stklos-srfi-64:
