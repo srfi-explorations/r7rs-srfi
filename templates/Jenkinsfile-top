@@ -12,6 +12,10 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
+    parameters {
+        string(name: 'ONLY_SRFI_NUMBER', defaultValue: '', description: 'Build only SRFI of given number, leave empty to build all')
+    }
+
     stages {
 
         stage("Init") {
@@ -22,5 +26,7 @@ pipeline {
               stash name: 'reports', includes: 'reports/*'
               sh 'echo "<h1>Test results</h1>" > reports/results.html'
               stash name: 'tests', includes: 'srfi-test/*'
+              sh '(cd srfi-test && make clean build)'
+              sh 'tree srfi-test'
             }
         }

@@ -11,19 +11,18 @@
 
 (define full-library-command
   (lambda (implementation srfi)
-    (let ((name (symbol->string (cdr (assoc 'name implementation))))
-          (number (number->string (cdr (assoc 'number srfi))))
-          (library-command (assoc 'library-command implementation)))
+    (let* ((name (symbol->string (cdr (assoc 'name implementation))))
+           (number (number->string (cdr (assoc 'number srfi))))
+           (library-command (assoc 'library-command implementation)))
       (cond ((not library-command) #f)
+            ; Note that Chicken needs to have the SRFI library as srfi-N.scm in same folder
             ((string=? name "chicken")
-             (string-append "cp srfi/" number ".sld"
-                            " "
-                            "srfi-" number ".sld"
-                            " ; "
-                            (cdr library-command)
-                            " "
-                            "srfi-" number ".sld"))
-            (else (string-append (cdr library-command) " srfi/" number ".sld"))))))
+             (string-append "cp srfi/64.sld srfi-64.sld"
+                            " && " (cdr library-command) " srfi-64.sld "
+                            " && cp srfi/" number ".sld srfi-" number ".sld"
+                            " && " (cdr library-command) " srfi-" number ".sld"))
+            (else (string-append (string-append (cdr library-command) " srfi/64.sld ")
+                                 " && " (cdr library-command) " srfi/" number ".sld"))))))
 
 (define full-command
   (lambda (implementation srfi)
@@ -32,14 +31,19 @@
            (command
              (string-append
                (cdr (assoc 'command implementation))
-               " "
-               "srfi-test/"
-               number
-               ".scm"))
+               " srfi-test/r7rs-programs/" number ".scm"))
            (library-command (assoc 'library-command implementation)))
       (cond
-        ((not library-command) command)
-        (else (string-append command " ; srfi-test/" number " ; rm srfi-test/" number))))))
+        ((not library-command)
+         (string-append command
+                        ; Sagittarius does not make .log file for some reason
+                        ; Temporary fix to get atleast something out
+                        (if (string=? name "sagittarius")
+                          (string-append " > srfi-" number ".log ")
+                          "")))
+        (else (string-append command
+                             " && srfi-test/r7rs-programs/" number
+                             " && rm srfi-test/r7rs-programs/" number))))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))
