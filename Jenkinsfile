@@ -39,7 +39,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'chibi-scheme -I srfi srfi-test/r7rs-programs/64.scm'
+                    sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -327,7 +327,7 @@ pipeline {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
                     
-                    sh 'sash srfi-test/r7rs-programs/64.scm'
+                    sh 'sash -r7 -I  ./srfi srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them

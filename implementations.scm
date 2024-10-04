@@ -1,6 +1,6 @@
 
 (define implementations
-  '(((name . chibi) (command . "chibi-scheme -I srfi"))
+  '(((name . chibi) (command . "chibi-scheme -I ./srfi"))
     ((name . chicken)
      (command . "csc -include-path ./srfi -X r7rs -R r7rs")
      (library-command . "csc -include-path ./srfi -X r7rs -R r7rs -s -J"))
@@ -15,7 +15,7 @@
     ((name . kawa) (command . "kawa --r7rs -Dkawa.import.path=..:*.sld"))
     ((name . loko) (command . "loko -std=r7rs -feval --compile"))
     ((name . mit-scheme) (command . "mit-scheme --load"))
-    ((name . sagittarius) (command . "sash"))
+    ((name . sagittarius) (command . "sash -r7 -I  ./srfi"))
     ((name . stklos) (command . "STKLOS_FRAMES=1 stklos -I . -f"))
     ((name . skint) (command . "skint --program"))
     ((name . tr7) (command . "tr7i"))))

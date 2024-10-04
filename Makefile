@@ -1,6 +1,6 @@
 test-chibi-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi bash -c "cd workdir && chibi-scheme -I srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm"
 
 
 test-chicken-srfi-64:
@@ -45,7 +45,7 @@ test-mit-scheme-srfi-64:
 
 test-sagittarius-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -I  ./srfi srfi-test/r7rs-programs/64.scm"
 
 
 test-stklos-srfi-64:
