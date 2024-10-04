@@ -75,7 +75,7 @@
                 (execute report-row
                          `((name . ,name)
                            (command . ,command)
-                           (color . ,color)
+                           (div . ,(string-append "<div style='background-color:" color "'>"))
                            (library-command . ,(if (assoc 'library-command implementation)
                                                  (cdr (assoc 'library-command implementation))
                                                  #f))

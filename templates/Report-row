@@ -1,8 +1,5 @@
 <td>
-    <div style='background-color:
-    {{color}}
-    '>
-        {{color}}
+    {{div}}
         {{expected-passes}}
         {{expected-failures}}
         {{unexpected-failures}}
