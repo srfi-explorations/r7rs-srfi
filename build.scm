@@ -58,9 +58,7 @@
     (newline out)
     (for-each
       (lambda (implementation)
-        (execute jenkinsfile-job-top
-                 `((name . ,(cdr (assoc 'name implementation))))
-                 out)
+        (execute jenkinsfile-job-top `((name . ,(cdr (assoc 'name implementation)))) out)
         (for-each
           (lambda (srfi)
             (execute jenkinsfile-srfi-job
@@ -70,7 +68,7 @@
                        (number . ,(cdr (assoc 'number srfi))))
                      out))
           srfis)
-            (execute jenkinsfile-job-bottom `() out)
+            (execute jenkinsfile-job-bottom `((name . ,(cdr (assoc 'name implementation)))) out)
             (newline out))
       implementations)
     (execute jenkinsfile-bottom '() out)
