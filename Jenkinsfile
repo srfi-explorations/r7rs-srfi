@@ -21,9 +21,9 @@ pipeline {
               sh 'touch reports/placeholder'
               stash name: 'reports', includes: 'reports/*'
               sh 'echo "<h1>Test results</h1>" > reports/results.html'
-              stash name: 'tests', includes: 'srfi-test/*'
               sh '(cd srfi-test && make clean build)'
               sh 'tree srfi-test'
+              stash name: 'tests', includes: 'srfi-test/*'
             }
         }
 
