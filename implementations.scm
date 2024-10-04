@@ -16,6 +16,6 @@
     ((name . loko) (command . "loko -std=r7rs -feval --compile"))
     ((name . mit-scheme) (command . "mit-scheme --load"))
     ((name . sagittarius) (command . "sash -r7 -I  ./srfi"))
-    ((name . stklos) (command . "STKLOS_FRAMES=1 stklos -I . -f"))
+    ((name . stklos) (command . "stklos -I ."))
     ((name . skint) (command . "skint --program"))
     ((name . tr7) (command . "tr7i"))))

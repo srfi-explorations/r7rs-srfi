@@ -50,7 +50,7 @@ test-sagittarius-srfi-64:
 
 test-stklos-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && STKLOS_FRAMES=1 stklos -I . -f srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && stklos -I . srfi-test/r7rs-programs/64.scm"
 
 
 test-skint-srfi-64:

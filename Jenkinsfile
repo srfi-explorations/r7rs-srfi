@@ -392,7 +392,7 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'STKLOS_FRAMES=1 stklos -I . -f srfi-test/r7rs-programs/64.scm'
+                    sh 'stklos -I . srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
