@@ -1,8 +1,7 @@
-<td>
-    {{{div}}}
+    <span style="background-color:{{color}};">
+        {{color}}
         {{expected-passes}}
         {{expected-failures}}
         {{unexpected-failures}}
         {{skipped-tests}}
-    </div>
-</td>
+    </span>
