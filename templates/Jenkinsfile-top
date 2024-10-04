@@ -13,7 +13,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'ONLY_SRFI_NUMBER', defaultValue: '64', description: 'Build only SRFI of given number')
+        string(name: 'ONLY_SRFI_NUMBER', defaultValue: '', description: 'Build only SRFI of given number, leave empty to build all')
     }
 
     stages {
