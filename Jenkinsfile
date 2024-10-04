@@ -100,8 +100,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'cyclone -I . srfi/64.sld'
-                    sh 'cyclone -I . srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
+                    sh 'cyclone -A . srfi/64.sld'
+                    sh 'cyclone -A . srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -132,8 +132,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
 
-                    sh 'gsc -:r7rs -dynamic srfi/64.sld'
-                    sh 'gsi -:r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
+                    sh 'gsc . srfi/64.sld'
+                    sh 'gsc -exe . -nopreload srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
