@@ -14,7 +14,7 @@ pipeline {
 
     parameters {
         choice(name: 'BUILD_IMPLEMENTATION',
-               description: 'Build'
+               description: 'Build',
                choices: [
                  'all',
                  'chibi',
@@ -30,8 +30,7 @@ pipeline {
                  'stklos',
                  'skint',
                  'tr7',
-               ],
-               )
+               ])
     }
 
     stages {
