@@ -49,9 +49,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -78,9 +75,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -107,9 +101,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -136,9 +127,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -165,9 +153,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -194,9 +179,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -223,9 +205,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -252,9 +231,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -281,9 +257,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -310,9 +283,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -339,9 +309,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -368,9 +335,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
@@ -397,9 +361,6 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
-                    // Clean up possible executables
-                    sh 'rm -rf srfi-test/'
-
                 }
             }
         }
