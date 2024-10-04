@@ -21,7 +21,7 @@
             ((string=? name "chicken")
              (string-append "cp srfi/64.sld srfi.64.sld"
                             " && " (cdr library-command) " srfi.64.sld "
-                            "cp srfi/" number ".sld"
+                            " && cp srfi/" number ".sld"
                             " "
                             "srfi-" number ".sld"
                             " && "
