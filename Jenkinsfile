@@ -39,6 +39,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -49,6 +50,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -84,6 +86,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -94,6 +97,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -129,6 +133,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -139,6 +144,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -174,6 +180,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -184,6 +191,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -219,6 +227,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -229,6 +238,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -264,6 +274,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -274,6 +285,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -309,6 +321,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -319,6 +332,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -354,6 +368,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -364,6 +379,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -399,6 +415,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -409,6 +426,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -444,6 +462,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -454,6 +473,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -489,6 +509,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -499,6 +520,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -534,6 +556,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -544,6 +567,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
@@ -579,6 +603,7 @@ pipeline {
                 }
             }
             steps {
+                /*
                 when {
                     anyOf {
                         expression {
@@ -589,6 +614,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
                     sh 'find . -name "*.so" -delete'
