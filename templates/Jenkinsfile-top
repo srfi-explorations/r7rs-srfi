@@ -13,7 +13,7 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'ONLY_IMPLEMENTATION',
+        choice(name: 'BUILD_IMPLEMENTATION',
                description: 'Build'
                choices: [
                  'all',

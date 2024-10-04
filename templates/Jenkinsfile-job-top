@@ -7,7 +7,7 @@
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == '{{name}}'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == '{{name}}'
                 }
             }
             steps {

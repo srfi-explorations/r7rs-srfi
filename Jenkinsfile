@@ -13,7 +13,7 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'ONLY_IMPLEMENTATION',
+        choice(name: 'BUILD_IMPLEMENTATION',
                description: 'Build'
                choices: [
                  'all',
@@ -58,7 +58,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'chibi'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chibi'
                 }
             }
             steps {
@@ -89,7 +89,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'chicken'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken'
                 }
             }
             steps {
@@ -120,7 +120,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'cyclone'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone'
                 }
             }
             steps {
@@ -151,7 +151,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'gambit'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit'
                 }
             }
             steps {
@@ -182,7 +182,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'gauche'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gauche'
                 }
             }
             steps {
@@ -213,7 +213,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'guile'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'guile'
                 }
             }
             steps {
@@ -244,7 +244,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'kawa'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'kawa'
                 }
             }
             steps {
@@ -275,7 +275,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'loko'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'loko'
                 }
             }
             steps {
@@ -306,7 +306,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'mit-scheme'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'mit-scheme'
                 }
             }
             steps {
@@ -337,7 +337,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'sagittarius'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'sagittarius'
                 }
             }
             steps {
@@ -368,7 +368,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'stklos'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'stklos'
                 }
             }
             steps {
@@ -399,7 +399,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'skint'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'skint'
                 }
             }
             steps {
@@ -430,7 +430,7 @@ pipeline {
             }
             when {
                 expression {
-                    params.ONLY_IMPLEMENTATION == '' || params.ONLY_IMPLEMENTATION == 'tr7'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'tr7'
                 }
             }
             steps {
