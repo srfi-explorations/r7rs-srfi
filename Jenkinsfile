@@ -130,8 +130,8 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
 
-                    sh 'cyclone -I . -COPT -I./srfi srfi/64.sld  && cyclone -I . -COPT -I./srfi srfi/8.sld'
-                    sh 'cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
+                    sh 'cyclone -A . srfi/64.sld  && cyclone -A . srfi/8.sld'
+                    sh 'cyclone -A . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -650,8 +650,8 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
 
-                    sh 'cyclone -I . -COPT -I./srfi srfi/64.sld  && cyclone -I . -COPT -I./srfi srfi/64.sld'
-                    sh 'cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
+                    sh 'cyclone -A . srfi/64.sld  && cyclone -A . srfi/64.sld'
+                    sh 'cyclone -A . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -1086,6 +1086,12 @@ pipeline {
     post {
         always {
             deleteDir()
+            archiveArtifacts artifacts: 'reports/*.log'
+        }
+        failure {
+            deleteDir()
+            archiveArtifacts artifacts: 'reports/*.html'
+            archiveArtifacts artifacts: 'reports/*.log'
         }
     }
 }
