@@ -465,13 +465,18 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'reports/*.log'
+            publishHTML (target : [allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'reports',
+                reportFiles: '*.html',
+                reportName: 'R7RS-SRFI Test Report',
+                reportTitles: 'R7RS-SRFI Test Report'])
             deleteDir()
         }
         failure {
             deleteDir()
-            archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'reports/*.log'
         }
     }
