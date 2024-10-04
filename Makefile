@@ -34,8 +34,8 @@ test-kawa-srfi-8:
 
 
 test-loko-srfi-8:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi/64.sld  &amp;&amp; loko -std=r7rs -feval --compile srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/r7rs-programs/8.scm &amp;&amp; srfi-test/r7rs-programs/8 &amp;&amp; rm srfi-test/r7rs-programs/8"
 
 
 test-mit-scheme-srfi-8:
@@ -99,8 +99,8 @@ test-kawa-srfi-64:
 
 
 test-loko-srfi-64:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi/64.sld  &amp;&amp; loko -std=r7rs -feval --compile srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/r7rs-programs/64.scm &amp;&amp; srfi-test/r7rs-programs/64 &amp;&amp; rm srfi-test/r7rs-programs/64"
 
 
 test-mit-scheme-srfi-64:
