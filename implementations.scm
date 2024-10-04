@@ -8,7 +8,7 @@
      (command . "cyclone -I .")
      (library-command . "cyclone -I . -COPT -I./srfi"))
     ((name . gambit)
-     (command . "gsc . -exe -nopreload")
+     (command . "gsc -exe . -nopreload")
      (library-command . "gsc ."))
     ((name . gauche) (command . "gosh"))
     ((name . guile) (command . "guile --fresh-auto-compile --r7rs -L ."))
