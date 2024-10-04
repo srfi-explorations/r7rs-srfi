@@ -72,7 +72,6 @@
                                      ((> unexpected-failures 0) "red")
                                      ((> skipped-tests 0) "yellow")
                                      (else "green"))))
-                (display (string-append "<td style='background-color:" color "'>") out)
                 (execute report-row
                          `((name . ,name)
                            (command . ,command)
@@ -86,7 +85,6 @@
                            (unexpected-failures . ,unexpected-failures)
                            (skipped-tests . ,skipped-tests))
                          out)
-                (display (string-append "</td>") out)
                 (newline out)))
             implementations)
           (display (string-append "</tr>") out)))
