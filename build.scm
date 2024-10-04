@@ -19,7 +19,7 @@
              (string-append "cp srfi/" number ".sld"
                             " "
                             "srfi-" number ".sld"
-                            " ; "
+                            " && "
                             (cdr library-command)
                             " "
                             "srfi-" number ".sld"))
@@ -39,7 +39,7 @@
            (library-command (assoc 'library-command implementation)))
       (cond
         ((not library-command) command)
-        (else (string-append command " ; srfi-test/" number " ; rm srfi-test/" number))))))
+        (else (string-append command " && srfi-test/r7rs-programs/" number " && rm srfi-test/r7rs-programs/" number))))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))
