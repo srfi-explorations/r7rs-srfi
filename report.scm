@@ -45,10 +45,9 @@
               (letrec* ((name (cdr (assoc 'name implementation)))
                         (command (cdr (assoc 'command implementation)))
                         (logfile (string-append "reports/"
-                                                "SRFI-"
-                                                (number->string number)
-                                                "-"
                                                 (symbol->string name)
+                                                "-srfi-"
+                                                (number->string number)
                                                 ".log"))
                         (read-results (lambda (line results)
                                         (if (eof-object? line)
