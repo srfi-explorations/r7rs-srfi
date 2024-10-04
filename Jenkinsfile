@@ -22,7 +22,7 @@ pipeline {
               stash name: 'reports', includes: 'reports/*'
               sh 'echo "<h1>Test results</h1>" > reports/results.html'
               stash name: 'tests', includes: 'srfi-test/*'
-              sh 'cd srfi-test && java -jar ../kawa.jar convert.scm'
+              sh 'cd srfi-test && gosh -r7 convert.scm'
               sh 'tree srfi-test'
             }
         }
@@ -448,7 +448,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     unstash 'reports'
-                    sh './report-kawa'
+                    sh './report'
                     archiveArtifacts artifacts: 'reports/*.html'
                 }
             }

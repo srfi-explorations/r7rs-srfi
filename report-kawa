@@ -1,6 +1,0 @@
-#!/bin/sh
-
-mkdir -p reports
-java -jar kawa.jar --r7rs -Dkawa.import.path=.:./snow:./snow/*.sld report.scm reports/*.log
-
-
