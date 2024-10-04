@@ -40,6 +40,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     
                     sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm'
                     
@@ -68,6 +69,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     sh 'cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  && cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh 'cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  && cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld'
@@ -96,6 +98,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     sh 'cyclone -A . srfi/64.sld  && cyclone -A . srfi/64.sld'
                     sh 'cyclone -A . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh 'cyclone -A . srfi/64.sld  && cyclone -A . srfi/8.sld'
@@ -124,6 +127,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     sh 'gsc . srfi/64.sld  && gsc . srfi/64.sld'
                     sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh 'gsc . srfi/64.sld  && gsc . srfi/8.sld'
@@ -152,6 +156,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     
                     sh 'gosh srfi-test/r7rs-programs/64.scm'
                     
@@ -180,6 +185,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm'
                     
@@ -208,6 +214,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     
                     sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/64.scm'
                     
@@ -236,6 +243,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     sh 'ls srfi/64.sld  && ls srfi/64.sld'
                     sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh 'ls srfi/64.sld  && ls srfi/8.sld'
@@ -264,6 +272,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     
                     sh 'mit-scheme --load srfi-test/r7rs-programs/64.scm'
                     
@@ -292,6 +301,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     
                     sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log '
                     
@@ -320,6 +330,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     
                     sh 'stklos -I . srfi-test/r7rs-programs/64.scm'
                     
@@ -348,6 +359,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     
                     sh 'skint --program srfi-test/r7rs-programs/64.scm'
                     
@@ -376,6 +388,7 @@ pipeline {
                     sh 'find . -name "*.so" -delete'
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
                     
                     sh 'tr7i srfi-test/r7rs-programs/64.scm'
                     
