@@ -31,6 +31,9 @@
            (command
              (string-append
                (cdr (assoc 'command implementation))
+               (cond ((string=? name "gambit")
+                      "-o srfi-test/r7rs-programs/" number)
+                     (else ""))
                " "
                "srfi-test/r7rs-programs/"
                number
@@ -38,7 +41,9 @@
            (library-command (assoc 'library-command implementation)))
       (cond
         ((not library-command) command)
-        (else (string-append command " && srfi-test/r7rs-programs/" number " && rm srfi-test/r7rs-programs/" number))))))
+        (else (string-append command
+                             " && srfi-test/r7rs-programs/" number
+                             " && rm srfi-test/r7rs-programs/" number))))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))
