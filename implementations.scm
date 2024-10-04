@@ -14,8 +14,9 @@
     ((name . guile) (command . "guile --fresh-auto-compile --r7rs -L ."))
     ((name . kawa) (command . "kawa --r7rs -Dkawa.import.path=..:*.sld"))
     ((name . loko)
-     (command . "loko -std=r7rs -feval --compile")
-     (library-command . "loko -std=r7rs -feval --compile"))
+     (command . "LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile")
+     ; Library command so the executable gets run
+     (library-command . "ls"))
     ((name . mit-scheme) (command . "mit-scheme --load"))
     ((name . sagittarius) (command . "sash -r7 -L ./srfi"))
     ((name . stklos) (command . "stklos -I ."))
