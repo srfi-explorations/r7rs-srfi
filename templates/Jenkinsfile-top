@@ -13,7 +13,25 @@ pipeline {
     }
 
     parameters {
-        string(name: 'ONLY_IMPLEMENTATION', defaultValue: '', description: 'Build only implementation, leave empty to build all')
+        choice(name: 'ONLY_IMPLEMENTATION',
+               description: 'Build'
+               choices: [
+                 'all',
+                 'chibi',
+                 'chicken',
+                 'cyclone',
+                 'gambit',
+                 'gauche',
+                 'guile',
+                 'kawa',
+                 'loko',
+                 'mit-scheme',
+                 'sagittarius',
+                 'stklos',
+                 'skint',
+                 'tr7',
+               ],
+               )
     }
 
     stages {
