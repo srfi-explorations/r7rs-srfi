@@ -20,15 +20,6 @@
               (scheme write)
               (only (kawa base) try-catch)
               (srfi 35)))
-    (racket
-      (import (scheme base)
-              (scheme char)
-              (scheme complex)
-              (scheme eval)
-              (scheme file)
-              (scheme read)
-              (scheme write)
-              (only (racket) compile-enforce-module-constants)))
     (else
       (import (scheme base)
               (scheme char)
@@ -68,7 +59,6 @@
         (define-module srfi-64)
         (select-module srfi-64))
       (kawa (provide 'srfi-64))
-      (racket (compile-enforce-module-constants #f))
       (else))
     (cond-expand
       (chibi (include "srfi/64.scm"))

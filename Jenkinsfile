@@ -12,6 +12,10 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
+    parameters {
+        string(name: 'ONLY_SRFI_NUMBER', defaultValue: '', description: 'Build only SRFI of given number, leave empty to build all')
+    }
+
     stages {
 
         stage("Init") {
@@ -22,6 +26,528 @@ pipeline {
               stash name: 'reports', includes: 'reports/*'
               sh 'echo "<h1>Test results</h1>" > reports/results.html'
               stash name: 'tests', includes: 'srfi-test/*'
+              sh '(cd srfi-test && make clean build)'
+              sh 'tree srfi-test'
+            }
+        }
+
+        stage("SRFI-8 - chibi") {
+            agent {
+                docker {
+                    image 'schemers/chibi'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    
+                    sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/8.scm'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-chibi.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - chicken") {
+            agent {
+                docker {
+                    image 'schemers/chicken'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    sh 'cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  && cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-chicken.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - cyclone") {
+            agent {
+                docker {
+                    image 'schemers/cyclone'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    sh 'cyclone -I . -COPT -I./srfi srfi/64.sld  && cyclone -I . -COPT -I./srfi srfi/8.sld'
+                    sh 'cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-cyclone.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - gambit") {
+            agent {
+                docker {
+                    image 'schemers/gambit'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    sh 'gsc . srfi/64.sld  && gsc . srfi/8.sld'
+                    sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-gambit.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - gauche") {
+            agent {
+                docker {
+                    image 'schemers/gauche'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    
+                    sh 'gosh srfi-test/r7rs-programs/8.scm'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-gauche.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - guile") {
+            agent {
+                docker {
+                    image 'schemers/guile'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    
+                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-guile.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - kawa") {
+            agent {
+                docker {
+                    image 'schemers/kawa'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    
+                    sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/8.scm'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-kawa.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - loko") {
+            agent {
+                docker {
+                    image 'schemers/loko'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    sh 'ls srfi/64.sld  && ls srfi/8.sld'
+                    sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-loko.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - mit-scheme") {
+            agent {
+                docker {
+                    image 'schemers/mit-scheme'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    
+                    sh 'mit-scheme --load srfi-test/r7rs-programs/8.scm'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-mit-scheme.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - sagittarius") {
+            agent {
+                docker {
+                    image 'schemers/sagittarius'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    
+                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log '
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-sagittarius.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - stklos") {
+            agent {
+                docker {
+                    image 'schemers/stklos'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    
+                    sh 'stklos -I . srfi-test/r7rs-programs/8.scm'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-stklos.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - skint") {
+            agent {
+                docker {
+                    image 'schemers/skint'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    
+                    sh 'skint --program srfi-test/r7rs-programs/8.scm'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-skint.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
+            }
+        }
+
+        stage("SRFI-8 - tr7") {
+            agent {
+                docker {
+                    image 'schemers/tr7'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '8'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+
+                    
+                    sh 'tr7i srfi-test/r7rs-programs/8.scm'
+
+
+                    // Change any logfiles to identify implementatio nand SRFI and stash them
+                    unstash 'reports'
+                    sh 'for f in *.log; do cp -- "$f" "reports/SRFI-8-tr7.log"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+
+                    // Clean up possible executables
+                    sh 'rm -rf srfi-test/8'
+
+
+                    // Check if all tests passed, dont put anything after this on fail it wont be run
+                    sh 'test $(grep result-kind: *.log | grep fail | grep -v xfail -c) -eq 0 || exit 1'
+                }
             }
         }
 
@@ -32,12 +558,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'chibi-scheme -I srfi srfi-test/64.scm'
+                    sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -64,12 +598,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
-                    sh 'cp srfi/64.sld srfi-64.sld ; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
-                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
+                    sh 'cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  && cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -96,12 +638,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
-                    sh 'cyclone -I . srfi/64.sld'
-                    sh 'cyclone -I . srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
+                    sh 'cyclone -I . -COPT -I./srfi srfi/64.sld  && cyclone -I . -COPT -I./srfi srfi/64.sld'
+                    sh 'cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -128,12 +678,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
-                    sh 'gsc -:r7rs -dynamic srfi/64.sld'
-                    sh 'gsi -:r7rs srfi-test/64.scm ; srfi-test/64 ; rm srfi-test/64'
+                    sh 'gsc . srfi/64.sld  && gsc . srfi/64.sld'
+                    sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -160,12 +718,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'gosh srfi-test/64.scm'
+                    sh 'gosh srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -192,12 +758,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/64.scm'
+                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -224,12 +798,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/64.scm'
+                    sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -256,12 +838,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
-                    
-                    sh 'loko -std=r7rs -feval --compile srfi-test/64.scm'
+                    sh 'ls srfi/64.sld  && ls srfi/64.sld'
+                    sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -288,12 +878,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'mit-scheme --load srfi-test/64.scm'
+                    sh 'mit-scheme --load srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -320,12 +918,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'sash srfi-test/64.scm'
+                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log '
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -352,12 +958,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'STKLOS_FRAMES=1 stklos -I . -f srfi-test/64.scm'
+                    sh 'stklos -I . srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -384,12 +998,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'skint --program srfi-test/64.scm'
+                    sh 'skint --program srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -416,12 +1038,20 @@ pipeline {
                     reuseNode true
                 }
             }
+            when {
+                expression {
+                    params.ONLY_SRFI_NUMBER == '' || params.ONLY_SRFI_NUMBER == '64'
+                }
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'tr7i srfi-test/64.scm'
+                    sh 'tr7i srfi-test/r7rs-programs/64.scm'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -446,7 +1076,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     unstash 'reports'
-                    sh './report-kawa'
+                    sh './report'
                     archiveArtifacts artifacts: 'reports/*.html'
                 }
             }
