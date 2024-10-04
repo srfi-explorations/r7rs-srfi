@@ -18,16 +18,12 @@
            (srfi-64-command (lambda (library-command)
                               (string-append (cdr library-command) " srfi/64.sld && "))))
       (cond ((not library-command) #f)
+            ; Note that Chicken needs to have the SRFI library as srfi-N.scm in same folder
             ((string=? name "chicken")
-             (string-append "cp srfi/64.sld srfi.64.sld"
-                            " && " (cdr library-command) " srfi.64.sld "
-                            " && cp srfi/" number ".sld"
-                            " "
-                            "srfi-" number ".sld"
-                            " && "
-                            (cdr library-command)
-                            " "
-                            "srfi-" number ".sld"))
+             (string-append "cp srfi/64.sld srfi-64.sld"
+                            " && " (cdr library-command) " srfi-64.sld "
+                            " && cp srfi/" number ".sld srfi-" number ".sld"
+                            " && " (cdr library-command) "srfi-" number ".sld"))
             (else (string-append (srfi-64-command library-command)
                                  (cdr library-command)
                                  " srfi/" number ".sld"))))))
