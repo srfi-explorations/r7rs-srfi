@@ -11,14 +11,15 @@
 
 (define full-library-command
   (lambda (implementation srfi)
-    (let ((name (symbol->string (cdr (assoc 'name implementation))))
+    (let* ((name (symbol->string (cdr (assoc 'name implementation))))
           (number (number->string (cdr (assoc 'number srfi))))
           (library-command (assoc 'library-command implementation))
           ; SRFI-64 is use for testing so it needs always to be compiled
-          (srfi-64-command (string-append library-command " srfi/64.sld && ")))
+          (srfi-64-command (lambda (library-command)
+                                    (string-append (cdr library-command) " srfi/64.sld && "))))
       (cond ((not library-command) #f)
             ((string=? name "chicken")
-             (string-append srfi-64-command
+             (string-append (srfi-64-command library-command)
                             "cp srfi/" number ".sld"
                             " "
                             "srfi-" number ".sld"
@@ -26,7 +27,7 @@
                             (cdr library-command)
                             " "
                             "srfi-" number ".sld"))
-            (else (string-append srfi-64-command
+            (else (string-append (srfi-64-command library-command)
                                  (cdr library-command)
                                  " srfi/" number ".sld"))))))
 
