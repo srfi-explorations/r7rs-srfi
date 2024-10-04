@@ -22,6 +22,8 @@ pipeline {
               stash name: 'reports', includes: 'reports/*'
               sh 'echo "<h1>Test results</h1>" > reports/results.html'
               stash name: 'tests', includes: 'srfi-test/*'
+              sh 'cd srfi-test && java -jar ../kawa.jar convert.scm'
+              sh 'tree srfi-test'
             }
         }
 
