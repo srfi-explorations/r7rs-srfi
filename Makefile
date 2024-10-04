@@ -69,17 +69,17 @@ test-chibi-srfi-64:
 
 
 test-chicken-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/64.sld srfi-64.sld &amp;&amp; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi/64.sld &amp;&amp; cp srfi/64.sld srfi-64.sld &amp;&amp; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm &amp;&amp; srfi-test/r7rs-programs/64 &amp;&amp; rm srfi-test/r7rs-programs/64"
 
 
 test-cyclone-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld &amp;&amp; cyclone -I . srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm &amp;&amp; srfi-test/r7rs-programs/64 &amp;&amp; rm srfi-test/r7rs-programs/64"
 
 
 test-gambit-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -:r7rs -dynamic srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -:r7rs -dynamic srfi/64.sld &amp;&amp; gsc -:r7rs -dynamic srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:r7rs srfi-test/r7rs-programs/64.scm &amp;&amp; srfi-test/r7rs-programs/64 &amp;&amp; rm srfi-test/r7rs-programs/64"
 
 
