@@ -24,10 +24,6 @@
 ;; CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(cond-expand
-  (racket (compile-enforce-module-constants #f))
-  (else))
-
 (define-syntax internal-test-export
   (syntax-rules ()
     ((internal-test-export . names) (if #f #f))))
