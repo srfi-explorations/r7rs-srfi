@@ -17,7 +17,7 @@
      (command . "loko -std=r7rs -feval --compile")
      (library-command . "loko -std=r7rs -feval --compile"))
     ((name . mit-scheme) (command . "mit-scheme --load"))
-    ((name . sagittarius) (command . "sash -r7 -A  ./srfi"))
+    ((name . sagittarius) (command . "sash -r7 -L ./srfi"))
     ((name . stklos) (command . "stklos -I ."))
     ((name . skint) (command . "skint --program"))
     ((name . tr7) (command . "tr7i"))))

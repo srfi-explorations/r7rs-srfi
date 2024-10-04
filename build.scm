@@ -34,7 +34,13 @@
                " srfi-test/r7rs-programs/" number ".scm"))
            (library-command (assoc 'library-command implementation)))
       (cond
-        ((not library-command) command)
+        ((not library-command)
+         (string-append command
+                        ; Sagittarius does not make .log file for some reason
+                        ; Temporary fix to get atleast something out
+                        (if (string=? name "sagittarius")
+                          (string-append " > srfi-" number ".log ")
+                          "")))
         (else (string-append command
                              " && srfi-test/r7rs-programs/" number
                              " && rm srfi-test/r7rs-programs/" number))))))

@@ -4,18 +4,18 @@ test-chibi-srfi-8:
 
 
 test-chicken-srfi-8:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/64.sld srfi-64.sld &amp;&amp; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  &amp;&amp; cp srfi/8.sld srfi-8.sld &amp;&amp; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm &amp;&amp; srfi-test/r7rs-programs/8 &amp;&amp; rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  && cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 
 test-cyclone-srfi-8:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . -COPT -I./srfi srfi/64.sld  &amp;&amp; cyclone -I . -COPT -I./srfi srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/8.scm &amp;&amp; srfi-test/r7rs-programs/8 &amp;&amp; rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . -COPT -I./srfi srfi/64.sld  && cyclone -I . -COPT -I./srfi srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 
 test-gambit-srfi-8:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . srfi/64.sld  &amp;&amp; gsc . srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -exe . -nopreload srfi-test/r7rs-programs/8.scm &amp;&amp; srfi-test/r7rs-programs/8 &amp;&amp; rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . srfi/64.sld  && gsc . srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 
 test-gauche-srfi-8:
@@ -34,8 +34,8 @@ test-kawa-srfi-8:
 
 
 test-loko-srfi-8:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi/64.sld  &amp;&amp; loko -std=r7rs -feval --compile srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/r7rs-programs/8.scm &amp;&amp; srfi-test/r7rs-programs/8 &amp;&amp; rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi/64.sld  && loko -std=r7rs -feval --compile srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 
 test-mit-scheme-srfi-8:
@@ -45,7 +45,7 @@ test-mit-scheme-srfi-8:
 
 test-sagittarius-srfi-8:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -A  ./srfi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log "
 
 
 test-stklos-srfi-8:
@@ -69,18 +69,18 @@ test-chibi-srfi-64:
 
 
 test-chicken-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/64.sld srfi-64.sld &amp;&amp; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  &amp;&amp; cp srfi/64.sld srfi-64.sld &amp;&amp; csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm &amp;&amp; srfi-test/r7rs-programs/64 &amp;&amp; rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  && cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 
 test-cyclone-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . -COPT -I./srfi srfi/64.sld  &amp;&amp; cyclone -I . -COPT -I./srfi srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm &amp;&amp; srfi-test/r7rs-programs/64 &amp;&amp; rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . -COPT -I./srfi srfi/64.sld  && cyclone -I . -COPT -I./srfi srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 
 test-gambit-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . srfi/64.sld  &amp;&amp; gsc . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -exe . -nopreload srfi-test/r7rs-programs/64.scm &amp;&amp; srfi-test/r7rs-programs/64 &amp;&amp; rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . srfi/64.sld  && gsc . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 
 test-gauche-srfi-64:
@@ -99,8 +99,8 @@ test-kawa-srfi-64:
 
 
 test-loko-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi/64.sld  &amp;&amp; loko -std=r7rs -feval --compile srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/r7rs-programs/64.scm &amp;&amp; srfi-test/r7rs-programs/64 &amp;&amp; rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi/64.sld  && loko -std=r7rs -feval --compile srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs -feval --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 
 test-mit-scheme-srfi-64:
@@ -110,7 +110,7 @@ test-mit-scheme-srfi-64:
 
 test-sagittarius-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -A  ./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log "
 
 
 test-stklos-srfi-64:

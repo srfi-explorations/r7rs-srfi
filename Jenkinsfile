@@ -411,7 +411,7 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'sash -r7 -A  ./srfi srfi-test/r7rs-programs/8.scm'
+                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log '
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -931,7 +931,7 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
 
                     
-                    sh 'sash -r7 -A  ./srfi srfi-test/r7rs-programs/64.scm'
+                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log '
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
