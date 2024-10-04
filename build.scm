@@ -33,7 +33,7 @@
              (string-append
                (cdr (assoc 'command implementation))
                " "
-               "srfi-test/"
+               "srfi-test/r7rs-programs/"
                number
                ".scm"))
            (library-command (assoc 'library-command implementation)))
