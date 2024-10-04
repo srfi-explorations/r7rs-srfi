@@ -457,7 +457,13 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     unstash 'reports'
                     sh './report'
-                    archiveArtifacts artifacts: 'reports/*.html'
+                    publishHTML (target : [allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'reports',
+                        reportFiles: '*.html',
+                        reportName: 'R7RS-SRFI Test Report',
+                        reportTitles: 'R7RS-SRFI Test Report'])
                 }
             }
         }
@@ -466,13 +472,6 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'reports/*.log'
-            publishHTML (target : [allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'reports',
-                reportFiles: '*.html',
-                reportName: 'R7RS-SRFI Test Report',
-                reportTitles: 'R7RS-SRFI Test Report'])
             deleteDir()
         }
         failure {
