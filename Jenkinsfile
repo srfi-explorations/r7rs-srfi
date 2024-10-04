@@ -39,12 +39,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -82,12 +84,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -125,12 +129,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -168,12 +174,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -211,12 +219,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -254,12 +264,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -297,12 +309,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -340,12 +354,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -383,12 +399,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -426,12 +444,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -469,12 +489,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -512,12 +534,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -555,12 +579,14 @@ pipeline {
                 }
             }
             steps {
-                anyOf {
-                    expression {
-                        params.ONLY_SRFI_NUMBER == ""
-                    }
-                    expression {
-                        params.ONLY_SRFI_NUMBER == "64"
+                when {
+                    anyOf {
+                        expression {
+                            params.ONLY_SRFI_NUMBER == ""
+                        }
+                        expression {
+                            params.ONLY_SRFI_NUMBER == "64"
+                        }
                     }
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
