@@ -13,7 +13,24 @@ pipeline {
     }
 
     parameters {
-        string(name: 'ONLY_SRFI_NUMBER', defaultValue: '', description: 'Build only SRFI of given number, leave empty to build all')
+        choice(name: 'BUILD_IMPLEMENTATION',
+               description: 'Build',
+               choices: [
+                 'all',
+                 'chibi',
+                 'chicken',
+                 'cyclone',
+                 'gambit',
+                 'gauche',
+                 'guile',
+                 'kawa',
+                 'loko',
+                 'mit-scheme',
+                 'sagittarius',
+                 'stklos',
+                 'skint',
+                 'tr7',
+               ])
     }
 
     stages {
@@ -25,8 +42,8 @@ pipeline {
               sh 'touch reports/placeholder'
               stash name: 'reports', includes: 'reports/*'
               sh 'echo "<h1>Test results</h1>" > reports/results.html'
-              stash name: 'tests', includes: 'srfi-test/*'
               sh '(cd srfi-test && make clean build)'
               sh 'tree srfi-test'
+              stash name: 'tests', includes: 'srfi-test/*'
             }
         }
