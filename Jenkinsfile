@@ -457,6 +457,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     unstash 'reports'
                     sh './report'
+                    archiveArtifacts artifacts: 'reports/*.html'
                     publishHTML (target : [allowMissing: false,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
@@ -472,6 +473,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'reports/*.log'
+            archiveArtifacts artifacts: 'reports/*.html'
             deleteDir()
         }
         failure {
