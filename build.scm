@@ -39,7 +39,7 @@
                         ; Sagittarius does not make .log file for some reason
                         ; Temporary fix to get atleast something out
                         (if (string=? name "sagittarius")
-                          (string-append " > srfi-" number ".log ")
+                          (string-append " > srfi-" number ".log && cat srfi-" number ".log")
                           "")))
         (else (string-append command
                              " && srfi-test/r7rs-programs/" number

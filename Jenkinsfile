@@ -276,9 +276,9 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log '
+                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log && cat srfi-64.log'
                     
-                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log '
+                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log && cat srfi-8.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/sagittarius-$f.log"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
