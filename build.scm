@@ -31,13 +31,7 @@
            (command
              (string-append
                (cdr (assoc 'command implementation))
-               (cond ((string=? name "gambit")
-                      "-o srfi-test/r7rs-programs/" number)
-                     (else ""))
-               " "
-               "srfi-test/r7rs-programs/"
-               number
-               ".scm"))
+               " srfi-test/r7rs-programs/" number ".scm"))
            (library-command (assoc 'library-command implementation)))
       (cond
         ((not library-command) command)

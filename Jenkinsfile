@@ -170,8 +170,8 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
 
-                    sh 'gsc -:r7rs -dynamic srfi/64.sld  && gsc -:r7rs -dynamic srfi/8.sld'
-                    sh 'gsi -:r7rs8 srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
+                    sh 'gsc . srfi/64.sld  && gsc . srfi/8.sld'
+                    sh 'gsc . -exe -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
@@ -690,8 +690,8 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
 
-                    sh 'gsc -:r7rs -dynamic srfi/64.sld  && gsc -:r7rs -dynamic srfi/64.sld'
-                    sh 'gsi -:r7rs64 srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
+                    sh 'gsc . srfi/64.sld  && gsc . srfi/64.sld'
+                    sh 'gsc . -exe -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
 
 
                     // Change any logfiles to identify implementatio nand SRFI and stash them
