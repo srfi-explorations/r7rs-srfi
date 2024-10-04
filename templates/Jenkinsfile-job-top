@@ -1,0 +1,11 @@
+        stage("{{name}}") {
+            agent {
+                docker {
+                    image 'schemers/{{name}}'
+                    reuseNode true
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make'
+                    sh 'make clean'

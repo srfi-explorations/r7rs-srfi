@@ -46,7 +46,9 @@
                              " && rm srfi-test/r7rs-programs/" number))))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
-(define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))
+(define jenkinsfile-job-top (compile (slurp "templates/Jenkinsfile-job-top")))
+(define jenkinsfile-srfi-job (compile (slurp "templates/Jenkinsfile-srfi-job")))
+(define jenkinsfile-job-bottom (compile (slurp "templates/Jenkinsfile-job-bottom")))
 (define jenkinsfile-bottom (compile (slurp "templates/Jenkinsfile-bottom")))
 
 (call-with-output-file
@@ -55,18 +57,22 @@
     (execute jenkinsfile-top '() out)
     (newline out)
     (for-each
-      (lambda (srfi)
+      (lambda (implementation)
+        (execute jenkinsfile-job-top
+                 `((name . ,(cdr (assoc 'name implementation))))
+                 out)
         (for-each
-          (lambda (implementation)
-            (execute jenkinsfile-job
+          (lambda (srfi)
+            (execute jenkinsfile-srfi-job
                      `((name . ,(cdr (assoc 'name implementation)))
                        (command . ,(full-command implementation srfi))
                        (library-command . ,(full-library-command implementation srfi))
                        (number . ,(cdr (assoc 'number srfi))))
-                     out)
+                     out))
+          srfis)
+            (execute jenkinsfile-job-bottom `() out)
             (newline out))
-          implementations))
-      srfis)
+      implementations)
     (execute jenkinsfile-bottom '() out)
     (newline out)))
 
