@@ -17,3 +17,4 @@
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
+                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
