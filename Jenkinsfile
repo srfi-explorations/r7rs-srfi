@@ -508,6 +508,7 @@ pipeline {
         }
         failure {
             deleteDir()
+            archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'reports/*.log'
         }
     }
