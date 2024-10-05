@@ -61,6 +61,9 @@
           (lambda (srfi)
             (execute jenkinsfile-job
                      `((name . ,(cdr (assoc 'name implementation)))
+                       (docker-image . ,(if (assoc 'docker-image implementation)
+                                          (cdr (assoc 'docker-image implementation))
+                                          (cdr (assoc 'name implementation))))
                        (command . ,(full-command implementation srfi))
                        (library-command . ,(full-library-command implementation srfi))
                        (number . ,(cdr (assoc 'number srfi))))

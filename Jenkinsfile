@@ -51,7 +51,7 @@ pipeline {
         stage("chibi") {
             agent {
                 docker {
-                    image 'schemers/chibi'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -88,7 +88,7 @@ pipeline {
         stage("chicken") {
             agent {
                 docker {
-                    image 'schemers/chicken'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -125,7 +125,7 @@ pipeline {
         stage("cyclone") {
             agent {
                 docker {
-                    image 'schemers/cyclone'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -162,7 +162,7 @@ pipeline {
         stage("gambit") {
             agent {
                 docker {
-                    image 'schemers/gambit'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -199,7 +199,7 @@ pipeline {
         stage("gauche") {
             agent {
                 docker {
-                    image 'schemers/gauche'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -236,7 +236,7 @@ pipeline {
         stage("guile") {
             agent {
                 docker {
-                    image 'schemers/guile'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -273,7 +273,7 @@ pipeline {
         stage("kawa") {
             agent {
                 docker {
-                    image 'schemers/kawa'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -310,7 +310,7 @@ pipeline {
         stage("loko") {
             agent {
                 docker {
-                    image 'schemers/loko'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -331,11 +331,11 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     sh 'ls srfi/64.sld'
-                    sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
+                    sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh 'ls srfi/8.sld'
-                    sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
+                    sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh 'ls srfi/1.sld'
-                    sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
+                    sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
                     sh 'for f in *.log; do cp -- "$f" "reports/loko-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -347,7 +347,7 @@ pipeline {
         stage("mit-scheme") {
             agent {
                 docker {
-                    image 'schemers/mit-scheme'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -384,7 +384,7 @@ pipeline {
         stage("sagittarius") {
             agent {
                 docker {
-                    image 'schemers/sagittarius'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -421,7 +421,7 @@ pipeline {
         stage("stklos") {
             agent {
                 docker {
-                    image 'schemers/stklos'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -458,7 +458,7 @@ pipeline {
         stage("skint") {
             agent {
                 docker {
-                    image 'schemers/skint'
+                    image 'schemers/'
                     reuseNode true
                 }
             }
@@ -495,7 +495,7 @@ pipeline {
         stage("tr7") {
             agent {
                 docker {
-                    image 'schemers/tr7'
+                    image 'schemers/'
                     reuseNode true
                 }
             }

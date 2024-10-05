@@ -1,7 +1,7 @@
         stage("{{name}}") {
             agent {
                 docker {
-                    image 'schemers/{{name}}'
+                    image 'schemers/{{docker-image}}'
                     reuseNode true
                 }
             }
