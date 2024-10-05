@@ -36,9 +36,13 @@ do
     cp ${f/.sld/.scm} /tmp/srfi/${package_name}/srfi
 
     echo "Packaging /tmp/srfi"
-    cd /tmp/srfi
+
+    cd /tmp/srfi/${package_name}
 
     wget https://srfi.schemers.org/srfi-${number}/srfi-${number}.html
+
+    cd /tmp/srfi
+
 
     tree .
 
