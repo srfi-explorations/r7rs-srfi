@@ -1,33 +1,12 @@
 (define-library
   (srfi 64)
-  (cond-expand
-    (chicken
-      (import (scheme base)
-              (scheme char)
-              (scheme complex)
-              (scheme eval)
-              (scheme file)
-              (scheme read)
-              (scheme write)
-              (chicken base)))
-    (kawa
-      (import (scheme base)
-              (scheme char)
-              (scheme complex)
-              (scheme eval)
-              (scheme file)
-              (scheme read)
-              (scheme write)
-              (only (kawa base) try-catch)
-              (srfi 35)))
-    (else
-      (import (scheme base)
-              (scheme char)
-              (scheme complex)
-              (scheme eval)
-              (scheme file)
-              (scheme read)
-              (scheme write))))
+  (import (scheme base)
+          (scheme char)
+          (scheme complex)
+          (scheme eval)
+          (scheme file)
+          (scheme read)
+          (scheme write))
   (export test-assert test-eqv test-equal test-eq test-approximate test-error
           test-read-eval-string test-begin test-end test-group
           test-group-with-cleanup test-match-name test-match-nth test-match-any

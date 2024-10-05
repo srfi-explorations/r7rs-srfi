@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -euxo
+
+
+VERSION=$(cat VERSION)
+
+rm -rf packages
+mkdir -p packages
+
+cd srfi
+for f in *.sld
+do
+    rm -rf /tmp/srfi
+    mkdir -p /tmp/srfi
+
+    number=${f/.sld}
+    dependencies=$(gosh -r7 ../get-dependencies.scm ${f})
+
+    {
+        echo "(package"
+        echo "  (authors \"r7rs-srfi\")"
+        echo "  (version \"${VERSION}\")"
+        echo "  (library"
+        echo "    (name (srfi ${number}))"
+        echo "    (path \"srfi/${number}.sld\")"
+        echo "    (depends ${dependencies})))"
+    } > /tmp/srfi/package.scm
+
+    echo "${f} package.scm: "
+    cat /tmp/srfi/package.scm
+
+    cp ${f} /tmp/srfi/
+    cp ${f/.sld/.scm} /tmp/srfi/
+    echo "Packaging /tmp/srfi"
+    tree /tmp/srfi
+    tar -czvf ../packages/srfi-${f/.sld/}-${VERSION}.tgz /tmp/srfi
+
+done
+cd ..
+
+ls packages/

@@ -546,8 +546,8 @@ pipeline {
         }
         stage("Package") {
             steps {
-                sh 'for f in srfi/*.sld; do snow-chibi package "$f"; done'
-                archiveArtifacts artifacts: '*.tgz'
+                sh './snow-package'
+                archiveArtifacts artifacts: 'packages/*.tgz'
             }
         }
 
