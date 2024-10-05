@@ -1,8 +1,6 @@
-<td>
-    <p style="background-color:{{color}}; border: 1px solid black">
+<td style="background-color:{{color}}">
     {{expected-passes}}
     {{expected-failures}}
     {{unexpected-failures}}
     {{skipped-tests}}
-    </p>
 </td>
