@@ -10,6 +10,10 @@
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == '{{name}}'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -17,4 +21,3 @@
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'

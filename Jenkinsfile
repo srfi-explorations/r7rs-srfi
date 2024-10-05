@@ -60,6 +60,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chibi'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -67,7 +71,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     
                     sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm'
                     
@@ -94,6 +97,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -101,7 +108,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     sh ' cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh ' cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld'
@@ -128,6 +134,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -135,7 +145,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     sh 'cyclone -A . srfi/64.sld'
                     sh 'cyclone -A . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh 'cyclone -A . srfi/8.sld'
@@ -162,6 +171,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -169,7 +182,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     sh 'gsc . srfi/64'
                     sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh 'gsc . srfi/8'
@@ -196,6 +208,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gauche'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -203,7 +219,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     
                     sh 'gosh srfi-test/r7rs-programs/64.scm'
                     
@@ -230,6 +245,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'guile'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -237,7 +256,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm'
                     
@@ -264,6 +282,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'kawa'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -271,7 +293,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     
                     sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/64.scm'
                     
@@ -298,6 +319,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'loko'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -305,7 +330,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     sh 'ls srfi/64.sld'
                     sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh 'ls srfi/8.sld'
@@ -332,6 +356,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'mit-scheme'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -339,7 +367,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     
                     sh 'mit-scheme --load srfi-test/r7rs-programs/64.scm'
                     
@@ -366,6 +393,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'sagittarius'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -373,7 +404,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     
                     sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log && cat srfi-64.log'
                     
@@ -400,6 +430,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'stklos'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -407,7 +441,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     
                     sh 'stklos -I . srfi-test/r7rs-programs/64.scm'
                     
@@ -434,6 +467,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'skint'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -441,7 +478,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     
                     sh 'skint --program srfi-test/r7rs-programs/64.scm'
                     
@@ -468,6 +504,10 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'tr7'
                 }
             }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'find . -maxdepth 1 -name "*.log" -delete'
@@ -475,7 +515,6 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
-                    sh 'export MITSCHEME_LIBRARY_PATH=${MITSCHEME_LIBRARY_PATH}:${PWD}:${PWD}/srfi'
                     
                     sh 'tr7i srfi-test/r7rs-programs/64.scm'
                     
