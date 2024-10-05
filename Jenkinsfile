@@ -501,15 +501,11 @@ pipeline {
             archiveArtifacts artifacts: 'reports/*.log'
             archiveArtifacts artifacts: 'reports/*.html'
             deleteDir()
-==== BASE ====
-            archiveArtifacts artifacts: 'reports/*.log'
-==== BASE ====
-==== BASE ====
         }
         failure {
-            deleteDir()
             archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'reports/*.log'
+            deleteDir()
         }
     }
 }
