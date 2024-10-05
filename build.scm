@@ -56,21 +56,23 @@
     (newline out)
     (for-each
       (lambda (implementation)
-        (execute jenkinsfile-job-top `((name . ,(cdr (assoc 'name implementation)))) out)
-        (for-each
-          (lambda (srfi)
-            (execute jenkinsfile-job
-                     `((name . ,(cdr (assoc 'name implementation)))
-                       (docker-image . ,(if (assoc 'docker-image implementation)
-                                          (cdr (assoc 'docker-image implementation))
-                                          (cdr (assoc 'name implementation))))
-                       (command . ,(full-command implementation srfi))
-                       (library-command . ,(full-library-command implementation srfi))
-                       (number . ,(cdr (assoc 'number srfi))))
-                     out))
-          srfis)
-            (execute jenkinsfile-job-bottom `((name . ,(cdr (assoc 'name implementation)))) out)
-            (newline out))
+        (let ((name (symbol->string (cdr (assoc 'name implementation)))))
+          (execute jenkinsfile-job-top
+                   `((name . ,name)
+                     (dockerimage . ,(if (assoc 'docker-image implementation)
+                                       (cdr (assoc 'docker-image implementation))
+                                       (string-append "schemers/" name)))) out)
+          (for-each
+            (lambda (srfi)
+              (execute jenkinsfile-job
+                       `((name . ,name)
+                         (command . ,(full-command implementation srfi))
+                         (library-command . ,(full-library-command implementation srfi))
+                         (number . ,(cdr (assoc 'number srfi))))
+                       out))
+            srfis)
+          (execute jenkinsfile-job-bottom `((name . ,(cdr (assoc 'name implementation)))) out)
+          (newline out)))
       implementations)
     (execute jenkinsfile-bottom '() out)
     (newline out)))

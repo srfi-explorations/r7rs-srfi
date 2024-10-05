@@ -51,7 +51,7 @@ pipeline {
         stage("chibi") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/chibi'
                     reuseNode true
                 }
             }
@@ -88,7 +88,7 @@ pipeline {
         stage("chicken") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/chicken'
                     reuseNode true
                 }
             }
@@ -125,7 +125,7 @@ pipeline {
         stage("cyclone") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/cyclone'
                     reuseNode true
                 }
             }
@@ -162,7 +162,7 @@ pipeline {
         stage("gambit") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/gambit'
                     reuseNode true
                 }
             }
@@ -199,7 +199,7 @@ pipeline {
         stage("gauche") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/gauche'
                     reuseNode true
                 }
             }
@@ -236,7 +236,7 @@ pipeline {
         stage("guile") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/guile'
                     reuseNode true
                 }
             }
@@ -273,7 +273,7 @@ pipeline {
         stage("kawa") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/kawa'
                     reuseNode true
                 }
             }
@@ -310,7 +310,7 @@ pipeline {
         stage("loko") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/loko:head'
                     reuseNode true
                 }
             }
@@ -347,7 +347,7 @@ pipeline {
         stage("mit-scheme") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/mit-scheme'
                     reuseNode true
                 }
             }
@@ -384,7 +384,7 @@ pipeline {
         stage("sagittarius") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/sagittarius'
                     reuseNode true
                 }
             }
@@ -421,7 +421,7 @@ pipeline {
         stage("stklos") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/stklos'
                     reuseNode true
                 }
             }
@@ -458,7 +458,7 @@ pipeline {
         stage("skint") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/skint'
                     reuseNode true
                 }
             }
@@ -495,7 +495,7 @@ pipeline {
         stage("tr7") {
             agent {
                 docker {
-                    image 'schemers/'
+                    image 'schemers/tr7'
                     reuseNode true
                 }
             }
