@@ -220,11 +220,11 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'gosh srfi-test/r7rs-programs/64.scm'
+                    sh 'gosh -r7 srfi-test/r7rs-programs/64.scm'
                     
-                    sh 'gosh srfi-test/r7rs-programs/8.scm'
+                    sh 'gosh -r7 srfi-test/r7rs-programs/8.scm'
                     
-                    sh 'gosh srfi-test/r7rs-programs/1.scm'
+                    sh 'gosh -r7 srfi-test/r7rs-programs/1.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/gauche-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -532,18 +532,22 @@ pipeline {
 
         stage("Report") {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    unstash 'reports'
-                    sh './report'
-                    archiveArtifacts artifacts: 'reports/*.html'
-                    publishHTML (target : [allowMissing: false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: true,
-                        reportDir: 'reports',
-                        reportFiles: '*.html,*.css',
-                        reportName: 'R7RS-SRFI Test Report',
-                        reportTitles: 'R7RS-SRFI Test Report'])
-                }
+                unstash 'reports'
+                sh './report'
+                archiveArtifacts artifacts: 'reports/*.html'
+                publishHTML (target : [allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'reports',
+                    reportFiles: '*.html,*.css',
+                    reportName: 'R7RS-SRFI Test Report',
+                    reportTitles: 'R7RS-SRFI Test Report'])
+            }
+        }
+        stage("Package") {
+            steps {
+                sh 'for f in srfi/*.sld; do snow-chibi package "$f"; done'
+                archiveArtifacts artifacts: '*.tgz'
             }
         }
 
@@ -552,7 +556,6 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'reports/*.log'
             archiveArtifacts artifacts: 'reports/*.html'
-            sh 'for f in srfi/*.sld; do snow-chibi package "$f"; done'
             archiveArtifacts artifacts: '*.tgz'
             archiveArtifacts artifacts: 'srfi/*.tgz'
             deleteDir()

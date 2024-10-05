@@ -10,7 +10,7 @@
     ((name . gambit)
      (command . "gsc -exe . -nopreload")
      (library-command . "gsc ."))
-    ((name . gauche) (command . "gosh"))
+    ((name . gauche) (command . "gosh -r7"))
     ((name . guile) (command . "guile --fresh-auto-compile --r7rs -L ."))
     ((name . kawa) (command . "kawa --r7rs -Dkawa.import.path=..:*.sld"))
     ((name . loko)

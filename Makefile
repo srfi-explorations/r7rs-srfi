@@ -20,7 +20,7 @@ test-gambit-srfi-64:
 
 test-gauche-srfi-64:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh -r7 srfi-test/r7rs-programs/64.scm"
 
 
 test-guile-srfi-64:
@@ -85,7 +85,7 @@ test-gambit-srfi-8:
 
 test-gauche-srfi-8:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh -r7 srfi-test/r7rs-programs/8.scm"
 
 
 test-guile-srfi-8:
@@ -150,7 +150,7 @@ test-gambit-srfi-1:
 
 test-gauche-srfi-1:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh -r7 srfi-test/r7rs-programs/1.scm"
 
 
 test-guile-srfi-1:
