@@ -17,7 +17,7 @@
       (cond ((not library-command) #f)
             ; Note that Chicken needs to have the SRFI library as srfi-N.scm in same folder
             ((string=? name "chicken")
-             (string-append " && cp srfi/" number ".sld srfi-" number ".sld"
+             (string-append " cp srfi/" number ".sld srfi-" number ".sld"
                             " && " (cdr library-command) " srfi-" number ".sld"))
             (else (string-append " && " (cdr library-command) " srfi/" number ".sld"))))))
 

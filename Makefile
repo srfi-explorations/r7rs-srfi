@@ -4,7 +4,7 @@ test-chibi-srfi-64:
 
 
 test-chicken-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir &&  && cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir &&  cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 
@@ -69,7 +69,7 @@ test-chibi-srfi-8:
 
 
 test-chicken-srfi-8:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir &&  && cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir &&  cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 
@@ -134,7 +134,7 @@ test-chibi-srfi-1:
 
 
 test-chicken-srfi-1:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir &&  && cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir &&  cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
 
 
