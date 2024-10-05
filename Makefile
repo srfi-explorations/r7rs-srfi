@@ -193,6 +193,71 @@ test-tr7-srfi-1:
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && tr7i srfi-test/r7rs-programs/1.scm"
 
 
+test-chibi-srfi-13:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/13.scm"
+
+
+test-chicken-srfi-13:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir &&  cp srfi/13.sld srfi-13.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+
+
+test-cyclone-srfi-13:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -A . srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+
+
+test-gambit-srfi-13:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . srfi/13"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -exe . -nopreload srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+
+
+test-gauche-srfi-13:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche bash -c "cd workdir && gosh -r7 srfi-test/r7rs-programs/13.scm"
+
+
+test-guile-srfi-13:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/13.scm"
+
+
+test-kawa-srfi-13:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/13.scm"
+
+
+test-loko-srfi-13:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+
+
+test-mit-scheme-srfi-13:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/13.scm"
+
+
+test-sagittarius-srfi-13:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius bash -c "cd workdir && sash -r7 -L ./srfi srfi-test/r7rs-programs/13.scm > srfi-13.log && cat srfi-13.log"
+
+
+test-stklos-srfi-13:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos bash -c "cd workdir && stklos -I . srfi-test/r7rs-programs/13.scm"
+
+
+test-skint-srfi-13:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint bash -c "cd workdir && skint --program srfi-test/r7rs-programs/13.scm"
+
+
+test-tr7-srfi-13:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && tr7i srfi-test/r7rs-programs/13.scm"
+
+
 clean:
 	find . -name "*.so" -delete
 	find . -name "*.c" -delete
