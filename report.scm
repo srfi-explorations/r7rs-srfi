@@ -45,10 +45,9 @@
               (letrec* ((name (cdr (assoc 'name implementation)))
                         (command (cdr (assoc 'command implementation)))
                         (logfile (string-append "reports/"
-                                                "SRFI-"
-                                                (number->string number)
-                                                "-"
                                                 (symbol->string name)
+                                                "-srfi-"
+                                                (number->string number)
                                                 ".log"))
                         (read-results (lambda (line results)
                                         (if (eof-object? line)
@@ -69,10 +68,10 @@
                         (expected-failures (if (> (length results) 1) (list-ref results 1) 0))
                         (unexpected-failures (if (> (length results) 2) (list-ref results 2) 0))
                         (skipped-tests (if (> (length results) 3) (list-ref results 3) 0))
-                        (color (cond ((string? expected-passes) 'white) ; No logfile
-                                     ((> unexpected-failures 0) 'red)
-                                     ((> skipped-tests 0) 'yellow)
-                                     (else 'green))))
+                        (color (cond ((string? expected-passes) "white") ; No logfile
+                                     ((> unexpected-failures 0) "red")
+                                     ((> skipped-tests 0) "yellow")
+                                     (else "green"))))
                 (execute report-row
                          `((name . ,name)
                            (command . ,command)

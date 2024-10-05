@@ -73,7 +73,7 @@ pipeline {
                     sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/1.scm'
                     
                     sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm'
-                    sh 'for f in *.log; do cp -- "$f" "reports/chibi-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/chibi-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -106,7 +106,7 @@ pipeline {
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
                     sh 'cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld  && cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld'
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
-                    sh 'for f in *.log; do cp -- "$f" "reports/chicken-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/chicken-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -139,7 +139,7 @@ pipeline {
                     sh 'cyclone -A . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
                     sh 'cyclone -A . srfi/64.sld  && cyclone -A . srfi/64.sld'
                     sh 'cyclone -A . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
-                    sh 'for f in *.log; do cp -- "$f" "reports/cyclone-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/cyclone-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -172,7 +172,7 @@ pipeline {
                     sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
                     sh 'gsc . srfi/64.sld  && gsc . srfi/64.sld'
                     sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
-                    sh 'for f in *.log; do cp -- "$f" "reports/gambit-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/gambit-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -205,7 +205,7 @@ pipeline {
                     sh 'gosh srfi-test/r7rs-programs/1.scm'
                     
                     sh 'gosh srfi-test/r7rs-programs/64.scm'
-                    sh 'for f in *.log; do cp -- "$f" "reports/gauche-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/gauche-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -238,7 +238,7 @@ pipeline {
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm'
                     
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm'
-                    sh 'for f in *.log; do cp -- "$f" "reports/guile-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/guile-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -271,7 +271,7 @@ pipeline {
                     sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/1.scm'
                     
                     sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/64.scm'
-                    sh 'for f in *.log; do cp -- "$f" "reports/kawa-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/kawa-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -304,7 +304,7 @@ pipeline {
                     sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
                     sh 'ls srfi/64.sld  && ls srfi/64.sld'
                     sh 'LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
-                    sh 'for f in *.log; do cp -- "$f" "reports/loko-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/loko-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -337,7 +337,7 @@ pipeline {
                     sh 'mit-scheme --load srfi-test/r7rs-programs/1.scm'
                     
                     sh 'mit-scheme --load srfi-test/r7rs-programs/64.scm'
-                    sh 'for f in *.log; do cp -- "$f" "reports/mit-scheme-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/mit-scheme-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -370,7 +370,7 @@ pipeline {
                     sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/1.scm > srfi-1.log && cat srfi-1.log'
                     
                     sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log && cat srfi-64.log'
-                    sh 'for f in *.log; do cp -- "$f" "reports/sagittarius-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/sagittarius-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -403,7 +403,7 @@ pipeline {
                     sh 'stklos -I . srfi-test/r7rs-programs/1.scm'
                     
                     sh 'stklos -I . srfi-test/r7rs-programs/64.scm'
-                    sh 'for f in *.log; do cp -- "$f" "reports/stklos-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/stklos-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -436,7 +436,7 @@ pipeline {
                     sh 'skint --program srfi-test/r7rs-programs/1.scm'
                     
                     sh 'skint --program srfi-test/r7rs-programs/64.scm'
-                    sh 'for f in *.log; do cp -- "$f" "reports/skint-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/skint-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -469,7 +469,7 @@ pipeline {
                     sh 'tr7i srfi-test/r7rs-programs/1.scm'
                     
                     sh 'tr7i srfi-test/r7rs-programs/64.scm'
-                    sh 'for f in *.log; do cp -- "$f" "reports/tr7-$f.log"; done'
+                    sh 'for f in *.log; do cp -- "$f" "reports/tr7-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -484,6 +484,13 @@ pipeline {
                     unstash 'reports'
                     sh './report'
                     archiveArtifacts artifacts: 'reports/*.html'
+                    publishHTML (target : [allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'reports',
+                        reportFiles: '*.html,*.css',
+                        reportName: 'R7RS-SRFI Test Report',
+                        reportTitles: 'R7RS-SRFI Test Report'])
                 }
             }
         }
@@ -491,13 +498,16 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'reports/*.log'
+            archiveArtifacts artifacts: 'reports/*.html'
             deleteDir()
+==== BASE ====
+            archiveArtifacts artifacts: 'reports/*.log'
+==== BASE ====
+==== BASE ====
         }
         failure {
             deleteDir()
-            archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'reports/*.log'
         }
     }

@@ -5,6 +5,13 @@
                     unstash 'reports'
                     sh './report'
                     archiveArtifacts artifacts: 'reports/*.html'
+                    publishHTML (target : [allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'reports',
+                        reportFiles: '*.html,*.css',
+                        reportName: 'R7RS-SRFI Test Report',
+                        reportTitles: 'R7RS-SRFI Test Report'])
                 }
             }
         }
@@ -12,13 +19,16 @@
     }
     post {
         always {
-            archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'reports/*.log'
+            archiveArtifacts artifacts: 'reports/*.html'
             deleteDir()
+==== BASE ====
+            archiveArtifacts artifacts: 'reports/*.log'
+==== BASE ====
+==== BASE ====
         }
         failure {
             deleteDir()
-            archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'reports/*.log'
         }
     }
