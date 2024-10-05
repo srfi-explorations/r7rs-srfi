@@ -44,7 +44,7 @@
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job-top (compile (slurp "templates/Jenkinsfile-job-top")))
-(define jenkinsfile-srfi-job (compile (slurp "templates/Jenkinsfile-srfi-job")))
+(define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))
 (define jenkinsfile-job-bottom (compile (slurp "templates/Jenkinsfile-job-bottom")))
 (define jenkinsfile-bottom (compile (slurp "templates/Jenkinsfile-bottom")))
 
@@ -58,7 +58,7 @@
         (execute jenkinsfile-job-top `((name . ,(cdr (assoc 'name implementation)))) out)
         (for-each
           (lambda (srfi)
-            (execute jenkinsfile-srfi-job
+            (execute jenkinsfile-job
                      `((name . ,(cdr (assoc 'name implementation)))
                        (command . ,(full-command implementation srfi))
                        (library-command . ,(full-library-command implementation srfi))
