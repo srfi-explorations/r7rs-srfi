@@ -9,12 +9,12 @@ test-chicken-srfi-64:
 
 
 test-cyclone-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir &&  && cyclone -A . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -A . srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 
 test-gambit-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir &&  && gsc . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 
@@ -34,7 +34,7 @@ test-kawa-srfi-64:
 
 
 test-loko-srfi-64:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir &&  && ls srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 
@@ -74,12 +74,12 @@ test-chicken-srfi-8:
 
 
 test-cyclone-srfi-8:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir &&  && cyclone -A . srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -A . srfi/8.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 
 test-gambit-srfi-8:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir &&  && gsc . srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . srfi/8.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 
@@ -99,7 +99,7 @@ test-kawa-srfi-8:
 
 
 test-loko-srfi-8:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir &&  && ls srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/8.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 
@@ -139,12 +139,12 @@ test-chicken-srfi-1:
 
 
 test-cyclone-srfi-1:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir &&  && cyclone -A . srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -A . srfi/1.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
 
 
 test-gambit-srfi-1:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir &&  && gsc . srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc . srfi/1.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -exe . -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
 
 
@@ -164,7 +164,7 @@ test-kawa-srfi-1:
 
 
 test-loko-srfi-1:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir &&  && ls srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/1.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && LOKO_LIBRARY_FILE_EXTENSIONS=.sld loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
 
 

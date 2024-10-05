@@ -19,7 +19,7 @@
             ((string=? name "chicken")
              (string-append " cp srfi/" number ".sld srfi-" number ".sld"
                             " && " (cdr library-command) " srfi-" number ".sld"))
-            (else (string-append " && " (cdr library-command) " srfi/" number ".sld"))))))
+            (else (string-append (cdr library-command) " srfi/" number ".sld"))))))
 
 (define full-command
   (lambda (implementation srfi)
