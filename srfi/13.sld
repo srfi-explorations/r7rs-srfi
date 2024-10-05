@@ -2,16 +2,20 @@
   (srfi 13)
   (import (scheme base)
           (scheme char)
+          (srfi 8)
+          (srfi 14)
           (srfi 33))
   (export
-    string-map
+    ;; Already in R7RS
+    ;string-map
     string-map!
     string-fold
     string-unfold
     string-fold-right
     string-unfold-right
     string-tabulate
-    string-for-each
+    ;; Already in R7RS
+    ;string-for-each
     string-for-each-index
     string-every
     string-any
@@ -31,8 +35,10 @@
     string-ci<=
     string-ci>=
     string-ci<>
-    string-downcase
-    string-upcase
+    ;; Already in R7RS
+    ;string-downcase
+    ;; Already in R7RS
+    ;string-upcase
     string-titlecase
     string-downcase!
     string-upcase!
@@ -63,16 +69,19 @@
     string-suffix-ci?
     string-contains
     string-contains-ci
-    string-copy!
+    ;; Already in R7RS
+    ;string-copy!
     substring/shared
-    string-reverse
+    ;; Already in R7RS
+    ;string-reverse
     string-reverse!
     reverse-list->string
     string-concatenate
     string-concatenate/shared
     string-concatenate-reverse
     string-append/shared
-    xsubstring string-xcopy!
+    xsubstring
+    string-xcopy!
     string-null?
     string-join
     string-tokenize

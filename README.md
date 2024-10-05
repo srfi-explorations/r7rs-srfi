@@ -10,6 +10,16 @@ Use either:
 
     make test-IMPLEMENTATION-srfi-N
 
+With compiler implementations run the tests for SRFIs the SRFI you want to test needs to build them.
+
+So for example on Chicken to test SRFI-13 run:
+
+    make test-chicken-srfi-64
+    make test-chicken-srfi-33
+    make test-chicken-srfi-14
+    make test-chicken-srfi-13
+
+
 # Adding new srfi
 
 Add files:
@@ -18,8 +28,6 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
-    - srfi/N.rkt
-        - Shim file to support Racket
 
 You should be able to deduct what the contents of these files are from other SRFI implementations
 in this repository.
@@ -27,7 +35,7 @@ in this repository.
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
 The test file needs to be named N.scm.
 
-Add the SRFI data into srfis.scm.
+Add the SRFI data into srfis.scm. Keep the order by dependencies and mention them in the file.
 
 # Adding new implementation
 
@@ -35,7 +43,7 @@ Add the implementation data into implementations.scm, keep the order alphabetica
 The first SRFI you port to any new implementation should be SRFI-64. As it's the test suite used
 in SRFI tests.
 
-## Code origins, notes, articles and misc.
+## Notes, articles and misc.
 
 - SRFI-64
     - https://github.com/fisherro/snow-srfi-64

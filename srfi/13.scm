@@ -111,7 +111,201 @@
 ;;; Enough introductory blather. On to the source code. (But see the end of
 ;;; the file for further notes on porting & performance tuning.)
 
-
+
+;; Util procedures begin
+
+(define check-arg (lambda (pred val caller) (if (not (pred val)) (error val caller))))
+(define :optional (lambda (a b) (if (null? a) b (car a))))
+(define char-cased?
+  (lambda (c)
+    (let ((upcased (char-upcase c)))
+      (char-upper-case? upcased))))
+(define char-titlecase char-upcase)
+
+(define-syntax internal-let-optionals
+      (syntax-rules ()
+        ((internal-let-optionals arg (((var ...) xparser) opt-clause ...) body ...)
+         (call-with-values (lambda () (xparser arg))
+                           (lambda (rest var ...)
+                             (internal-let-optionals rest (opt-clause ...) body ...))))
+
+        ((internal-let-optionals arg ((var default) opt-clause ...) body ...)
+         (call-with-values (lambda () (if (null? arg) (values default '())
+                                        (values (car arg) (cdr arg))))
+                           (lambda (var rest)
+                             (internal-let-optionals rest (opt-clause ...) body ...))))
+
+        ((internal-let-optionals arg ((var default test) opt-clause ...) body ...)
+         (call-with-values (lambda ()
+                             (if (null? arg) (values default '())
+                               (let ((var (car arg)))
+                                 (if test (values var (cdr arg))
+                                   (error "arg failed LET-OPT test" var)))))
+                           (lambda (var rest)
+                             (internal-let-optionals rest (opt-clause ...) body ...))))
+
+        ((internal-let-optionals arg ((var default test supplied?) opt-clause ...) body ...)
+         (call-with-values (lambda ()
+                             (if (null? arg) (values default #f '())
+                               (let ((var (car arg)))
+                                 (if test (values var #t (cdr arg))
+                                   (error "arg failed LET-OPT test" var)))))
+                           (lambda (var supplied? rest)
+                             (internal-let-optionals rest (opt-clause ...) body ...))))
+
+        ((internal-let-optionals arg (rest) body ...)
+         (let ((rest arg)) body ...))
+
+        ((internal-let-optionals arg () body ...)
+         (if (null? arg) (begin body ...)
+           (error "Too many arguments in let-opt" arg)))))
+
+(define-syntax let-optionals*
+      (syntax-rules ()
+        ((let-optionals arg (opt-clause ...) body ...)
+         (let ((rest arg))
+           (internal-let-optionals rest (opt-clause ...) body ...)))))
+
+;; let-string-start+end from STklos begin
+;;;;
+;;;; srfi-13.stk                -- Implementation of SRFI-13
+;;;;
+;;;; Copyright © 2002-2022 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;;
+;;;;
+;;;; This program is free software; you can redistribute it and/or modify
+;;;; it under the terms of the GNU General Public License as published by
+;;;; the Free Software Foundation; either version 2 of the License, or
+;;;; (at your option) any later version.
+;;;;
+;;;; This program is distributed in the hope that it will be useful,
+;;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;;; GNU General Public License for more details.
+;;;;
+;;;; You should have received a copy of the GNU General Public License
+;;;; along with this program; if not, write to the Free Software
+;;;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+;;;; USA.
+;;;;
+;;;; This file is a derivative work from the Olin Shivers implementation of
+;;;; this SRFI, it is copyrighted as:
+;;;;
+;;;;   Copyright (c) 1988-1994 Massachusetts Institute of Technology.
+;;;;   Copyright (c) 1998, 1999, 2000 Olin Shivers. All rights reserved.
+;;;;     The details of the copyrights appear at the end of the file. Short
+;;;;     summary: BSD-style open source.
+;;;;
+;;;;           Author: Erick Gallesio [eg@essi.fr]
+;;;;    Creation date:  5-Jun-2002 19:20 (eg)
+;;;;
+
+(define-syntax let-string-start+end
+  (syntax-rules ()
+    ((_ (?start ?end ?rest) ?proc ?s ?args . ?body)
+     (call-with-values
+       (lambda () (string-parse-start+end ?proc ?s ?args))
+       (lambda (?rest ?start ?end) . ?body)))
+    ((_ (?start ?end) ?proc ?s ?args . ?body)
+     (call-with-values
+       (lambda () (string-parse-final-start+end ?proc ?s ?args))
+       (lambda (?start ?end) . ?body)))))
+;; let-string-start+end from STklos end
+
+;; make-kmp-restart-vector from Kawa begin
+;;; (make-kmp-restart-vector pattern [c= start end]) -> integer-vector
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Compute the KMP restart vector RV for string PATTERN.  If
+;;; we have matched chars 0..i-1 of PATTERN against a search string S, and
+;;; PATTERN[i] doesn't match S[k], then reset i := RV[i], and try again to
+;;; match S[k].  If RV[i] = -1, then punt S[k] completely, and move on to
+;;; S[k+1] and PATTERN[0] -- no possible match of PAT[0..i] contains S[k].
+;;;
+;;; In other words, if you have matched the first i chars of PATTERN, but
+;;; the i+1'th char doesn't match, RV[i] tells you what the next-longest
+;;; prefix of PATTERN is that you have matched.
+;;;
+;;; - C= (default CHAR=?) is used to compare characters for equality.
+;;;   Pass in CHAR-CI=? for case-folded string search.
+;;;
+;;; - START & END restrict the pattern to the indicated substring; the
+;;;   returned vector will be of length END - START. The numbers stored
+;;;   in the vector will be values in the range [0,END-START) -- that is,
+;;;   they are valid indices into the restart vector; you have to add START
+;;;   to them to use them as indices into PATTERN.
+;;;
+;;; I've split this out as a separate function in case other constant-string
+;;; searchers might want to use it.
+;;;
+;;; E.g.:
+;;;    a b d  a b x
+;;; #(-1 0 0 -1 1 2)
+(define (make-kmp-restart-vector pattern . maybe-c=+start+end)
+  (let-optionals* maybe-c=+start+end
+                  ((c= char=? (procedure? c=))
+                   ((start end) (lambda (args)
+                                  (string-parse-start+end make-kmp-restart-vector
+                                                          pattern args))))
+                  (let* ((rvlen (- end start))
+                         (rv (make-vector rvlen -1)))
+                    (if (> rvlen 0)
+                      (let ((rvlen-1 (- rvlen 1))
+                            (c0 (string-ref pattern start)))
+
+                        ;; Here's the main loop. We have set rv[0] ... rv[i].
+                        ;; K = I + START -- it is the corresponding index into PATTERN.
+                        (let lp1 ((i 0) (j -1) (k start))	
+                          (if (< i rvlen-1)
+                            ;; lp2 invariant:
+                            ;;   pat[(k-j) .. k-1] matches pat[start .. start+j-1]
+                            ;;   or j = -1.
+                            (let lp2 ((j j))
+                              (cond ((= j -1)
+                                     (let ((i1 (+ 1 i)))
+                                       (if (not (c= (string-ref pattern (+ k 1)) c0))
+                                         (vector-set! rv i1 0))
+                                       (lp1 i1 0 (+ k 1))))
+                                    ;; pat[(k-j) .. k] matches pat[start..start+j].
+                                    ((c= (string-ref pattern k) (string-ref pattern (+ j start)))
+                                     (let* ((i1 (+ 1 i))
+                                            (j1 (+ 1 j)))
+                                       (vector-set! rv i1 j1)
+                                       (lp1 i1 j1 (+ k 1))))
+
+                                    (else (lp2 (vector-ref rv j)))))))))
+                    rv)))
+;; make-kmp-restart-vector from Kawa end
+
+;; string-kmp-partial-search from Kawa begin
+(define (string-kmp-partial-search pat rv s i . c=+p-start+s-start+s-end)
+  (check-arg vector? rv string-kmp-partial-search)
+  (let-optionals* c=+p-start+s-start+s-end
+                  ((c=      char=? (procedure? c=))
+                   (p-start 0 (and (integer? p-start) (exact? p-start) (<= 0 p-start)))
+                   ((s-start s-end) (lambda (args)
+                                      (string-parse-start+end string-kmp-partial-search
+                                                              s args))))
+                  (let ((patlen (vector-length rv)))
+                    (check-arg (lambda (i) (and (integer? i) (exact? i) (<= 0 i) (< i patlen)))
+                               i string-kmp-partial-search)
+
+                    ;; Enough prelude. Here's the actual code.
+                    (let lp ((si s-start)		; An index into S.
+                             (vi i))			; An index into RV.
+                      (cond ((= vi patlen) (- si))	; Win.
+                            ((= si s-end) vi)		; Ran off the end.
+                            (else			; Match s[si] & loop.
+                              (let ((c (string-ref s si)))
+                                (lp (+ si 1)	
+                                    (let lp2 ((vi vi))	; This is just KMP-STEP.
+                                      (if (c= c (string-ref pat (+ vi p-start)))
+                                        (+ vi 1)
+                                        (let ((vi (vector-ref rv vi)))
+                                          (if (= vi -1) 0
+                                            (lp2 vi)))))))))))))
+;; string-kmp-partial-search from Kawa end
+;; Util procedures end
+
 ;;; Support for START/END substring specs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; This macro parses optional start/end arguments from arg lists, defaulting
@@ -221,7 +415,8 @@
   (if (and (zero? start) (= end (string-length s))) s
     (substring s start end)))
 
-(define (string-copy s . maybe-start+end)
+;; Already in R7RS
+#;(define (string-copy s . maybe-start+end)
   (let-string-start+end (start end) string-copy s maybe-start+end
                         (substring s start end)))
 
@@ -253,7 +448,9 @@
 ;;; You'd at least like a lot of inlining for clients of these procedures.
 ;;; Don't hold your breath.
 
-(define (string-map proc s . maybe-start+end)
+
+;; Already in R7RS
+#;(define (string-map proc s . maybe-start+end)
   (check-arg procedure? proc string-map)
   (let-string-start+end (start end) string-map s maybe-start+end
                         (%string-map proc s start end)))
@@ -450,7 +647,8 @@
                           ans))))))
 
 
-(define (string-for-each proc s . maybe-start+end)
+;; Already in R7RS
+#;(define (string-for-each proc s . maybe-start+end)
   (check-arg procedure? proc string-for-each)
   (let-string-start+end (start end) string-for-each s maybe-start+end
                         (let lp ((i start))
@@ -918,7 +1116,8 @@
 ;;;   Capitalize every contiguous alpha sequence: capitalise
 ;;;   first char, lowercase rest.
 
-(define (string-upcase  s . maybe-start+end)
+;; Already in R7RS
+#;(define (string-upcase  s . maybe-start+end)
   (let-string-start+end (start end) string-upcase s maybe-start+end
                         (%string-map char-upcase s start end)))
 
@@ -926,7 +1125,8 @@
   (let-string-start+end (start end) string-upcase! s maybe-start+end
                         (%string-map! char-upcase s start end)))
 
-(define (string-downcase  s . maybe-start+end)
+;; Already in R7RS
+#;(define (string-downcase  s . maybe-start+end)
   (let-string-start+end (start end) string-downcase s maybe-start+end
                         (%string-map char-downcase s start end)))
 
@@ -1252,14 +1452,16 @@
 ;;; string-copy! to tstart from [fstart fend]
 ;;;     Guaranteed to work, even if s1 eq s2.
 
-(define (string-fill! s char . maybe-start+end)
+;; Already in R7RS
+#;(define (string-fill! s char . maybe-start+end)
   (check-arg char? char string-fill!)
   (let-string-start+end (start end) string-fill! s maybe-start+end
                         (do ((i (- end 1) (- i 1)))
                           ((< i start))
                           (string-set! s i char))))
 
-(define (string-copy! to tstart from . maybe-fstart+fend)
+;; Already in R7RS
+#;(define (string-copy! to tstart from . maybe-fstart+fend)
   (let-string-start+end (fstart fend) string-copy! from maybe-fstart+fend
                         (check-arg integer? tstart string-copy!)
                         (check-substring-spec string-copy! to tstart (+ tstart (- fend fstart)))
@@ -1482,7 +1684,8 @@
 
 (define (string-null? s) (zero? (string-length s)))
 
-(define (string-reverse s . maybe-start+end)
+;; Already in R7RS
+#;(define (string-reverse s . maybe-start+end)
   (let-string-start+end (start end) string-reverse s maybe-start+end
                         (let* ((len (- end start))
                                (ans (make-string len)))
@@ -1514,7 +1717,7 @@
 ;(define (string->list s . maybe-start+end)
 ;  (apply string-fold-right cons '() s maybe-start+end))
 
-(define (string->list s . maybe-start+end)
+#;(define (string->list s . maybe-start+end)
   (let-string-start+end (start end) string->list s maybe-start+end
                         (do ((i (- end 1) (- i 1))
                              (ans '() (cons (string-ref s i) ans)))
