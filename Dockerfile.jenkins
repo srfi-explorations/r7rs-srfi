@@ -1,2 +1,4 @@
 FROM schemers/gauche
-RUN apt update && apt install -y docker.io make bash curl tree file chibi-scheme
+RUN apt update && apt install -y docker.io make bash curl wget tree file build-essential
+RUN wget https://github.com/ashinn/chibi-scheme/archive/refs/tags/0.11.tar.gz && tar -xf 0.11.tar.gz
+RUN cd chibi-scheme-0.11 && ./configure && 3make && make install
