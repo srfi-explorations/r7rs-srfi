@@ -10,6 +10,8 @@ Use either:
 
     make test-IMPLEMENTATION-srfi-N
 
+With compiler implementations run the tests for SRFIs the SRFI you want to test needs to build them.
+
 # Adding new srfi
 
 Add files:
