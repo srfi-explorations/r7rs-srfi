@@ -459,10 +459,10 @@ pipeline {
                     sh './report'
                     archiveArtifacts artifacts: 'reports/*.html'
                     publishHTML (target : [allowMissing: false,
-                        alwaysLinkToLastBuild: true,
+                        alwaysLinkToLastBuild: false,
                         keepAll: true,
                         reportDir: 'reports',
-                        reportFiles: '*.html',
+                        reportFiles: '*.html,*.css',
                         reportName: 'R7RS-SRFI Test Report',
                         reportTitles: 'R7RS-SRFI Test Report'])
                 }
