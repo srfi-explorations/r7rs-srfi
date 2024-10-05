@@ -2,17 +2,18 @@
 
 set -euxo
 
-
+WORKDIR=${PWD}
 VERSION=$(cat VERSION)
 
 rm -rf packages
 mkdir -p packages
 
-cd srfi
+cd ${WORKDIR}/srfi
 for f in *.sld
 do
+    package_name=srfi-${f/.sld}-${VERSION}
     rm -rf /tmp/srfi
-    mkdir -p /tmp/srfi
+    mkdir -p /tmp/srfi/${package_name}/srfi
 
     number=${f/.sld}
     dependencies=$(gosh -r7 ../get-dependencies.scm ${f})
@@ -25,17 +26,22 @@ do
         echo "    (name (srfi ${number}))"
         echo "    (path \"srfi/${number}.sld\")"
         echo "    (depends ${dependencies})))"
-    } > /tmp/srfi/package.scm
+    } > /tmp/srfi/${package_name}/package.scm
 
     echo "${f} package.scm: "
-    cat /tmp/srfi/package.scm
+    cat /tmp/srfi/${package_name}/package.scm
 
-    cp ${f} /tmp/srfi/
-    cp ${f/.sld/.scm} /tmp/srfi/
+    cp ${f} /tmp/srfi/${package_name}/srfi
+    cp ${f/.sld/.scm} /tmp/srfi/${package_name}/srfi
+
     echo "Packaging /tmp/srfi"
-    tree /tmp/srfi
-    tar -czvf ../packages/srfi-${f/.sld/}-${VERSION}.tgz /tmp/srfi
+    cd /tmp/srfi
 
+    tree .
+
+    tar -czvf ${WORKDIR}/packages/srfi-${f/.sld/}-${VERSION}.tgz ${package_name}
+
+    cd ${WORKDIR}/srfi
 done
 cd ..
 
