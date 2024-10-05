@@ -1,2 +1,2 @@
 FROM schemers/gauche
-RUN apt update && apt install -y docker.io make bash curl tree file
+RUN apt update && apt install -y docker.io make bash curl wget tree file build-essential git

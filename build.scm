@@ -17,12 +17,10 @@
       (cond ((not library-command) #f)
             ; Note that Chicken needs to have the SRFI library as srfi-N.scm in same folder
             ((string=? name "chicken")
-             (string-append "cp srfi/64.sld srfi-64.sld"
-                            " && " (cdr library-command) " srfi-64.sld "
-                            " && cp srfi/" number ".sld srfi-" number ".sld"
+             (string-append " cp srfi/" number ".sld srfi-" number ".sld"
                             " && " (cdr library-command) " srfi-" number ".sld"))
-            (else (string-append (string-append (cdr library-command) " srfi/64.sld ")
-                                 " && " (cdr library-command) " srfi/" number ".sld"))))))
+            (else (string-append (cdr library-command)
+                                 " srfi/" number (if (string=? name "gambit") "" ".sld")))))))
 
 (define full-command
   (lambda (implementation srfi)
@@ -47,7 +45,7 @@
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job-top (compile (slurp "templates/Jenkinsfile-job-top")))
-(define jenkinsfile-srfi-job (compile (slurp "templates/Jenkinsfile-srfi-job")))
+(define jenkinsfile-job (compile (slurp "templates/Jenkinsfile-job")))
 (define jenkinsfile-job-bottom (compile (slurp "templates/Jenkinsfile-job-bottom")))
 (define jenkinsfile-bottom (compile (slurp "templates/Jenkinsfile-bottom")))
 
@@ -58,18 +56,23 @@
     (newline out)
     (for-each
       (lambda (implementation)
-        (execute jenkinsfile-job-top `((name . ,(cdr (assoc 'name implementation)))) out)
-        (for-each
-          (lambda (srfi)
-            (execute jenkinsfile-srfi-job
-                     `((name . ,(cdr (assoc 'name implementation)))
-                       (command . ,(full-command implementation srfi))
-                       (library-command . ,(full-library-command implementation srfi))
-                       (number . ,(cdr (assoc 'number srfi))))
-                     out))
-          srfis)
-            (execute jenkinsfile-job-bottom `((name . ,(cdr (assoc 'name implementation)))) out)
-            (newline out))
+        (let ((name (symbol->string (cdr (assoc 'name implementation)))))
+          (execute jenkinsfile-job-top
+                   `((name . ,name)
+                     (dockerimage . ,(if (assoc 'docker-image implementation)
+                                       (cdr (assoc 'docker-image implementation))
+                                       (string-append "schemers/" name)))) out)
+          (for-each
+            (lambda (srfi)
+              (execute jenkinsfile-job
+                       `((name . ,name)
+                         (command . ,(full-command implementation srfi))
+                         (library-command . ,(full-library-command implementation srfi))
+                         (number . ,(cdr (assoc 'number srfi))))
+                       out))
+            srfis)
+          (execute jenkinsfile-job-bottom `((name . ,(cdr (assoc 'name implementation)))) out)
+          (newline out)))
       implementations)
     (execute jenkinsfile-bottom '() out)
     (newline out)))
