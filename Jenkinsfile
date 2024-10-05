@@ -552,6 +552,9 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'reports/*.log'
             archiveArtifacts artifacts: 'reports/*.html'
+            sh 'for f in srfi/*.sld; do snow-chibi package "$f"; done'
+            archiveArtifacts artifacts: '*.tgz'
+            archiveArtifacts artifacts: 'srfi/*.tgz'
             deleteDir()
         }
         failure {
