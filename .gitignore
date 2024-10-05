@@ -15,4 +15,5 @@ srfi.*.scm
 srfi.*.sld
 test-prefix.txt
 reports
+packages
 srfi-test
