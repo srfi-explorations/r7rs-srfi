@@ -1,10 +1,15 @@
+# R7RS-SRFI
+
+This is a project for collection of R7RS SRFI implementations.
+
+
 # Building
 
-Use either:
+Make sure you have Gauche installed and run:
 
-- ./generate-kawa
-- ./generate-gauche
-
+    git clone https://github.com/srfi-explorations/srfi-test.git
+    make -C srfi-test
+    ./generate
 
 # Running tests
 
