@@ -3,6 +3,7 @@
 This is a project for collection of R7RS SRFI implementations.
 
 [Builds](https://jenkins.staging.scheme.org/job/r7rs/job/r7rs-srfi/)
+[Tests used](https://github.com/srfi-explorations/srfi-test)
 
 # Building
 
