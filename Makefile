@@ -1,12 +1,12 @@
 test-64-chibi:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-chibi-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-chicken:
 	make clean
@@ -41,32 +41,32 @@ test-64-gambit-head:
 test-64-gauche:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-gauche-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-guile:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-guile-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-kawa:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-kawa-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-loko:
 	make clean
@@ -81,72 +81,72 @@ test-64-loko-head:
 test-64-mit-scheme:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-mit-scheme-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-racket:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-racket-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-sagittarius:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-sagittarius-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-stklos:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-stklos-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-skint:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint --program srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint --program srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-skint-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint --program srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint --program srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-tr7:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-64-tr7-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/64.scm > srfi-64.log"
 
 test-8-chibi:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-chibi-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-chicken:
 	make clean
@@ -181,32 +181,32 @@ test-8-gambit-head:
 test-8-gauche:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-gauche-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-guile:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-guile-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-kawa:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-kawa-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-loko:
 	make clean
@@ -221,72 +221,72 @@ test-8-loko-head:
 test-8-mit-scheme:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-mit-scheme-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-racket:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-racket-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-sagittarius:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-sagittarius-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-stklos:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-stklos-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-skint:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint --program srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint --program srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-skint-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint --program srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint --program srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-tr7:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-8-tr7-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/8.scm > srfi-8.log"
 
 test-1-chibi:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-chibi-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I ./srfi srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-chicken:
 	make clean
@@ -321,32 +321,32 @@ test-1-gambit-head:
 test-1-gauche:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-gauche-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-guile:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-guile-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-kawa:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-kawa-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-loko:
 	make clean
@@ -361,62 +361,62 @@ test-1-loko-head:
 test-1-mit-scheme:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-mit-scheme-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-racket:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-racket-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-sagittarius:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-sagittarius-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-stklos:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-stklos-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-skint:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint --program srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint --program srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-skint-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint --program srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint --program srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-tr7:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 test-1-tr7-head:
 	make clean
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/1.scm > srfi-1.log"
 
 clean:
 	find . -name "*.so" -delete
