@@ -46,6 +46,8 @@ in SRFI tests.
 
 ## Code origins, notes, articles and misc.
 
+- SRFI-28
+    - Reference implementation as basea https://srfi.schemers.org/srfi-28/srfi-28.html
 - SRFI-64
     - https://github.com/fisherro/snow-srfi-64
     - https://mdhughes.tech/2020/02/27/scheme-test-unit/

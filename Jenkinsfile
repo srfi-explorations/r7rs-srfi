@@ -78,6 +78,8 @@ pipeline {
                     
                     sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/1.scm'
                     
+                    sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/28.scm'
+                    
                     sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/33.scm'
                     
                     sh 'chibi-scheme -I ./srfi srfi-test/r7rs-programs/14.scm'
@@ -118,6 +120,8 @@ pipeline {
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh ' cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld'
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
+                    sh ' cp srfi/28.sld srfi-28.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-28.sld'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28'
                     sh ' cp srfi/33.sld srfi-33.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-33.sld'
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/33.scm && srfi-test/r7rs-programs/33 && rm srfi-test/r7rs-programs/33'
                     sh ' cp srfi/14.sld srfi-14.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-14.sld'
@@ -159,6 +163,8 @@ pipeline {
                     sh 'cyclone -A . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh 'cyclone -A . srfi/1.sld'
                     sh 'cyclone -A . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
+                    sh 'cyclone -A . srfi/28.sld'
+                    sh 'cyclone -A . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28'
                     sh 'cyclone -A . srfi/33.sld'
                     sh 'cyclone -A . srfi-test/r7rs-programs/33.scm && srfi-test/r7rs-programs/33 && rm srfi-test/r7rs-programs/33'
                     sh 'cyclone -A . srfi/14.sld'
@@ -200,6 +206,8 @@ pipeline {
                     sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh 'gsc . srfi/1'
                     sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
+                    sh 'gsc . srfi/28'
+                    sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28'
                     sh 'gsc . srfi/33'
                     sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/33.scm && srfi-test/r7rs-programs/33 && rm srfi-test/r7rs-programs/33'
                     sh 'gsc . srfi/14'
@@ -242,6 +250,8 @@ pipeline {
                     
                     sh 'gosh -r7 srfi-test/r7rs-programs/1.scm'
                     
+                    sh 'gosh -r7 srfi-test/r7rs-programs/28.scm'
+                    
                     sh 'gosh -r7 srfi-test/r7rs-programs/33.scm'
                     
                     sh 'gosh -r7 srfi-test/r7rs-programs/14.scm'
@@ -282,6 +292,8 @@ pipeline {
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm'
                     
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm'
+                    
+                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/28.scm'
                     
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/33.scm'
                     
@@ -324,6 +336,8 @@ pipeline {
                     
                     sh 'kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm'
                     
+                    sh 'kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm'
+                    
                     sh 'kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/33.scm'
                     
                     sh 'kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/14.scm'
@@ -364,6 +378,8 @@ pipeline {
                     sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh 'ls srfi/1.sld'
                     sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
+                    sh 'ls srfi/28.sld'
+                    sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28'
                     sh 'ls srfi/33.sld'
                     sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/33.scm && srfi-test/r7rs-programs/33 && rm srfi-test/r7rs-programs/33'
                     sh 'ls srfi/14.sld'
@@ -406,6 +422,8 @@ pipeline {
                     
                     sh 'mit-scheme --load srfi-test/r7rs-programs/1.scm'
                     
+                    sh 'mit-scheme --load srfi-test/r7rs-programs/28.scm'
+                    
                     sh 'mit-scheme --load srfi-test/r7rs-programs/33.scm'
                     
                     sh 'mit-scheme --load srfi-test/r7rs-programs/14.scm'
@@ -446,6 +464,8 @@ pipeline {
                     sh 'sash -r7 -L . srfi-test/r7rs-programs/8.scm > srfi-8.log && cat srfi-8.log'
                     
                     sh 'sash -r7 -L . srfi-test/r7rs-programs/1.scm > srfi-1.log && cat srfi-1.log'
+                    
+                    sh 'sash -r7 -L . srfi-test/r7rs-programs/28.scm > srfi-28.log && cat srfi-28.log'
                     
                     sh 'sash -r7 -L . srfi-test/r7rs-programs/33.scm > srfi-33.log && cat srfi-33.log'
                     
@@ -488,6 +508,8 @@ pipeline {
                     
                     sh 'stklos -I . srfi-test/r7rs-programs/1.scm'
                     
+                    sh 'stklos -I . srfi-test/r7rs-programs/28.scm'
+                    
                     sh 'stklos -I . srfi-test/r7rs-programs/33.scm'
                     
                     sh 'stklos -I . srfi-test/r7rs-programs/14.scm'
@@ -529,6 +551,8 @@ pipeline {
                     
                     sh 'skint --program srfi-test/r7rs-programs/1.scm'
                     
+                    sh 'skint --program srfi-test/r7rs-programs/28.scm'
+                    
                     sh 'skint --program srfi-test/r7rs-programs/33.scm'
                     
                     sh 'skint --program srfi-test/r7rs-programs/14.scm'
@@ -569,6 +593,8 @@ pipeline {
                     sh 'tr7i srfi-test/r7rs-programs/8.scm'
                     
                     sh 'tr7i srfi-test/r7rs-programs/1.scm'
+                    
+                    sh 'tr7i srfi-test/r7rs-programs/28.scm'
                     
                     sh 'tr7i srfi-test/r7rs-programs/33.scm'
                     
