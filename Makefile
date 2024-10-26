@@ -11,32 +11,32 @@ test-64-chibi-head:
 test-64-chicken:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 > srfi-64.log && rm srfi-test/r7rs-programs/64"
 
 test-64-chicken-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 > srfi-64.log && rm srfi-test/r7rs-programs/64"
 
 test-64-cyclone:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -A . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 > srfi-64.log && rm srfi-test/r7rs-programs/64"
 
 test-64-cyclone-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -A . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 > srfi-64.log && rm srfi-test/r7rs-programs/64"
 
 test-64-gambit:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc . srfi/64"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 > srfi-64.log && rm srfi-test/r7rs-programs/64"
 
 test-64-gambit-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc . srfi/64"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 > srfi-64.log && rm srfi-test/r7rs-programs/64"
 
 test-64-gauche:
 	make clean
@@ -71,12 +71,12 @@ test-64-kawa-head:
 test-64-loko:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 > srfi-64.log && rm srfi-test/r7rs-programs/64"
 
 test-64-loko-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 > srfi-64.log && rm srfi-test/r7rs-programs/64"
 
 test-64-mit-scheme:
 	make clean
@@ -151,32 +151,32 @@ test-8-chibi-head:
 test-8-chicken:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 > srfi-8.log && rm srfi-test/r7rs-programs/8"
 
 test-8-chicken-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 > srfi-8.log && rm srfi-test/r7rs-programs/8"
 
 test-8-cyclone:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -A . srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 > srfi-8.log && rm srfi-test/r7rs-programs/8"
 
 test-8-cyclone-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -A . srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 > srfi-8.log && rm srfi-test/r7rs-programs/8"
 
 test-8-gambit:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc . srfi/8"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 > srfi-8.log && rm srfi-test/r7rs-programs/8"
 
 test-8-gambit-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc . srfi/8"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 > srfi-8.log && rm srfi-test/r7rs-programs/8"
 
 test-8-gauche:
 	make clean
@@ -211,12 +211,12 @@ test-8-kawa-head:
 test-8-loko:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 > srfi-8.log && rm srfi-test/r7rs-programs/8"
 
 test-8-loko-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 > srfi-8.log && rm srfi-test/r7rs-programs/8"
 
 test-8-mit-scheme:
 	make clean
@@ -291,32 +291,32 @@ test-1-chibi-head:
 test-1-chicken:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 > srfi-1.log && rm srfi-test/r7rs-programs/1"
 
 test-1-chicken-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 > srfi-1.log && rm srfi-test/r7rs-programs/1"
 
 test-1-cyclone:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -A . srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 > srfi-1.log && rm srfi-test/r7rs-programs/1"
 
 test-1-cyclone-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -A . srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -A . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 > srfi-1.log && rm srfi-test/r7rs-programs/1"
 
 test-1-gambit:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc . srfi/1"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 > srfi-1.log && rm srfi-test/r7rs-programs/1"
 
 test-1-gambit-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc . srfi/1"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 > srfi-1.log && rm srfi-test/r7rs-programs/1"
 
 test-1-gauche:
 	make clean
@@ -351,12 +351,12 @@ test-1-kawa-head:
 test-1-loko:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 > srfi-1.log && rm srfi-test/r7rs-programs/1"
 
 test-1-loko-head:
 	make clean
 	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 > srfi-1.log && rm srfi-test/r7rs-programs/1"
 
 test-1-mit-scheme:
 	make clean

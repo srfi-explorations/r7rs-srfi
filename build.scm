@@ -34,7 +34,7 @@
       (cond
         ((not library-command) (string-append command " > srfi-" number ".log"))
         (else (string-append command
-                             " && srfi-test/r7rs-programs/" number
+                             " && srfi-test/r7rs-programs/" number " > srfi-" number ".log"
                              " && rm srfi-test/r7rs-programs/" number))))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
