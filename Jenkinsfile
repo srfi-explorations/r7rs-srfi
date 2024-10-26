@@ -81,6 +81,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -118,6 +119,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -155,6 +157,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -192,6 +195,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -229,6 +233,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -266,6 +271,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -303,6 +309,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -340,6 +347,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -377,6 +385,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -414,6 +423,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -451,6 +461,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -488,6 +499,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -525,6 +537,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -562,6 +575,7 @@ pipeline {
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
