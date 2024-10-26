@@ -32,13 +32,7 @@
                " srfi-test/r7rs-programs/" number ".scm"))
            (library-command (assoc 'library-command implementation)))
       (cond
-        ((not library-command)
-         (string-append command
-                        ; Sagittarius does not make .log file for some reason
-                        ; Temporary fix to get atleast something out
-                        (if (string=? name "sagittarius")
-                          (string-append " > srfi-" number ".log && cat srfi-" number ".log")
-                          "")))
+        ((not library-command) command)
         (else (string-append command
                              " && srfi-test/r7rs-programs/" number
                              " && rm srfi-test/r7rs-programs/" number))))))
@@ -49,33 +43,40 @@
 (define jenkinsfile-job-bottom (compile (slurp "templates/Jenkinsfile-job-bottom")))
 (define jenkinsfile-bottom (compile (slurp "templates/Jenkinsfile-bottom")))
 
-(call-with-output-file
-  "Jenkinsfile"
-  (lambda (out)
-    (execute jenkinsfile-top '() out)
-    (newline out)
-    (for-each
-      (lambda (implementation)
-        (let ((name (symbol->string (cdr (assoc 'name implementation)))))
-          (execute jenkinsfile-job-top
-                   `((name . ,name)
-                     (dockerimage . ,(if (assoc 'docker-image implementation)
-                                       (cdr (assoc 'docker-image implementation))
-                                       (string-append "schemers/" name)))) out)
-          (for-each
-            (lambda (srfi)
-              (execute jenkinsfile-job
+(define generate-jenkinsfile
+  (lambda (head?)
+    (call-with-output-file
+      (string-append "Jenkinsfile" (if head? "-head" ""))
+      (lambda (out)
+        (execute jenkinsfile-top '() out)
+        (newline out)
+        (for-each
+          (lambda (implementation)
+            (let ((name (symbol->string (cdr (assoc 'name implementation)))))
+              (execute jenkinsfile-job-top
                        `((name . ,name)
-                         (command . ,(full-command implementation srfi))
-                         (library-command . ,(full-library-command implementation srfi))
-                         (number . ,(cdr (assoc 'number srfi))))
-                       out))
-            srfis)
-          (execute jenkinsfile-job-bottom `((name . ,(cdr (assoc 'name implementation)))) out)
-          (newline out)))
-      implementations)
-    (execute jenkinsfile-bottom '() out)
-    (newline out)))
+                         (dockerimage . ,(if (assoc 'docker-image implementation)
+                                           (cdr (assoc 'docker-image implementation))
+                                           (string-append "schemers/"
+                                                          name
+                                                          (if head? ":head" ":latest"))))) out)
+              (for-each
+                (lambda (srfi)
+                  (execute jenkinsfile-job
+                           `((name . ,name)
+                             (command . ,(full-command implementation srfi))
+                             (library-command . ,(full-library-command implementation srfi))
+                             (number . ,(cdr (assoc 'number srfi))))
+                           out))
+                srfis)
+              (execute jenkinsfile-job-bottom `((name . ,(cdr (assoc 'name implementation)))) out)
+              (newline out)))
+          implementations)
+        (execute jenkinsfile-bottom '() out)
+        (newline out)))))
+
+(generate-jenkinsfile #f)
+(generate-jenkinsfile #t)
 
 (define makefile-top (compile (slurp "templates/Makefile-top")))
 (define makefile-job (compile (slurp "templates/Makefile-job")))

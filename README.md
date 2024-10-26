@@ -38,9 +38,4 @@ in SRFI tests.
 ## Code origins, notes, articles and misc.
 
 - SRFI-64
-    - https://github.com/fisherro/snow-srfi-64
-    - https://mdhughes.tech/2020/02/27/scheme-test-unit/
-    - https://wolfsden.cz/blog/post/state-of-srfi-64.html
-    - https://github.com/mnieper/scheme-libraries-fork/blob/main/lib/scheme-libraries/testing.sls
-        - This should produce [TAP](https://testanything.org/) output
-    - tr7 does not have (scheme complex) support as the time of writing (2024-09-28)
+    - Taken from Guile's new implementation and mutilated to cooperation

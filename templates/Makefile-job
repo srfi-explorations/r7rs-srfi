@@ -1,4 +1,9 @@
-test-{{name}}-srfi-{{number}}:
-	{{#library-command}}docker run -it -v ${PWD}:/workdir:z schemers/{{name}} bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
-	docker run -it -v ${PWD}:/workdir:z schemers/{{name}} bash -c "cd workdir && {{{command}}}"
+test-{{number}}-{{name}}:
+	make clean
+	{{#library-command}}docker run -it -v ${PWD}:/workdir:z schemers/{{name}}:latest bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
+	docker run -it -v ${PWD}:/workdir:z schemers/{{name}}:latest bash -c "cd workdir && {{{command}}}"
 
+test-{{number}}-{{name}}-head:
+	make clean
+	{{#library-command}}docker run -it -v ${PWD}:/workdir:z schemers/{{name}}:head bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
+	docker run -it -v ${PWD}:/workdir:z schemers/{{name}}:head bash -c "cd workdir && {{{command}}}"

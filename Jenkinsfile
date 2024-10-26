@@ -51,7 +51,7 @@ pipeline {
         stage("chibi") {
             agent {
                 docker {
-                    image 'schemers/chibi'
+                    image 'schemers/chibi:latest'
                     reuseNode true
                 }
             }
@@ -88,7 +88,7 @@ pipeline {
         stage("chicken") {
             agent {
                 docker {
-                    image 'schemers/chicken'
+                    image 'schemers/chicken:latest'
                     reuseNode true
                 }
             }
@@ -125,7 +125,7 @@ pipeline {
         stage("cyclone") {
             agent {
                 docker {
-                    image 'schemers/cyclone'
+                    image 'schemers/cyclone:latest'
                     reuseNode true
                 }
             }
@@ -162,7 +162,7 @@ pipeline {
         stage("gambit") {
             agent {
                 docker {
-                    image 'schemers/gambit'
+                    image 'schemers/gambit:latest'
                     reuseNode true
                 }
             }
@@ -183,11 +183,11 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     sh 'gsc . srfi/64'
-                    sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
+                    sh 'gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64'
                     sh 'gsc . srfi/8'
-                    sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
+                    sh 'gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8'
                     sh 'gsc . srfi/1'
-                    sh 'gsc -exe . -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
+                    sh 'gsc -:r7rs -exe . -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1'
                     sh 'for f in *.log; do cp -- "$f" "reports/gambit-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -199,7 +199,7 @@ pipeline {
         stage("gauche") {
             agent {
                 docker {
-                    image 'schemers/gauche'
+                    image 'schemers/gauche:latest'
                     reuseNode true
                 }
             }
@@ -220,11 +220,11 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'gosh -r7 srfi-test/r7rs-programs/64.scm'
+                    sh 'gosh -r7 -I . srfi-test/r7rs-programs/64.scm'
                     
-                    sh 'gosh -r7 srfi-test/r7rs-programs/8.scm'
+                    sh 'gosh -r7 -I . srfi-test/r7rs-programs/8.scm'
                     
-                    sh 'gosh -r7 srfi-test/r7rs-programs/1.scm'
+                    sh 'gosh -r7 -I . srfi-test/r7rs-programs/1.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/gauche-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -236,7 +236,7 @@ pipeline {
         stage("guile") {
             agent {
                 docker {
-                    image 'schemers/guile'
+                    image 'schemers/guile:latest'
                     reuseNode true
                 }
             }
@@ -273,7 +273,7 @@ pipeline {
         stage("kawa") {
             agent {
                 docker {
-                    image 'schemers/kawa'
+                    image 'schemers/kawa:latest'
                     reuseNode true
                 }
             }
@@ -294,11 +294,11 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/64.scm'
+                    sh 'kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/64.scm'
                     
-                    sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/8.scm'
+                    sh 'kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/8.scm'
                     
-                    sh 'kawa --r7rs -Dkawa.import.path=..:*.sld srfi-test/r7rs-programs/1.scm'
+                    sh 'kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/1.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/kawa-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -347,7 +347,7 @@ pipeline {
         stage("mit-scheme") {
             agent {
                 docker {
-                    image 'schemers/mit-scheme'
+                    image 'schemers/mit-scheme:latest'
                     reuseNode true
                 }
             }
@@ -381,10 +381,47 @@ pipeline {
             }
         }
 
+        stage("racket") {
+            agent {
+                docker {
+                    image 'schemers/racket:latest'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'racket'
+                }
+            }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi"
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
+                    
+                    sh 'racket -I r7rs -S . --script srfi-test/r7rs-programs/64.scm'
+                    
+                    sh 'racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm'
+                    
+                    sh 'racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm'
+                    sh 'for f in *.log; do cp -- "$f" "reports/racket-$f"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                }
+            }
+        }
+
         stage("sagittarius") {
             agent {
                 docker {
-                    image 'schemers/sagittarius'
+                    image 'schemers/sagittarius:latest'
                     reuseNode true
                 }
             }
@@ -405,11 +442,11 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/64.scm > srfi-64.log && cat srfi-64.log'
+                    sh 'sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/64.scm'
                     
-                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log && cat srfi-8.log'
+                    sh 'sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm'
                     
-                    sh 'sash -r7 -L ./srfi srfi-test/r7rs-programs/1.scm > srfi-1.log && cat srfi-1.log'
+                    sh 'sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/sagittarius-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -421,7 +458,7 @@ pipeline {
         stage("stklos") {
             agent {
                 docker {
-                    image 'schemers/stklos'
+                    image 'schemers/stklos:latest'
                     reuseNode true
                 }
             }
@@ -442,11 +479,11 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'stklos -I . srfi-test/r7rs-programs/64.scm'
+                    sh 'stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm'
                     
-                    sh 'stklos -I . srfi-test/r7rs-programs/8.scm'
+                    sh 'stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm'
                     
-                    sh 'stklos -I . srfi-test/r7rs-programs/1.scm'
+                    sh 'stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm'
                     sh 'for f in *.log; do cp -- "$f" "reports/stklos-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -458,7 +495,7 @@ pipeline {
         stage("skint") {
             agent {
                 docker {
-                    image 'schemers/skint'
+                    image 'schemers/skint:latest'
                     reuseNode true
                 }
             }
@@ -495,7 +532,7 @@ pipeline {
         stage("tr7") {
             agent {
                 docker {
-                    image 'schemers/tr7'
+                    image 'schemers/tr7:latest'
                     reuseNode true
                 }
             }

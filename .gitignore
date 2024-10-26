@@ -9,10 +9,10 @@ test-prefix
 *.zo
 *.meta
 compiled
-srfi-*.scm
-srfi-*.sld
-srfi.*.scm
-srfi.*.sld
+./srfi-*.scm
+./srfi-*.sld
+./srfi.*.scm
+./srfi.*.sld
 test-prefix.txt
 reports
 packages
