@@ -1,2 +1,2 @@
                     {{#library-command}}sh '{{{library-command}}}'{{/library-command}}
-                    sh '{{{command}}}'
+                    sh '{{{command}}} > srfi-{{number}}.log'

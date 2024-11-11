@@ -24,11 +24,14 @@
 
 ;;; R7RS-SRFI brought in utilities:
 
-(define-syntax receive
-  (syntax-rules ()
-    ((receive formals expression body ...)
-     (call-with-values (lambda () expression)
-                       (lambda formals body ...)))))
+(cond-expand
+  (gambit #t)
+  (else
+    (define-syntax receive
+      (syntax-rules ()
+        ((_ formals expression body ...)
+         (call-with-values (lambda () expression)
+                           (lambda formals body ...)))))))
 
 (define (%cars+cdrs+ lists cars-final)
   (call-with-current-continuation

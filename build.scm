@@ -32,9 +32,9 @@
                " srfi-test/r7rs-programs/" number ".scm"))
            (library-command (assoc 'library-command implementation)))
       (cond
-        ((not library-command) (string-append command " > srfi-" number ".log"))
+        ((not library-command) command)
         (else (string-append command
-                             " && srfi-test/r7rs-programs/" number " > srfi-" number ".log"
+                             " && srfi-test/r7rs-programs/" number
                              " && rm srfi-test/r7rs-programs/" number))))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
@@ -83,7 +83,7 @@
 (define makefile-bottom (compile (slurp "templates/Makefile-bottom")))
 
 (call-with-output-file
-  "Makefile"
+  "Makefile.tests"
   (lambda (out)
     (execute makefile-top '() out)
     (for-each

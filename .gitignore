@@ -17,3 +17,4 @@ test-prefix.txt
 reports
 packages
 srfi-test
+Makefile.tests

@@ -51,7 +51,7 @@ pipeline {
         stage("chibi") {
             agent {
                 docker {
-                    image 'schemers/chibi:latest'
+                    image 'schemers/chibi:head'
                     reuseNode true
                 }
             }
@@ -89,7 +89,7 @@ pipeline {
         stage("chicken") {
             agent {
                 docker {
-                    image 'schemers/chicken:latest'
+                    image 'schemers/chicken:head'
                     reuseNode true
                 }
             }
@@ -127,7 +127,7 @@ pipeline {
         stage("cyclone") {
             agent {
                 docker {
-                    image 'schemers/cyclone:latest'
+                    image 'schemers/cyclone:head'
                     reuseNode true
                 }
             }
@@ -165,7 +165,7 @@ pipeline {
         stage("gambit") {
             agent {
                 docker {
-                    image 'schemers/gambit:latest'
+                    image 'schemers/gambit:head'
                     reuseNode true
                 }
             }
@@ -203,7 +203,7 @@ pipeline {
         stage("gauche") {
             agent {
                 docker {
-                    image 'schemers/gauche:latest'
+                    image 'schemers/gauche:head'
                     reuseNode true
                 }
             }
@@ -241,7 +241,7 @@ pipeline {
         stage("gerbil") {
             agent {
                 docker {
-                    image 'schemers/gerbil:latest'
+                    image 'schemers/gerbil:head'
                     reuseNode true
                 }
             }
@@ -279,7 +279,7 @@ pipeline {
         stage("guile") {
             agent {
                 docker {
-                    image 'schemers/guile:latest'
+                    image 'schemers/guile:head'
                     reuseNode true
                 }
             }
@@ -317,7 +317,7 @@ pipeline {
         stage("kawa") {
             agent {
                 docker {
-                    image 'schemers/kawa:latest'
+                    image 'schemers/kawa:head'
                     reuseNode true
                 }
             }
@@ -393,7 +393,7 @@ pipeline {
         stage("mit-scheme") {
             agent {
                 docker {
-                    image 'schemers/mit-scheme:latest'
+                    image 'schemers/mit-scheme:head'
                     reuseNode true
                 }
             }
@@ -431,7 +431,7 @@ pipeline {
         stage("mosh") {
             agent {
                 docker {
-                    image 'schemers/mosh:latest'
+                    image 'schemers/mosh:head'
                     reuseNode true
                 }
             }
@@ -469,7 +469,7 @@ pipeline {
         stage("racket") {
             agent {
                 docker {
-                    image 'schemers/racket:latest'
+                    image 'schemers/racket:head'
                     reuseNode true
                 }
             }
@@ -507,7 +507,7 @@ pipeline {
         stage("sagittarius") {
             agent {
                 docker {
-                    image 'schemers/sagittarius:latest'
+                    image 'schemers/sagittarius:head'
                     reuseNode true
                 }
             }
@@ -545,7 +545,7 @@ pipeline {
         stage("stklos") {
             agent {
                 docker {
-                    image 'schemers/stklos:latest'
+                    image 'schemers/stklos:head'
                     reuseNode true
                 }
             }
@@ -583,7 +583,7 @@ pipeline {
         stage("skint") {
             agent {
                 docker {
-                    image 'schemers/skint:latest'
+                    image 'schemers/skint:head'
                     reuseNode true
                 }
             }
@@ -621,7 +621,7 @@ pipeline {
         stage("tr7") {
             agent {
                 docker {
-                    image 'schemers/tr7:latest'
+                    image 'schemers/tr7:head'
                     reuseNode true
                 }
             }
