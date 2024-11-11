@@ -15,4 +15,3 @@ clean:
 	find . -name "srfi.*.import.scm" -delete
 	find . -name "srfi-*.import.scm" -delete
 	find . -name "*.log" -delete
-	find . -name "test-prefix.txt" -delete

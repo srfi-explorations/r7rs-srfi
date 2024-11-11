@@ -16,7 +16,7 @@
      (library-command . "gxc -O"))
     ((name . guile) (command . "guile --fresh-auto-compile --r7rs -L ."))
     ((name . kawa)
-     (command . "kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld")) ;; FIXME
+     (command . "kawa --r7rs -Dkawa.import.path=${PWD}/*.sld")) ;; FIXME
     ((name . loko)
      (docker-image . "schemers/loko:head")
      (command . "loko -std=r7rs --compile")

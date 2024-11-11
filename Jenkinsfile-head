@@ -338,11 +338,11 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/64.scm > srfi-64.log'
+                    sh 'kawa --r7rs -Dkawa.import.path=${PWD}/*.sld srfi-test/r7rs-programs/64.scm > srfi-64.log'
                     
-                    sh 'kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/8.scm > srfi-8.log'
+                    sh 'kawa --r7rs -Dkawa.import.path=${PWD}/*.sld srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
-                    sh 'kawa --r7rs -Dkawa.import.path=.:./srfi/*.sld:..:../srfi/*.sld srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    sh 'kawa --r7rs -Dkawa.import.path=${PWD}/*.sld srfi-test/r7rs-programs/1.scm > srfi-1.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/kawa-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
