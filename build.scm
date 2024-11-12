@@ -32,10 +32,13 @@
                " srfi-test/r7rs-programs/" number ".scm"))
            (library-command (assoc 'library-command implementation)))
       (cond
-        ((not library-command) command)
-        (else (string-append command
-                             " && srfi-test/r7rs-programs/" number
-                             " && rm srfi-test/r7rs-programs/" number))))))
+        (library-command
+          (string-append command
+                         (if (string=? name "gambit")
+                           (string-append " && srfi-test/r7rs-programs/" number " -:search=.")
+                           (string-append " && srfi-test/r7rs-programs/" number))
+                         " && rm srfi-test/r7rs-programs/" number))
+        (else command)))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
 (define jenkinsfile-job-top (compile (slurp "templates/Jenkinsfile-job-top")))
