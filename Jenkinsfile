@@ -162,6 +162,44 @@ pipeline {
             }
         }
 
+        stage("foment") {
+            agent {
+                docker {
+                    image 'schemers/foment:latest'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'foment'
+                }
+            }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi"
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
+                    
+                    sh 'foment -I -b srfi-test/r7rs-programs/64.scm > srfi-64.log'
+                    
+                    sh 'foment -I -b srfi-test/r7rs-programs/8.scm > srfi-8.log'
+                    
+                    sh 'foment -I -b srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    sh 'for f in *.log; do cp -- "$f" "reports/foment-$f"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("gambit") {
             agent {
                 docker {
@@ -686,6 +724,44 @@ pipeline {
                     
                     sh 'tr7i srfi-test/r7rs-programs/1.scm > srfi-1.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/tr7-$f"; done'
+                    sh 'ls reports'
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("ypsilon") {
+            agent {
+                docker {
+                    image 'schemers/ypsilon:latest'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'ypsilon'
+                }
+            }
+            environment {
+                MITSCHEME_LIBRARY_PATH = "${env.MITSCHEME_LIBRARY_PATH}:${env.PWD}:${env.PWD}/srfi"
+                TR7_LIB_PATH = "${env.TR7_LIB_PATH}:${env.PWD}:${env.PWD}/srfi"
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'find . -maxdepth 1 -name "*.log" -delete'
+                    sh 'find . -name "*.so" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    sh 'find . -name "*.o" -delete'
+                    unstash 'tests'
+                    
+                    sh 'ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/64.scm > srfi-64.log'
+                    
+                    sh 'ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/8.scm > srfi-8.log'
+                    
+                    sh 'ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    sh 'for f in *.log; do cp -- "$f" "reports/ypsilon-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
