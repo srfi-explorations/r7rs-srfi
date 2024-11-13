@@ -17,6 +17,8 @@
     ((name . guile) (command . "guile --fresh-auto-compile --r7rs -L ."))
     ((name . kawa)
      (command . "kawa --r7rs -Dkawa.import.path=\"${PWD}/*.sld\"")) ;; FIXME
+    ((name . larceny)
+     (command . "larceny -r7 -I ."))
     ((name . loko)
      (command . "loko -std=r7rs --compile")
      ; Library command so the executable gets run
