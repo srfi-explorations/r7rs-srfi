@@ -1,5 +1,6 @@
 build:
 	gosh -r7 -I . -I ./snow build.scm
+
 clean:
 	find . -name "*.so" -delete
 	find . -name "*.c" -delete

@@ -1,14 +1,12 @@
 # Building
 
-Use either:
+Run:
 
-- ./generate-kawa
-- ./generate-gauche
-
+    make
 
 # Running tests
 
-    make test-IMPLEMENTATION-srfi-N
+    make test-srfi-N-IMPLEMENTATION
 
 # Adding new srfi
 
@@ -20,6 +18,9 @@ Add files:
         - Library body/content
     - srfi/N.rkt
         - Shim file to support Racket
+    - srfi/srfi-N.rkt
+        - Shim file to support Guile
+
 
 You should be able to deduct what the contents of these files are from other SRFI implementations
 in this repository.
