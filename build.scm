@@ -48,6 +48,8 @@
 
 (define generate-jenkinsfile
   (lambda (head?)
+    (when (file-exists? (string-append "Jenkinsfile" (if head? "-head" "")))
+      (delete-file (string-append "Jenkinsfile" (if head? "-head" ""))))
     (call-with-output-file
       (string-append "Jenkinsfile" (if head? "-head" ""))
       (lambda (out)
@@ -85,6 +87,7 @@
 (define makefile-job (compile (slurp "templates/Makefile-job")))
 (define makefile-bottom (compile (slurp "templates/Makefile-bottom")))
 
+(when (file-exists? "Makefile.tests") (delete-file "Makefile.tests"))
 (call-with-output-file
   "Makefile.tests"
   (lambda (out)

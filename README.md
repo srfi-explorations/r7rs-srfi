@@ -2,7 +2,11 @@
 
 Run:
 
+    git submodule update --init --recursive
+    git submodule update --recursive --remote
+    make -C srfi-test
     make
+
 
 # Running tests
 
