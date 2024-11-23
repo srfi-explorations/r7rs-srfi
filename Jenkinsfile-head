@@ -76,7 +76,13 @@ pipeline {
                     
                     sh 'chibi-scheme -I . srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'chibi-scheme -I . srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'chibi-scheme -I . srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'chibi-scheme -I . srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'chibi-scheme -I . srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/chibi-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -113,8 +119,14 @@ pipeline {
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64 > srfi-64.log'
                     sh ' cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld'
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8 > srfi-8.log'
+                    sh ' cp srfi/26.sld srfi-26.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-26.sld'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26 > srfi-26.log'
+                    sh ' cp srfi/28.sld srfi-28.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-28.sld'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28 > srfi-28.log'
                     sh ' cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld'
                     sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1 > srfi-1.log'
+                    sh ' cp srfi/71.sld srfi-71.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-71.sld'
+                    sh 'csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/71.scm && srfi-test/r7rs-programs/71 && rm srfi-test/r7rs-programs/71 > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/chicken-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -151,8 +163,14 @@ pipeline {
                     sh 'cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64 > srfi-64.log'
                     sh 'cyclone -I . srfi/8.sld'
                     sh 'cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8 > srfi-8.log'
+                    sh 'cyclone -I . srfi/26.sld'
+                    sh 'cyclone -I . srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26 > srfi-26.log'
+                    sh 'cyclone -I . srfi/28.sld'
+                    sh 'cyclone -I . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28 > srfi-28.log'
                     sh 'cyclone -I . srfi/1.sld'
                     sh 'cyclone -I . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1 > srfi-1.log'
+                    sh 'cyclone -I . srfi/71.sld'
+                    sh 'cyclone -I . srfi-test/r7rs-programs/71.scm && srfi-test/r7rs-programs/71 && rm srfi-test/r7rs-programs/71 > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/cyclone-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -190,7 +208,13 @@ pipeline {
                     
                     sh 'foment -I -b srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'foment -I -b srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'foment -I -b srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'foment -I -b srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'foment -I -b srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/foment-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -227,8 +251,14 @@ pipeline {
                     sh 'gsc -exe ./ -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 -:search=. && rm srfi-test/r7rs-programs/64 > srfi-64.log'
                     sh 'gsc -:search=. srfi/8'
                     sh 'gsc -exe ./ -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 -:search=. && rm srfi-test/r7rs-programs/8 > srfi-8.log'
+                    sh 'gsc -:search=. srfi/26'
+                    sh 'gsc -exe ./ -nopreload srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 -:search=. && rm srfi-test/r7rs-programs/26 > srfi-26.log'
+                    sh 'gsc -:search=. srfi/28'
+                    sh 'gsc -exe ./ -nopreload srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 -:search=. && rm srfi-test/r7rs-programs/28 > srfi-28.log'
                     sh 'gsc -:search=. srfi/1'
                     sh 'gsc -exe ./ -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 -:search=. && rm srfi-test/r7rs-programs/1 > srfi-1.log'
+                    sh 'gsc -:search=. srfi/71'
+                    sh 'gsc -exe ./ -nopreload srfi-test/r7rs-programs/71.scm && srfi-test/r7rs-programs/71 -:search=. && rm srfi-test/r7rs-programs/71 > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/gambit-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -266,7 +296,13 @@ pipeline {
                     
                     sh 'gosh -r7 -I . srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'gosh -r7 -I . srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'gosh -r7 -I . srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'gosh -r7 -I . srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'gosh -r7 -I . srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/gauche-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -303,8 +339,14 @@ pipeline {
                     sh 'gxi --lang r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64 > srfi-64.log'
                     sh 'gxc -O srfi/8.sld'
                     sh 'gxi --lang r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8 > srfi-8.log'
+                    sh 'gxc -O srfi/26.sld'
+                    sh 'gxi --lang r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26 > srfi-26.log'
+                    sh 'gxc -O srfi/28.sld'
+                    sh 'gxi --lang r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28 > srfi-28.log'
                     sh 'gxc -O srfi/1.sld'
                     sh 'gxi --lang r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1 > srfi-1.log'
+                    sh 'gxc -O srfi/71.sld'
+                    sh 'gxi --lang r7rs srfi-test/r7rs-programs/71.scm && srfi-test/r7rs-programs/71 && rm srfi-test/r7rs-programs/71 > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/gerbil-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -342,7 +384,13 @@ pipeline {
                     
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/guile-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -376,11 +424,17 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'kawa --r7rs -Dkawa.import.path="${PWD}/*.sld" srfi-test/r7rs-programs/64.scm > srfi-64.log'
+                    sh 'kawa --r7rs -Dkawa.import.path=${PWD} srfi-test/r7rs-programs/64.scm > srfi-64.log'
                     
-                    sh 'kawa --r7rs -Dkawa.import.path="${PWD}/*.sld" srfi-test/r7rs-programs/8.scm > srfi-8.log'
+                    sh 'kawa --r7rs -Dkawa.import.path=${PWD} srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
-                    sh 'kawa --r7rs -Dkawa.import.path="${PWD}/*.sld" srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    sh 'kawa --r7rs -Dkawa.import.path=${PWD} srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'kawa --r7rs -Dkawa.import.path=${PWD} srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
+                    sh 'kawa --r7rs -Dkawa.import.path=${PWD} srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'kawa --r7rs -Dkawa.import.path=${PWD} srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/kawa-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -418,7 +472,13 @@ pipeline {
                     
                     sh 'larceny -r7 -I . srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'larceny -r7 -I . srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'larceny -r7 -I . srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'larceny -r7 -I . srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'larceny -r7 -I . srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/larceny-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -455,8 +515,14 @@ pipeline {
                     sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64 > srfi-64.log'
                     sh 'ls srfi/8.sld'
                     sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8 > srfi-8.log'
+                    sh 'ls srfi/26.sld'
+                    sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26 > srfi-26.log'
+                    sh 'ls srfi/28.sld'
+                    sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28 > srfi-28.log'
                     sh 'ls srfi/1.sld'
                     sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1 > srfi-1.log'
+                    sh 'ls srfi/71.sld'
+                    sh 'loko -std=r7rs --compile srfi-test/r7rs-programs/71.scm && srfi-test/r7rs-programs/71 && rm srfi-test/r7rs-programs/71 > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/loko-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -490,11 +556,17 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'MITSCHEME_LIBRARY_PATH=${PWD}/srfi:/usr/local/lib/mit-scheme-aarch64le-12.1 mit-scheme --load srfi-test/r7rs-programs/64.scm > srfi-64.log'
+                    sh 'mit-scheme --load srfi-test/r7rs-programs/64.scm > srfi-64.log'
                     
-                    sh 'MITSCHEME_LIBRARY_PATH=${PWD}/srfi:/usr/local/lib/mit-scheme-aarch64le-12.1 mit-scheme --load srfi-test/r7rs-programs/8.scm > srfi-8.log'
+                    sh 'mit-scheme --load srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
-                    sh 'MITSCHEME_LIBRARY_PATH=${PWD}/srfi:/usr/local/lib/mit-scheme-aarch64le-12.1 mit-scheme --load srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    sh 'mit-scheme --load srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'mit-scheme --load srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
+                    sh 'mit-scheme --load srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'mit-scheme --load srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/mit-scheme-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -532,7 +604,13 @@ pipeline {
                     
                     sh 'mosh --loadpath=. srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'mosh --loadpath=. srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'mosh --loadpath=. srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'mosh --loadpath=. srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'mosh --loadpath=. srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/mosh-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -570,7 +648,13 @@ pipeline {
                     
                     sh 'racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'racket -I r7rs -S . --script srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'racket -I r7rs -S . --script srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'racket -I r7rs -S . --script srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/racket-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -608,7 +692,13 @@ pipeline {
                     
                     sh 'sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/sagittarius-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -646,7 +736,13 @@ pipeline {
                     
                     sh 'stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'stklos -I . -I ./srfi -f srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/stklos-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -680,11 +776,17 @@ pipeline {
                     sh 'find . -name "*.o" -delete'
                     unstash 'tests'
                     
-                    sh 'skint -I ./ --program srfi-test/r7rs-programs/64.scm > srfi-64.log'
+                    sh 'skint -I ./ --script srfi-test/r7rs-programs/64.scm > srfi-64.log'
                     
-                    sh 'skint -I ./ --program srfi-test/r7rs-programs/8.scm > srfi-8.log'
+                    sh 'skint -I ./ --script srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
-                    sh 'skint -I ./ --program srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    sh 'skint -I ./ --script srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'skint -I ./ --script srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
+                    sh 'skint -I ./ --script srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'skint -I ./ --script srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/skint-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -722,7 +824,13 @@ pipeline {
                     
                     sh 'tr7i srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'tr7i srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'tr7i srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'tr7i srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'tr7i srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/tr7-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'
@@ -760,7 +868,13 @@ pipeline {
                     
                     sh 'ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/8.scm > srfi-8.log'
                     
+                    sh 'ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/26.scm > srfi-26.log'
+                    
+                    sh 'ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/28.scm > srfi-28.log'
+                    
                     sh 'ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/1.scm > srfi-1.log'
+                    
+                    sh 'ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/71.scm > srfi-71.log'
                     sh 'for f in *.log; do cp -- "$f" "reports/ypsilon-$f"; done'
                     sh 'ls reports'
                     stash name: 'reports', includes: 'reports/*'

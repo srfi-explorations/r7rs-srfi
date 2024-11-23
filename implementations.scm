@@ -18,19 +18,19 @@
      (library-command . "gxc -O"))
     ((name . guile) (command . "guile --fresh-auto-compile --r7rs -L ."))
     ((name . kawa)
-     (command . "kawa --r7rs -Dkawa.import.path=\"${PWD}/*.sld\"")) ;; FIXME
+     (command . "kawa --r7rs -Dkawa.import.path=${PWD}")) ;; FIXME
     ((name . larceny)
      (command . "larceny -r7 -I ."))
     ((name . loko)
      (command . "loko -std=r7rs --compile")
      ; Library command so the executable gets run
      (library-command . "ls"))
-    ;; Add the needed paths to the MITSCHEME_LIBRARY_PATH
-    ((name . mit-scheme) (command . "MITSCHEME_LIBRARY_PATH=${PWD}/srfi:/usr/local/lib/mit-scheme-aarch64le-12.1 mit-scheme --load"))
+    ((name . mit-scheme)
+     (command . "mit-scheme --load")) ;; FIXME
     ((name . mosh) (command . "mosh --loadpath=."))
     ((name . racket) (command . "racket -I r7rs -S . --script"))
     ((name . sagittarius) (command . "sash -r7 -L . -L ./srfi"))
     ((name . stklos) (command . "stklos -I . -I ./srfi -f"))
-    ((name . skint) (command . "skint -I ./ --program"))
+    ((name . skint) (command . "skint -I ./ --script"))
     ((name . tr7) (command . "tr7i"))
     ((name . ypsilon) (command . "ypsilon --r7rs --loadpath=."))))

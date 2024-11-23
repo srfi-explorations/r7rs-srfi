@@ -7,7 +7,11 @@
           (scheme file)
           (scheme read)
           (scheme write)
-          (scheme process-context))
+          (scheme process-context)
+          (srfi 1)
+          (srfi 8)
+          (srfi 26)
+          (srfi 28))
   (export test-assert
           test-eqv
           test-equal
@@ -72,4 +76,5 @@
           test-runner-aux-value!
           test-runner-reset
           test-on-final-simple)
+  (include "64-util.scm")
   (include "64.scm"))

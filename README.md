@@ -10,7 +10,7 @@ Run:
 
 # Running tests
 
-    make test-srfi-N-IMPLEMENTATION
+    make -f Makefile.tests test-srfi-N-IMPLEMENTATION
 
 # Adding new srfi
 
