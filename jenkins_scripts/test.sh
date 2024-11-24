@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
-set -eu -o pipefail
+set -eu
 
 name="$1"
 cmd="$2"
