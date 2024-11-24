@@ -567,7 +567,7 @@ standard output port."
   ;@var{thunk} must return @code{#f} to indicate test failure.  Otherwise the
   ;test is considered successful."
   (syntax-rules ()
-    ((test-thunk test-name thunk)
+    ((_ test-name thunk)
      (let ((r (test-runner-current)))
        ;; Since skip checks are using -test-name, set it first.
        (test-runner-test-name! r (or test-name ""))
@@ -641,24 +641,24 @@ standard output port."
 
 (define-syntax test-eq
   (syntax-rules ()
-    ((_ test-name expected eq?)
-     (%%test-2 eq? test-name expected eq?))
+    ((_ test-name expected test-expr)
+     (%%test-2 eq? test-name expected test-expr))
     ((_ expected test-expr)
-     (%%test-2 eq? #f expected eq?))))
+     (%%test-2 eq? #f expected test-expr))))
 
 (define-syntax test-eqv
   (syntax-rules ()
-    ((_ test-name expected eqv?)
-     (%%test-2 eqv? test-name expected eqv?))
+    ((_ test-name expected test-expr)
+     (%%test-2 eqv? test-name expected test-expr))
     ((_ expected test-expr)
-     (%%test-2 eqv? #f expected eqv?))))
+     (%%test-2 eqv? #f expected test-expr))))
 
 (define-syntax test-equal
   (syntax-rules ()
-    ((_ test-name expected equal?)
-     (%%test-2 equal? test-name expected equal?))
+    ((_ test-name expected test-expr)
+     (%%test-2 equal? test-name expected test-expr))
     ((_ expected test-expr)
-     (%%test-2 equal? #f expected equal?))))
+     (%%test-2 equal? #f expected test-expr))))
 
 ;(set-documentation! 'test-eq
 ;  "@defspec test-eq test-name expected test-expr
