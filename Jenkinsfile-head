@@ -48,7 +48,7 @@ pipeline {
                 docker {
                     image 'schemers/chibi:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -74,7 +74,7 @@ pipeline {
                 docker {
                     image 'schemers/chicken:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -100,7 +100,7 @@ pipeline {
                 docker {
                     image 'schemers/cyclone:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -126,7 +126,7 @@ pipeline {
                 docker {
                     image 'schemers/foment:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -152,7 +152,7 @@ pipeline {
                 docker {
                     image 'schemers/gambit:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -178,7 +178,7 @@ pipeline {
                 docker {
                     image 'schemers/gauche:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -204,7 +204,7 @@ pipeline {
                 docker {
                     image 'schemers/gerbil:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -230,7 +230,7 @@ pipeline {
                 docker {
                     image 'schemers/guile:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -256,7 +256,7 @@ pipeline {
                 docker {
                     image 'schemers/kawa:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -282,7 +282,7 @@ pipeline {
                 docker {
                     image 'schemers/larceny:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -308,7 +308,7 @@ pipeline {
                 docker {
                     image 'schemers/loko:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -334,7 +334,7 @@ pipeline {
                 docker {
                     image 'schemers/mit-scheme:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -360,7 +360,7 @@ pipeline {
                 docker {
                     image 'schemers/mosh:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -386,7 +386,7 @@ pipeline {
                 docker {
                     image 'schemers/racket:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -412,7 +412,7 @@ pipeline {
                 docker {
                     image 'schemers/sagittarius:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -438,7 +438,7 @@ pipeline {
                 docker {
                     image 'schemers/stklos:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -464,7 +464,7 @@ pipeline {
                 docker {
                     image 'schemers/skint:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -490,7 +490,7 @@ pipeline {
                 docker {
                     image 'schemers/tr7:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
@@ -516,7 +516,7 @@ pipeline {
                 docker {
                     image 'schemers/ypsilon:head'
                     reuseNode true
-                    args 'user=root'
+                    args '--user=root'
                 }
             }
             when {
