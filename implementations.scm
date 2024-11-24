@@ -30,7 +30,7 @@
     ((name . mosh) (command . "mosh --loadpath=."))
     ((name . racket) (command . "racket -I r7rs -S . --script"))
     ((name . sagittarius) (command . "sash -r7 -L . -L ./srfi"))
-    ((name . stklos) (command . "STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f"))
+    ((name . stklos) (command . "stklos -I . -I ./srfi -f"))
     ((name . skint) (command . "skint -I ./ --script"))
     ((name . tr7) (command . "tr7i"))
     ((name . ypsilon) (command . "ypsilon --r7rs --loadpath=."))))
