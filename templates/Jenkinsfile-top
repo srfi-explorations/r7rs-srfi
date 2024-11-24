@@ -37,7 +37,7 @@ pipeline {
 
         stage("Init") {
             steps {
-                sh './jenkins_scripts/init.sh'
+                sh 'sh jenkins_scripts/init.sh'
                 stash name: 'reports', includes: 'reports/*'
                 stash name: 'tests', includes: 'srfi-test/*'
             }

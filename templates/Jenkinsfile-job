@@ -1,1 +1,1 @@
-                    sh './jenkins_scripts/test.sh "{{{name}}}" "{{{command}}}" "{{{library-command}}}" {{numbers}}'
+                    sh 'sh jenkins_scripts/test.sh "{{{name}}}" "{{{command}}}" "{{{library-command}}}" {{numbers}}'
