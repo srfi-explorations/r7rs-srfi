@@ -9,18 +9,11 @@ shift 3
 srfis=$@
 
 ## Build 64 always first
-if [ ! "$lib_cmd" = "" ] && [ "$name" = "gambit" ]
-then
-    echo "Building library: srfi/64 with command $lib_cmd"
-    $lib_cmd "srfi/64"
-elif [ ! "$lib_cmd"  = "" ]
-then
-    echo "Building library: srfi/64.scm with command $lib_cmd"
-    $lib_cmd "srfi/64.scm"
-fi
+make test-srfi-64-$name-build-library
 
 for srfi in $srfis
 do
+    make test-srfi-$srfi-$name-build-library
     echo "Testing $srfi with command $cmd"
     $cmd "srfi-test/r7rs-programs/$srfi.scm" > "srfi-$srfi.log"
 done
