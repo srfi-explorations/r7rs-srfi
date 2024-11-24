@@ -419,7 +419,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh 'sh jenkins_scripts/test.sh "stklos" "STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -443,7 +443,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh 'sh jenkins_scripts/test.sh "skint" "skint -I ./ --script" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "skint" "skint -I ./" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'

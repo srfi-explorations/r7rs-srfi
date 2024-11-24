@@ -31,6 +31,6 @@
     ((name . racket) (command . "racket -I r7rs -S . --script"))
     ((name . sagittarius) (command . "sash -r7 -L . -L ./srfi"))
     ((name . stklos) (command . "stklos -I . -I ./srfi -f"))
-    ((name . skint) (command . "skint -I ./ --script"))
+    ((name . skint) (command . "skint -I ./"))
     ((name . tr7) (command . "tr7i"))
     ((name . ypsilon) (command . "ypsilon --r7rs --loadpath=."))))

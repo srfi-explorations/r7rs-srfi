@@ -255,32 +255,32 @@ test-srfi-8-sagittarius-docker-head:
 
 test-srfi-8-stklos:
 	
-	STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm
 
 
 test-srfi-8-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
 
 
 test-srfi-8-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
 
 
 test-srfi-8-skint:
 	
-	skint -I ./ --script srfi-test/r7rs-programs/8.scm
+	skint -I ./ srfi-test/r7rs-programs/8.scm
 
 
 test-srfi-8-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/8.scm"
 
 
 test-srfi-8-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/8.scm"
 
 
 test-srfi-8-tr7:
@@ -570,32 +570,32 @@ test-srfi-1-sagittarius-docker-head:
 
 test-srfi-1-stklos:
 	
-	STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm
 
 
 test-srfi-1-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
 
 
 test-srfi-1-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
 
 
 test-srfi-1-skint:
 	
-	skint -I ./ --script srfi-test/r7rs-programs/1.scm
+	skint -I ./ srfi-test/r7rs-programs/1.scm
 
 
 test-srfi-1-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/1.scm"
 
 
 test-srfi-1-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/1.scm"
 
 
 test-srfi-1-tr7:
@@ -885,32 +885,32 @@ test-srfi-26-sagittarius-docker-head:
 
 test-srfi-26-stklos:
 	
-	STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm
 
 
 test-srfi-26-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
 
 
 test-srfi-26-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
 
 
 test-srfi-26-skint:
 	
-	skint -I ./ --script srfi-test/r7rs-programs/26.scm
+	skint -I ./ srfi-test/r7rs-programs/26.scm
 
 
 test-srfi-26-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/26.scm"
 
 
 test-srfi-26-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/26.scm"
 
 
 test-srfi-26-tr7:
@@ -1200,32 +1200,32 @@ test-srfi-28-sagittarius-docker-head:
 
 test-srfi-28-stklos:
 	
-	STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm
 
 
 test-srfi-28-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
 
 
 test-srfi-28-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
 
 
 test-srfi-28-skint:
 	
-	skint -I ./ --script srfi-test/r7rs-programs/28.scm
+	skint -I ./ srfi-test/r7rs-programs/28.scm
 
 
 test-srfi-28-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/28.scm"
 
 
 test-srfi-28-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/28.scm"
 
 
 test-srfi-28-tr7:
@@ -1515,32 +1515,32 @@ test-srfi-64-sagittarius-docker-head:
 
 test-srfi-64-stklos:
 	
-	STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm
 
 
 test-srfi-64-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
 
 
 test-srfi-64-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
 
 
 test-srfi-64-skint:
 	
-	skint -I ./ --script srfi-test/r7rs-programs/64.scm
+	skint -I ./ srfi-test/r7rs-programs/64.scm
 
 
 test-srfi-64-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/64.scm"
 
 
 test-srfi-64-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/64.scm"
 
 
 test-srfi-64-tr7:
@@ -1830,32 +1830,32 @@ test-srfi-71-sagittarius-docker-head:
 
 test-srfi-71-stklos:
 	
-	STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/71.scm
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/71.scm
 
 
 test-srfi-71-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/71.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/71.scm"
 
 
 test-srfi-71-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f srfi-test/r7rs-programs/71.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/71.scm"
 
 
 test-srfi-71-skint:
 	
-	skint -I ./ --script srfi-test/r7rs-programs/71.scm
+	skint -I ./ srfi-test/r7rs-programs/71.scm
 
 
 test-srfi-71-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/71.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/71.scm"
 
 
 test-srfi-71-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/71.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/71.scm"
 
 
 test-srfi-71-tr7:
