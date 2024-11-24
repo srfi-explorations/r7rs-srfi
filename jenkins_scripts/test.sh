@@ -16,7 +16,7 @@ do
         "$lib_cmd" "srfi/$srfi.scm"
     fi
 
-    "$command" "$srfi" > "srfi-$srfi.log"
+    "$cmd" "$srfi" > "srfi-$srfi.log"
 done
 
 for f in *.log
