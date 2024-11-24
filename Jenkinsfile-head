@@ -526,7 +526,7 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'reports/*.log'
             archiveArtifacts artifacts: 'reports/*.html'
-            archiveArtifacts artifacts: 'pakages/*.tgz'
+            archiveArtifacts artifacts: 'packages/*.tgz'
             archiveArtifacts artifacts: 'srfi/*.tgz'
             deleteDir()
         }
