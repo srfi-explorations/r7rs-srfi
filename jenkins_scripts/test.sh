@@ -8,10 +8,10 @@ srfis=$@
 
 for srfi in $srfis
 do
-    if [ ! "$lib_cmd" ] && [ "$name" = "gambit"]
+    if [ ! "$lib_cmd" = "" ] && [ "$name" = "gambit" ]
     then
         "$lib_cmd" "srfi/$srfi"
-    elif [ ! "$lib_cmd" ]
+    elif [ ! "$lib_cmd"  = "" ]
     then
         "$lib_cmd" "srfi/$srfi.scm"
     fi
