@@ -21,7 +21,7 @@ done
 
 for f in *.log
 do
-    cp -- "$f" "reports/$name$-$f"
+    cp -- "$f" "reports/$name-$f"
 done
 
 ls reports
