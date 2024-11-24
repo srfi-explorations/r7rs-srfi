@@ -1,5 +1,7 @@
 pipeline {
 
+    triggers { cron('H 4/* 0 0 1-5') }
+
     agent {
         dockerfile {
             filename 'Dockerfile.jenkins'
