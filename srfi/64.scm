@@ -334,14 +334,16 @@ instead."
         (display (format "* ~a: ~a~%"
                 result-kind
                 (test-runner-test-name runner)))
-        (unless (member result-kind '(pass xfail))
+        ;; TODO
+        #;(unless (member result-kind '(pass xfail))
           (maybe-print-prop 'source-file    #f)
           (maybe-print-prop 'source-line    #f)
           (maybe-print-prop 'source-form    #t)
           (maybe-print-prop 'expected-value #f)
           (maybe-print-prop 'expected-error #t)
           (maybe-print-prop 'actual-value   #f)
-          (maybe-print-prop 'actual-error   #t))))))
+          (maybe-print-prop 'actual-error   #t))
+        ))))
 
 (define (test-runner-simple)
   "Creates a new simple test-runner, that prints errors and a summary on the
@@ -456,13 +458,12 @@ standard output port."
     (let* ((r (test-runner-current))
            (group (car (test-runner-groups r))))
 
-      ;; TODO
-      ;(let* ((suite-name (if (null? suite-name-arg) '() (car suite-name-arg)))
-      ;(begin-name (car (test-runner-group-stack r)))
-      ;(end-name suite-name))
-      ;(when (and end-name (not (%cmp-group-name begin-name end-name)))
-      ;((test-runner-on-bad-end-name r) r begin-name end-name)
-      ;(error "Bad end name" begin-name end-name)))
+      (let* ((suite-name (if (null? suite-name-arg) #f (car suite-name-arg)))
+             (begin-name (car (test-runner-group-stack r)))
+             (end-name suite-name))
+        (when (and end-name (not (%cmp-group-name begin-name end-name)))
+          ((test-runner-on-bad-end-name r) r begin-name end-name)
+          (error "Bad end name" begin-name end-name)))
 
       ;; TODO
       ;(let ((expected-count (group-count group))
@@ -827,7 +828,14 @@ active run list?"
           (specifiers (if (= (length args) 1)
                         (list)
                         (map obj->specifier (reverse (list-tail (reverse args) 1))))))
-      (apply test-apply runner `(,@specifiers ,thunk)))))
+      ;(apply test-apply `(,runner ,@specifiers ,thunk))
+      (test-with-runner runner
+                        (parameterize (((test-runner-run-list r)
+                                        (if (null? specifiers)
+                                          #f
+                                          (map obj->specifier specifiers))))
+                          (thunk))))))
+
 ;(set-documentation! 'test-apply
 ;  "@defunx test-apply runner specifier ... procedure
 ;@defunx test-apply specifier ... procedure
