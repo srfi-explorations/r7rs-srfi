@@ -20,3 +20,4 @@ reports
 packages
 srfi-test
 Makefile.tests
+*@gambit*

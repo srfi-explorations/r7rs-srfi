@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+set -eu -o pipefail
 
 name="$1"
 cmd="$2"
@@ -10,12 +12,15 @@ for srfi in $srfis
 do
     if [ ! "$lib_cmd" = "" ] && [ "$name" = "gambit" ]
     then
+        echo "Building library: srfi/$srfi with command $lib_cmd"
         "$lib_cmd" "srfi/$srfi"
     elif [ ! "$lib_cmd"  = "" ]
     then
+        echo "Building library: srfi/$srfi.scm with command $lib_cmd"
         "$lib_cmd" "srfi/$srfi.scm"
     fi
 
+    echo "Testing $srfi with command $cmd"
     $cmd "srfi-test/r7rs-programs/$srfi.scm" > "srfi-$srfi.log"
 done
 

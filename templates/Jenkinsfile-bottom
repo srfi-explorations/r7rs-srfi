@@ -2,7 +2,7 @@
         stage("Report") {
             steps {
                 unstash 'reports'
-                sh './report'
+                sh './jenkins_scripts/reports.sh'
                 archiveArtifacts artifacts: 'reports/*.html'
                 publishHTML (target : [allowMissing: false,
                     alwaysLinkToLastBuild: false,
