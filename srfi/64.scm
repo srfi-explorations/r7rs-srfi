@@ -23,24 +23,24 @@
 
 ;;; Code:
 
-(define (set-documentation! symbol docstring)
-  "Set the docstring for @var{symbol} in current module to @var{docstring}.
+;(define (set-documentation! symbol docstring)
+  ;"Set the docstring for @var{symbol} in current module to @var{docstring}.
 
-Do not use this procedure for forms that already support setting the
-docstring.  Should directly follow the definition of @var{symbol}.
+  ;Do not use this procedure for forms that already support setting the
+  ;docstring.  Should directly follow the definition of @var{symbol}.
 
-Example:
+ ;Example:
 
-@lisp
-(define answer 42)
-(set-documentation! 'answer
-  \"The answer to life, the universe, and everything.\")
-@end lisp"
-  #;(set-object-property! (module-ref (current-module) symbol)
-                        'documentation
-                        docstring)
-#t
-  )
+;@lisp
+;(define answer 42)
+;(set-documentation! 'answer
+  ;\"The answer to life, the universe, and everything.\")
+;@end lisp"
+  ;(set-object-property! (module-ref (current-module) symbol)
+                        ;'documentation
+                        ;docstring)
+;#t
+  ;)
 
 ;(cond-expand-provide (current-module) '(srfi-64))
 
@@ -88,16 +88,15 @@ Example:
   (test-runner-skip-list! runner '()))
 
 (define (test-runner-group-path runner)
-  "Return list of names of groups we're nested in, with the outermost group
-first."
+  ;"Return list of names of groups we're nested in, with the outermost group first."
   (reverse (test-runner-group-stack runner)))
 
 (define (test-runner-fail-count r)
-  "Return the number of tests that failed, but were expected to pass."
+  ;"Return the number of tests that failed, but were expected to pass."
   (or (assq-ref (test-runner-counts r) 'fail) 0))
 
 (define (test-runner-pass-count r)
-  "Return the number of tests that passed, and were expected to pass."
+  ;"Return the number of tests that passed, and were expected to pass."
   (or (assq-ref (test-runner-counts r) 'pass) 0))
 
 (define (test-runner-skip-count r)
@@ -239,24 +238,27 @@ fail.  This only affects test reporting, not test execution."
   (test-runner-result-alist! runner '()))
 
 (define test-result-alist test-runner-result-alist)
-(set-documentation! 'test-result-alist
-  "Returns an association list of the current result properties.  It is
-unspecified if the result shares state with the test-runner.  The result
-should not be modified; on the other hand, the result may be implicitly
-modified by future @code{test-result-set!} or @code{test-result-remove} calls.
-However, a @code{test-result-clear} does not modify the returned alist.")
+;(set-documentation! 'test-result-alist
+  ;"Returns an association list of the current result properties.  It is
+;unspecified if the result shares state with the test-runner.  The result
+;should not be modified; on the other hand, the result may be implicitly
+;modified by future @code{test-result-set!} or @code{test-result-remove} calls.
+;However, a @code{test-result-clear} does not modify the returned alist."
+;)
 
 ;;;
 ;;; Result kind
 ;;;
-(define (test-result-kind . runner-arg)
-  "Result code of most recent test.  Returns @code{#f} if no tests have been run yet.
-If we have started on a new test, but do not have a result yet, then the
-result kind is @code{'xfail} if the test is expected to fail, @code{'skip} if
-the test is supposed to be skipped, or @code{#f} otherwise."
-  (test-result-ref (if (null? runner-arg) (test-runner-current) (car runner-arg)) 'result-kind))
+(define test-result-kind
+  (lambda runner-arg
+  ;"Result code of most recent test.  Returns @code{#f} if no tests have been run yet.
+;If we have started on a new test, but do not have a result yet, then the
+;result kind is @code{'xfail} if the test is expected to fail, @code{'skip} if
+;the test is supposed to be skipped, or @code{#f} otherwise."
+  (test-result-ref (if (null? runner-arg) (test-runner-current) (car runner-arg)) 'result-kind)))
 
-(define (test-passed? . runner-arg)
+(define test-passed?
+  (lambda runner-arg
   "Is the value of @code{(test-result-kind [runner])} one of @code{'pass} or
 @code{'xpass}?
 
@@ -265,7 +267,7 @@ should write your own wrapper checking @code{'pass} and @code{'xfail}
 instead."
   (let ((result (test-result-kind (if (null? runner-arg) (test-runner-current) (car runner-arg)))))
     (or (eq? result 'pass)
-        (eq? result 'xpass))))
+        (eq? result 'xpass)))))
 
 ;;;
 ;;; Simple test runner
@@ -359,8 +361,8 @@ standard output port."
 ;;;
 
 (define test-runner-current (make-parameter #f))
-(set-documentation! 'test-runner-current
-  "Parameter representing currently installed test runner.")
+;(set-documentation! 'test-runner-current
+;  "Parameter representing currently installed test runner.")
 
 (define (test-runner-get)
   "Get current test runner if any, raise an exception otherwise."
@@ -368,9 +370,9 @@ standard output port."
       (error 'no-test-runner)))
 
 (define test-runner-factory (make-parameter test-runner-simple))
-(set-documentation! 'test-runner-factory
-  "Factory producing new test runner.  Has to be a procedure of arity 0
-returning new test runner.  Defaults to @code{test-runner-simple}.")
+;(set-documentation! 'test-runner-factory
+;  "Factory producing new test runner.  Has to be a procedure of arity 0
+;returning new test runner.  Defaults to @code{test-runner-simple}.")
 
 (define (test-runner-create)
   "Create a new test-runner. Equivalent to @code{((test-runner-factory))}."
@@ -595,15 +597,15 @@ supported as @var{suite-name}."
        (%test-assert test-name expression))
       ((_ expression)
        (%test-assert #f expression))))
-(set-documentation! 'test-assert
-  "@defspec test-assert test-name expression
-@defspecx test-assert expression
-Evaluate the @var{expression}, the test passes if the result is true.
-
-@var{test-name} and @var{expression} are evaluated just once.  It is an error
-to invoke @code{test-assert} if there is no current test runner.
-
-@end defspec")
+;(set-documentation! 'test-assert
+;  "@defspec test-assert test-name expression
+;@defspecx test-assert expression
+;Evaluate the @var{expression}, the test passes if the result is true.
+;
+;@var{test-name} and @var{expression} are evaluated just once.  It is an error
+;to invoke @code{test-assert} if there is no current test runner.
+;
+;@end defspec")
 
 (define-syntax %%test-2
   (syntax-rules ()
@@ -631,27 +633,27 @@ to invoke @code{test-assert} if there is no current test runner.
 (%test-2 test-eqv   eqv?)
 (%test-2 test-equal equal?)
 
-(set-documentation! 'test-eq
-  "@defspec test-eq test-name expected test-expr
-@defspecx test-eq expected test-expr
-Test whether result of @var{test-expr} matches @var{expected} using
-@code{eq?}.
-
-@end defspec")
-(set-documentation! 'test-eqv
-  "@defspec test-eqv test-name expected test-expr
-@defspecx test-eqv expected test-expr
-Test whether result of @var{test-expr} matches @var{expected} using
-@code{eqv?}.
-
-@end defspec")
-(set-documentation! 'test-equal
-  "@defspec test-equal test-name expected test-expr
-@defspecx test-equal expected test-expr
-Test whether result of @var{test-expr} matches @var{expected} using
-@code{equal?}.
-
-@end defspec")
+;(set-documentation! 'test-eq
+;  "@defspec test-eq test-name expected test-expr
+;@defspecx test-eq expected test-expr
+;Test whether result of @var{test-expr} matches @var{expected} using
+;@code{eq?}.
+;
+;@end defspec")
+;(set-documentation! 'test-eqv
+;  "@defspec test-eqv test-name expected test-expr
+;@defspecx test-eqv expected test-expr
+;Test whether result of @var{test-expr} matches @var{expected} using
+;@code{eqv?}.
+;
+;@end defspec")
+;(set-documentation! 'test-equal
+;  "@defspec test-equal test-name expected test-expr
+;@defspecx test-equal expected test-expr
+;Test whether result of @var{test-expr} matches @var{expected} using
+;@code{equal?}.
+;
+;@end defspec")
 
 (define (within-epsilon eps)
   (lambda (expected actual)
@@ -678,13 +680,13 @@ Test whether result of @var{test-expr} matches @var{expected} using
      (%test-approximate test-name expected test-expr error))
     ((_ expected test-expr error)
      (%test-approximate #f expected test-expr error))))
-(set-documentation! 'test-approximate
-  "@defspec test-approximate test-name expected test-expr error
-@defspecx test-approximate expected test-expr error
-Test whether result of @var{test-expr} is within @var{error} of
-@var{expected}.
-
-@end defspec")
+;(set-documentation! 'test-approximate
+;  "@defspec test-approximate test-name expected test-expr error
+;@defspecx test-approximate expected test-expr error
+;Test whether result of @var{test-expr} is within @var{error} of
+;@var{expected}.
+;
+;@end defspec")
 
 (define-syntax %test-error
     (syntax-rules ()
@@ -719,36 +721,36 @@ Test whether result of @var{test-expr} is within @var{error} of
      (%test-error #f error-type test-expr))
     ((_ test-expr)
      (%test-error #f #t test-expr))))
-(set-documentation! 'test-error
-  "@defspec test-error test-name error-type test-expr
-@defspecx test-error error-type test-expr
-@defspecx test-error test-expr
-Evaluating @var{test-expr} is expected to signal an error.  The kind of error
-is indicated by @var{error-type}.  It is always evaluated (even when no
-exception is raised) and can be one of the following.
-
-@table @code
-@item #t
-Per specification, this matches any exception.
-
-@item #f
-Pass if no exception is raised.
-
-@item symbol?
-Symbols can be used to match against exceptions created using
-@code{throw} and @code{error}.
-
-@item procedure?
-The exception object is passed to the predicate procedure.  Example
-would be @code{external-error?}.
-
-@item exception-type?
-Exception type like for example @code{&external-error}.
-
-@end table
-
-@end defspec")
-
+;(set-documentation! 'test-error
+;  "@defspec test-error test-name error-type test-expr
+;@defspecx test-error error-type test-expr
+;@defspecx test-error test-expr
+;Evaluating @var{test-expr} is expected to signal an error.  The kind of error
+;is indicated by @var{error-type}.  It is always evaluated (even when no
+;exception is raised) and can be one of the following.
+;
+;@table @code
+;@item #t
+;Per specification, this matches any exception.
+;
+;@item #f
+;Pass if no exception is raised.
+;
+;@item symbol?
+;Symbols can be used to match against exceptions created using
+;@code{throw} and @code{error}.
+;
+;@item procedure?
+;The exception object is passed to the predicate procedure.  Example
+;would be @code{external-error?}.
+;
+;@item exception-type?
+;Exception type like for example @code{&external-error}.
+;
+;@end table
+;
+;@end defspec")
+;
 ;;;
 ;;; Testing syntax
 ;;;
@@ -798,15 +800,15 @@ active run list?"
                       (list)
                       (map obj->specifier (reverse (list-tail (reverse args) 1))))))
     (apply test-apply runner `(,@specifiers ,thunk))))
-(set-documentation! 'test-apply
-  "@defunx test-apply runner specifier ... procedure
-@defunx test-apply specifier ... procedure
-
-Call @var{procedure} with no arguments using the specified @var{runner} as the
-current test-runner.  If runner is omitted, then @code{(test-runner-current)}
-is used.  If there is no current runner, one is created as in
-@code{test-begin}.  If one or more @var{specifiers} are listed then only tests
-matching the @var{specifiers} are executed.  A specifier has the same form as
-one used for @code{test-skip}.  A test is executed if it matches any of the
-specifiers in the @code{test-apply} and does not match any active
-@code{test-skip} specifiers.")
+;(set-documentation! 'test-apply
+;  "@defunx test-apply runner specifier ... procedure
+;@defunx test-apply specifier ... procedure
+;
+;Call @var{procedure} with no arguments using the specified @var{runner} as the
+;current test-runner.  If runner is omitted, then @code{(test-runner-current)}
+;is used.  If there is no current runner, one is created as in
+;@code{test-begin}.  If one or more @var{specifiers} are listed then only tests
+;matching the @var{specifiers} are executed.  A specifier has the same form as
+;one used for @code{test-skip}.  A test is executed if it matches any of the
+;specifiers in the @code{test-apply} and does not match any active
+;@code{test-skip} specifiers.")
