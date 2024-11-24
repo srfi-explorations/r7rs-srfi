@@ -828,9 +828,8 @@ active run list?"
           (specifiers (if (= (length args) 1)
                         (list)
                         (map obj->specifier (reverse (list-tail (reverse args) 1))))))
-      ;(apply test-apply `(,runner ,@specifiers ,thunk))
       (test-with-runner runner
-                        (parameterize (((test-runner-run-list r)
+                        (parameterize (((test-runner-run-list runner)
                                         (if (null? specifiers)
                                           #f
                                           (map obj->specifier specifiers))))
