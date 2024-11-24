@@ -1,4 +1,5 @@
 ;;; Copyright (C) 2024 Tomas Volf <~@wolfsden.cz>
+;;; Copyright (C) 2024 Retropikzel <retropikzel@iki.fi>
 
 ;;
 ;; This library is free software; you can redistribute it and/or
@@ -119,46 +120,48 @@
   (lambda (runner)
     (equal? name (test-runner-test-name runner))))
 
-(define (test-match-nth n . count-arg)
-  "Return a stateful predicate.  A counter keeps track of how many times it
-has been called.  The predicate matches the @var{n}'th time it is
-called (where 1 is the first time), and the next @code{(- @var{count} 1)}
-times, where @var{count} defaults to 1."
-  (let* ((count (if (null? count-arg) 1 (car count-arg)))
-         (i 0)
-         (m (+ n -1)))
-    (lambda (runner)
-      (set! i (+ i 1))
-      (and (>= i n) (<= i m)))))
+(define test-match-nth
+  (lambda (n . count-arg)
+    "Return a stateful predicate.  A counter keeps track of how many times it
+    has been called.  The predicate matches the @var{n}'th time it is
+    called (where 1 is the first time), and the next @code{(- @var{count} 1)}
+    times, where @var{count} defaults to 1."
+    (let* ((count (if (null? count-arg) 1 (car count-arg)))
+           (i 0)
+           (m (+ n -1)))
+      (lambda (runner)
+        (set! i (+ i 1))
+        (and (>= i n) (<= i m))))))
 
 (define (obj->specifier obj)
-  "Convert an object to a specifier accounting for the convenience
-  short-hands."
+  ;"Convert an object to a specifier accounting for the convenience short-hands."
   (cond ((procedure? obj) obj)
         ((string? obj) (test-match-name obj))
         ((integer? obj) (test-match-nth 1 count))))
 
-(define (test-match-any . specifiers)
-  "Return specifier matching if any specifier in @var{specifiers} matches.
-  Each specifier is applied, in order, so side-effects from a later specifier
-  happen even if an earlier specifier is true."
-  (let ((specifiers (map obj->specifier specifiers)))
-    (lambda (runner)
-      (fold (lambda (specifier seed)
-              (or (specifier runner) seed))
-            #f
-            specifiers))))
+(define test-match-any
+  (lambda specifiers-arg
+    ;"Return specifier matching if any specifier in @var{specifiers} matches.
+    ;Each specifier is applied, in order, so side-effects from a later specifier
+    ;happen even if an earlier specifier is true."
+    (let ((specifiers (map obj->specifier specifiers-arg)))
+      (lambda (runner)
+        (fold (lambda (specifier seed)
+                (or (specifier runner) seed))
+              #f
+              specifiers)))))
 
-(define (test-match-all . specifiers)
-  "Return specifier matching if all @var{specifiers} match.  Each specifier is
-applied, in order, so side-effects from a later specifier happen even if an
-earlier specifier is true."
-  (let ((specifiers (map obj->specifier specifiers)))
+(define test-match-all
+  (lambda specifiers-arg
+  ;"Return specifier matching if all @var{specifiers} match.  Each specifier is
+;applied, in order, so side-effects from a later specifier happen even if an
+;earlier specifier is true."
+  (let ((specifiers (map obj->specifier specifiers-arg)))
     (lambda (runner)
       (fold (lambda (specifier seed)
               (and (specifier runner) seed))
             #t
-            specifiers))))
+            specifiers)))))
 
 ;;;
 ;;; Skipping selected tests
@@ -207,13 +210,14 @@ fail.  This only affects test reporting, not test execution."
 ;;;
 ;;; Test result properties
 ;;;
-(define (test-result-ref runner pname . default-arg)
-  "Returns the property value associated with the @var{pname} property name.
-  If there is no value associated with @var{pname} return @var{default}, or
-  @code{#f} if @var{default} is not specified."
+(define test-result-ref
+  (lambda (runner pname . default-arg)
+  ;"Returns the property value associated with the @var{pname} property name.
+  ;If there is no value associated with @var{pname} return @var{default}, or
+  ;@code{#f} if @var{default} is not specified."
   (let ((default (if (null? default-arg) '() (car default-arg))))
     (or (assoc-ref (test-runner-result-alist runner) pname)
-        default)))
+        default))))
 
 (define (test-result-set! runner pname value)
   "Sets the property value associated with the @var{pname} property name to
@@ -415,67 +419,69 @@ standard output port."
         (group-executed-count! group
                                (+ (group-executed-count group) 1))))))
 
-(define (test-begin suite-name . count-arg)
-  "Enter a new test group.
+(define test-begin
+  (lambda (suite-name . count-arg)
+    ;"Enter a new test group.
 
-As implementation extension, in addition to strings, symbols are also
-supported as @var{suite-name}."
-  (let* ((count (if (null? count-arg) 0 (car count-arg)))
-         (r (if (test-runner-current) (test-runner-current) (test-runner-create)))
-         (install? (if (test-runner-current) #f #t))
-         (group (make-group suite-name
-                            count
-                            0
-                            install?
-                            (test-runner-skip-list r))))
-    (when install?
-      (test-runner-current r))
+    ;As implementation extension, in addition to strings, symbols are also
+    ;supported as @var{suite-name}."
+    (let* ((count (if (null? count-arg) 0 (car count-arg)))
+           (r (if (test-runner-current) (test-runner-current) (test-runner-create)))
+           (install? (if (test-runner-current) #f #t))
+           (group (make-group suite-name
+                              count
+                              0
+                              install?
+                              (test-runner-skip-list r))))
+      (when install?
+        (test-runner-current r))
 
-    (test-runner-test-name! r suite-name)
-    (test-runner-groups! r (cons group (test-runner-groups r)))
-    ;; Per-strict reading of SRFI-64, -group-stack is required to be
-    ;; non-copying, hence non-computed.  So duplicate the information already
-    ;; present in -groups here.
-    (test-runner-group-stack! r (cons suite-name (test-runner-group-stack r)))
+      (test-runner-test-name! r suite-name)
+      (test-runner-groups! r (cons group (test-runner-groups r)))
+      ;; Per-strict reading of SRFI-64, -group-stack is required to be
+      ;; non-copying, hence non-computed.  So duplicate the information already
+      ;; present in -groups here.
+      (test-runner-group-stack! r (cons suite-name (test-runner-group-stack r)))
 
-    ((test-runner-on-group-begin r) r suite-name count)))
+      ((test-runner-on-group-begin r) r suite-name count))))
 
 (define (%cmp-group-name a b)
     (cond ((and (string? a) (string? b)) (string=? a b))
           ((and (symbol? a) (symbol? b)) (eq? a b))
           (else #f)))
 
-(define (test-end . suite-name-arg)
-  "Leave the current test group."
-  (let* ((r (test-runner-current))
-         (group (car (test-runner-groups r))))
+(define test-end
+  (lambda suite-name-arg
+    "Leave the current test group."
+    (let* ((r (test-runner-current))
+           (group (car (test-runner-groups r))))
 
-    ;; TODO
-    #;(let* ((suite-name (if (null? suite-name-arg) '() (car suite-name-arg)))
-           (begin-name (car (test-runner-group-stack r)))
-          (end-name suite-name))
-      (when (and end-name (not (%cmp-group-name begin-name end-name)))
-        ((test-runner-on-bad-end-name r) r begin-name end-name)
-        (error "Bad end name" begin-name end-name)))
+      ;; TODO
+      ;(let* ((suite-name (if (null? suite-name-arg) '() (car suite-name-arg)))
+      ;(begin-name (car (test-runner-group-stack r)))
+      ;(end-name suite-name))
+      ;(when (and end-name (not (%cmp-group-name begin-name end-name)))
+      ;((test-runner-on-bad-end-name r) r begin-name end-name)
+      ;(error "Bad end name" begin-name end-name)))
 
-    ;; TODO
-    #;(let ((expected-count (group-count group))
-          (actual-count   (group-executed-count group)))
-      (when (and expected-count (not (= expected-count actual-count)))
-        ((test-runner-on-bad-count r) r actual-count expected-count)))
+      ;; TODO
+      ;(let ((expected-count (group-count group))
+      ;(actual-count   (group-executed-count group)))
+      ;(when (and expected-count (not (= expected-count actual-count)))
+      ;((test-runner-on-bad-count r) r actual-count expected-count)))
 
-    ((test-runner-on-group-end r) r)
+      ((test-runner-on-group-end r) r)
 
-    (test-runner-groups!      r (cdr (test-runner-groups      r)))
-    (test-runner-group-stack! r (cdr (test-runner-group-stack r)))
-    (test-runner-skip-list!   r (group-previous-skip-list group))
+      (test-runner-groups!      r (cdr (test-runner-groups      r)))
+      (test-runner-group-stack! r (cdr (test-runner-group-stack r)))
+      (test-runner-skip-list!   r (group-previous-skip-list group))
 
-    (if (null? (test-runner-group-stack r))
+      (if (null? (test-runner-group-stack r))
         ((test-runner-on-final r) r)
         (increment-executed-count r))
 
-    (when (group-installed-runner? group)
-      (test-runner-current #f))))
+      (when (group-installed-runner? group)
+        (test-runner-current #f)))))
 
 (define-syntax test-group
   (syntax-rules ()
@@ -619,7 +625,7 @@ supported as @var{suite-name}."
                      (test-result-set! r 'actual-value   a)
                      (test-proc e a)))))))
 
-(define-syntax %test-2
+#;(define-syntax %test-2
   (syntax-rules ()
     ((_ name test-proc)
      (define-syntax name
@@ -629,9 +635,30 @@ supported as @var{suite-name}."
            ((_ expected test-expr)
             (%%test-2 test-proc #f expected test-expr)))))))
 
-(%test-2 test-eq    eq?)
-(%test-2 test-eqv   eqv?)
-(%test-2 test-equal equal?)
+;(%test-2 test-eq eq?)
+;(%test-2 test-eqv eqv?)
+;(%test-2 test-equal equal?)
+
+(define-syntax test-eq
+  (syntax-rules ()
+    ((_ test-name expected eq?)
+     (%%test-2 test-proc test-name expected eq?))
+    ((_ expected test-expr)
+     (%%test-2 test-proc #f expected eq?))))
+
+(define-syntax test-eqv
+  (syntax-rules ()
+    ((_ test-name expected eqv?)
+     (%%test-2 test-proc test-name expected eqv?))
+    ((_ expected test-expr)
+     (%%test-2 test-proc #f expected eqv?))))
+
+(define-syntax test-equal
+  (syntax-rules ()
+    ((_ test-name expected equal?)
+     (%%test-2 test-proc test-name expected equal?))
+    ((_ expected test-expr)
+     (%%test-2 test-proc #f expected equal?))))
 
 ;(set-documentation! 'test-eq
 ;  "@defspec test-eq test-name expected test-expr
@@ -789,17 +816,18 @@ active run list?"
         (any-specifier-matches? run-list)
         #t)))
 
-(define (test-apply maybe-runner . args)
-  (let ((thunk (car (reverse args)))
-        (runner (if (test-runner? (car args))
-                  (car args)
-                  (if (test-runner-current)
-                    (test-runner-current)
-                    (test-runner-create))))
-        (specifiers (if (= (length args) 1)
-                      (list)
-                      (map obj->specifier (reverse (list-tail (reverse args) 1))))))
-    (apply test-apply runner `(,@specifiers ,thunk))))
+(define test-apply
+  (lambda (maybe-runner . args)
+    (let ((thunk (car (reverse args)))
+          (runner (if (test-runner? (car args))
+                    (car args)
+                    (if (test-runner-current)
+                      (test-runner-current)
+                      (test-runner-create))))
+          (specifiers (if (= (length args) 1)
+                        (list)
+                        (map obj->specifier (reverse (list-tail (reverse args) 1))))))
+      (apply test-apply runner `(,@specifiers ,thunk)))))
 ;(set-documentation! 'test-apply
 ;  "@defunx test-apply runner specifier ... procedure
 ;@defunx test-apply specifier ... procedure

@@ -76,7 +76,6 @@
         '(test-runner-result-alist . srfi-64#test-runner-result-alist)
         '(%make-test-runner . srfi-64#%make-test-runner)
         '(<test-runner> . srfi-64#<test-runner>)
-        '(set-documentation! . srfi-64#set-documentation!)
         '(pretty-print . srfi-64#pretty-print)
         '(string-trim-both . srfi-64#string-trim-both))
       '((test-read-eval-string . srfi-64#test-read-eval-string)
@@ -165,23 +164,23 @@
           'test-equal
           (syntax-rules
             ()
-            ((_ test-name expected test-expr)
-             (%%test-2 equal? test-name expected test-expr))
-            ((_ expected test-expr) (%%test-2 equal? #f expected test-expr))))
+            ((_ test-name expected equal?)
+             (%%test-2 test-proc test-name expected equal?))
+            ((_ expected test-expr) (%%test-2 test-proc #f expected equal?))))
         (scheme#cons
           'test-eqv
           (syntax-rules
             ()
-            ((_ test-name expected test-expr)
-             (%%test-2 eqv? test-name expected test-expr))
-            ((_ expected test-expr) (%%test-2 eqv? #f expected test-expr))))
+            ((_ test-name expected eqv?)
+             (%%test-2 test-proc test-name expected eqv?))
+            ((_ expected test-expr) (%%test-2 test-proc #f expected eqv?))))
         (scheme#cons
           'test-eq
           (syntax-rules
             ()
-            ((_ test-name expected test-expr)
-             (%%test-2 eq? test-name expected test-expr))
-            ((_ expected test-expr) (%%test-2 eq? #f expected test-expr))))
+            ((_ test-name expected eq?)
+             (%%test-2 test-proc test-name expected eq?))
+            ((_ expected test-expr) (%%test-2 test-proc #f expected eq?))))
         (scheme#cons
           'test-assert
           (syntax-rules
@@ -247,19 +246,6 @@
                    (test-result-set! r 'actual-value a)
                    (test-result-set! r 'epsilon eps)
                    ((within-epsilon eps) e a)))))))
-        (scheme#cons
-          '%test-2
-          (syntax-rules
-            ()
-            ((_ name test-proc)
-             (define-syntax
-               name
-               (syntax-rules
-                 ()
-                 ((_ test-name expected test-expr)
-                  (%%test-2 test-proc test-name expected test-expr))
-                 ((_ expected test-expr)
-                  (%%test-2 test-proc #f expected test-expr)))))))
         (scheme#cons
           '%%test-2
           (syntax-rules

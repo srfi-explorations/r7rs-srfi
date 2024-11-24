@@ -37,7 +37,7 @@ pipeline {
 
         stage("Init") {
             steps {
-                sh './jenkins_scripts/init.sh'
+                sh 'sh jenkins_scripts/init.sh'
                 stash name: 'reports', includes: 'reports/*'
                 stash name: 'tests', includes: 'srfi-test/*'
             }
@@ -57,9 +57,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -81,9 +81,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -105,9 +105,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone" "cyclone -I ." "cyclone -I ." 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "cyclone" "cyclone -I ." "cyclone -I ." 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -129,9 +129,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "foment" "foment -I -b" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "foment" "foment -I --load" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -153,9 +153,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit" "gsc -exe ./ -nopreload" "gsc -:search=." 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "gambit" "gsc -exe ./ -nopreload" "gsc -:search=." 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -177,9 +177,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -201,9 +201,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil" "gxi --lang r7rs" "gxc -O" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "gerbil" "gxi --lang r7rs" "gxc -O" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -225,9 +225,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -249,9 +249,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=${PWD}" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=${PWD}" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -273,9 +273,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -297,9 +297,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -321,9 +321,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --load" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "mit-scheme" "mit-scheme --load" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -345,9 +345,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "mosh" "mosh --loadpath=." "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -369,9 +369,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -393,9 +393,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -417,9 +417,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "stklos" "STKLOS_FRAMES=10 stklos --compiler-flags='+line-info,-time-display,unroll-iterations=3' --debug -I . -I ./srfi -f" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -441,9 +441,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "skint" "skint -I ./ --script" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "skint" "skint -I ./ --script" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -465,9 +465,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "tr7" "tr7i" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "tr7" "tr7i" "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
@@ -489,9 +489,9 @@ pipeline {
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=." "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=." "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'

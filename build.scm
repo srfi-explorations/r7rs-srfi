@@ -90,9 +90,9 @@
 (define makefile-job (compile (slurp "templates/Makefile-job")))
 (define makefile-bottom (compile (slurp "templates/Makefile-bottom")))
 
-(when (file-exists? "Makefile.tests") (delete-file "Makefile.tests"))
+(when (file-exists? "Makefile") (delete-file "Makefile"))
 (call-with-output-file
-  "Makefile.tests"
+  "Makefile"
   (lambda (out)
     (execute makefile-top '() out)
     (for-each
