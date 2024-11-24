@@ -516,7 +516,7 @@ pipeline {
         }
         stage("Package") {
             steps {
-                sh './snow-package'
+                sh './jenkins_scripts/snow-package.sh'
                 archiveArtifacts artifacts: 'packages/*.tgz'
             }
         }

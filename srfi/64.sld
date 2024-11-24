@@ -76,5 +76,4 @@
     test-runner-aux-value!
     test-runner-reset
     test-on-final-simple)
-  (include "64-util.scm")
   (include "64.scm"))
