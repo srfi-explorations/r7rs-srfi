@@ -13,11 +13,11 @@ do
     if [ ! "$lib_cmd" = "" ] && [ "$name" = "gambit" ]
     then
         echo "Building library: srfi/$srfi with command $lib_cmd"
-        "$lib_cmd" "srfi/$srfi"
+        $lib_cmd "srfi/$srfi"
     elif [ ! "$lib_cmd"  = "" ]
     then
         echo "Building library: srfi/$srfi.scm with command $lib_cmd"
-        "$lib_cmd" "srfi/$srfi.scm"
+        $lib_cmd "srfi/$srfi.scm"
     fi
 
     echo "Testing $srfi with command $cmd"
