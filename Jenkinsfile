@@ -251,7 +251,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh 'sh jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=${PWD}" "" 8 1 26 28 64 71 '
+                    sh 'sh jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=." "" 8 1 26 28 64 71 '
                     stash name: 'reports', includes: 'reports/*'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'

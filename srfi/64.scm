@@ -25,23 +25,23 @@
 ;;; Code:
 
 ;(define (set-documentation! symbol docstring)
-  ;"Set the docstring for @var{symbol} in current module to @var{docstring}.
+;"Set the docstring for @var{symbol} in current module to @var{docstring}.
 
-  ;Do not use this procedure for forms that already support setting the
-  ;docstring.  Should directly follow the definition of @var{symbol}.
+;Do not use this procedure for forms that already support setting the
+;docstring.  Should directly follow the definition of @var{symbol}.
 
- ;Example:
+;Example:
 
 ;@lisp
 ;(define answer 42)
 ;(set-documentation! 'answer
-  ;\"The answer to life, the universe, and everything.\")
+;\"The answer to life, the universe, and everything.\")
 ;@end lisp"
-  ;(set-object-property! (module-ref (current-module) symbol)
-                        ;'documentation
-                        ;docstring)
+;(set-object-property! (module-ref (current-module) symbol)
+;'documentation
+;docstring)
 ;#t
-  ;)
+;)
 
 ;(cond-expand-provide (current-module) '(srfi-64))
 
@@ -101,31 +101,31 @@
   (or (assq-ref (test-runner-counts r) 'pass) 0))
 
 (define (test-runner-skip-count r)
-  "Return the number of tests or test groups that were skipped."
+  ;"Return the number of tests or test groups that were skipped."
   (or (assq-ref (test-runner-counts r) 'skip) 0))
 
 (define (test-runner-xfail-count r)
-  "Return the number of tests that failed, and were expected to fail."
+  ;"Return the number of tests that failed, and were expected to fail."
   (or (assq-ref (test-runner-counts r) 'xfail) 0))
 
 (define (test-runner-xpass-count r)
-  "Return the number of tests that passed, but were expected to fail."
+  ;"Return the number of tests that passed, but were expected to fail."
   (or (assq-ref (test-runner-counts r) 'xpass) 0))
 
 ;;;
 ;;; Test specifiers
 ;;;
 (define (test-match-name name)
-  "Return a specifier matching the current test name against @var{name}."
+  ;"Return a specifier matching the current test name against @var{name}."
   (lambda (runner)
     (equal? name (test-runner-test-name runner))))
 
 (define test-match-nth
   (lambda (n . count-arg)
-    "Return a stateful predicate.  A counter keeps track of how many times it
-    has been called.  The predicate matches the @var{n}'th time it is
-    called (where 1 is the first time), and the next @code{(- @var{count} 1)}
-    times, where @var{count} defaults to 1."
+    ;"Return a stateful predicate.  A counter keeps track of how many times it
+    ;has been called.  The predicate matches the @var{n}'th time it is
+    ;called (where 1 is the first time), and the next @code{(- @var{count} 1)}
+    ;times, where @var{count} defaults to 1."
     (let* ((count (if (null? count-arg) 1 (car count-arg)))
            (i 0)
            (m (+ n -1)))
@@ -153,36 +153,36 @@
 
 (define test-match-all
   (lambda specifiers-arg
-  ;"Return specifier matching if all @var{specifiers} match.  Each specifier is
-;applied, in order, so side-effects from a later specifier happen even if an
-;earlier specifier is true."
-  (let ((specifiers (map obj->specifier specifiers-arg)))
-    (lambda (runner)
-      (fold (lambda (specifier seed)
-              (and (specifier runner) seed))
-            #t
-            specifiers)))))
+    ;"Return specifier matching if all @var{specifiers} match.  Each specifier is
+    ;applied, in order, so side-effects from a later specifier happen even if an
+    ;earlier specifier is true."
+    (let ((specifiers (map obj->specifier specifiers-arg)))
+      (lambda (runner)
+        (fold (lambda (specifier seed)
+                (and (specifier runner) seed))
+              #t
+              specifiers)))))
 
 ;;;
 ;;; Skipping selected tests
 ;;;
 (define (test-skip specifier)
-  "Evaluating test-skip adds the resulting specifier to the set of currently
-active skip-specifiers.  Before each test (or test-group) the set of active
-skip-specifiers are applied to the active test-runner.  If any specifier
-matches, then the test is skipped.
-
-@var{specifier} can be a predicate of one argument (the test runner), a
-string (used as if @code{(test-match-name @var{specifier})}) or an
-integer (used as if @code{(test-match-nth 1 @var{specifier})})."
+  ;  "Evaluating test-skip adds the resulting specifier to the set of currently
+  ;active skip-specifiers.  Before each test (or test-group) the set of active
+  ;skip-specifiers are applied to the active test-runner.  If any specifier
+  ;matches, then the test is skipped.
+  ;
+  ;@var{specifier} can be a predicate of one argument (the test runner), a
+  ;string (used as if @code{(test-match-name @var{specifier})}) or an
+  ;integer (used as if @code{(test-match-nth 1 @var{specifier})})."
   (let ((r (test-runner-current)))
     (test-runner-skip-list! r (cons (obj->specifier specifier)
                                     (test-runner-skip-list r)))))
 
 (define (any-specifier-matches? specifiers)
-  "Does any specifier in @var{specifiers} match current test?
+  ;  "Does any specifier in @var{specifiers} match current test?
 
-All specifiers are always evaluated."
+  ;All specifiers are always evaluated."
   (let ((r (test-runner-current)))
     (fold (lambda (specifier seed)
             (or (specifier r) seed))
@@ -190,21 +190,21 @@ All specifiers are always evaluated."
           specifiers)))
 
 (define (should-skip?)
-  "Should current test be skipped?"
+  ;"Should current test be skipped?"
   (any-specifier-matches? (test-runner-skip-list (test-runner-current))))
 
 ;;;
 ;;; Expected failures
 ;;;
 (define (test-expect-fail specifier)
-  "Matching tests (where matching is defined as in test-skip) are expected to
-fail.  This only affects test reporting, not test execution."
+  ;  "Matching tests (where matching is defined as in test-skip) are expected to
+  ;fail.  This only affects test reporting, not test execution."
   (let ((r (test-runner-current)))
     (test-runner-fail-list! r (cons (obj->specifier specifier)
                                     (test-runner-fail-list r)))))
 
 (define (should-fail?)
-  "Should the current test fail?"
+  ;"Should the current test fail?"
   (any-specifier-matches? (test-runner-fail-list (test-runner-current))))
 
 ;;;
@@ -212,29 +212,29 @@ fail.  This only affects test reporting, not test execution."
 ;;;
 (define test-result-ref
   (lambda (runner pname . default-arg)
-  ;"Returns the property value associated with the @var{pname} property name.
-  ;If there is no value associated with @var{pname} return @var{default}, or
-  ;@code{#f} if @var{default} is not specified."
-  (let ((default (if (null? default-arg) '() (car default-arg))))
-    (or (assoc-ref (test-runner-result-alist runner) pname)
-        default))))
+    ;"Returns the property value associated with the @var{pname} property name.
+    ;If there is no value associated with @var{pname} return @var{default}, or
+    ;@code{#f} if @var{default} is not specified."
+    (let ((default (if (null? default-arg) #f (car default-arg))))
+      (or (assoc-ref (test-runner-result-alist runner) pname)
+          default))))
 
 (define (test-result-set! runner pname value)
-  "Sets the property value associated with the @var{pname} property name to
-@var{value}."
+  ;  "Sets the property value associated with the @var{pname} property name to
+  ;@var{value}."
   (test-runner-result-alist! runner
                              (assoc-set! (test-runner-result-alist runner)
                                          pname
                                          value)))
 
 (define (test-result-remove runner pname)
-  "Remove the property with the name @var{pname}."
+  ;"Remove the property with the name @var{pname}."
   (test-runner-result-alist! runner
                              (assoc-remove! (test-runner-result-alist runner)
                                             pname)))
 
 (define (test-result-clear runner)
-  "Remove all result properties."
+  ;"Remove all result properties."
   ;; Standard says the following for test-result-alist:
   ;; > However, a test-result-clear does not modify the returned alist.
   ;;
@@ -243,7 +243,7 @@ fail.  This only affects test reporting, not test execution."
 
 (define test-result-alist test-runner-result-alist)
 ;(set-documentation! 'test-result-alist
-  ;"Returns an association list of the current result properties.  It is
+;"Returns an association list of the current result properties.  It is
 ;unspecified if the result shares state with the test-runner.  The result
 ;should not be modified; on the other hand, the result may be implicitly
 ;modified by future @code{test-result-set!} or @code{test-result-remove} calls.
@@ -255,39 +255,39 @@ fail.  This only affects test reporting, not test execution."
 ;;;
 (define test-result-kind
   (lambda runner-arg
-  ;"Result code of most recent test.  Returns @code{#f} if no tests have been run yet.
-;If we have started on a new test, but do not have a result yet, then the
-;result kind is @code{'xfail} if the test is expected to fail, @code{'skip} if
-;the test is supposed to be skipped, or @code{#f} otherwise."
-  (test-result-ref (if (null? runner-arg) (test-runner-current) (car runner-arg)) 'result-kind)))
+    ;"Result code of most recent test.  Returns @code{#f} if no tests have been run yet.
+    ;If we have started on a new test, but do not have a result yet, then the
+    ;result kind is @code{'xfail} if the test is expected to fail, @code{'skip} if
+    ;the test is supposed to be skipped, or @code{#f} otherwise."
+    (test-result-ref (if (null? runner-arg) (test-runner-current) (car runner-arg)) 'result-kind)))
 
 (define test-passed?
   (lambda runner-arg
-  "Is the value of @code{(test-result-kind [runner])} one of @code{'pass} or
-@code{'xpass}?
-
-This function is of little use, since @code{'xpass} is type of failure.  You
-should write your own wrapper checking @code{'pass} and @code{'xfail}
-instead."
-  (let ((result (test-result-kind (if (null? runner-arg) (test-runner-current) (car runner-arg)))))
-    (or (eq? result 'pass)
-        (eq? result 'xpass)))))
+    ;  "Is the value of @code{(test-result-kind [runner])} one of @code{'pass} or
+    ;@code{'xpass}?
+    ;
+    ;This function is of little use, since @code{'xpass} is type of failure.  You
+    ;should write your own wrapper checking @code{'pass} and @code{'xfail}
+    ;instead."
+    (let ((result (test-result-kind (if (null? runner-arg) (test-runner-current) (car runner-arg)))))
+      (or (eq? result 'pass)
+          (eq? result 'xpass)))))
 
 ;;;
 ;;; Simple test runner
 ;;;
 (define (test-on-bad-count-simple runner actual-count expected-count)
-  "Log the discrepancy between expected and actual test counts."
+  ;"Log the discrepancy between expected and actual test counts."
   (display (format "*** Expected to run ~a tests, but ~a was executed. ***~%"
-          expected-count actual-count)))
+                   expected-count actual-count)))
 
 (define (test-on-bad-end-name-simple runner begin-name end-name)
-  "Log the discrepancy between the -begin and -end suite names."
+  ;"Log the discrepancy between the -begin and -end suite names."
   (display (format "*** Suite name mismatch: test-begin (~a) != test-end (~a) ***~%"
-          begin-name end-name)))
+                   begin-name end-name)))
 
 (define (test-on-final-simple runner)
-  "Display summary of the test suite."
+  ;"Display summary of the test suite."
   (display "*** Test suite finished. ***\n")
   (for-each (lambda (x)
               (let ((count ((cdr x) runner)))
@@ -300,22 +300,23 @@ instead."
               ("skips              " . ,test-runner-skip-count))))
 
 (define (test-on-group-begin-simple runner suite-name count)
-  "Log that the group is beginning."
-  (display (format "*** Entering test group: ~a (# of tests: ~a) ***~%"
-          suite-name count)))
+  ;"Log that the group is beginning."
+  (if count
+    (display (format "*** Entering test group: ~a (# of tests: ~a) ***~%" suite-name count))
+    (display (format "*** Entering test group: ~a ***~%" suite-name))))
 
 (define (test-on-group-end-simple runner)
-  "Log that the group is ending."
+  ;"Log that the group is ending."
   ;; There is no portable way to get the test group name.
   (display (format "*** Leaving test group: ~a ***~%"
-          (car (test-runner-group-stack runner)))))
+                   (car (test-runner-group-stack runner)))))
 
 (define (test-on-test-begin-simple runner)
-  "Do nothing."
+  ;"Do nothing."
   #f)
 
 (define (test-on-test-end-simple runner)
-  "Log that test is done."
+  ;"Log that test is done."
   (letrec* ((maybe-print-prop
               (lambda (prop pretty?)
                 (let* ((val (test-result-ref runner prop))
@@ -332,10 +333,9 @@ instead."
       ;; Skip tests not executed due to run list.
       (when result-kind
         (display (format "* ~a: ~a~%"
-                result-kind
-                (test-runner-test-name runner)))
-        ;; TODO
-        #;(unless (member result-kind '(pass xfail))
+                         result-kind
+                         (test-runner-test-name runner)))
+        (unless (member result-kind '(pass xfail))
           (maybe-print-prop 'source-file    #f)
           (maybe-print-prop 'source-line    #f)
           (maybe-print-prop 'source-form    #t)
@@ -346,8 +346,8 @@ instead."
         ))))
 
 (define (test-runner-simple)
-  "Creates a new simple test-runner, that prints errors and a summary on the
-standard output port."
+  ;  "Creates a new simple test-runner, that prints errors and a summary on the
+  ;standard output port."
   (let ((r (%make-test-runner)))
     (test-runner-reset r)
 
@@ -371,7 +371,7 @@ standard output port."
 ;  "Parameter representing currently installed test runner.")
 
 (define (test-runner-get)
-  "Get current test runner if any, raise an exception otherwise."
+  ;"Get current test runner if any, raise an exception otherwise."
   (or (test-runner-current)
       (error 'no-test-runner)))
 
@@ -381,7 +381,7 @@ standard output port."
 ;returning new test runner.  Defaults to @code{test-runner-simple}.")
 
 (define (test-runner-create)
-  "Create a new test-runner. Equivalent to @code{((test-runner-factory))}."
+  ;"Create a new test-runner. Equivalent to @code{((test-runner-factory))}."
   ((test-runner-factory)))
 
 (define (test-runner-null)
@@ -414,7 +414,7 @@ standard output port."
   (previous-skip-list group-previous-skip-list))
 
 (define (increment-executed-count r)
-  "Increment executed count of the first group."
+  ;"Increment executed count of the first group."
   (let ((groups (test-runner-groups r)))
     (unless (null? groups)
       (let ((group (car groups)))
@@ -427,7 +427,7 @@ standard output port."
 
     ;As implementation extension, in addition to strings, symbols are also
     ;supported as @var{suite-name}."
-    (let* ((count (if (null? count-arg) 0 (car count-arg)))
+    (let* ((count (if (null? count-arg) #f (car count-arg)))
            (r (if (test-runner-current) (test-runner-current) (test-runner-create)))
            (install? (if (test-runner-current) #f #t))
            (group (make-group suite-name
@@ -448,13 +448,13 @@ standard output port."
       ((test-runner-on-group-begin r) r suite-name count))))
 
 (define (%cmp-group-name a b)
-    (cond ((and (string? a) (string? b)) (string=? a b))
-          ((and (symbol? a) (symbol? b)) (eq? a b))
-          (else #f)))
+  (cond ((and (string? a) (string? b)) (string=? a b))
+        ((and (symbol? a) (symbol? b)) (eq? a b))
+        (else #f)))
 
 (define test-end
   (lambda suite-name-arg
-    "Leave the current test group."
+    ;"Leave the current test group."
     (let* ((r (test-runner-current))
            (group (car (test-runner-groups r))))
 
@@ -465,11 +465,10 @@ standard output port."
           ((test-runner-on-bad-end-name r) r begin-name end-name)
           (error "Bad end name" begin-name end-name)))
 
-      ;; TODO
-      ;(let ((expected-count (group-count group))
-      ;(actual-count   (group-executed-count group)))
-      ;(when (and expected-count (not (= expected-count actual-count)))
-      ;((test-runner-on-bad-count r) r actual-count expected-count)))
+      (let ((expected-count (group-count group))
+            (actual-count   (group-executed-count group)))
+        (when (and expected-count (not (= expected-count actual-count)))
+          ((test-runner-on-bad-count r) r actual-count expected-count)))
 
       ((test-runner-on-group-end r) r)
 
@@ -522,39 +521,39 @@ standard output port."
 ;;; Simple test-cases
 ;;;
 (define (preliminary-result-kind! r fail? skip?)
-  "Set result-kind before the test was run based on @var{fail?} and
-@var{skip?}."
+  ;"Set result-kind before the test was run based on @var{fail?} and @var{skip?}."
   (test-result-set! r 'result-kind (cond
-                                    ;; I think this order is stupid, but it is
-                                    ;; what SRFI demands.
-                                    (fail? 'xfail)
-                                    (skip? 'skip)
-                                    (else  #f))))
+                                     ;; I think this order is stupid, but it is
+                                     ;; what SRFI demands.
+                                     (fail? 'xfail)
+                                     (skip? 'skip)
+                                     (else  #f))))
 
 (define (final-result-kind! r match? fail-expected?)
-  "Set the final result-kind based on @var{match?} and @var{fail-expected?}."
+  ;"Set the final result-kind based on @var{match?} and @var{fail-expected?}."
   (test-result-set! r 'result-kind (cond ((and match? fail-expected?)
                                           'xpass)
                                          (match?
-                                          'pass)
+                                           'pass)
                                          (fail-expected?
-                                          'xfail)
+                                           'xfail)
                                          (else
-                                          'fail))))
+                                           'fail))))
 
-(define (fail-on-exception thunk)
-  "Run the thunk and return the result.  If exception occurs, record it and
-  return @code{#f}."
-  (call-with-current-continuation
-    (lambda (k)
-      (with-exception-handler
-        (lambda (exc)
-          (test-result-set! (test-runner-current) 'actual-error exc)
-          (k #f))
-        (lambda () (thunk))))))
+(define-syntax fail-on-exception
+  (syntax-rules ()
+    ((_ thunk)
+     ;"Run the thunk and return the result.  If exception occurs, record it and return @code{#f}."
+     (call-with-current-continuation
+       (lambda (k)
+         (with-exception-handler
+           (lambda (exc)
+             (test-result-set! (test-runner-current) 'actual-error exc)
+             (k #f))
+           (lambda () (thunk))))))))
 
 (define (increment-test-count r)
-  "Increment the test count for the current 'result-kind."
+  ;"Increment the test count for the current 'result-kind."
   (let* ((kind (test-result-kind r))
          (counts (test-runner-counts r))
          (c (or (assq-ref counts kind) 0)))
@@ -599,11 +598,11 @@ standard output port."
                      a))))))
 
 (define-syntax test-assert
-    (syntax-rules ()
-      ((_ test-name expression)
-       (%test-assert test-name expression))
-      ((_ expression)
-       (%test-assert #f expression))))
+  (syntax-rules ()
+    ((_ test-name expression)
+     (%test-assert test-name expression))
+    ((_ expression)
+     (%test-assert #f expression))))
 ;(set-documentation! 'test-assert
 ;  "@defspec test-assert test-name expression
 ;@defspecx test-assert expression
@@ -627,14 +626,14 @@ standard output port."
                      (test-proc e a)))))))
 
 #;(define-syntax %test-2
-  (syntax-rules ()
-    ((_ name test-proc)
-     (define-syntax name
-         (syntax-rules ()
-           ((_ test-name expected test-expr)
-            (%%test-2 test-proc test-name expected test-expr))
-           ((_ expected test-expr)
-            (%%test-2 test-proc #f expected test-expr)))))))
+(syntax-rules ()
+  ((_ name test-proc)
+   (define-syntax name
+     (syntax-rules ()
+       ((_ test-name expected test-expr)
+        (%%test-2 test-proc test-name expected test-expr))
+       ((_ expected test-expr)
+        (%%test-2 test-proc #f expected test-expr)))))))
 
 ;(%test-2 test-eq eq?)
 ;(%test-2 test-eqv eqv?)
@@ -717,29 +716,41 @@ standard output port."
 ;@end defspec")
 
 (define-syntax %test-error
-    (syntax-rules ()
-      ((_ test-name error-type test-expr)
-       (test-thunk (let () test-name)
-                     (lambda ()
-                       (let ((r (test-runner-current))
-                             (e-type (let () error-type)))
-                         (test-result-set! r 'expected-error e-type)
+  (syntax-rules ()
+    ((_ test-name error-type test-expr)
+     (test-thunk (let () test-name)
+                 (lambda ()
+                   (let ((r (test-runner-current))
+                         (e-type (let () error-type)))
+                     (test-result-set! r 'expected-error e-type)
+                     (call-with-current-continuation
+                       (lambda (k)
                          (with-exception-handler
-                             (lambda (exc)
-                               (test-result-set! r 'actual-error exc)
-                               (cond ((symbol? e-type)
-                                      ;; TODO
-                                      ;(eq? e-type (exception-kind exc))
-                                      #f
-                                      )
-                                     ((procedure? e-type)
-                                      (e-type exc))
-                                     ;; TODO
-                                     ;((exception-type? e-type) ((exception-predicate e-type) exc))
-                                     ))
+                           (lambda (exc)
+                             (test-result-set! r 'actual-error exc)
+                             (k
+                               (cond
+                                 ((equal? e-type #t) #t)
+                                 ((equal? e-type #f) #f)
+                                 ((symbol? e-type)
+                                  ;; TODO
+                                  ;(eq? e-type (exception-kind exc))
+                                  (display "%test-error 1 :")
+                                  (display e-type)
+                                  (newline)
+                                  #f
+                                  )
+                                 ((procedure? e-type)
+                                  (e-type exc))
+                                 ;; TODO
+                                 ;((exception-type? e-type) ((exception-predicate e-type) exc))
+                                 (else
+                                   (display "%test-error 2 :")
+                                   (display e-type)
+                                   (newline)))))
                            (lambda ()
                              test-expr
-                             (not e-type)))))))))
+                             (not e-type)))))))))))
 
 (define-syntax test-error
   (syntax-rules ()
@@ -783,11 +794,11 @@ standard output port."
 ;;; Testing syntax
 ;;;
 (define (test-read-eval-string string)
-  "Parse the @var{string} (using @code{read}), evaluate and return the
-  result.
-
-  An error is signaled if there are unread characters after the @code{read} is
-  done."
+  ;"Parse the @var{string} (using @code{read}), evaluate and return the
+  ;result.
+  ;
+  ;  An error is signaled if there are unread characters after the @code{read} is
+  ;  done."
   (let* ((string-port (open-input-string string))
          (exp (read string-port)))
     (unless (eof-object? (read-char))
@@ -810,12 +821,11 @@ standard output port."
        decl-or-expr ...))))
 
 (define (should-run?)
-  "Should current test be considered for execution according to currently
-active run list?"
+  ;"Should current test be considered for execution according to currently active run list?"
   (let ((run-list ((test-runner-run-list (test-runner-current)))))
     (if run-list
-        (any-specifier-matches? run-list)
-        #t)))
+      (any-specifier-matches? run-list)
+      #t)))
 
 (define test-apply
   (lambda (maybe-runner . args)

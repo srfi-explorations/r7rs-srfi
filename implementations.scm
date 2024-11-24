@@ -18,7 +18,7 @@
      (library-command . "gxc -O"))
     ((name . guile) (command . "guile --fresh-auto-compile --r7rs -L ."))
     ((name . kawa)
-     (command . "kawa --r7rs -Dkawa.import.path=${PWD}")) ;; FIXME
+     (command . "kawa --r7rs -Dkawa.import.path=.")) ;; FIXME
     ((name . larceny)
      (command . "larceny -r7 -I ."))
     ((name . loko)
