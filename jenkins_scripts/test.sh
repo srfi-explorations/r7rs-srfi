@@ -9,11 +9,11 @@ shift 3
 srfis=$@
 
 ## Build 64 always first
-make test-srfi-64-$name-build-library
+make srfi-64-$name-build-library
 
 for srfi in $srfis
 do
-    make test-srfi-$srfi-$name-build-library
+    make srfi-$srfi-$name-build-library
     echo "Testing $srfi with command $cmd"
     $cmd "srfi-test/r7rs-programs/$srfi.scm" > "srfi-$srfi.log"
 done
