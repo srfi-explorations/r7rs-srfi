@@ -333,7 +333,7 @@
       ;; Skip tests not executed due to run list.
       (when result-kind
         (display (format "* ~a: ~a~%"
-                         result-kind
+                         (string-upcase (symbol->string result-kind))
                          (test-runner-test-name runner)))
         (unless (member result-kind '(pass xfail))
           (maybe-print-prop 'source-file    #f)
@@ -570,10 +570,7 @@
     ((_ test-name thunk)
      (let ((r (test-runner-current)))
        ;; Since skip checks are using -test-name, set it first.
-       (write "HERE: ")
-       (write test-name)
-       (newline)
-       (test-runner-test-name! r (if test-name test-name ""))
+       (test-runner-test-name! r (or test-name ""))
        ;(test-runner-result-alist! r properties)
 
        (let ((fail? (should-fail?))
