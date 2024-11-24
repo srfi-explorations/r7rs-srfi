@@ -13,5 +13,10 @@
             <li>Yellow: # of skipped tests > 0</li>
             <li>Green: none of the above</li>
         </ul>
+
+        <p>
+            If you can not see colors Jenkins might have CSS disabled. Download the HTML to see
+            them.
+        </p>
     </body>
 </html>
