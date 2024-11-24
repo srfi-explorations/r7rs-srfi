@@ -156,6 +156,15 @@ pipeline {
                     sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh 'sh jenkins_scripts/test.sh "gambit" "gsc -exe ./ -nopreload" "gsc -:search=." 8 1 26 28 64 71 '
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("gauche") {
+            agent {
                 docker {
                     image 'schemers/gauche:latest'
                     reuseNode true
@@ -195,6 +204,15 @@ pipeline {
                     sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh 'sh jenkins_scripts/test.sh "gerbil" "gxi --lang r7rs" "gxc -O" 8 1 26 28 64 71 '
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("guile") {
+            agent {
                 docker {
                     image 'schemers/guile:latest'
                     reuseNode true
@@ -330,6 +348,24 @@ pipeline {
                     sh 'sh jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh 'sh jenkins_scripts/test.sh "mosh" "mosh --loadpath=." "" 8 1 26 28 64 71 '
+                    stash name: 'reports', includes: 'reports/*'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("racket") {
+            agent {
+                docker {
+                    image 'schemers/racket:latest'
+                    reuseNode true
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'racket'
+                }
             }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
