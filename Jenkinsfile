@@ -527,7 +527,6 @@ pipeline {
             archiveArtifacts artifacts: 'reports/*.log'
             archiveArtifacts artifacts: 'reports/*.html'
             archiveArtifacts artifacts: 'packages/*.tgz'
-            archiveArtifacts artifacts: 'srfi/*.tgz'
             deleteDir()
         }
         failure {
