@@ -65,15 +65,18 @@
                                            (string-append "schemers/"
                                                           name
                                                           (if head? ":head" ":latest"))))) out)
-              (for-each
-                (lambda (srfi)
-                  (execute jenkinsfile-job
+              (execute jenkinsfile-job
                            `((name . ,name)
-                             (command . ,(full-command implementation srfi))
-                             (library-command . ,(full-library-command implementation srfi))
-                             (number . ,(cdr (assoc 'number srfi))))
-                           out))
-                srfis)
+                             (command . ,(cdr (assoc 'command implementation)))
+                             (library-command . ,(if (assoc 'library-command implementation)
+                                                   (cdr (assoc 'library-command implementation))
+                                                   ""))
+                             (numbers . ,(apply string-append
+                                                (map (lambda (srfi)
+                                                       (string-append (number->string (cdr (assoc 'number srfi)))
+                                                                      " "))
+                                                     srfis))))
+                           out)
               (execute jenkinsfile-job-bottom `((name . ,(cdr (assoc 'name implementation)))) out)
               (newline out)))
           implementations)

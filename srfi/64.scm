@@ -378,7 +378,7 @@ returning new test runner.  Defaults to @code{test-runner-simple}.")
 
 (define (test-runner-null)
   (let ((r (%make-test-runner))
-        (dummy-1 (lambda (_)        #f))
+        (dummy-1 (lambda (_) #f))
         (dummy-3 (lambda (_ __ ___) #f)))
     (test-runner-reset r)
 
@@ -456,7 +456,8 @@ supported as @var{suite-name}."
         ((test-runner-on-bad-end-name r) r begin-name end-name)
         (error "Bad end name" begin-name end-name)))
 
-    (let ((expected-count (group-count group))
+    ;; TODO
+    #;(let ((expected-count (group-count group))
           (actual-count   (group-executed-count group)))
       (when (and expected-count (not (= expected-count actual-count)))
         ((test-runner-on-bad-count r) r actual-count expected-count)))
@@ -787,24 +788,16 @@ active run list?"
         #t)))
 
 (define (test-apply maybe-runner . args)
-  ;; TODO
-  #|
-  (match-lambda*
-    (((? test-runner? r) specifiers ... thunk)
-     (test-with-runner r
-       (parameterize (((test-runner-run-list r)
-                       (if (null? specifiers)
-                           #f
-                           (map obj->specifier specifiers))))
-         (thunk))))
-    ((specifiers ... thunk)
-     (apply test-apply
-            (or (test-runner-current)
-                (test-runner-create))
-            `(,@specifiers ,thunk))))
-  |#
-#f
-  )
+  (let ((thunk (car (reverse args)))
+        (runner (if (test-runner? (car args))
+                  (car args)
+                  (if (test-runner-current)
+                    (test-runner-current)
+                    (test-runner-create))))
+        (specifiers (if (= (length args) 1)
+                      (list)
+                      (map obj->specifier (reverse (list-tail (reverse args) 1))))))
+    (apply test-apply runner `(,@specifiers ,thunk))))
 (set-documentation! 'test-apply
   "@defunx test-apply runner specifier ... procedure
 @defunx test-apply specifier ... procedure
