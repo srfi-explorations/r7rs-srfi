@@ -1,6 +1,6 @@
-# Building
+# R7RS-SRFI
 
-Run:
+This is a project for collection of R7RS SRFI implementations.
 
     git submodule update --init --recursive
     git submodule update --recursive --remote
@@ -16,6 +16,8 @@ This will generate Makefile to run tests.
 On implementation like Chicken that compile the libraries too you need to first run tests for
 SRFIs that the SRFI you want to the depends on. The tests will propably fail but the libraries will
 get built.
+
+With compiler implementations run the tests for SRFIs the SRFI you want to test needs to build them.
 
 # Adding new srfi
 
