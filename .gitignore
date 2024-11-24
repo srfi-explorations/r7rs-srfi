@@ -13,6 +13,8 @@ compiled
 ./srfi-*.sld
 ./srfi.*.scm
 ./srfi.*.sld
+srfi-*.import*
+srfi-*.sld
 test-prefix.txt
 reports
 packages

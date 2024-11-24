@@ -642,23 +642,23 @@ standard output port."
 (define-syntax test-eq
   (syntax-rules ()
     ((_ test-name expected eq?)
-     (%%test-2 test-proc test-name expected eq?))
+     (%%test-2 eq? test-name expected eq?))
     ((_ expected test-expr)
-     (%%test-2 test-proc #f expected eq?))))
+     (%%test-2 eq? #f expected eq?))))
 
 (define-syntax test-eqv
   (syntax-rules ()
     ((_ test-name expected eqv?)
-     (%%test-2 test-proc test-name expected eqv?))
+     (%%test-2 eqv? test-name expected eqv?))
     ((_ expected test-expr)
-     (%%test-2 test-proc #f expected eqv?))))
+     (%%test-2 eqv? #f expected eqv?))))
 
 (define-syntax test-equal
   (syntax-rules ()
     ((_ test-name expected equal?)
-     (%%test-2 test-proc test-name expected equal?))
+     (%%test-2 equal? test-name expected equal?))
     ((_ expected test-expr)
-     (%%test-2 test-proc #f expected equal?))))
+     (%%test-2 equal? #f expected equal?))))
 
 ;(set-documentation! 'test-eq
 ;  "@defspec test-eq test-name expected test-expr
