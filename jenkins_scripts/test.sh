@@ -15,7 +15,13 @@ for srfi in $srfis
 do
     make srfi-$srfi-$name-build-library
     echo "Testing $srfi with command $cmd"
-    $cmd "srfi-test/r7rs-programs/$srfi.scm" > "srfi-$srfi.log"
+    if [ "$lib_cmd" = "" ]
+    then
+        $cmd "srfi-test/r7rs-programs/$srfi.scm" > "srfi-$srfi.log"
+    else
+        $cmd "srfi-test/r7rs-programs/$srfi.scm"
+        srfi-test/r7rs-programs/$srfi > "srfi-$srfi.log"
+    fi
 done
 
 for f in *.log
