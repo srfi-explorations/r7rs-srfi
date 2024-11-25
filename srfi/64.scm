@@ -579,99 +579,54 @@
            (lambda () decl-or-expr ...)
            (lambda () (test-end   name))))))))
 
-;;;
-;;; Handling set-up and cleanup
-;;;
-(define-syntax test-group-with-cleanup
+==== BASE ====
+(define-syntax internal-test-comp2body
+==== BASE ====
   (syntax-rules ()
-    ;"Execute each of the @var{decl-or-expr} forms in order, and then execute
-    ;the @var{cleanup-form}.  The latter shall be executed even if one of a
-    ;@var{decl-or-expr} forms raises an exception."
-    ((_ suite-name decl-or-expr ... cleanup-form)
-     (dynamic-wind
-       (lambda () #t)
-       (lambda () (test-group suite-name decl-or-expr ...))
-       (lambda () cleanup-form)))))
+==== BASE ====
+    ((internal-test-comp2body r comp expected expr)
+     (let ()
+       (if (internal-test-on-test-begin r)
+         (let ((exp expected))
+           (test-result-expected-value! r exp)
+           (let ((res (internal-test-evaluate-with-catch expr)))
+             (test-result-actual-value! r res)
+             (internal-test-on-test-end r (comp exp res)))))
+       (internal-test-report-result)))))
 
-;;;
-;;; Simple test-cases
-;;;
-(define (preliminary-result-kind! r fail? skip?)
-  ;"Set result-kind before the test was run based on @var{fail?} and @var{skip?}."
-  (test-result-set! r 'result-kind (cond
-                                     ;; I think this order is stupid, but it is
-                                     ;; what SRFI demands.
-                                     (fail? 'xfail)
-                                     (skip? 'skip)
-                                     (else  #f))))
+(define (internal-test-approximate= error)
+  (lambda (value expected)
+    (let ((rval (real-part value))
+          (ival (imag-part value))
+          (rexp (real-part expected))
+          (iexp (imag-part expected)))
+      (and (>= rval (- rexp error))
+           (>= ival (- iexp error))
+           (<= rval (+ rexp error))
+           (<= ival (+ iexp error))))))
 
-(define (final-result-kind! r match? fail-expected?)
-  ;"Set the final result-kind based on @var{match?} and @var{fail-expected?}."
-  (test-result-set! r 'result-kind (cond ((and match? fail-expected?)
-                                          'xpass)
-                                         (match?
-                                           'pass)
-                                         (fail-expected?
-                                           'xfail)
-                                         (else
-                                           'fail))))
-
-(define-syntax fail-on-exception
+(define-syntax internal-test-comp1body
+==== BASE ====
   (syntax-rules ()
-    ((_ thunk)
-     ;"Run the thunk and return the result.  If exception occurs, record it and return @code{#f}."
-     (call-with-current-continuation
-       (lambda (k)
-         (with-exception-handler
-           (lambda (exc)
-             (test-result-set! (test-runner-current) 'actual-error exc)
-             (k #f))
-           (lambda () (thunk))))))))
+==== BASE ====
+    ((internal-test-comp1body r expr)
+     (let ()
+       (if (internal-test-on-test-begin r)
+         (let ()
+           (let ((res (internal-test-evaluate-with-catch expr)))
+             (test-result-actual-value! r res)
+             (internal-test-on-test-end r res))))
+       (internal-test-report-result)))))
 
-(define (increment-test-count r)
-  ;"Increment the test count for the current 'result-kind."
-  (let* ((kind (test-result-kind r))
-         (counts (test-runner-counts r))
-         (c (or (assq-ref counts kind) 0)))
-    (test-runner-counts! r (assq-set! counts kind (+ c 1)))))
-
-(define-syntax test-thunk
-  ;"Run test @var{thunk} while taking into account currently active skip list
-  ;and such.  The result alist is initially set to @var{properties}, however
-  ;@var{thunk} is expected to make additions (actual, expected values, ...).
-
-  ;@var{thunk} must return @code{#f} to indicate test failure.  Otherwise the
-  ;test is considered successful."
+(define-syntax test-end
+==== BASE ====
   (syntax-rules ()
-    ((_ test-name thunk)
-     (let ((r (test-runner-current)))
-       ;; Since skip checks are using -test-name, set it first.
-       (test-runner-test-name! r (or test-name ""))
-       ;(test-runner-result-alist! r properties)
-
-       (let ((fail? (should-fail?))
-             (run?  (should-run?))
-             (skip? (should-skip?)))
-         (preliminary-result-kind! r fail? skip?)
-         ((test-runner-on-test-begin r) r)
-         (when run?
-           (if skip?
-             (test-result-set! r 'result-kind 'skip)
-             (begin
-               (final-result-kind! r (fail-on-exception thunk) fail?)
-               (increment-executed-count r))))
-         ((test-runner-on-test-end r) r)
-         (increment-test-count r))))))
-
-(define-syntax %test-assert
-  (syntax-rules ()
-    ((_ test-name expression)
-     (test-thunk (let () test-name)
-                 (lambda ()
-                   (let ((r (test-runner-current))
-                         (a (let () expression)))
-                     (test-result-set! r 'actual-value a)
-                     a))))))
+==== BASE ====
+    ((test-end)
+     (internal-test-end #f '()))
+    ((test-end suite-name)
+     (internal-test-end suite-name '()))))
+==== BASE ====
 
 (define-syntax test-assert
   (syntax-rules ()
@@ -729,53 +684,14 @@
     ((_ expected test-expr)
      (%%test-2 eqv? #f expected test-expr))))
 
-(define-syntax test-equal
+==== BASE ====
+(define-syntax test-eq
+==== BASE ====
   (syntax-rules ()
-    ((_ test-name expected test-expr)
-     (%%test-2 equal? test-name expected test-expr))
-    ((_ expected test-expr)
-     (%%test-2 equal? #f expected test-expr))))
-
-;(set-documentation! 'test-eq
-;  "@defspec test-eq test-name expected test-expr
-;@defspecx test-eq expected test-expr
-;Test whether result of @var{test-expr} matches @var{expected} using
-;@code{eq?}.
-;
-;@end defspec")
-;(set-documentation! 'test-eqv
-;  "@defspec test-eqv test-name expected test-expr
-;@defspecx test-eqv expected test-expr
-;Test whether result of @var{test-expr} matches @var{expected} using
-;@code{eqv?}.
-;
-;@end defspec")
-;(set-documentation! 'test-equal
-;  "@defspec test-equal test-name expected test-expr
-;@defspecx test-equal expected test-expr
-;Test whether result of @var{test-expr} matches @var{expected} using
-;@code{equal?}.
-;
-;@end defspec")
-
-(define (within-epsilon eps)
-  (lambda (expected actual)
-    (and (>= actual (- expected eps))
-         (<= actual (+ expected eps)))))
-
-(define-syntax %test-approximate
-  (syntax-rules ()
-    ((_ test-name expected test-expr error)
-     (test-thunk (let () test-name)
-                 (lambda ()
-                   (let ((r (test-runner-current))
-                         (e (let () expected))
-                         (a (let () test-expr))
-                         (eps (let () error)))
-                     (test-result-set! r 'expected-value e)
-                     (test-result-set! r 'actual-value   a)
-                     (test-result-set! r 'epsilon        eps)
-                     ((within-epsilon eps) e a)))))))
+==== BASE ====
+    ((test-eq . rest)
+     (internal-test-comp2 eq? . rest))))
+==== BASE ====
 
 (define-syntax test-approximate
   (syntax-rules ()

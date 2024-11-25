@@ -231,6 +231,7 @@ pipeline {
                     params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'guile'
                 }
             }
+==== BASE ====
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make'
