@@ -13,19 +13,11 @@
                     reportTitles: 'R7RS-SRFI Test Report'])
             }
         }
-        stage("Package") {
-            steps {
-                sh './jenkins_scripts/snow-package.sh'
-                archiveArtifacts artifacts: 'packages/*.tgz'
-            }
-        }
-
     }
     post {
         always {
             archiveArtifacts artifacts: 'reports/*.log'
             archiveArtifacts artifacts: 'reports/*.html'
-            archiveArtifacts artifacts: 'packages/*.tgz'
             deleteDir()
         }
         failure {
