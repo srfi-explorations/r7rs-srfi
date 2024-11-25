@@ -403,8 +403,7 @@
                                   (if pretty?
                                     (pretty-print val "             ")
                                     (display val)))))))
-                  (when val
-                    (display (format "~a: ~a~%" prop val)))))))
+                  (when val (display (format "~a: ~a~%" prop val)))))))
 
     (let ((result-kind (test-result-kind runner)))
       ;; Skip tests not executed due to run list.
