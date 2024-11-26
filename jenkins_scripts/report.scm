@@ -83,6 +83,7 @@
                            (number . ,number)
                            (expected-passes . ,expected-passes)
                            (expected-failures . ,expected-failures)
+                           (unexpected-passes . ,unexpected-passes)
                            (unexpected-failures . ,unexpected-failures)
                            (skipped-tests . ,skipped-tests))
                          out)
