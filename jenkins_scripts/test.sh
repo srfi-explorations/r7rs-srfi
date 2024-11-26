@@ -1,27 +1,32 @@
 #!/bin/sh
 
+set -eu
+
 name="$1"
 cmd="$2"
 lib_cmd="$3"
 shift 3
 srfis=$@
 
+## Build 64 always first
+make srfi-64-$name-build-library
+
 for srfi in $srfis
 do
-    if [ ! "$lib_cmd" = "" ] && [ "$name" = "gambit" ]
+    make srfi-$srfi-$name-build-library
+    echo "Testing $srfi with command $cmd"
+    if [ "$lib_cmd" = "" ]
     then
-        "$lib_cmd" "srfi/$srfi"
-    elif [ ! "$lib_cmd"  = "" ]
-    then
-        "$lib_cmd" "srfi/$srfi.scm"
+        $cmd "srfi-test/r7rs-programs/$srfi.scm" > "srfi-$srfi.log"
+    else
+        $cmd "srfi-test/r7rs-programs/$srfi.scm"
+        srfi-test/r7rs-programs/$srfi > "srfi-$srfi.log"
     fi
-
-    "$command" "$srfi" > "srfi-$srfi.log"
 done
 
 for f in *.log
 do
-    cp -- "$f" "reports/$name$-$f"
+    cp -- "$f" "reports/$name-$f"
 done
 
 ls reports

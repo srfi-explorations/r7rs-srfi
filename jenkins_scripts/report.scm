@@ -53,7 +53,7 @@
                                         (if (eof-object? line)
                                           results
                                           (read-results (read-line)
-                                                        (if (string-starts-with? line "# of")
+                                                        (if (string-starts-with? line "*** # of")
                                                           (begin
                                                             (append results
                                                                     (list (number-of-line->number line))))

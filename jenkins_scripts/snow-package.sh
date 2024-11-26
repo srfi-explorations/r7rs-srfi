@@ -16,7 +16,7 @@ do
     mkdir -p /tmp/srfi/${package_name}/srfi
 
     number=${f/.sld}
-    dependencies=$(gosh -r7 ../get-dependencies.scm ${f})
+    dependencies=$(gosh -r7 ../jenkins_scripts/get-dependencies.scm ${f})
 
     {
         echo "(package"
@@ -46,7 +46,7 @@ do
 
     tree .
 
-    tar -czvf ${WORKDIR}/packages/srfi-${f/.sld/}-${VERSION}.tgz ${package_name}
+    tar -czvf ${WORKDIR}/packages/srfi-${f/.sld/}-${VERSION}.tar.gz ${package_name}
 
     cd ${WORKDIR}/srfi
 done
