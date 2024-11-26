@@ -1,3 +1,4 @@
+; This file exists for Guile compability
 (define-library
   (srfi 1)
   (import (scheme base)

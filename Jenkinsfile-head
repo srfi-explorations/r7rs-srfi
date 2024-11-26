@@ -46,7 +46,7 @@ pipeline {
         stage("chibi") {
             agent {
                 docker {
-                    image 'schemers/chibi:latest'
+                    image 'schemers/chibi:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -71,7 +71,7 @@ pipeline {
         stage("chicken") {
             agent {
                 docker {
-                    image 'schemers/chicken:latest'
+                    image 'schemers/chicken:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -96,7 +96,7 @@ pipeline {
         stage("cyclone") {
             agent {
                 docker {
-                    image 'schemers/cyclone:latest'
+                    image 'schemers/cyclone:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -121,7 +121,7 @@ pipeline {
         stage("foment") {
             agent {
                 docker {
-                    image 'schemers/foment:latest'
+                    image 'schemers/foment:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -146,7 +146,7 @@ pipeline {
         stage("gambit") {
             agent {
                 docker {
-                    image 'schemers/gambit:latest'
+                    image 'schemers/gambit:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -171,7 +171,7 @@ pipeline {
         stage("gauche") {
             agent {
                 docker {
-                    image 'schemers/gauche:latest'
+                    image 'schemers/gauche:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -196,7 +196,7 @@ pipeline {
         stage("gerbil") {
             agent {
                 docker {
-                    image 'schemers/gerbil:latest'
+                    image 'schemers/gerbil:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -221,7 +221,7 @@ pipeline {
         stage("guile") {
             agent {
                 docker {
-                    image 'schemers/guile:latest'
+                    image 'schemers/guile:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -246,7 +246,7 @@ pipeline {
         stage("kawa") {
             agent {
                 docker {
-                    image 'schemers/kawa:latest'
+                    image 'schemers/kawa:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -271,7 +271,7 @@ pipeline {
         stage("larceny") {
             agent {
                 docker {
-                    image 'schemers/larceny:latest'
+                    image 'schemers/larceny:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -296,7 +296,7 @@ pipeline {
         stage("loko") {
             agent {
                 docker {
-                    image 'schemers/loko:latest'
+                    image 'schemers/loko:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -321,7 +321,7 @@ pipeline {
         stage("mit-scheme") {
             agent {
                 docker {
-                    image 'schemers/mit-scheme:latest'
+                    image 'schemers/mit-scheme:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -346,7 +346,7 @@ pipeline {
         stage("mosh") {
             agent {
                 docker {
-                    image 'schemers/mosh:latest'
+                    image 'schemers/mosh:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -371,7 +371,7 @@ pipeline {
         stage("racket") {
             agent {
                 docker {
-                    image 'schemers/racket:latest'
+                    image 'schemers/racket:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -396,7 +396,7 @@ pipeline {
         stage("sagittarius") {
             agent {
                 docker {
-                    image 'schemers/sagittarius:latest'
+                    image 'schemers/sagittarius:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -421,7 +421,7 @@ pipeline {
         stage("stklos") {
             agent {
                 docker {
-                    image 'schemers/stklos:latest'
+                    image 'schemers/stklos:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -446,7 +446,7 @@ pipeline {
         stage("skint") {
             agent {
                 docker {
-                    image 'schemers/skint:latest'
+                    image 'schemers/skint:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -471,7 +471,7 @@ pipeline {
         stage("tr7") {
             agent {
                 docker {
-                    image 'schemers/tr7:latest'
+                    image 'schemers/tr7:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -496,7 +496,7 @@ pipeline {
         stage("ypsilon") {
             agent {
                 docker {
-                    image 'schemers/ypsilon:latest'
+                    image 'schemers/ypsilon:head'
                     reuseNode true
                     args '--user=root'
                 }

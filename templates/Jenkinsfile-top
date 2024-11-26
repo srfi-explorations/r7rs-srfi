@@ -37,13 +37,8 @@ pipeline {
 
         stage("Init") {
             steps {
-              sh 'rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git'
-              sh 'mkdir -p reports'
-              sh 'touch reports/placeholder'
-              stash name: 'reports', includes: 'reports/*'
-              sh 'echo "<h1>Test results</h1>" > reports/results.html'
-              sh '(cd srfi-test && make clean build)'
-              sh 'tree srfi-test'
-              stash name: 'tests', includes: 'srfi-test/*'
+                sh 'sh jenkins_scripts/init.sh'
+                stash name: 'reports', includes: 'reports/*'
+                stash name: 'tests', includes: 'srfi-test/*'
             }
         }

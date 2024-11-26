@@ -1,14 +1,21 @@
-# Building
+# R7RS-SRFI
 
-Use either:
+This is a project for collection of R7RS SRFI implementations.
 
-- ./generate-kawa
-- ./generate-gauche
+    git submodule update --init --recursive
+    git submodule update --recursive --remote
+    make -C srfi-test
+    make -f Makefile.build
 
+This will generate Makefile to run tests.
 
 # Running tests
 
-    make test-IMPLEMENTATION-srfi-N
+    make test-srfi-N-IMPLEMENTATION
+
+On implementation like Chicken that compile the libraries too you need to first run tests for
+SRFIs that the SRFI you want to the depends on. The tests will propably fail but the libraries will
+get built.
 
 With compiler implementations run the tests for SRFIs the SRFI you want to test needs to build them.
 
@@ -28,6 +35,11 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
+    - srfi/N.rkt
+        - Shim file to support Racket
+    - srfi/srfi-N.rkt
+        - Shim file to support Guile
+
 
 You should be able to deduct what the contents of these files are from other SRFI implementations
 in this repository.
@@ -46,9 +58,4 @@ in SRFI tests.
 ## Notes, articles and misc.
 
 - SRFI-64
-    - https://github.com/fisherro/snow-srfi-64
-    - https://mdhughes.tech/2020/02/27/scheme-test-unit/
-    - https://wolfsden.cz/blog/post/state-of-srfi-64.html
-    - https://github.com/mnieper/scheme-libraries-fork/blob/main/lib/scheme-libraries/testing.sls
-        - This should produce [TAP](https://testanything.org/) output
-    - tr7 does not have (scheme complex) support as the time of writing (2024-09-28)
+    - Taken from Guile's new implementation and mutilated to cooperation

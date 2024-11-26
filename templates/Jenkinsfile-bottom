@@ -2,7 +2,7 @@
         stage("Report") {
             steps {
                 unstash 'reports'
-                sh './report'
+                sh './jenkins_scripts/reports.sh'
                 archiveArtifacts artifacts: 'reports/*.html'
                 publishHTML (target : [allowMissing: false,
                     alwaysLinkToLastBuild: false,
@@ -13,20 +13,11 @@
                     reportTitles: 'R7RS-SRFI Test Report'])
             }
         }
-        stage("Package") {
-            steps {
-                sh './snow-package'
-                archiveArtifacts artifacts: 'packages/*.tgz'
-            }
-        }
-
     }
     post {
         always {
             archiveArtifacts artifacts: 'reports/*.log'
             archiveArtifacts artifacts: 'reports/*.html'
-            archiveArtifacts artifacts: '*.tgz'
-            archiveArtifacts artifacts: 'srfi/*.tgz'
             deleteDir()
         }
         failure {
