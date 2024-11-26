@@ -66,9 +66,9 @@
                                        (read-results (read-line) (list))))))
                         (expected-passes (if (> (length results) 0) (list-ref results 0) 0))
                         (expected-failures (if (> (length results) 1) (list-ref results 1) 0))
-                        (unexpected-passes (if (> (length results) 1) (list-ref results 2) 0))
-                        (unexpected-failures (if (> (length results) 2) (list-ref results 3) 0))
-                        (skipped-tests (if (> (length results) 3) (list-ref results 4) 0))
+                        (unexpected-passes (if (> (length results) 2) (list-ref results 2) 0))
+                        (unexpected-failures (if (> (length results) 3) (list-ref results 3) 0))
+                        (skipped-tests (if (> (length results) 4) (list-ref results 4) 0))
                         (color (cond ((string? expected-passes) "white") ; No logfile
                                      ((> unexpected-failures 0) "red")
                                      ((> skipped-tests 0) "yellow")
