@@ -2,6 +2,10 @@
 
 This is a project for collection of R7RS SRFI implementations.
 
+[Report](https://jenkins.scheme.org/job/r7rs/job/r7rs-srfi/job/main/R7RS-SRFI_20Test_20Report)
+
+## Building
+
     git submodule update --init --recursive
     git submodule update --recursive --remote
     make -C srfi-test
@@ -9,7 +13,7 @@ This is a project for collection of R7RS SRFI implementations.
 
 This will generate Makefile to run tests.
 
-# Running tests
+## Running tests
 
     make test-srfi-N-IMPLEMENTATION
 
@@ -19,7 +23,7 @@ get built.
 
 With compiler implementations run the tests for SRFIs the SRFI you want to test needs to build them.
 
-# Adding new srfi
+## Adding new srfi
 
 Add files:
 
@@ -41,7 +45,7 @@ The test file needs to be named N.scm.
 
 Add the SRFI data into srfis.scm.
 
-# Adding new implementation
+## Adding new implementation
 
 Add the implementation data into implementations.scm, keep the order alphabetical.
 The first SRFI you port to any new implementation should be SRFI-64. As it's the test suite used
