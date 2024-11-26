@@ -6,8 +6,8 @@ This is a project for collection of R7RS SRFI implementations.
 
 ## Building
 
-    git submodule update --init --recursive
-    git submodule update --recursive --remote
+    rm -rf srfi-test
+    git clone https://github.com/srfi-explorations/srfi-test.git
     make -C srfi-test
     make -f Makefile.build
 
