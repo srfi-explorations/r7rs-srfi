@@ -287,8 +287,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" 8 1 14 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -312,12 +310,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls" 8 1 14 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
-
         stage("mit-scheme") {
             agent {
                 docker {

@@ -387,8 +387,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 14 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -412,8 +410,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" "" 8 1 14 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -487,8 +483,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "tr7" "tr7i" "" 8 1 14 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
