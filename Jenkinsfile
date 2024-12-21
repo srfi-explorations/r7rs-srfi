@@ -61,7 +61,11 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." "" 8 1 19 26 28 64 151 '
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
         }
 
         stage("chicken") {
@@ -82,7 +86,15 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" 8 1 19 26 28 64 151 '
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("cyclone") {
+            agent {
                 docker {
                     image 'schemers/cyclone:latest'
                     reuseNode true
@@ -99,7 +111,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone" "cyclone -I ." "cyclone -I ." 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "cyclone" "cyclone -I ." "cyclone -I ." 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -124,7 +136,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "foment" "foment -I --load" "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "foment" "foment -I . -I ./srfi" "" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -149,7 +161,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit" "gsc -exe ./ -nopreload" "gsc -:search=." 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "gambit" "gsc -exe ./ -nopreload" "gsc -:search=." 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -174,7 +186,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." "" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -199,7 +211,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil" "gxi --lang r7rs" "gxc -O" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "gerbil" "gxi --lang r7rs" "gxc -O" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -224,7 +236,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -249,7 +261,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../../*.sld" "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../.." "" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -274,7 +286,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -299,7 +311,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -324,7 +336,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --load" "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld" "" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -349,7 +361,9 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." "" 8 1 19 26 28 64 151 '
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -372,7 +386,9 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 19 26 28 64 151 '
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -395,7 +411,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" "" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -420,7 +436,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" "" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -445,7 +461,9 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "skint" "skint -I ./" "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "skint" "skint -I ./" "" 8 1 19 26 28 64 151 '
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -468,7 +486,9 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "tr7" "tr7i" "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "tr7" "tr7i" "" 8 1 19 26 28 64 151 '
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -491,7 +511,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=." "" 8 1 26 28 64 151 '
+                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=. --loadpath=./srfi" "" 8 1 19 26 28 64 151 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
