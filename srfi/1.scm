@@ -211,7 +211,7 @@
 ;;; The SRFI discussion record contains more discussion on this topic.
 
 
-;;; Utilities
+;;; r7rs-srfi util
 
 (define (check-arg pred val caller)
   (if (pred val) val (error "Bad argument" val pred caller)))
@@ -261,6 +261,8 @@
     ((internal-let-optionals arg () body ...)
      (if (null? arg) (begin body ...)
        (error "Too many arguments in let-opt" arg)))))
+
+;;; r7rs-srfi util end
 
 ;;; Constructors
 ;;;;;;;;;;;;;;;;
