@@ -27,7 +27,7 @@
      (library-command . "ls"))
     ; FIXME Temporarily loading needed stuff to run srfi-64
     ((name . mit-scheme)
-     (command . "mit-scheme --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld")) ;; FIXME
+     (command . "mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld"))
     ((name . mosh) (command . "mosh --loadpath=."))
     ((name . racket) (command . "racket -I r7rs -S . --script"))
     ((name . sagittarius) (command . "sash -r7 -L . -L ./srfi"))
