@@ -53,7 +53,9 @@ Add the implementation data into implementations.scm, keep the order alphabetica
 The first SRFI you port to any new implementation should be SRFI-64. As it's the test suite used
 in SRFI tests.
 
-## Code origins, notes, articles and misc.
+### Misc
 
-- SRFI-64
-    - Taken from Guile's new implementation and mutilated to cooperation
+The srfi/srfi-N.scm files exist for Guile compability, their content should be identical to
+srfi/N.sld.
+
+The srfi/N.rkt files exists for racket-r7rs compability.
