@@ -136,7 +136,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "foment" "foment -I --load" "" 8 1 19 26 28 64 '
+                    sh './jenkins_scripts/test.sh "foment" "foment -I . -I ./srfi" "" 8 1 19 26 28 64 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -261,7 +261,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../../*.sld" "" 8 1 19 26 28 64 '
+                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../.." "" 8 1 19 26 28 64 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -336,7 +336,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --load" "" 8 1 19 26 28 64 '
+                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld" "" 8 1 19 26 28 64 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -511,7 +511,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=." "" 8 1 19 26 28 64 '
+                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=. --loadpath=./srfi" "" 8 1 19 26 28 64 '
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
