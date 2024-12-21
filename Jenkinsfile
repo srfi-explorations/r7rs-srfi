@@ -62,10 +62,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
         }
 
         stage("chicken") {
@@ -87,14 +83,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
-
-        stage("cyclone") {
-            agent {
                 docker {
                     image 'schemers/cyclone:latest'
                     reuseNode true
@@ -362,8 +350,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -387,8 +373,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -462,8 +446,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "skint" "skint -I ./" "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -487,8 +469,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "tr7" "tr7i" "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }

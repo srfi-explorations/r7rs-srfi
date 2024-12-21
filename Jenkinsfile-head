@@ -187,8 +187,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -237,14 +235,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
-
-        stage("kawa") {
-            agent {
                 docker {
                     image 'schemers/kawa:head'
                     reuseNode true
@@ -287,8 +277,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -312,14 +300,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
-
-        stage("mit-scheme") {
-            agent {
                 docker {
                     image 'schemers/mit-scheme:head'
                     reuseNode true
@@ -387,8 +367,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -412,8 +390,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -437,12 +413,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
-
         stage("skint") {
             agent {
                 docker {
@@ -487,10 +457,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "tr7" "tr7i" "" 8 1 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
         }
 
         stage("ypsilon") {

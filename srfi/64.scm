@@ -86,18 +86,10 @@
     ;; TODO
     str))
 
-(define-syntax with-output-to-string
-  (syntax-rules ()
-    ((_ thunk)
-     (parameterize
-       ((current-output-port
-          (open-output-string)))
-       thunk
-       (get-output-string (current-output-port))))))
-
-(define (pretty-print val per-line-prefix)
-  (write val))
-
+(define (display-to-string value)
+  (let ((output-string (open-output-string)))
+    (display value output-string)
+    (get-output-string output-string)))
 
 ;;; Code:
 
@@ -197,24 +189,23 @@
   (lambda (runner)
     (equal? name (test-runner-test-name runner))))
 
-(define test-match-nth
-  (lambda (n . count-arg)
-    ;"Return a stateful predicate.  A counter keeps track of how many times it
-    ;has been called.  The predicate matches the @var{n}'th time it is
-    ;called (where 1 is the first time), and the next @code{(- @var{count} 1)}
-    ;times, where @var{count} defaults to 1."
-    (let* ((count (if (null? count-arg) 1 (car count-arg)))
-           (i 0)
-           (m (+ n -1)))
-      (lambda (runner)
-        (set! i (+ i 1))
-        (and (>= i n) (<= i m))))))
+(define (test-match-nth n . count-arg)
+  ;"Return a stateful predicate.  A counter keeps track of how many times it
+  ;has been called.  The predicate matches the @var{n}'th time it is
+  ;called (where 1 is the first time), and the next @code{(- @var{count} 1)}
+  ;times, where @var{count} defaults to 1."
+  (let* ((count (if (null? count-arg) 1 (car count-arg)))
+         (i 0)
+         (m (+ n (- count 1))))
+    (lambda (runner)
+      (set! i (+ i 1))
+      (and (>= i n) (<= i m)))))
 
 (define (obj->specifier obj)
   ;"Convert an object to a specifier accounting for the convenience short-hands."
   (cond ((procedure? obj) obj)
         ((string? obj) (test-match-name obj))
-        ((integer? obj) (test-match-nth 1 count))))
+        ((integer? obj) (test-match-nth 1 obj))))
 
 (define test-match-any
   (lambda specifiers-arg
@@ -396,12 +387,7 @@
   (letrec* ((maybe-print-prop
               (lambda (prop pretty?)
                 (let* ((val (test-result-ref runner prop))
-                       (val (string-trim-both
-                              (with-output-to-string
-                                (lambda ()
-                                  (if pretty?
-                                    (pretty-print val "             ")
-                                    (display val)))))))
+                       (val (string-trim-both (display-to-string val))))
                   (when val (display (format "~a: ~a~%" prop val)))))))
 
     (let ((result-kind (test-result-kind runner)))
@@ -411,14 +397,13 @@
                          (string-upcase (symbol->string result-kind))
                          (test-runner-test-name runner)))
         (unless (member result-kind '(pass xfail))
-          (maybe-print-prop 'source-file    #f)
-          (maybe-print-prop 'source-line    #f)
-          (maybe-print-prop 'source-form    #t)
+          ;(maybe-print-prop 'source-file    #f)
+          ;(maybe-print-prop 'source-line    #f)
+          ;(maybe-print-prop 'source-form    #t)
           (maybe-print-prop 'expected-value #f)
           (maybe-print-prop 'expected-error #t)
           (maybe-print-prop 'actual-value   #f)
-          (maybe-print-prop 'actual-error   #t))
-        ))))
+          (maybe-print-prop 'actual-error   #t))))))
 
 (define (test-runner-simple)
   ;  "Creates a new simple test-runner, that prints errors and a summary on the
