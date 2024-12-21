@@ -47,49 +47,49 @@
           make-bitwise-generator)
   ;; Provide core functions
   (cond-expand
-    #;(chibi
-    (include-shared "srfi/142/bit")
-    (begin
-      (define (bitwise-not i) (- -1 i))
+    (chibi
+      (include-shared "srfi/142/bit")
+      (begin
+        (define (bitwise-not i) (- -1 i))
 
-      (define (make-nary proc2 default)
-        (lambda args
-          (if (null? args)
-            default
-            (let lp ((i (car args)) (ls (cdr args)))
-              (if (null? ls)
-                i
-                (lp (proc2 i (car ls)) (cdr ls)))))))
+        (define (make-nary proc2 default)
+          (lambda args
+            (if (null? args)
+              default
+              (let lp ((i (car args)) (ls (cdr args)))
+                (if (null? ls)
+                  i
+                  (lp (proc2 i (car ls)) (cdr ls)))))))
 
-      (define bitwise-and  (make-nary bit-and  -1))
-      (define bitwise-ior  (make-nary bit-ior   0))
-      (define bitwise-xor  (make-nary bit-xor   0))))
+        (define bitwise-and  (make-nary bit-and  -1))
+        (define bitwise-ior  (make-nary bit-ior   0))
+        (define bitwise-xor  (make-nary bit-xor   0))))
 
-  ((library (rnrs arithmetic bitwise))
-   (import (only (rnrs arithmetic bitwise)
-                 bitwise-not bitwise-and bitwise-ior bitwise-xor
-                 bitwise-bit-count)
-           (rename (only (rnrs arithmetic bitwise)
-                         bitwise-arithmetic-shift bitwise-length)
-                   (bitwise-arithmetic-shift arithmetic-shift)
-                   (bitwise-length integer-length)))
-   (begin
-     (define (bit-count i) ; Negative case different to R6RS bitwise-bit-count
-       (if (>= i 0)
-         (bitwise-bit-count i)
-         (bitwise-bit-count (bitwise-not i))))))
+    ((library (rnrs arithmetic bitwise))
+     (import (only (rnrs arithmetic bitwise)
+                   bitwise-not bitwise-and bitwise-ior bitwise-xor
+                   bitwise-bit-count)
+             (rename (only (rnrs arithmetic bitwise)
+                           bitwise-arithmetic-shift bitwise-length)
+                     (bitwise-arithmetic-shift arithmetic-shift)
+                     (bitwise-length integer-length)))
+     (begin
+       (define (bit-count i) ; Negative case different to R6RS bitwise-bit-count
+         (if (>= i 0)
+           (bitwise-bit-count i)
+           (bitwise-bit-count (bitwise-not i))))))
 
-  (gauche
-    (import (only (gauche base)
-                  integer-length)
-            (rename (only (gauche base)
-                          lognot logand logior logxor ash)
-                    (lognot bitwise-not)
-                    (logand bitwise-and)
-                    (logior bitwise-ior)
-                    (logxor bitwise-xor)
-                    (ash arithmetic-shift))))
-  (else (include "bitwise-core.scm")))
+    (gauche
+      (import (only (gauche base)
+                    integer-length)
+              (rename (only (gauche base)
+                            lognot logand logior logxor ash)
+                      (lognot bitwise-not)
+                      (logand bitwise-and)
+                      (logior bitwise-ior)
+                      (logxor bitwise-xor)
+                      (ash arithmetic-shift))))
+    (else (include "bitwise-core.scm")))
 
 ;; Stable part of the implementation
 (include "bitwise-33.scm")

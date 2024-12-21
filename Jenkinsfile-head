@@ -62,8 +62,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." "" 8 1 14 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -262,8 +260,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../.." "" 8 1 14 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -337,8 +333,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld" "" 8 1 14 26 28 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
                 }
             }
         }
@@ -387,10 +381,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 14 26 28 64 151 '
-                }
-            }
-        }
-
         stage("sagittarius") {
             agent {
                 docker {

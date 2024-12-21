@@ -287,10 +287,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" 8 1 14 26 28 64 151 '
-                }
-            }
-        }
-
         stage("loko") {
             agent {
                 docker {
