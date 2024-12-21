@@ -4,7 +4,7 @@ This is a project for collection of R7RS SRFI implementations.
 
 [Jenkins](https://jenkins.scheme.org/job/r7rs/job/r7rs-srfi/)
 
-[Test report](https://jenkins.scheme.org/job/r8rs/job/r7rs-srfi/job/main/R7RS-SRFI_20Test_20Report)
+[Test report](https://jenkins.scheme.org/job/r8rs/job/r7rs-srfi/job/main/R7RS-SRFI_20Test_20Report/)
 
 ## Building
 
