@@ -63,21 +63,21 @@ srfi-8-cyclone-build-library-docker-head:
 
 test-srfi-8-foment:
 	
-	foment -I --load srfi-test/r7rs-programs/8.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm
 
 srfi-8-foment-build-library:
 	
 
 test-srfi-8-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
 
 srfi-8-foment-build-library-docker:
 	
 
 test-srfi-8-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
 
 srfi-8-foment-build-library-docker-head:
 	
@@ -168,21 +168,21 @@ srfi-8-guile-build-library-docker-head:
 
 test-srfi-8-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm
+	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/8.scm
 
 srfi-8-kawa-build-library:
 	
 
 test-srfi-8-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/8.scm"
 
 srfi-8-kawa-build-library-docker:
 	
 
 test-srfi-8-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/8.scm"
 
 srfi-8-kawa-build-library-docker-head:
 	
@@ -231,21 +231,21 @@ srfi-8-loko-build-library-docker-head:
 
 test-srfi-8-mit-scheme:
 	
-	mit-scheme --load srfi-test/r7rs-programs/8.scm
+	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
 
 srfi-8-mit-scheme-build-library:
 	
 
 test-srfi-8-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 srfi-8-mit-scheme-build-library-docker:
 	
 
 test-srfi-8-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 srfi-8-mit-scheme-build-library-docker-head:
 	
@@ -378,21 +378,21 @@ srfi-8-tr7-build-library-docker-head:
 
 test-srfi-8-ypsilon:
 	
-	ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/8.scm
+	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/8.scm
 
 srfi-8-ypsilon-build-library:
 	
 
 test-srfi-8-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/8.scm"
 
 srfi-8-ypsilon-build-library-docker:
 	
 
 test-srfi-8-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/8.scm"
 
 srfi-8-ypsilon-build-library-docker-head:
 	
@@ -462,21 +462,21 @@ srfi-1-cyclone-build-library-docker-head:
 
 test-srfi-1-foment:
 	
-	foment -I --load srfi-test/r7rs-programs/1.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm
 
 srfi-1-foment-build-library:
 	
 
 test-srfi-1-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
 
 srfi-1-foment-build-library-docker:
 	
 
 test-srfi-1-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
 
 srfi-1-foment-build-library-docker-head:
 	
@@ -567,21 +567,21 @@ srfi-1-guile-build-library-docker-head:
 
 test-srfi-1-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm
+	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/1.scm
 
 srfi-1-kawa-build-library:
 	
 
 test-srfi-1-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/1.scm"
 
 srfi-1-kawa-build-library-docker:
 	
 
 test-srfi-1-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/1.scm"
 
 srfi-1-kawa-build-library-docker-head:
 	
@@ -630,21 +630,21 @@ srfi-1-loko-build-library-docker-head:
 
 test-srfi-1-mit-scheme:
 	
-	mit-scheme --load srfi-test/r7rs-programs/1.scm
+	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
 
 srfi-1-mit-scheme-build-library:
 	
 
 test-srfi-1-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 srfi-1-mit-scheme-build-library-docker:
 	
 
 test-srfi-1-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 srfi-1-mit-scheme-build-library-docker-head:
 	
@@ -777,21 +777,21 @@ srfi-1-tr7-build-library-docker-head:
 
 test-srfi-1-ypsilon:
 	
-	ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/1.scm
+	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/1.scm
 
 srfi-1-ypsilon-build-library:
 	
 
 test-srfi-1-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/1.scm"
 
 srfi-1-ypsilon-build-library-docker:
 	
 
 test-srfi-1-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/1.scm"
 
 srfi-1-ypsilon-build-library-docker-head:
 	
@@ -1260,21 +1260,21 @@ srfi-26-cyclone-build-library-docker-head:
 
 test-srfi-26-foment:
 	
-	foment -I --load srfi-test/r7rs-programs/26.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm
 
 srfi-26-foment-build-library:
 	
 
 test-srfi-26-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
 
 srfi-26-foment-build-library-docker:
 	
 
 test-srfi-26-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
 
 srfi-26-foment-build-library-docker-head:
 	
@@ -1365,21 +1365,21 @@ srfi-26-guile-build-library-docker-head:
 
 test-srfi-26-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm
+	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/26.scm
 
 srfi-26-kawa-build-library:
 	
 
 test-srfi-26-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/26.scm"
 
 srfi-26-kawa-build-library-docker:
 	
 
 test-srfi-26-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/26.scm"
 
 srfi-26-kawa-build-library-docker-head:
 	
@@ -1428,21 +1428,21 @@ srfi-26-loko-build-library-docker-head:
 
 test-srfi-26-mit-scheme:
 	
-	mit-scheme --load srfi-test/r7rs-programs/26.scm
+	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
 
 srfi-26-mit-scheme-build-library:
 	
 
 test-srfi-26-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 srfi-26-mit-scheme-build-library-docker:
 	
 
 test-srfi-26-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 srfi-26-mit-scheme-build-library-docker-head:
 	
@@ -1575,21 +1575,21 @@ srfi-26-tr7-build-library-docker-head:
 
 test-srfi-26-ypsilon:
 	
-	ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/26.scm
+	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/26.scm
 
 srfi-26-ypsilon-build-library:
 	
 
 test-srfi-26-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/26.scm"
 
 srfi-26-ypsilon-build-library-docker:
 	
 
 test-srfi-26-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/26.scm"
 
 srfi-26-ypsilon-build-library-docker-head:
 	
@@ -1659,21 +1659,21 @@ srfi-28-cyclone-build-library-docker-head:
 
 test-srfi-28-foment:
 	
-	foment -I --load srfi-test/r7rs-programs/28.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm
 
 srfi-28-foment-build-library:
 	
 
 test-srfi-28-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
 
 srfi-28-foment-build-library-docker:
 	
 
 test-srfi-28-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
 
 srfi-28-foment-build-library-docker-head:
 	
@@ -1764,21 +1764,21 @@ srfi-28-guile-build-library-docker-head:
 
 test-srfi-28-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm
+	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/28.scm
 
 srfi-28-kawa-build-library:
 	
 
 test-srfi-28-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/28.scm"
 
 srfi-28-kawa-build-library-docker:
 	
 
 test-srfi-28-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/28.scm"
 
 srfi-28-kawa-build-library-docker-head:
 	
@@ -1827,21 +1827,21 @@ srfi-28-loko-build-library-docker-head:
 
 test-srfi-28-mit-scheme:
 	
-	mit-scheme --load srfi-test/r7rs-programs/28.scm
+	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
 
 srfi-28-mit-scheme-build-library:
 	
 
 test-srfi-28-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 srfi-28-mit-scheme-build-library-docker:
 	
 
 test-srfi-28-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 srfi-28-mit-scheme-build-library-docker-head:
 	
@@ -1974,21 +1974,21 @@ srfi-28-tr7-build-library-docker-head:
 
 test-srfi-28-ypsilon:
 	
-	ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/28.scm
+	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/28.scm
 
 srfi-28-ypsilon-build-library:
 	
 
 test-srfi-28-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/28.scm"
 
 srfi-28-ypsilon-build-library-docker:
 	
 
 test-srfi-28-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/28.scm"
 
 srfi-28-ypsilon-build-library-docker-head:
 	
@@ -2058,21 +2058,21 @@ srfi-64-cyclone-build-library-docker-head:
 
 test-srfi-64-foment:
 	
-	foment -I --load srfi-test/r7rs-programs/64.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm
 
 srfi-64-foment-build-library:
 	
 
 test-srfi-64-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm"
 
 srfi-64-foment-build-library-docker:
 	
 
 test-srfi-64-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm"
 
 srfi-64-foment-build-library-docker-head:
 	
@@ -2163,21 +2163,21 @@ srfi-64-guile-build-library-docker-head:
 
 test-srfi-64-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm
+	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/64.scm
 
 srfi-64-kawa-build-library:
 	
 
 test-srfi-64-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/64.scm"
 
 srfi-64-kawa-build-library-docker:
 	
 
 test-srfi-64-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/64.scm"
 
 srfi-64-kawa-build-library-docker-head:
 	
@@ -2226,21 +2226,21 @@ srfi-64-loko-build-library-docker-head:
 
 test-srfi-64-mit-scheme:
 	
-	mit-scheme --load srfi-test/r7rs-programs/64.scm
+	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm
 
 srfi-64-mit-scheme-build-library:
 	
 
 test-srfi-64-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
 
 srfi-64-mit-scheme-build-library-docker:
 	
 
 test-srfi-64-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
 
 srfi-64-mit-scheme-build-library-docker-head:
 	
@@ -2373,21 +2373,21 @@ srfi-64-tr7-build-library-docker-head:
 
 test-srfi-64-ypsilon:
 	
-	ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/64.scm
+	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/64.scm
 
 srfi-64-ypsilon-build-library:
 	
 
 test-srfi-64-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/64.scm"
 
 srfi-64-ypsilon-build-library-docker:
 	
 
 test-srfi-64-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/64.scm"
 
 srfi-64-ypsilon-build-library-docker-head:
 	
