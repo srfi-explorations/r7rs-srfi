@@ -8,7 +8,7 @@ lib_cmd="$3"
 srfis=$(srfi-numbers.txt)
 
 ## Build 64 always first
-make srfi-64-$name-build-library
+make build-srfi-64-$name-library
 
 for srfi in $srfis
 do
