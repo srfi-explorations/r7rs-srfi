@@ -61,26 +61,47 @@ test-srfi-8-chicken-interpreter-docker-head:
 build-srfi-8-chicken-interpreter-library-docker-head:
 	
 
-test-srfi-8-cyclone:
+test-srfi-8-cyclone-compiler:
 	 cyclone -I . srfi/8.sld 
 	cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8
 
-build-srfi-8-cyclone-library:
+build-srfi-8-cyclone-compiler-library:
 	 cyclone -I . srfi/8.sld 
 
-test-srfi-8-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+test-srfi-8-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
-build-srfi-8-cyclone-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/8.sld" 
+build-srfi-8-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/8.sld" 
 
-test-srfi-8-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+test-srfi-8-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
-build-srfi-8-cyclone-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/8.sld" 
+build-srfi-8-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/8.sld" 
+
+test-srfi-8-cyclone-interpreter:
+	
+	icyc -I . srfi-test/r7rs-programs/8.scm
+
+build-srfi-8-cyclone-interpreter-library:
+	
+
+test-srfi-8-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/8.scm"
+
+build-srfi-8-cyclone-interpreter-library-docker:
+	
+
+test-srfi-8-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/8.scm"
+
+build-srfi-8-cyclone-interpreter-library-docker-head:
+	
 
 test-srfi-8-foment:
 	
@@ -126,21 +147,21 @@ build-srfi-8-gambit-compiler-library-docker-head:
 
 test-srfi-8-gambit-interpreter:
 	
-	gsi srfi-test/r7rs-programs/8.scm
+	gsi -:s srfi-test/r7rs-programs/8.scm
 
 build-srfi-8-gambit-interpreter-library:
 	
 
 test-srfi-8-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-gambit-interpreter-library-docker:
 	
 
 test-srfi-8-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-gambit-interpreter-library-docker-head:
 	
@@ -523,26 +544,47 @@ test-srfi-1-chicken-interpreter-docker-head:
 build-srfi-1-chicken-interpreter-library-docker-head:
 	
 
-test-srfi-1-cyclone:
+test-srfi-1-cyclone-compiler:
 	 cyclone -I . srfi/1.sld 
 	cyclone -I . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1
 
-build-srfi-1-cyclone-library:
+build-srfi-1-cyclone-compiler-library:
 	 cyclone -I . srfi/1.sld 
 
-test-srfi-1-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+test-srfi-1-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
 
-build-srfi-1-cyclone-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/1.sld" 
+build-srfi-1-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/1.sld" 
 
-test-srfi-1-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+test-srfi-1-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
 
-build-srfi-1-cyclone-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/1.sld" 
+build-srfi-1-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/1.sld" 
+
+test-srfi-1-cyclone-interpreter:
+	
+	icyc -I . srfi-test/r7rs-programs/1.scm
+
+build-srfi-1-cyclone-interpreter-library:
+	
+
+test-srfi-1-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/1.scm"
+
+build-srfi-1-cyclone-interpreter-library-docker:
+	
+
+test-srfi-1-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/1.scm"
+
+build-srfi-1-cyclone-interpreter-library-docker-head:
+	
 
 test-srfi-1-foment:
 	
@@ -588,21 +630,21 @@ build-srfi-1-gambit-compiler-library-docker-head:
 
 test-srfi-1-gambit-interpreter:
 	
-	gsi srfi-test/r7rs-programs/1.scm
+	gsi -:s srfi-test/r7rs-programs/1.scm
 
 build-srfi-1-gambit-interpreter-library:
 	
 
 test-srfi-1-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-gambit-interpreter-library-docker:
 	
 
 test-srfi-1-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-gambit-interpreter-library-docker-head:
 	
@@ -985,26 +1027,47 @@ test-srfi-14-chicken-interpreter-docker-head:
 build-srfi-14-chicken-interpreter-library-docker-head:
 	
 
-test-srfi-14-cyclone:
+test-srfi-14-cyclone-compiler:
 	 cyclone -I . srfi/14.sld 
 	cyclone -I . srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14
 
-build-srfi-14-cyclone-library:
+build-srfi-14-cyclone-compiler-library:
 	 cyclone -I . srfi/14.sld 
 
-test-srfi-14-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
+test-srfi-14-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
 
-build-srfi-14-cyclone-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/14.sld" 
+build-srfi-14-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/14.sld" 
 
-test-srfi-14-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
+test-srfi-14-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
 
-build-srfi-14-cyclone-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/14.sld" 
+build-srfi-14-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/14.sld" 
+
+test-srfi-14-cyclone-interpreter:
+	
+	icyc -I . srfi-test/r7rs-programs/14.scm
+
+build-srfi-14-cyclone-interpreter-library:
+	
+
+test-srfi-14-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/14.scm"
+
+build-srfi-14-cyclone-interpreter-library-docker:
+	
+
+test-srfi-14-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/14.scm"
+
+build-srfi-14-cyclone-interpreter-library-docker-head:
+	
 
 test-srfi-14-foment:
 	
@@ -1050,21 +1113,21 @@ build-srfi-14-gambit-compiler-library-docker-head:
 
 test-srfi-14-gambit-interpreter:
 	
-	gsi srfi-test/r7rs-programs/14.scm
+	gsi -:s srfi-test/r7rs-programs/14.scm
 
 build-srfi-14-gambit-interpreter-library:
 	
 
 test-srfi-14-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-gambit-interpreter-library-docker:
 	
 
 test-srfi-14-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-gambit-interpreter-library-docker-head:
 	
@@ -1447,26 +1510,47 @@ test-srfi-26-chicken-interpreter-docker-head:
 build-srfi-26-chicken-interpreter-library-docker-head:
 	
 
-test-srfi-26-cyclone:
+test-srfi-26-cyclone-compiler:
 	 cyclone -I . srfi/26.sld 
 	cyclone -I . srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26
 
-build-srfi-26-cyclone-library:
+build-srfi-26-cyclone-compiler-library:
 	 cyclone -I . srfi/26.sld 
 
-test-srfi-26-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
+test-srfi-26-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
 
-build-srfi-26-cyclone-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/26.sld" 
+build-srfi-26-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/26.sld" 
 
-test-srfi-26-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
+test-srfi-26-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
 
-build-srfi-26-cyclone-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/26.sld" 
+build-srfi-26-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/26.sld" 
+
+test-srfi-26-cyclone-interpreter:
+	
+	icyc -I . srfi-test/r7rs-programs/26.scm
+
+build-srfi-26-cyclone-interpreter-library:
+	
+
+test-srfi-26-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/26.scm"
+
+build-srfi-26-cyclone-interpreter-library-docker:
+	
+
+test-srfi-26-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/26.scm"
+
+build-srfi-26-cyclone-interpreter-library-docker-head:
+	
 
 test-srfi-26-foment:
 	
@@ -1512,21 +1596,21 @@ build-srfi-26-gambit-compiler-library-docker-head:
 
 test-srfi-26-gambit-interpreter:
 	
-	gsi srfi-test/r7rs-programs/26.scm
+	gsi -:s srfi-test/r7rs-programs/26.scm
 
 build-srfi-26-gambit-interpreter-library:
 	
 
 test-srfi-26-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-gambit-interpreter-library-docker:
 	
 
 test-srfi-26-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-gambit-interpreter-library-docker-head:
 	
@@ -1909,26 +1993,47 @@ test-srfi-28-chicken-interpreter-docker-head:
 build-srfi-28-chicken-interpreter-library-docker-head:
 	
 
-test-srfi-28-cyclone:
+test-srfi-28-cyclone-compiler:
 	 cyclone -I . srfi/28.sld 
 	cyclone -I . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28
 
-build-srfi-28-cyclone-library:
+build-srfi-28-cyclone-compiler-library:
 	 cyclone -I . srfi/28.sld 
 
-test-srfi-28-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+test-srfi-28-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
 
-build-srfi-28-cyclone-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/28.sld" 
+build-srfi-28-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/28.sld" 
 
-test-srfi-28-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+test-srfi-28-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
 
-build-srfi-28-cyclone-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/28.sld" 
+build-srfi-28-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/28.sld" 
+
+test-srfi-28-cyclone-interpreter:
+	
+	icyc -I . srfi-test/r7rs-programs/28.scm
+
+build-srfi-28-cyclone-interpreter-library:
+	
+
+test-srfi-28-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/28.scm"
+
+build-srfi-28-cyclone-interpreter-library-docker:
+	
+
+test-srfi-28-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/28.scm"
+
+build-srfi-28-cyclone-interpreter-library-docker-head:
+	
 
 test-srfi-28-foment:
 	
@@ -1974,21 +2079,21 @@ build-srfi-28-gambit-compiler-library-docker-head:
 
 test-srfi-28-gambit-interpreter:
 	
-	gsi srfi-test/r7rs-programs/28.scm
+	gsi -:s srfi-test/r7rs-programs/28.scm
 
 build-srfi-28-gambit-interpreter-library:
 	
 
 test-srfi-28-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-gambit-interpreter-library-docker:
 	
 
 test-srfi-28-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-gambit-interpreter-library-docker-head:
 	
@@ -2371,26 +2476,47 @@ test-srfi-64-chicken-interpreter-docker-head:
 build-srfi-64-chicken-interpreter-library-docker-head:
 	
 
-test-srfi-64-cyclone:
+test-srfi-64-cyclone-compiler:
 	 cyclone -I . srfi/64.sld 
 	cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64
 
-build-srfi-64-cyclone-library:
+build-srfi-64-cyclone-compiler-library:
 	 cyclone -I . srfi/64.sld 
 
-test-srfi-64-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+test-srfi-64-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
-build-srfi-64-cyclone-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/64.sld" 
+build-srfi-64-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/64.sld" 
 
-test-srfi-64-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+test-srfi-64-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
-build-srfi-64-cyclone-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/64.sld" 
+build-srfi-64-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/64.sld" 
+
+test-srfi-64-cyclone-interpreter:
+	
+	icyc -I . srfi-test/r7rs-programs/64.scm
+
+build-srfi-64-cyclone-interpreter-library:
+	
+
+test-srfi-64-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/64.scm"
+
+build-srfi-64-cyclone-interpreter-library-docker:
+	
+
+test-srfi-64-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/64.scm"
+
+build-srfi-64-cyclone-interpreter-library-docker-head:
+	
 
 test-srfi-64-foment:
 	
@@ -2436,21 +2562,21 @@ build-srfi-64-gambit-compiler-library-docker-head:
 
 test-srfi-64-gambit-interpreter:
 	
-	gsi srfi-test/r7rs-programs/64.scm
+	gsi -:s srfi-test/r7rs-programs/64.scm
 
 build-srfi-64-gambit-interpreter-library:
 	
 
 test-srfi-64-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-gambit-interpreter-library-docker:
 	
 
 test-srfi-64-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-gambit-interpreter-library-docker-head:
 	
@@ -2833,26 +2959,47 @@ test-srfi-151-chicken-interpreter-docker-head:
 build-srfi-151-chicken-interpreter-library-docker-head:
 	
 
-test-srfi-151-cyclone:
+test-srfi-151-cyclone-compiler:
 	 cyclone -I . srfi/151.sld 
 	cyclone -I . srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151
 
-build-srfi-151-cyclone-library:
+build-srfi-151-cyclone-compiler-library:
 	 cyclone -I . srfi/151.sld 
 
-test-srfi-151-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
+test-srfi-151-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/151.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
 
-build-srfi-151-cyclone-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/151.sld" 
+build-srfi-151-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/151.sld" 
 
-test-srfi-151-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
+test-srfi-151-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/151.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
 
-build-srfi-151-cyclone-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/151.sld" 
+build-srfi-151-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/151.sld" 
+
+test-srfi-151-cyclone-interpreter:
+	
+	icyc -I . srfi-test/r7rs-programs/151.scm
+
+build-srfi-151-cyclone-interpreter-library:
+	
+
+test-srfi-151-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/151.scm"
+
+build-srfi-151-cyclone-interpreter-library-docker:
+	
+
+test-srfi-151-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/151.scm"
+
+build-srfi-151-cyclone-interpreter-library-docker-head:
+	
 
 test-srfi-151-foment:
 	
@@ -2898,21 +3045,21 @@ build-srfi-151-gambit-compiler-library-docker-head:
 
 test-srfi-151-gambit-interpreter:
 	
-	gsi srfi-test/r7rs-programs/151.scm
+	gsi -:s srfi-test/r7rs-programs/151.scm
 
 build-srfi-151-gambit-interpreter-library:
 	
 
 test-srfi-151-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/151.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/151.scm"
 
 build-srfi-151-gambit-interpreter-library-docker:
 	
 
 test-srfi-151-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/151.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/151.scm"
 
 build-srfi-151-gambit-interpreter-library-docker-head:
 	
@@ -3295,26 +3442,47 @@ test-srfi-13-chicken-interpreter-docker-head:
 build-srfi-13-chicken-interpreter-library-docker-head:
 	
 
-test-srfi-13-cyclone:
+test-srfi-13-cyclone-compiler:
 	 cyclone -I . srfi/13.sld 
 	cyclone -I . srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13
 
-build-srfi-13-cyclone-library:
+build-srfi-13-cyclone-compiler-library:
 	 cyclone -I . srfi/13.sld 
 
-test-srfi-13-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+test-srfi-13-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
 
-build-srfi-13-cyclone-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/13.sld" 
+build-srfi-13-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:latest bash -c "cd workdir && cyclone -I . srfi/13.sld" 
 
-test-srfi-13-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+test-srfi-13-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
 
-build-srfi-13-cyclone-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/13.sld" 
+build-srfi-13-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone-compiler:head bash -c "cd workdir && cyclone -I . srfi/13.sld" 
+
+test-srfi-13-cyclone-interpreter:
+	
+	icyc -I . srfi-test/r7rs-programs/13.scm
+
+build-srfi-13-cyclone-interpreter-library:
+	
+
+test-srfi-13-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/13.scm"
+
+build-srfi-13-cyclone-interpreter-library-docker:
+	
+
+test-srfi-13-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . srfi-test/r7rs-programs/13.scm"
+
+build-srfi-13-cyclone-interpreter-library-docker-head:
+	
 
 test-srfi-13-foment:
 	
@@ -3360,21 +3528,21 @@ build-srfi-13-gambit-compiler-library-docker-head:
 
 test-srfi-13-gambit-interpreter:
 	
-	gsi srfi-test/r7rs-programs/13.scm
+	gsi -:s srfi-test/r7rs-programs/13.scm
 
 build-srfi-13-gambit-interpreter-library:
 	
 
 test-srfi-13-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-gambit-interpreter-library-docker:
 	
 
 test-srfi-13-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-gambit-interpreter-library-docker-head:
 	

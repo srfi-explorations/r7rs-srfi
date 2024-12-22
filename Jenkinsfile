@@ -123,17 +123,17 @@ pipeline {
             }
         }
 
-        stage("cyclone") {
+        stage("cyclone-compiler") {
             agent {
                 docker {
-                    image 'schemers/cyclone:latest'
+                    image 'schemers/cyclone'
                     reuseNode true
                     args '--user=root'
                 }
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-compiler'
                 }
             }
             steps {
@@ -141,7 +141,32 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone" "cyclone -I ." "cyclone -I ."'
+                    sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -I ." "cyclone -I ."'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("cyclone-interpreter") {
+            agent {
+                docker {
+                    image 'schemers/cyclone'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-interpreter'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make'
+                    sh './jenkins_scripts/clean.sh'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I ." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -216,7 +241,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi" ""'
+                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

@@ -7,18 +7,18 @@
 ;;;
 ;;; Olin Shivers is the sole author of this code, and he has placed it in
 ;;; the public domain.
-;;; 
+;;;
 ;;; A good implementation might choose to provide direct compiler/interpreter
 ;;; support for these derived functions, or might simply define them to be
 ;;; integrable -- i.e., inline-expanded.
-;;; 
+;;;
 ;;; The seven non-trivial boolean functions in terms
 ;;; of not, and, or & xor.
 
 (define (bitwise-nand  i j)  (bitwise-not (bitwise-and i j)))
 (define (bitwise-nor   i j)  (bitwise-not (bitwise-ior i j)))
-(define (bitwise-andc1 i j)  (bitwise-and (bitwise-not i) j))	
-(define (bitwise-andc2 i j)  (bitwise-and i (bitwise-not j)))	
+(define (bitwise-andc1 i j)  (bitwise-and (bitwise-not i) j))
+(define (bitwise-andc2 i j)  (bitwise-and i (bitwise-not j)))
 (define (bitwise-orc1  i j)  (bitwise-ior (bitwise-not i) j))
 (define (bitwise-orc2  i j)  (bitwise-ior i (bitwise-not j)))
 
