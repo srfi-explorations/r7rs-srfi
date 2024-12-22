@@ -63,21 +63,21 @@ srfi-8-cyclone-build-library-docker-head:
 
 test-srfi-8-foment:
 	
-	foment -I --load srfi-test/r7rs-programs/8.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm
 
 srfi-8-foment-build-library:
 	
 
 test-srfi-8-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
 
 srfi-8-foment-build-library-docker:
 	
 
 test-srfi-8-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
 
 srfi-8-foment-build-library-docker-head:
 	
@@ -231,21 +231,21 @@ srfi-8-loko-build-library-docker-head:
 
 test-srfi-8-mit-scheme:
 	
-	mit-scheme --load srfi-test/r7rs-programs/8.scm
+	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
 
 srfi-8-mit-scheme-build-library:
 	
 
 test-srfi-8-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 srfi-8-mit-scheme-build-library-docker:
 	
 
 test-srfi-8-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 srfi-8-mit-scheme-build-library-docker-head:
 	
@@ -462,21 +462,21 @@ srfi-1-cyclone-build-library-docker-head:
 
 test-srfi-1-foment:
 	
-	foment -I --load srfi-test/r7rs-programs/1.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm
 
 srfi-1-foment-build-library:
 	
 
 test-srfi-1-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
 
 srfi-1-foment-build-library-docker:
 	
 
 test-srfi-1-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
 
 srfi-1-foment-build-library-docker-head:
 	
@@ -630,21 +630,21 @@ srfi-1-loko-build-library-docker-head:
 
 test-srfi-1-mit-scheme:
 	
-	mit-scheme --load srfi-test/r7rs-programs/1.scm
+	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
 
 srfi-1-mit-scheme-build-library:
 	
 
 test-srfi-1-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 srfi-1-mit-scheme-build-library-docker:
 	
 
 test-srfi-1-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 srfi-1-mit-scheme-build-library-docker-head:
 	
@@ -1260,21 +1260,21 @@ srfi-26-cyclone-build-library-docker-head:
 
 test-srfi-26-foment:
 	
-	foment -I --load srfi-test/r7rs-programs/26.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm
 
 srfi-26-foment-build-library:
 	
 
 test-srfi-26-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
 
 srfi-26-foment-build-library-docker:
 	
 
 test-srfi-26-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
 
 srfi-26-foment-build-library-docker-head:
 	
@@ -1428,21 +1428,21 @@ srfi-26-loko-build-library-docker-head:
 
 test-srfi-26-mit-scheme:
 	
-	mit-scheme --load srfi-test/r7rs-programs/26.scm
+	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
 
 srfi-26-mit-scheme-build-library:
 	
 
 test-srfi-26-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 srfi-26-mit-scheme-build-library-docker:
 	
 
 test-srfi-26-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 srfi-26-mit-scheme-build-library-docker-head:
 	
@@ -1659,21 +1659,21 @@ srfi-28-cyclone-build-library-docker-head:
 
 test-srfi-28-foment:
 	
-	foment -I --load srfi-test/r7rs-programs/28.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm
 
 srfi-28-foment-build-library:
 	
 
 test-srfi-28-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
 
 srfi-28-foment-build-library-docker:
 	
 
 test-srfi-28-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I --load srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
 
 srfi-28-foment-build-library-docker-head:
 	
@@ -1827,21 +1827,21 @@ srfi-28-loko-build-library-docker-head:
 
 test-srfi-28-mit-scheme:
 	
-	mit-scheme --load srfi-test/r7rs-programs/28.scm
+	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
 
 srfi-28-mit-scheme-build-library:
 	
 
 test-srfi-28-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 srfi-28-mit-scheme-build-library-docker:
 	
 
 test-srfi-28-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --load srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 srfi-28-mit-scheme-build-library-docker-head:
 	

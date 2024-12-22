@@ -4,7 +4,7 @@ This is a project for collection of R7RS SRFI implementations.
 
 [Jenkins](https://jenkins.scheme.org/job/r7rs/job/r7rs-srfi/)
 
-[Test report](https://jenkins.scheme.org/job/r8rs/job/r7rs-srfi/job/main/R7RS-SRFI_20Test_20Report)
+[Test report](https://jenkins.scheme.org/job/r8rs/job/r7rs-srfi/job/main/R7RS-SRFI_20Test_20Report/)
 
 ## Building
 
@@ -61,7 +61,9 @@ Add the implementation data into implementations.scm, keep the order alphabetica
 The first SRFI you port to any new implementation should be SRFI-64. As it's the test suite used
 in SRFI tests.
 
-## Notes, articles and misc.
+### Misc
 
-- SRFI-64
-    - Taken from Guile's new implementation and mutilated to cooperation
+The srfi/srfi-N.scm files exist for Guile compability, their content should be identical to
+srfi/N.sld.
+
+The srfi/N.rkt files exists for racket-r7rs compability.
