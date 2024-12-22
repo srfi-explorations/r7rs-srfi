@@ -33,15 +33,20 @@
     ((name . gauche)
      (command . "gosh -r7 -I ."))
 
-    ((name . gerbil)
+    ((name . gerbil-compiler)
+     (command . "gxc --lang r7rs")
+     (library-command . "gxc -O")
+     (docker-imager . "schemers/gerbil"))
+
+    ((name . gerbil-interpreter)
      (command . "gxi --lang r7rs")
-     (library-command . "gxc -O"))
+     (docker-imager . "schemers/gerbil"))
 
     ((name . guile)
      (command . "guile --fresh-auto-compile --r7rs -L ."))
 
     ((name . kawa)
-     (command . "kawa --r7rs -Dkawa.import.path=../.."))
+     (command . "kawa --r7rs -Dkawa.import.path=../../*.sld"))
 
     ((name . larceny)
      (command . "larceny -r7 -I ."))

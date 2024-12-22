@@ -246,17 +246,17 @@ pipeline {
             }
         }
 
-        stage("gerbil") {
+        stage("gerbil-compiler") {
             agent {
                 docker {
-                    image 'schemers/gerbil:latest'
+                    image 'schemers/gerbil-compiler:latest'
                     reuseNode true
                     args '--user=root'
                 }
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-compiler'
                 }
             }
             steps {
@@ -264,7 +264,32 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil" "gxi --lang r7rs" "gxc -O"'
+                    sh './jenkins_scripts/test.sh "gerbil-compiler" "gxc --lang r7rs" "gxc -O"'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("gerbil-interpreter") {
+            agent {
+                docker {
+                    image 'schemers/gerbil-interpreter:latest'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-interpreter'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make'
+                    sh './jenkins_scripts/clean.sh'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "gerbil-interpreter" "gxi --lang r7rs" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
