@@ -100,11 +100,18 @@
         (let ((number (number->string (cdr (assoc 'number srfi)))))
           (for-each
             (lambda (implementation)
-              (let* ((name (symbol->string (cdr (assoc 'name implementation)))))
+              (let* ((name (symbol->string (cdr (assoc 'name implementation))))
+                     (dockerimage (if (assoc 'docker-image implementation)
+                                       (cdr (assoc 'docker-image implementation))
+                                       (string-append "schemers/"
+                                                      name
+                                                      ":latest"))))
+
                 (execute makefile-job
                          `((name . ,name)
                            (command . ,(full-command implementation srfi))
                            (library-command . ,(full-library-command implementation srfi))
+                           (dockerimage . ,dockerimage)
                            (number . ,number))
                          out))
               (newline out))
