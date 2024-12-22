@@ -175,14 +175,14 @@ build-srfi-8-gerbil-compiler-library:
 
 test-srfi-8-gerbil-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 build-srfi-8-gerbil-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/8.sld" 
 
 test-srfi-8-gerbil-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
 
 build-srfi-8-gerbil-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/8.sld" 
@@ -196,14 +196,14 @@ build-srfi-8-gerbil-interpreter-library:
 
 test-srfi-8-gerbil-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-gerbil-interpreter-library-docker:
 	
 
 test-srfi-8-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-gerbil-interpreter-library-docker-head:
 	
@@ -231,21 +231,21 @@ build-srfi-8-guile-library-docker-head:
 
 test-srfi-8-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/8.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm
 
 build-srfi-8-kawa-library:
 	
 
 test-srfi-8-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-kawa-library-docker:
 	
 
 test-srfi-8-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-kawa-library-docker-head:
 	
@@ -637,14 +637,14 @@ build-srfi-1-gerbil-compiler-library:
 
 test-srfi-1-gerbil-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
 
 build-srfi-1-gerbil-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/1.sld" 
 
 test-srfi-1-gerbil-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
 
 build-srfi-1-gerbil-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/1.sld" 
@@ -658,14 +658,14 @@ build-srfi-1-gerbil-interpreter-library:
 
 test-srfi-1-gerbil-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-gerbil-interpreter-library-docker:
 	
 
 test-srfi-1-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-gerbil-interpreter-library-docker-head:
 	
@@ -693,21 +693,21 @@ build-srfi-1-guile-library-docker-head:
 
 test-srfi-1-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/1.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm
 
 build-srfi-1-kawa-library:
 	
 
 test-srfi-1-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-kawa-library-docker:
 	
 
 test-srfi-1-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-kawa-library-docker-head:
 	
@@ -1099,14 +1099,14 @@ build-srfi-14-gerbil-compiler-library:
 
 test-srfi-14-gerbil-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
 
 build-srfi-14-gerbil-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/14.sld" 
 
 test-srfi-14-gerbil-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
 
 build-srfi-14-gerbil-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/14.sld" 
@@ -1120,14 +1120,14 @@ build-srfi-14-gerbil-interpreter-library:
 
 test-srfi-14-gerbil-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-gerbil-interpreter-library-docker:
 	
 
 test-srfi-14-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-gerbil-interpreter-library-docker-head:
 	
@@ -1155,21 +1155,21 @@ build-srfi-14-guile-library-docker-head:
 
 test-srfi-14-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/14.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/14.scm
 
 build-srfi-14-kawa-library:
 	
 
 test-srfi-14-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-kawa-library-docker:
 	
 
 test-srfi-14-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-kawa-library-docker-head:
 	
@@ -1561,14 +1561,14 @@ build-srfi-26-gerbil-compiler-library:
 
 test-srfi-26-gerbil-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
 
 build-srfi-26-gerbil-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/26.sld" 
 
 test-srfi-26-gerbil-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
 
 build-srfi-26-gerbil-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/26.sld" 
@@ -1582,14 +1582,14 @@ build-srfi-26-gerbil-interpreter-library:
 
 test-srfi-26-gerbil-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-gerbil-interpreter-library-docker:
 	
 
 test-srfi-26-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-gerbil-interpreter-library-docker-head:
 	
@@ -1617,21 +1617,21 @@ build-srfi-26-guile-library-docker-head:
 
 test-srfi-26-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/26.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm
 
 build-srfi-26-kawa-library:
 	
 
 test-srfi-26-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-kawa-library-docker:
 	
 
 test-srfi-26-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-kawa-library-docker-head:
 	
@@ -2023,14 +2023,14 @@ build-srfi-28-gerbil-compiler-library:
 
 test-srfi-28-gerbil-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
 
 build-srfi-28-gerbil-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/28.sld" 
 
 test-srfi-28-gerbil-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
 
 build-srfi-28-gerbil-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/28.sld" 
@@ -2044,14 +2044,14 @@ build-srfi-28-gerbil-interpreter-library:
 
 test-srfi-28-gerbil-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-gerbil-interpreter-library-docker:
 	
 
 test-srfi-28-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-gerbil-interpreter-library-docker-head:
 	
@@ -2079,21 +2079,21 @@ build-srfi-28-guile-library-docker-head:
 
 test-srfi-28-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/28.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm
 
 build-srfi-28-kawa-library:
 	
 
 test-srfi-28-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-kawa-library-docker:
 	
 
 test-srfi-28-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-kawa-library-docker-head:
 	
@@ -2485,14 +2485,14 @@ build-srfi-64-gerbil-compiler-library:
 
 test-srfi-64-gerbil-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 build-srfi-64-gerbil-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/64.sld" 
 
 test-srfi-64-gerbil-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
 
 build-srfi-64-gerbil-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/64.sld" 
@@ -2506,14 +2506,14 @@ build-srfi-64-gerbil-interpreter-library:
 
 test-srfi-64-gerbil-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-gerbil-interpreter-library-docker:
 	
 
 test-srfi-64-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-gerbil-interpreter-library-docker-head:
 	
@@ -2541,21 +2541,21 @@ build-srfi-64-guile-library-docker-head:
 
 test-srfi-64-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/64.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm
 
 build-srfi-64-kawa-library:
 	
 
 test-srfi-64-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-kawa-library-docker:
 	
 
 test-srfi-64-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-kawa-library-docker-head:
 	
@@ -2947,14 +2947,14 @@ build-srfi-151-gerbil-compiler-library:
 
 test-srfi-151-gerbil-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
 
 build-srfi-151-gerbil-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/151.sld" 
 
 test-srfi-151-gerbil-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
 
 build-srfi-151-gerbil-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/151.sld" 
@@ -2968,14 +2968,14 @@ build-srfi-151-gerbil-interpreter-library:
 
 test-srfi-151-gerbil-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/151.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/151.scm"
 
 build-srfi-151-gerbil-interpreter-library-docker:
 	
 
 test-srfi-151-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/151.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/151.scm"
 
 build-srfi-151-gerbil-interpreter-library-docker-head:
 	
@@ -3003,21 +3003,21 @@ build-srfi-151-guile-library-docker-head:
 
 test-srfi-151-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/151.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/151.scm
 
 build-srfi-151-kawa-library:
 	
 
 test-srfi-151-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/151.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/151.scm"
 
 build-srfi-151-kawa-library-docker:
 	
 
 test-srfi-151-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/151.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/151.scm"
 
 build-srfi-151-kawa-library-docker-head:
 	
@@ -3409,14 +3409,14 @@ build-srfi-13-gerbil-compiler-library:
 
 test-srfi-13-gerbil-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
 
 build-srfi-13-gerbil-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc -O srfi/13.sld" 
 
 test-srfi-13-gerbil-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:latest bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc --lang r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
 
 build-srfi-13-gerbil-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-compiler:head bash -c "cd workdir && gxc -O srfi/13.sld" 
@@ -3430,14 +3430,14 @@ build-srfi-13-gerbil-interpreter-library:
 
 test-srfi-13-gerbil-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-gerbil-interpreter-library-docker:
 	
 
 test-srfi-13-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil-interpreter:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-gerbil-interpreter-library-docker-head:
 	
@@ -3465,21 +3465,21 @@ build-srfi-13-guile-library-docker-head:
 
 test-srfi-13-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/13.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/13.scm
 
 build-srfi-13-kawa-library:
 	
 
 test-srfi-13-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-kawa-library-docker:
 	
 
 test-srfi-13-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-kawa-library-docker-head:
 	

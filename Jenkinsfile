@@ -249,7 +249,7 @@ pipeline {
         stage("gerbil-compiler") {
             agent {
                 docker {
-                    image 'schemers/gerbil-compiler:latest'
+                    image 'schemers/gerbil'
                     reuseNode true
                     args '--user=root'
                 }
@@ -274,7 +274,7 @@ pipeline {
         stage("gerbil-interpreter") {
             agent {
                 docker {
-                    image 'schemers/gerbil-interpreter:latest'
+                    image 'schemers/gerbil'
                     reuseNode true
                     args '--user=root'
                 }
@@ -339,7 +339,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../.." ""'
+                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../../*.sld" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

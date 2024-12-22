@@ -36,11 +36,11 @@
     ((name . gerbil-compiler)
      (command . "gxc --lang r7rs")
      (library-command . "gxc -O")
-     (docker-imager . "schemers/gerbil"))
+     (docker-image . "schemers/gerbil"))
 
     ((name . gerbil-interpreter)
      (command . "gxi --lang r7rs")
-     (docker-imager . "schemers/gerbil"))
+     (docker-image . "schemers/gerbil"))
 
     ((name . guile)
      (command . "guile --fresh-auto-compile --r7rs -L ."))
