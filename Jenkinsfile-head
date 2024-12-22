@@ -187,10 +187,6 @@ pipeline {
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." "" 1 8 26 28 64 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
         }
 
         stage("gerbil") {
