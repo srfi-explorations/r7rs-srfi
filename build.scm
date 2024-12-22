@@ -9,6 +9,18 @@
 (include "implementations.scm")
 (include "srfis.scm")
 
+(when (file-exists? "srfi-numbers.txt")
+  (delete-file "srfi-numbers.txt"))
+(with-output-to-file
+  "srfi-numbers.txt"
+  (lambda ()
+    (for-each
+      (lambda (srfi)
+        (display (cdr (assoc 'number srfi)))
+        (display " "))
+      srfis)))
+
+
 (define full-library-command
   (lambda (implementation srfi)
     (let* ((name (symbol->string (cdr (assoc 'name implementation))))

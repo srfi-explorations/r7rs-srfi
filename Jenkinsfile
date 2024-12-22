@@ -18,9 +18,11 @@ pipeline {
                choices: [
                  'all',
                  'chibi',
-                 'chicken',
+                 'chicken-interpreter',
+                 'chicken-compiler',
                  'cyclone',
-                 'gambit',
+                 'gambit-interpreter',
+                 'gambit-compiler',
                  'gauche',
                  'guile',
                  'kawa',
@@ -30,6 +32,7 @@ pipeline {
                  'stklos',
                  'skint',
                  'tr7',
+                 'ypsilon',
                ])
     }
 
@@ -61,7 +64,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -86,7 +89,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken-compiler" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "chicken-compiler" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -111,7 +114,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken-interpreter" "csi" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "chicken-interpreter" "csi" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -136,7 +139,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone" "cyclone -I ." "cyclone -I ." 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "cyclone" "cyclone -I ." "cyclone -I ." $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -161,7 +164,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "foment" "foment -I . -I ./srfi" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "foment" "foment -I . -I ./srfi" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -186,7 +189,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -:search=.,s -debug -warnings -exe ./  -nopreload" "gsc -:search=.,s -debug -warnings -obj" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -:search=.,s -debug -warnings -exe ./  -nopreload" "gsc -:search=.,s -debug -warnings -obj" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -211,7 +214,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -236,7 +239,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -261,7 +264,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil" "gxi --lang r7rs" "gxc -O" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "gerbil" "gxi --lang r7rs" "gxc -O" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -286,7 +289,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -311,7 +314,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../.." "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../.." "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -336,7 +339,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -361,7 +364,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -386,7 +389,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -411,7 +414,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -436,7 +439,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -461,7 +464,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -486,7 +489,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -511,7 +514,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "skint" "skint -I ./" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "skint" "skint -I ./" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -536,7 +539,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "tr7" "tr7i" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "tr7" "tr7i" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -561,7 +564,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=. --loadpath=./srfi" "" 8 1 14 26 28 64 151 13 '
+                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=. --loadpath=./srfi" "" $(cat srfi-numbers.txt)'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

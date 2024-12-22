@@ -18,9 +18,11 @@ pipeline {
                choices: [
                  'all',
                  'chibi',
-                 'chicken',
+                 'chicken-interpreter',
+                 'chicken-compiler',
                  'cyclone',
-                 'gambit',
+                 'gambit-interpreter',
+                 'gambit-compiler',
                  'gauche',
                  'guile',
                  'kawa',
@@ -30,6 +32,7 @@ pipeline {
                  'stklos',
                  'skint',
                  'tr7',
+                 'ypsilon',
                ])
     }
 
