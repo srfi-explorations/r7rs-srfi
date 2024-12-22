@@ -26,4 +26,5 @@
           clear-bit-field
           replace-bit-field
           copy-bit-field)
-  (include "33.scm"))
+  (begin
+    (include "33.scm")))

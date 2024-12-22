@@ -8,7 +8,6 @@
           (scheme write)
           (scheme process-context)
           (srfi 1)
-          (srfi 8)
           (srfi 26)
           (srfi 28))
   (export

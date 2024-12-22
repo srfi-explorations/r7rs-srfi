@@ -1,21 +1,20 @@
 (define-library
   (srfi 13)
   (import (scheme base)
+          (scheme write)
           (scheme char)
           (srfi 8)
           (srfi 14)
-          (srfi 33))
+          (srfi 151))
   (export
-    ;; Already in R7RS
-    ;string-map
+    ;string-map ;; Already in R7RS
     string-map!
     string-fold
     string-unfold
     string-fold-right
     string-unfold-right
     string-tabulate
-    ;; Already in R7RS
-    ;string-for-each
+    ;string-for-each ;; Already in R7RS
     string-for-each-index
     string-every
     string-any
@@ -35,10 +34,8 @@
     string-ci<=
     string-ci>=
     string-ci<>
-    ;; Already in R7RS
-    ;string-downcase
-    ;; Already in R7RS
-    ;string-upcase
+    ;string-downcase ;; Already in R7RS
+    ;string-upcase ;; Already in R7RS
     string-titlecase
     string-downcase!
     string-upcase!
@@ -54,6 +51,13 @@
     string-trim-both
     string-filter
     string-delete
+    string-parse-start+end
+    string-parse-final-start+end
+    let-string-start+end
+    check-substring-spec
+    substring-spec-ok?
+    make-kmp-restart-vector
+    kmp-step
     string-index
     string-index-right
     string-skip
@@ -69,16 +73,15 @@
     string-suffix-ci?
     string-contains
     string-contains-ci
-    ;; Already in R7RS
-    ;string-copy!
+    ;string-copy! ;; Already in R7RS
     substring/shared
-    ;; Already in R7RS
-    ;string-reverse
+    string-reverse
     string-reverse!
     reverse-list->string
     string-concatenate
     string-concatenate/shared
     string-concatenate-reverse
+    string-concatenate-reverse/shared
     string-append/shared
     xsubstring
     string-xcopy!

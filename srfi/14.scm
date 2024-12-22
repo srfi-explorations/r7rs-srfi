@@ -1,4 +1,4 @@
-;;; SRFI-14 character-sets library              -*- Scheme -*-
+;;; SRFI-14 character-sets library    -*- Scheme -*-
 ;;;
 ;;; - Ported from MIT Scheme runtime by Brian D. Carlstrom.
 ;;; - Massively rehacked & extended by Olin Shivers 6/98.
@@ -40,12 +40,12 @@
 ;;; char-set-difference  char-set-xor  char-set-diff+intersection
 ;;; char-set-difference! char-set-xor! char-set-diff+intersection!
 ;;;
-;;; char-set:lower-case     char-set:upper-case char-set:title-case
-;;; char-set:letter     char-set:digit      char-set:letter+digit
-;;; char-set:graphic        char-set:printing   char-set:whitespace
-;;; char-set:iso-control    char-set:punctuation    char-set:symbol
-;;; char-set:hex-digit      char-set:blank      char-set:ascii
-;;; char-set:empty      char-set:full
+;;; char-set:lower-case  char-set:upper-case char-set:title-case
+;;; char-set:letter  char-set:digit  char-set:letter+digit
+;;; char-set:graphic  char-set:printing char-set:whitespace
+;;; char-set:iso-control char-set:punctuation char-set:symbol
+;;; char-set:hex-digit  char-set:blank  char-set:ascii
+;;; char-set:empty  char-set:full
 
 ;;; Imports
 ;;; This code has the following non-R5RS dependencies:
@@ -67,65 +67,57 @@
 ;;; See the end of the file for porting and performance-tuning notes.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Added utils start
-
-(define %latin1->char
-  (lambda (c)
-    (integer->char c)))
-
-(define %char->latin1
-  (lambda (c)
-    (char->integer c)))
-
-(define check-arg (lambda (pred val caller) (if (not (pred val)) (error val caller))))
-
-(define :optional (lambda (a b) (if (null? a) b (car a))))
+;; r7rs-srfi util
+(define (check-arg pred val caller)
+  (if (pred val) val (error "Bad argument" val pred caller)))
+(define (optional a b) (if (null? a) b (car a)))
+(define (%latin1->char l) (integer->char l))
+(define (%char->latin1 c) (char->integer c))
+(define-syntax let-optionals*
+  (syntax-rules ()
+    ((let-optionals arg (opt-clause ...) body ...)
+     (let ((rest arg))
+       (internal-let-optionals rest (opt-clause ...) body ...)))))
 
 (define-syntax internal-let-optionals
-      (syntax-rules ()
-        ((internal-let-optionals arg (((var ...) xparser) opt-clause ...) body ...)
-         (call-with-values (lambda () (xparser arg))
-                           (lambda (rest var ...)
-                             (internal-let-optionals rest (opt-clause ...) body ...))))
+  (syntax-rules ()
+    ((internal-let-optionals arg (((var ...) xparser) opt-clause ...) body ...)
+     (call-with-values (lambda () (xparser arg))
+                       (lambda (rest var ...)
+                         (internal-let-optionals rest (opt-clause ...) body ...))))
 
-        ((internal-let-optionals arg ((var default) opt-clause ...) body ...)
-         (call-with-values (lambda () (if (null? arg) (values default '())
-                                        (values (car arg) (cdr arg))))
-                           (lambda (var rest)
-                             (internal-let-optionals rest (opt-clause ...) body ...))))
+    ((internal-let-optionals arg ((var default) opt-clause ...) body ...)
+     (call-with-values (lambda () (if (null? arg) (values default '())
+                                    (values (car arg) (cdr arg))))
+                       (lambda (var rest)
+                         (internal-let-optionals rest (opt-clause ...) body ...))))
 
-        ((internal-let-optionals arg ((var default test) opt-clause ...) body ...)
-         (call-with-values (lambda ()
-                             (if (null? arg) (values default '())
-                               (let ((var (car arg)))
-                                 (if test (values var (cdr arg))
-                                   (error "arg failed LET-OPT test" var)))))
-                           (lambda (var rest)
-                             (internal-let-optionals rest (opt-clause ...) body ...))))
+    ((internal-let-optionals arg ((var default test) opt-clause ...) body ...)
+     (call-with-values (lambda ()
+                         (if (null? arg) (values default '())
+                           (let ((var (car arg)))
+                             (if test (values var (cdr arg))
+                               (error "arg failed LET-OPT test" var)))))
+                       (lambda (var rest)
+                         (internal-let-optionals rest (opt-clause ...) body ...))))
 
-        ((internal-let-optionals arg ((var default test supplied?) opt-clause ...) body ...)
-         (call-with-values (lambda ()
-                             (if (null? arg) (values default #f '())
-                               (let ((var (car arg)))
-                                 (if test (values var #t (cdr arg))
-                                   (error "arg failed LET-OPT test" var)))))
-                           (lambda (var supplied? rest)
-                             (internal-let-optionals rest (opt-clause ...) body ...))))
+    ((internal-let-optionals arg ((var default test supplied?) opt-clause ...) body ...)
+     (call-with-values (lambda ()
+                         (if (null? arg) (values default #f '())
+                           (let ((var (car arg)))
+                             (if test (values var #t (cdr arg))
+                               (error "arg failed LET-OPT test" var)))))
+                       (lambda (var supplied? rest)
+                         (internal-let-optionals rest (opt-clause ...) body ...))))
 
-        ((internal-let-optionals arg (rest) body ...)
-         (let ((rest arg)) body ...))
+    ((internal-let-optionals arg (rest) body ...)
+     (let ((rest arg)) body ...))
 
-        ((internal-let-optionals arg () body ...)
-         (if (null? arg) (begin body ...)
-           (error "Too many arguments in let-opt" arg)))))
+    ((internal-let-optionals arg () body ...)
+     (if (null? arg) (begin body ...)
+       (error "Too many arguments in let-opt" arg)))))
+;; r7rs-srfi util end
 
-(define-syntax let-optionals*
-      (syntax-rules ()
-        ((let-optionals arg (opt-clause ...) body ...)
-         (let ((rest arg))
-           (internal-let-optionals rest (opt-clause ...) body ...)))))
-
-;; Added utils start end
 
 (define-record-type :char-set
   (make-char-set s)
@@ -206,8 +198,8 @@
           (or (not (pair? rest))
               (let ((s2 (%char-set:s/check (car rest) char-set<=))
                     (rest (cdr rest)))
-                (if (eq? s1 s2) (lp s2 rest)    ; Fast path
-                  (let lp2 ((i 255))      ; Real test
+                (if (eq? s1 s2) (lp s2 rest) ; Fast path
+                  (let lp2 ((i 255))  ; Real test
                     (if (< i 0) (lp s2 rest)
                       (and (<= (si s1 i) (si s2 i))
                            (lp2 (- i 1))))))))))))
@@ -231,10 +223,11 @@
 ;;; and everything will be copacetic.
 
 (define (char-set-hash cs . maybe-bound)
-  (let* ((bound (:optional maybe-bound 4194304 (lambda (n) (and (integer? n)
-                                                                (exact? n)
-                                                                (<= 0 n)))))
-         (bound (if (zero? bound) 4194304 bound))   ; 0 means default.
+  (let* ((bound (optional maybe-bound 4194304 #;(lambda (n) (and (integer? n)
+                                                               (exact? n)
+                                                               (<= 0 n)))
+                          ))
+         (bound (if (zero? bound) 4194304 bound)) ; 0 means default.
          (s (%char-set:s/check cs char-set-hash))
          ;; Compute a 111...1 mask that will cover BOUND-1:
          (mask (let lp ((i #x10000)) ; Let's skip first 16 iterations, eh?
@@ -314,7 +307,7 @@
              char-set-cursor-next)
   (%char-set-cursor-next cset cursor char-set-cursor-next))
 
-(define (%char-set-cursor-next cset cursor proc)    ; Internal
+(define (%char-set-cursor-next cset cursor proc) ; Internal
   (let ((s (%char-set:s/check cset proc)))
     (let lp ((cur cursor))
       (let ((cur (- cur 1)))
@@ -374,9 +367,9 @@
   (check-arg procedure? f proc)
   (check-arg procedure? g proc)
   (let lp ((seed seed))
-    (cond ((not (p seed))           ; P says we are done.
-           (%set1! s (%char->latin1 (f seed)))  ; Add (F SEED) to set.
-           (lp (g seed))))))            ; Loop on (G SEED).
+    (cond ((not (p seed))   ; P says we are done.
+           (%set1! s (%char->latin1 (f seed))) ; Add (F SEED) to set.
+           (lp (g seed))))))   ; Loop on (G SEED).
 
 (define (char-set-unfold p f g seed . maybe-base)
   (let ((bs (%default-base maybe-base char-set-unfold)))
@@ -680,8 +673,8 @@
 (define char-set:letter
   (let ((u/l (char-set-union char-set:upper-case char-set:lower-case)))
     (char-set-adjoin! u/l
-                      (%latin1->char #xaa)  ; FEMININE ORDINAL INDICATOR
-                      (%latin1->char #xba))))   ; MASCULINE ORDINAL INDICATOR
+                      (%latin1->char #xaa) ; FEMININE ORDINAL INDICATOR
+                      (%latin1->char #xba)))) ; MASCULINE ORDINAL INDICATOR
 
 (define char-set:digit     (string->char-set "0123456789"))
 (define char-set:hex-digit (string->char-set "0123456789abcdefABCDEF"))
@@ -727,7 +720,7 @@
 
 (define char-set:whitespace
   (list->char-set (map %latin1->char '(#x09 ; HORIZONTAL TABULATION
-                                       #x0A ; LINE FEED     
+                                       #x0A ; LINE FEED  
                                        #x0B ; VERTICAL TABULATION
                                        #x0C ; FORM FEED
                                        #x0D ; CARRIAGE RETURN
@@ -747,7 +740,7 @@
 
 (define char-set:ascii (ucs-range->char-set 0 128))
 
-
+
 ;;; Porting & performance-tuning notes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; See the section at the beginning of this file on external dependencies.

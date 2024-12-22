@@ -17,20 +17,21 @@
      (command . "gxi --lang r7rs")
      (library-command . "gxc -O"))
     ((name . guile) (command . "guile --fresh-auto-compile --r7rs -L ."))
-    ((name . kawa)
-     (command . "kawa --r7rs -Dkawa.import.path=../../*.sld"))
+    ((name . kawa) ;; FIXME
+     (command . "kawa --r7rs -Dkawa.import.path=../.."))
     ((name . larceny)
      (command . "larceny -r7 -I ."))
     ((name . loko)
      (command . "loko -std=r7rs --compile")
      ; Library command so the executable gets run
      (library-command . "ls"))
-    ((name . mit-scheme)
-     (command . "mit-scheme --load")) ;; FIXME
+    ((name . mit-scheme) ;; FIXME
+     (command . "mit-scheme --load"))
     ((name . mosh) (command . "mosh --loadpath=."))
     ((name . racket) (command . "racket -I r7rs -S . --script"))
     ((name . sagittarius) (command . "sash -r7 -L . -L ./srfi"))
     ((name . stklos) (command . "stklos -I . -I ./srfi -f"))
     ((name . skint) (command . "skint -I ./"))
     ((name . tr7) (command . "tr7i"))
-    ((name . ypsilon) (command . "ypsilon --r7rs --loadpath=."))))
+    ((name . ypsilon) ;; FIXME
+     (command . "ypsilon --warning --verbose --clean-acc --acc=/tmp --r7rs --loadpath=."))))

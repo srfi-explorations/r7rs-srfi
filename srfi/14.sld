@@ -2,7 +2,7 @@
   (srfi 14)
   (import (scheme base)
           (scheme char)
-          (srfi 33))
+          (srfi 151))
   (export char-set?
           char-set=
           char-set<=
@@ -23,6 +23,8 @@
           list->char-set!
           string->char-set!
           ;filterchar-set
+          char-set-filter
+          char-set-filter!
           ucs-range->char-set
           ->char-set
           ;filterchar-set!
