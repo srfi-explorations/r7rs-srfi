@@ -13,7 +13,7 @@ make srfi-64-$name-build-library
 
 for srfi in $srfis
 do
-    make srfi-$srfi-$name-build-library
+    make build-srfi-$srfi-$name-library
     echo "Testing $srfi with command $cmd"
     if [ "$lib_cmd" = "" ]
     then
