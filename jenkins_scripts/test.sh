@@ -5,8 +5,7 @@ set -eu
 name="$1"
 cmd="$2"
 lib_cmd="$3"
-shift 3
-srfis=$@
+srfis=$(srfi-numbers.txt)
 
 ## Build 64 always first
 make srfi-64-$name-build-library
