@@ -4,6 +4,7 @@
             Numbers
             <li># of expected passes</li>
             <li># of expected failures</li>
+            <li># of unexpected passes</li>
             <li># of unexpected failures</li>
             <li># of skipped tests</li>
         </ul>

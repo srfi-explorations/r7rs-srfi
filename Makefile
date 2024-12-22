@@ -168,21 +168,21 @@ srfi-8-guile-build-library-docker-head:
 
 test-srfi-8-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/8.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm
 
 srfi-8-kawa-build-library:
 	
 
 test-srfi-8-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm"
 
 srfi-8-kawa-build-library-docker:
 	
 
 test-srfi-8-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm"
 
 srfi-8-kawa-build-library-docker-head:
 	
@@ -567,21 +567,21 @@ srfi-1-guile-build-library-docker-head:
 
 test-srfi-1-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/1.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm
 
 srfi-1-kawa-build-library:
 	
 
 test-srfi-1-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm"
 
 srfi-1-kawa-build-library-docker:
 	
 
 test-srfi-1-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm"
 
 srfi-1-kawa-build-library-docker-head:
 	
@@ -1365,21 +1365,21 @@ srfi-26-guile-build-library-docker-head:
 
 test-srfi-26-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/26.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm
 
 srfi-26-kawa-build-library:
 	
 
 test-srfi-26-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm"
 
 srfi-26-kawa-build-library-docker:
 	
 
 test-srfi-26-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm"
 
 srfi-26-kawa-build-library-docker-head:
 	
@@ -1764,21 +1764,21 @@ srfi-28-guile-build-library-docker-head:
 
 test-srfi-28-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/28.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm
 
 srfi-28-kawa-build-library:
 	
 
 test-srfi-28-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm"
 
 srfi-28-kawa-build-library-docker:
 	
 
 test-srfi-28-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm"
 
 srfi-28-kawa-build-library-docker-head:
 	
@@ -2961,21 +2961,21 @@ srfi-64-guile-build-library-docker-head:
 
 test-srfi-64-kawa:
 	
-	kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/64.scm
+	kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm
 
 srfi-64-kawa-build-library:
 	
 
 test-srfi-64-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm"
 
 srfi-64-kawa-build-library-docker:
 	
 
 test-srfi-64-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=. srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm"
 
 srfi-64-kawa-build-library-docker-head:
 	
