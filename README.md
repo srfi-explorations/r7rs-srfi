@@ -25,7 +25,15 @@ get built.
 
 With compiler implementations run the tests for SRFIs the SRFI you want to test needs to build them.
 
-## Adding new srfi
+So for example on Chicken to test SRFI-13 run:
+
+    make test-chicken-srfi-64
+    make test-chicken-srfi-33
+    make test-chicken-srfi-14
+    make test-chicken-srfi-13
+
+
+# Adding new srfi
 
 Add files:
 
@@ -45,7 +53,7 @@ in this repository.
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
 The test file needs to be named N.scm.
 
-Add the SRFI data into srfis.scm.
+Add the SRFI data into srfis.scm. Keep the order by dependencies and mention them in the file.
 
 ## Adding new implementation
 

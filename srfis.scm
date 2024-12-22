@@ -6,7 +6,9 @@
     ((number . 14))
     ((number . 26))
     ((number . 28))
-    ((number . 64)) ; Depends on 1, 26, 28
+    ((number . 33))
+    ((number . 13)) ; Depends on 8, 14, 33
+    ((number . 64)) ; Depends on 1, 8, 26, 28
     ;((number . 71)) ; No tests yet
     ((number . 151))
     ))
