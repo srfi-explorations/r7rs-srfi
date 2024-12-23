@@ -8,7 +8,7 @@
      (command . "cyclone -I .")
      (library-command . "cyclone -I ."))
     ((name . foment)
-     (command . "foment -I . -I ./srfi"))
+     (command . "foment -I ./ -I ./srfi -l"))
     ((name . gambit)
      (command . "gsc -exe ./ -nopreload")
      (library-command . "gsc -:search=."))

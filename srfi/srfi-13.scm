@@ -4,7 +4,7 @@
           (scheme char)
           (srfi 8)
           (srfi 14)
-          (srfi 151))
+          (srfi 60))
   (export
     ;string-map ;; Already in R7RS
     string-map!
