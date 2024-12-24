@@ -110,7 +110,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken-interpreter" "csi" ""'
+                    sh './jenkins_scripts/test.sh "chicken-interpreter" "csi -b -R r7rs -I ./ -I ./srfi -script" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -160,7 +160,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I ." ""'
+                    sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I . -I ./srfi -s" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -235,7 +235,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s" ""'
+                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s,search=." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

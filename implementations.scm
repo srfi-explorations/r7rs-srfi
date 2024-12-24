@@ -9,7 +9,7 @@
      (docker-image . "schemers/chicken"))
 
     ((name . chicken-interpreter)
-     (command . "csi")
+     (command . "csi -b -R r7rs -I ./ -I ./srfi -script")
      (docker-image . "schemers/chicken"))
 
     ((name . cyclone-compiler)
@@ -20,22 +20,25 @@
      (docker-image . "schemers/cyclone"))
 
     ((name . cyclone-interpreter)
-     (command . "icyc -I .")
+     (command . "icyc -I . -I ./srfi -s")
      (docker-image . "schemers/cyclone"))
 
     ((name . foment)
      (command . "foment -I . -I ./srfi"))
 
     ;; FIXME
-    ;; Gambit compiler propably needs proper syntax-rules support
+    ;; Gambit propably needs proper syntax-rules support
     ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-compiler)
      (command . "gsc -:search=.,s -debug -warnings -exe ./  -nopreload")
      (library-command . "gsc -:search=.,s -debug -warnings -obj")
      (docker-image . "schemers/gambit"))
 
+    ;; FIXME
+    ;; Gambit propably needs proper syntax-rules support
+    ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-interpreter)
-     (command . "gsi -:s")
+     (command . "gsi -:s,search=.")
      (docker-image . "schemers/gambit"))
 
     ((name . gauche)
