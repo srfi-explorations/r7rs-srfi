@@ -1,12 +1,6 @@
 pipeline {
 
-    agent {
-        dockerfile {
-            filename 'Dockerfile.jenkins'
-            dir '.'
-            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
