@@ -36,7 +36,6 @@ pipeline {
 
         stage("Init") {
             steps {
-                sh 'apt install -y make tree git'
                 sh 'sh jenkins_scripts/init.sh'
                 stash name: 'reports', includes: 'reports/*'
                 stash name: 'tests', includes: 'srfi-test/*'
