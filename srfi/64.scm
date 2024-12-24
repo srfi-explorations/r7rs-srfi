@@ -591,14 +591,12 @@
 
 (define (final-result-kind! r match? fail-expected?)
   ;"Set the final result-kind based on @var{match?} and @var{fail-expected?}."
-  (test-result-set! r 'result-kind (cond ((and match? fail-expected?)
-                                          'xpass)
-                                         (match?
-                                           'pass)
-                                         (fail-expected?
-                                           'xfail)
-                                         (else
-                                           'fail))))
+  (test-result-set! r
+                    'result-kind
+                    (cond ((and match? fail-expected?) 'xpass)
+                          (match? 'pass)
+                          (fail-expected? 'xfail)
+                          (else 'fail))))
 
 (define-syntax fail-on-exception
   (syntax-rules ()

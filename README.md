@@ -43,8 +43,8 @@ Add files:
         - Library body/content
     - srfi/N.rkt
         - Shim file to support Racket
-    - srfi/srfi-N.rkt
-        - Shim file to support Guile
+    - srfi/srfi-N.scm
+        - Shim file to support Guile and Foment
 
 
 You should be able to deduct what the contents of these files are from other SRFI implementations

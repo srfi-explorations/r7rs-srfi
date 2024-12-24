@@ -15,6 +15,8 @@
     ((name . cyclone-compiler)
      (command . "cyclone -I .")
      (library-command . "cyclone -I .")
+     ; Library command so the executable gets run
+     ;(library-command . "ls")
      (docker-image . "schemers/cyclone"))
 
     ((name . cyclone-interpreter)
