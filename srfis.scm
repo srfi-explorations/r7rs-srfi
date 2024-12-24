@@ -8,5 +8,4 @@
     ((number . 13)) ; Depends on 8, 14, 33
     ((number . 60))
     ((number . 64)) ; Depends on 1, 8, 26, 28
-    ((number . 13)) ; Depends on 8, 14, 151
     ))
