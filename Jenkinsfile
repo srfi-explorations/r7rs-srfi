@@ -235,7 +235,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s,search=." ""'
+                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s ./ ./srfi/" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

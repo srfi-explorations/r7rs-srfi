@@ -1,6 +1,6 @@
 (define-library
   (srfi 64)
-  (import (scheme base)
+  (import (except (scheme base) make-parameter parameterize)
           (scheme char)
           (scheme eval)
           (scheme file)

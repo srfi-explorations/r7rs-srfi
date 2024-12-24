@@ -38,7 +38,7 @@
     ;; Gambit propably needs proper syntax-rules support
     ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-interpreter)
-     (command . "gsi -:s,search=.")
+     (command . "gsi -:s ./ ./srfi/")
      (docker-image . "schemers/gambit"))
 
     ((name . gauche)
