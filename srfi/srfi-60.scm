@@ -30,5 +30,7 @@
           integer->list
           list->integer
           booleans->integer)
-  (include "60.scm"))
+  (cond-expand
+    (foment (include "srfi/60.scm"))
+    (else (include "60.scm"))))
 

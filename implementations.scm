@@ -51,7 +51,7 @@
      (docker-image . "schemers/gerbil"))
 
     ((name . guile)
-     (command . "guile --fresh-auto-compile --r7rs -L ."))
+     (command . "guile --fresh-auto-compile --r7rs -L . -L ./srfi"))
 
     ((name . kawa)
      (command . "kawa --r7rs -Dkawa.import.path=../../*.sld"))
@@ -66,7 +66,7 @@
 
     ; FIXME Temporarily loading needed stuff to run srfi-64
     ((name . mit-scheme)
-     (command . "mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld"))
+     (command . "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld"))
 
     ((name . mosh)
      (command . "mosh --loadpath=."))
@@ -81,7 +81,7 @@
      (command . "stklos -I . -I ./srfi -f"))
 
     ((name . skint)
-     (command . "skint -I ./"))
+     (command . "skint -I ./ --program"))
 
     ((name . tr7)
      (command . "tr7i"))

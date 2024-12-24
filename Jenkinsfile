@@ -335,7 +335,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." ""'
+                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L . -L ./srfi" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -410,7 +410,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld" ""'
+                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -535,7 +535,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "skint" "skint -I ./" ""'
+                    sh './jenkins_scripts/test.sh "skint" "skint -I ./ --program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

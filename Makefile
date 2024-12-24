@@ -231,21 +231,21 @@ build-srfi-8-gerbil-interpreter-library-docker-head:
 
 test-srfi-8-guile:
 	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/8.scm
 
 build-srfi-8-guile-library:
 	
 
 test-srfi-8-guile-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-guile-library-docker:
 	
 
 test-srfi-8-guile-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-guile-library-docker-head:
 	
@@ -294,21 +294,21 @@ build-srfi-8-loko-library-docker-head:
 
 test-srfi-8-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
 
 build-srfi-8-mit-scheme-library:
 	
 
 test-srfi-8-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-mit-scheme-library-docker:
 	
 
 test-srfi-8-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-mit-scheme-library-docker-head:
 	
@@ -399,21 +399,21 @@ build-srfi-8-stklos-library-docker-head:
 
 test-srfi-8-skint:
 	
-	skint -I ./ srfi-test/r7rs-programs/8.scm
+	skint -I ./ --program srfi-test/r7rs-programs/8.scm
 
 build-srfi-8-skint-library:
 	
 
 test-srfi-8-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-skint-library-docker:
 	
 
 test-srfi-8-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-skint-library-docker-head:
 	
@@ -693,21 +693,21 @@ build-srfi-1-gerbil-interpreter-library-docker-head:
 
 test-srfi-1-guile:
 	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/1.scm
 
 build-srfi-1-guile-library:
 	
 
 test-srfi-1-guile-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-guile-library-docker:
 	
 
 test-srfi-1-guile-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-guile-library-docker-head:
 	
@@ -756,21 +756,21 @@ build-srfi-1-loko-library-docker-head:
 
 test-srfi-1-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
 
 build-srfi-1-mit-scheme-library:
 	
 
 test-srfi-1-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-mit-scheme-library-docker:
 	
 
 test-srfi-1-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-mit-scheme-library-docker-head:
 	
@@ -861,21 +861,21 @@ build-srfi-1-stklos-library-docker-head:
 
 test-srfi-1-skint:
 	
-	skint -I ./ srfi-test/r7rs-programs/1.scm
+	skint -I ./ --program srfi-test/r7rs-programs/1.scm
 
 build-srfi-1-skint-library:
 	
 
 test-srfi-1-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-skint-library-docker:
 	
 
 test-srfi-1-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-skint-library-docker-head:
 	
@@ -1155,21 +1155,21 @@ build-srfi-14-gerbil-interpreter-library-docker-head:
 
 test-srfi-14-guile:
 	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/14.scm
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/14.scm
 
 build-srfi-14-guile-library:
 	
 
 test-srfi-14-guile-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-guile-library-docker:
 	
 
 test-srfi-14-guile-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-guile-library-docker-head:
 	
@@ -1218,21 +1218,21 @@ build-srfi-14-loko-library-docker-head:
 
 test-srfi-14-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm
 
 build-srfi-14-mit-scheme-library:
 	
 
 test-srfi-14-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-mit-scheme-library-docker:
 	
 
 test-srfi-14-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-mit-scheme-library-docker-head:
 	
@@ -1323,21 +1323,21 @@ build-srfi-14-stklos-library-docker-head:
 
 test-srfi-14-skint:
 	
-	skint -I ./ srfi-test/r7rs-programs/14.scm
+	skint -I ./ --program srfi-test/r7rs-programs/14.scm
 
 build-srfi-14-skint-library:
 	
 
 test-srfi-14-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-skint-library-docker:
 	
 
 test-srfi-14-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-skint-library-docker-head:
 	
@@ -1617,21 +1617,21 @@ build-srfi-26-gerbil-interpreter-library-docker-head:
 
 test-srfi-26-guile:
 	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/26.scm
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/26.scm
 
 build-srfi-26-guile-library:
 	
 
 test-srfi-26-guile-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-guile-library-docker:
 	
 
 test-srfi-26-guile-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-guile-library-docker-head:
 	
@@ -1680,21 +1680,21 @@ build-srfi-26-loko-library-docker-head:
 
 test-srfi-26-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
 
 build-srfi-26-mit-scheme-library:
 	
 
 test-srfi-26-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-mit-scheme-library-docker:
 	
 
 test-srfi-26-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-mit-scheme-library-docker-head:
 	
@@ -1785,21 +1785,21 @@ build-srfi-26-stklos-library-docker-head:
 
 test-srfi-26-skint:
 	
-	skint -I ./ srfi-test/r7rs-programs/26.scm
+	skint -I ./ --program srfi-test/r7rs-programs/26.scm
 
 build-srfi-26-skint-library:
 	
 
 test-srfi-26-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-skint-library-docker:
 	
 
 test-srfi-26-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-skint-library-docker-head:
 	
@@ -2079,21 +2079,21 @@ build-srfi-28-gerbil-interpreter-library-docker-head:
 
 test-srfi-28-guile:
 	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/28.scm
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/28.scm
 
 build-srfi-28-guile-library:
 	
 
 test-srfi-28-guile-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-guile-library-docker:
 	
 
 test-srfi-28-guile-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-guile-library-docker-head:
 	
@@ -2142,21 +2142,21 @@ build-srfi-28-loko-library-docker-head:
 
 test-srfi-28-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
 
 build-srfi-28-mit-scheme-library:
 	
 
 test-srfi-28-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-mit-scheme-library-docker:
 	
 
 test-srfi-28-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-mit-scheme-library-docker-head:
 	
@@ -2247,21 +2247,21 @@ build-srfi-28-stklos-library-docker-head:
 
 test-srfi-28-skint:
 	
-	skint -I ./ srfi-test/r7rs-programs/28.scm
+	skint -I ./ --program srfi-test/r7rs-programs/28.scm
 
 build-srfi-28-skint-library:
 	
 
 test-srfi-28-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-skint-library-docker:
 	
 
 test-srfi-28-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-skint-library-docker-head:
 	
@@ -2541,21 +2541,21 @@ build-srfi-13-gerbil-interpreter-library-docker-head:
 
 test-srfi-13-guile:
 	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/13.scm
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/13.scm
 
 build-srfi-13-guile-library:
 	
 
 test-srfi-13-guile-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-guile-library-docker:
 	
 
 test-srfi-13-guile-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-guile-library-docker-head:
 	
@@ -2604,21 +2604,21 @@ build-srfi-13-loko-library-docker-head:
 
 test-srfi-13-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm
 
 build-srfi-13-mit-scheme-library:
 	
 
 test-srfi-13-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-mit-scheme-library-docker:
 	
 
 test-srfi-13-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-mit-scheme-library-docker-head:
 	
@@ -2709,21 +2709,21 @@ build-srfi-13-stklos-library-docker-head:
 
 test-srfi-13-skint:
 	
-	skint -I ./ srfi-test/r7rs-programs/13.scm
+	skint -I ./ --program srfi-test/r7rs-programs/13.scm
 
 build-srfi-13-skint-library:
 	
 
 test-srfi-13-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-skint-library-docker:
 	
 
 test-srfi-13-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-skint-library-docker-head:
 	
@@ -3003,21 +3003,21 @@ build-srfi-60-gerbil-interpreter-library-docker-head:
 
 test-srfi-60-guile:
 	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/60.scm
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/60.scm
 
 build-srfi-60-guile-library:
 	
 
 test-srfi-60-guile-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/60.scm"
 
 build-srfi-60-guile-library-docker:
 	
 
 test-srfi-60-guile-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/60.scm"
 
 build-srfi-60-guile-library-docker-head:
 	
@@ -3066,21 +3066,21 @@ build-srfi-60-loko-library-docker-head:
 
 test-srfi-60-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm
 
 build-srfi-60-mit-scheme-library:
 	
 
 test-srfi-60-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
 
 build-srfi-60-mit-scheme-library-docker:
 	
 
 test-srfi-60-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
 
 build-srfi-60-mit-scheme-library-docker-head:
 	
@@ -3171,21 +3171,21 @@ build-srfi-60-stklos-library-docker-head:
 
 test-srfi-60-skint:
 	
-	skint -I ./ srfi-test/r7rs-programs/60.scm
+	skint -I ./ --program srfi-test/r7rs-programs/60.scm
 
 build-srfi-60-skint-library:
 	
 
 test-srfi-60-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/60.scm"
 
 build-srfi-60-skint-library-docker:
 	
 
 test-srfi-60-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/60.scm"
 
 build-srfi-60-skint-library-docker-head:
 	
@@ -3465,21 +3465,21 @@ build-srfi-64-gerbil-interpreter-library-docker-head:
 
 test-srfi-64-guile:
 	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/64.scm
 
 build-srfi-64-guile-library:
 	
 
 test-srfi-64-guile-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-guile-library-docker:
 	
 
 test-srfi-64-guile-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-guile-library-docker-head:
 	
@@ -3528,21 +3528,21 @@ build-srfi-64-loko-library-docker-head:
 
 test-srfi-64-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm
 
 build-srfi-64-mit-scheme-library:
 	
 
 test-srfi-64-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-mit-scheme-library-docker:
 	
 
 test-srfi-64-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-mit-scheme-library-docker-head:
 	
@@ -3633,21 +3633,21 @@ build-srfi-64-stklos-library-docker-head:
 
 test-srfi-64-skint:
 	
-	skint -I ./ srfi-test/r7rs-programs/64.scm
+	skint -I ./ --program srfi-test/r7rs-programs/64.scm
 
 build-srfi-64-skint-library:
 	
 
 test-srfi-64-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-skint-library-docker:
 	
 
 test-srfi-64-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-skint-library-docker-head:
 	
