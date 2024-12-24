@@ -88,4 +88,6 @@
           time-tai->time-utc!
           date->string
           string->date)
-  (include "19.scm"))
+  (cond-expand
+    (foment (include "srfi/19.scm"))
+    (guile (include "19.scm"))))

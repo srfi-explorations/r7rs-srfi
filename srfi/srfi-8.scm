@@ -4,4 +4,4 @@
   (export receive)
   (cond-expand
     (foment (include "srfi/8.scm"))
-    (else (include "srfi/8.scm"))))
+    (guile (include "8.scm"))))

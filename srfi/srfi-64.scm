@@ -76,5 +76,5 @@
     test-runner-reset
     test-on-final-simple)
   (cond-expand
-    (foment (include "srfi/64.scm"))
-    (else (include "64.scm"))))
+    (guile (include "64.scm"))
+    (foment (include "srfi/64.scm"))))

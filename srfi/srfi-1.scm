@@ -153,6 +153,6 @@
     ;set-cdr!
     )
   (cond-expand
-    (foment (include "srfi/1.scm"))
-    (else (include "1.scm"))))
+    (guile (include "1.scm"))
+    (foment (include "srfi/1.scm"))))
 

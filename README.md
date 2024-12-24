@@ -45,6 +45,7 @@ Add files:
         - Shim file to support Racket
     - srfi/srfi-N.scm
         - Shim file to support Guile and Foment
+        - Should have identical exports to N.sld but cond-expanded include for Foment and Guile only
 
 
 You should be able to deduct what the contents of these files are from other SRFI implementations

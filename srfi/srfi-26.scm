@@ -4,5 +4,4 @@
   (export cut cute)
   (cond-expand
     (foment (include "srfi/26.scm"))
-    (else (include "26.scm"))))
-
+    (guile (include "26.scm"))))

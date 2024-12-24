@@ -88,4 +88,6 @@
     string-join
     string-tokenize
     string-replace)
-  (include "13.scm"))
+  (cond-expand
+    (foment (include "srfi/13.scm"))
+    (guile (include "13.scm"))))

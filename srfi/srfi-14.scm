@@ -69,4 +69,6 @@
           char-set:ascii
           char-set:empty
           char-set:full)
-  (begin (include "14.scm")))
+  (cond-expand
+    (foment (include "srfi/14.scm"))
+    (guile (include "14.scm"))))

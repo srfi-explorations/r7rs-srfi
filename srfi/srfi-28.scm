@@ -5,5 +5,5 @@
   (export format)
   (cond-expand
     (foment (include "srfi/28.scm"))
-    (else (include "28.scm"))))
+    (guile (include "28.scm"))))
 

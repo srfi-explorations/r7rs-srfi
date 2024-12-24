@@ -32,5 +32,5 @@
           booleans->integer)
   (cond-expand
     (foment (include "srfi/60.scm"))
-    (else (include "60.scm"))))
+    (guile (include "60.scm"))))
 
