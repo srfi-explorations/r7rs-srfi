@@ -273,21 +273,21 @@ build-srfi-8-kawa-library-docker-head:
 
 test-srfi-8-larceny:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/8.scm
+	larceny -utf8 -r7rs -program srfi-test/r7rs-programs/8.scm
 
 build-srfi-8-larceny-library:
 	
 
 test-srfi-8-larceny-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-larceny-library-docker:
 	
 
 test-srfi-8-larceny-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-larceny-library-docker-head:
 	
@@ -756,21 +756,21 @@ build-srfi-1-kawa-library-docker-head:
 
 test-srfi-1-larceny:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/1.scm
+	larceny -utf8 -r7rs -program srfi-test/r7rs-programs/1.scm
 
 build-srfi-1-larceny-library:
 	
 
 test-srfi-1-larceny-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-larceny-library-docker:
 	
 
 test-srfi-1-larceny-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-larceny-library-docker-head:
 	
@@ -1239,21 +1239,21 @@ build-srfi-14-kawa-library-docker-head:
 
 test-srfi-14-larceny:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/14.scm
+	larceny -utf8 -r7rs -program srfi-test/r7rs-programs/14.scm
 
 build-srfi-14-larceny-library:
 	
 
 test-srfi-14-larceny-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-larceny-library-docker:
 	
 
 test-srfi-14-larceny-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-larceny-library-docker-head:
 	
@@ -1722,21 +1722,21 @@ build-srfi-26-kawa-library-docker-head:
 
 test-srfi-26-larceny:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/26.scm
+	larceny -utf8 -r7rs -program srfi-test/r7rs-programs/26.scm
 
 build-srfi-26-larceny-library:
 	
 
 test-srfi-26-larceny-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-larceny-library-docker:
 	
 
 test-srfi-26-larceny-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-larceny-library-docker-head:
 	
@@ -2205,21 +2205,21 @@ build-srfi-28-kawa-library-docker-head:
 
 test-srfi-28-larceny:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/28.scm
+	larceny -utf8 -r7rs -program srfi-test/r7rs-programs/28.scm
 
 build-srfi-28-larceny-library:
 	
 
 test-srfi-28-larceny-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-larceny-library-docker:
 	
 
 test-srfi-28-larceny-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-larceny-library-docker-head:
 	
@@ -2688,21 +2688,21 @@ build-srfi-64-kawa-library-docker-head:
 
 test-srfi-64-larceny:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/64.scm
+	larceny -utf8 -r7rs -program srfi-test/r7rs-programs/64.scm
 
 build-srfi-64-larceny-library:
 	
 
 test-srfi-64-larceny-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-larceny-library-docker:
 	
 
 test-srfi-64-larceny-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-larceny-library-docker-head:
 	
@@ -3171,21 +3171,21 @@ build-srfi-151-kawa-library-docker-head:
 
 test-srfi-151-larceny:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/151.scm
+	larceny -utf8 -r7rs -program srfi-test/r7rs-programs/151.scm
 
 build-srfi-151-larceny-library:
 	
 
 test-srfi-151-larceny-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/151.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/151.scm"
 
 build-srfi-151-larceny-library-docker:
 	
 
 test-srfi-151-larceny-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/151.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/151.scm"
 
 build-srfi-151-larceny-library-docker-head:
 	
@@ -3654,21 +3654,21 @@ build-srfi-13-kawa-library-docker-head:
 
 test-srfi-13-larceny:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/13.scm
+	larceny -utf8 -r7rs -program srfi-test/r7rs-programs/13.scm
 
 build-srfi-13-larceny-library:
 	
 
 test-srfi-13-larceny-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-larceny-library-docker:
 	
 
 test-srfi-13-larceny-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -program srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-larceny-library-docker-head:
 	

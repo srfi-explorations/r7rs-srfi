@@ -6,6 +6,5 @@
     ((number . 26))
     ((number . 28))
     ((number . 64)) ; Depends on 1, 8, 26, 28
-    ((number . 151))
     ((number . 13)) ; Depends on 8, 14, 151
     ))

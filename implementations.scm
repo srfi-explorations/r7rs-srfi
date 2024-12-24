@@ -57,7 +57,7 @@
      (command . "kawa --r7rs -Dkawa.import.path=../../*.sld"))
 
     ((name . larceny)
-     (command . "larceny -r7 -I ."))
+     (command . "larceny -utf8 -r7rs -program"))
 
     ((name . loko)
      (command . "loko -std=r7rs --compile")

@@ -391,7 +391,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." ""'
+                    sh './jenkins_scripts/test.sh "larceny" "larceny -utf8 -r7rs -program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
