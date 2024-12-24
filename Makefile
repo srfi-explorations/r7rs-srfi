@@ -105,14 +105,14 @@ build-srfi-8-cyclone-interpreter-library-docker-head:
 
 test-srfi-8-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm
+	foment -I ./ -I ./srfi -l srfi-test/r7rs-programs/8.scm
 
 build-srfi-8-foment-library:
 	
 
 test-srfi-8-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I ./ -I ./srfi -l srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-foment-library-docker:
 	
@@ -588,14 +588,14 @@ build-srfi-1-cyclone-interpreter-library-docker-head:
 
 test-srfi-1-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm
+	foment -I ./ -I ./srfi -l srfi-test/r7rs-programs/1.scm
 
 build-srfi-1-foment-library:
 	
 
 test-srfi-1-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I ./ -I ./srfi -l srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-foment-library-docker:
 	
@@ -1071,14 +1071,14 @@ build-srfi-14-cyclone-interpreter-library-docker-head:
 
 test-srfi-14-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm
+	foment -I ./ -I ./srfi -l srfi-test/r7rs-programs/14.scm
 
 build-srfi-14-foment-library:
 	
 
 test-srfi-14-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I ./ -I ./srfi -l srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-foment-library-docker:
 	
@@ -1554,14 +1554,14 @@ build-srfi-26-cyclone-interpreter-library-docker-head:
 
 test-srfi-26-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm
+	foment -I ./ -I ./srfi -l srfi-test/r7rs-programs/26.scm
 
 build-srfi-26-foment-library:
 	
 
 test-srfi-26-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I ./ -I ./srfi -l srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-foment-library-docker:
 	
@@ -2044,7 +2044,7 @@ build-srfi-28-foment-library:
 
 test-srfi-28-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I ./ -I ./srfi -l srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-foment-library-docker:
 	
