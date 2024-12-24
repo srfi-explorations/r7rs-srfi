@@ -82,6 +82,7 @@
           string-suffix-ci?
           string-contains
           string-contains-ci
+          string-copy
           string-copy!
           substring/shared
           string-reverse
