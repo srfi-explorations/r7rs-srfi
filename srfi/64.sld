@@ -1,6 +1,6 @@
 (define-library
   (srfi 64)
-  (import (scheme base)
+  (import (except (scheme base) make-parameter parameterize)
           (scheme char)
           (scheme eval)
           (scheme file)
@@ -9,7 +9,8 @@
           (scheme process-context)
           (srfi 1)
           (srfi 26)
-          (srfi 28))
+          (srfi 28)
+          (srfi 39))
   (export
     test-assert
     test-eqv

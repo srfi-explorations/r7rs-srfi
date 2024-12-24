@@ -5,6 +5,7 @@
     ((number . 14))
     ((number . 26))
     ((number . 28))
+    ((number . 39))
     ((number . 13)) ; Depends on 8, 14, 33
     ((number . 60))
     ((number . 64)) ; Depends on 1, 8, 26, 28

@@ -9,7 +9,8 @@
           (scheme process-context)
           (srfi 1)
           (srfi 26)
-          (srfi 28))
+          (srfi 28)
+          (srfi 39))
   (export
     test-assert
     test-eqv

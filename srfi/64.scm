@@ -481,31 +481,30 @@
         (group-executed-count! group
                                (+ (group-executed-count group) 1))))))
 
-(define test-begin
-  (lambda (suite-name . count-arg)
-    ;"Enter a new test group.
+(define (test-begin suite-name . count-arg)
+  ;"Enter a new test group.
 
-    ;As implementation extension, in addition to strings, symbols are also
-    ;supported as @var{suite-name}."
-    (let* ((count (if (null? count-arg) #f (car count-arg)))
-           (r (if (test-runner-current) (test-runner-current) (test-runner-create)))
-           (install? (if (test-runner-current) #f #t))
-           (group (make-group suite-name
-                              count
-                              0
-                              install?
-                              (test-runner-skip-list r))))
-      (when install?
-        (test-runner-current r))
+  ;As implementation extension, in addition to strings, symbols are also
+  ;supported as @var{suite-name}."
+  (let* ((count (if (null? count-arg) #f (car count-arg)))
+         (r (if (test-runner-current) (test-runner-current) (test-runner-create)))
+         (install? (if (test-runner-current) #f #t))
+         (group (make-group suite-name
+                            count
+                            0
+                            install?
+                            (test-runner-skip-list r))))
+    (when install?
+      (test-runner-current r))
 
-      (test-runner-test-name! r suite-name)
-      (test-runner-groups! r (cons group (test-runner-groups r)))
-      ;; Per-strict reading of SRFI-64, -group-stack is required to be
-      ;; non-copying, hence non-computed.  So duplicate the information already
-      ;; present in -groups here.
-      (test-runner-group-stack! r (cons suite-name (test-runner-group-stack r)))
+    (test-runner-test-name! r suite-name)
+    (test-runner-groups! r (cons group (test-runner-groups r)))
+    ;; Per-strict reading of SRFI-64, -group-stack is required to be
+    ;; non-copying, hence non-computed.  So duplicate the information already
+    ;; present in -groups here.
+    (test-runner-group-stack! r (cons suite-name (test-runner-group-stack r)))
 
-      ((test-runner-on-group-begin r) r suite-name count))))
+    ((test-runner-on-group-begin r) r suite-name count)))
 
 (define (%cmp-group-name a b)
   (cond ((and (string? a) (string? b)) (string=? a b))
