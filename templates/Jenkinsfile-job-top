@@ -3,6 +3,7 @@
                 docker {
                     image '{{{dockerimage}}}'
                     reuseNode true
+                    args '--user=root'
                 }
             }
             when {
