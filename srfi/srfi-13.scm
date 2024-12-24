@@ -1,19 +1,30 @@
 (define-library
   (srfi 13)
-  (import (scheme base)
-          (scheme char)
+  (import (except (scheme base)
+                  string-copy
+                  string-map
+                  string-for-each
+                  string-fill!
+                  string-copy!
+                  string->list)
+          (only (scheme char)
+                char-ci=?
+                char-ci<?
+                char-downcase
+                char-upcase
+                char-alphabetic?)
           (srfi 8)
           (srfi 14)
           (srfi 60))
   (export
-    ;string-map ;; Already in R7RS
+    string-map
     string-map!
     string-fold
     string-unfold
     string-fold-right
     string-unfold-right
     string-tabulate
-    ;string-for-each ;; Already in R7RS
+    string-for-each
     string-for-each-index
     string-every
     string-any
@@ -33,8 +44,8 @@
     string-ci<=
     string-ci>=
     string-ci<>
-    ;string-downcase ;; Already in R7RS
-    ;string-upcase ;; Already in R7RS
+    string-downcase
+    string-upcase
     string-titlecase
     string-downcase!
     string-upcase!
@@ -72,7 +83,7 @@
     string-suffix-ci?
     string-contains
     string-contains-ci
-    ;string-copy! ;; Already in R7RS
+    string-copy!
     substring/shared
     string-reverse
     string-reverse!

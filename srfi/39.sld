@@ -2,11 +2,11 @@
   (srfi 39)
   (cond-expand
     (chibi (import (chibi)))
-    (mit-scheme (import (scheme base)))
     (racket (import (scheme base)))
     (else (import (except (scheme base) make-parameter parameterize))))
   (export make-parameter parameterize)
   (cond-expand
+    (mit-scheme (include "39.scm"))
     (chibi (include-shared "39/param")
            (cond-expand
              (threads (include "39/syntax.scm"))

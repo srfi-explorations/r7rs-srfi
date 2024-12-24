@@ -269,10 +269,10 @@
                start substring/shared)
     (%substring/shared s start
                        (optional maybe-end slen
-                                  #;(lambda (end) (and (integer? end)
-                                                     (exact? end)
-                                                     (<= start end)
-                                                     (<= end slen)))))))
+                                 #;(lambda (end) (and (integer? end)
+                                 (exact? end)
+                                 (<= start end)
+                                 (<= end slen)))))))
 
 ;;; Split out so that other routines in this library can avoid arg-parsing
 ;;; overhead for END parameter.
@@ -280,7 +280,7 @@
   (if (and (zero? start) (= end (string-length s))) s
     (substring s start end)))
 
-#;(define (string-copy s . maybe-start+end)
+(define (string-copy s . maybe-start+end)
   (let-string-start+end (start end) string-copy s maybe-start+end
                         (substring s start end)))
 
@@ -312,7 +312,7 @@
 ;;; You'd at least like a lot of inlining for clients of these procedures.
 ;;; Don't hold your breath.
 
-#;(define (string-map proc s . maybe-start+end)
+(define (string-map proc s . maybe-start+end)
   (check-arg procedure? proc string-map)
   (let-string-start+end (start end) string-map s maybe-start+end
                         (%string-map proc s start end)))
@@ -509,7 +509,7 @@
                           ans))))))
 
 
-#;(define (string-for-each proc s . maybe-start+end)
+(define (string-for-each proc s . maybe-start+end)
   (check-arg procedure? proc string-for-each)
   (let-string-start+end (start end) string-for-each s maybe-start+end
                         (let lp ((i start))
@@ -653,7 +653,7 @@
 
 
 (define (string-prefix-length s1 s2 . maybe-starts+ends)
-  (let-string-start+end2 (start1 end1 start2 end2) 
+  (let-string-start+end2 (start1 end1 start2 end2)
                          string-prefix-length s1 s2 maybe-starts+ends
                          (%string-prefix-length s1 start1 end1 s2 start2 end2)))
 
@@ -974,7 +974,7 @@
 ;;;   Capitalize every contiguous alpha sequence: capitalise
 ;;;   first char, lowercase rest.
 
-#;(define (string-upcase  s . maybe-start+end)
+(define (string-upcase  s . maybe-start+end)
   (let-string-start+end (start end) string-upcase s maybe-start+end
                         (%string-map char-upcase s start end)))
 
@@ -982,7 +982,7 @@
   (let-string-start+end (start end) string-upcase! s maybe-start+end
                         (%string-map! char-upcase s start end)))
 
-#;(define (string-downcase  s . maybe-start+end)
+(define (string-downcase  s . maybe-start+end)
   (let-string-start+end (start end) string-downcase s maybe-start+end
                         (%string-map char-downcase s start end)))
 
@@ -1304,14 +1304,14 @@
 ;;; string-copy! to tstart from [fstart fend]
 ;;;  Guaranteed to work, even if s1 eq s2.
 
-#;(define (string-fill! s char . maybe-start+end)
+(define (string-fill! s char . maybe-start+end)
   (check-arg char? char string-fill!)
   (let-string-start+end (start end) string-fill! s maybe-start+end
                         (do ((i (- end 1) (- i 1)))
                           ((< i start))
                           (string-set! s i char))))
 
-#;(define (string-copy! to tstart from . maybe-fstart+fend)
+(define (string-copy! to tstart from . maybe-fstart+fend)
   (let-string-start+end (fstart fend) string-copy! from maybe-fstart+fend
                         (check-arg integer? tstart string-copy!)
                         (check-substring-spec string-copy! to tstart (+ tstart (- fend fstart)))
@@ -1564,7 +1564,7 @@
 ;(define (string->list s . maybe-start+end)
 ;  (apply string-fold-right cons '() s maybe-start+end))
 
-#;(define (string->list s . maybe-start+end)
+(define (string->list s . maybe-start+end)
   (let-string-start+end (start end) string->list s maybe-start+end
                         (do ((i (- end 1) (- i 1))
                              (ans '() (cons (string-ref s i) ans)))
