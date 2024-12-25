@@ -595,7 +595,7 @@ pipeline {
                     }
                 }
 
-
+            }
         }
 
         stage("Report") {
