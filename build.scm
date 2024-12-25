@@ -46,9 +46,7 @@
       (cond
         (library-command
           (string-append command
-                         (if (string=? name "gambit")
-                           " && srfi-test/r7rs-programs/test"
-                           " && srfi-test/r7rs-programs/test")
+                         " && srfi-test/r7rs-programs/test"
                          " && ./srfi-test/r7rs-programs/test"))
         (else command)))))
 
