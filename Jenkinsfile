@@ -367,31 +367,6 @@ pipeline {
             }
         }
 
-        stage("larceny") {
-            agent {
-                docker {
-                    image 'schemers/larceny:latest'
-                    reuseNode true
-                    args '--user=root'
-                }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'larceny'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "larceny" "larceny -utf8 -r7rs -program" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
-
         stage("loko") {
             agent {
                 docker {

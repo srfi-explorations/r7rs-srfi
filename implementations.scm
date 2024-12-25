@@ -66,7 +66,7 @@
     ((name . kawa)
      (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld"))
 
-    ((name . larceny)
+    #;((name . larceny)
      (command . "larceny -utf8 -r7rs -program"))
 
     ((name . loko)
