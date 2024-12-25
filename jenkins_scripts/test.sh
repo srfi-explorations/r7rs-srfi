@@ -16,16 +16,17 @@ done
 for srfi in $srfis
 do
     make $srfi-$name-library
-    echo "Testing $srfi with command $cmd"
-    if [ "$lib_cmd" = "" ]
-    then
-        $cmd "srfi-test/r7rs-programs/$srfi.scm" > "reports/$name-srfi-$srfi.log"
-    else
-        $cmd "srfi-test/r7rs-programs/$srfi.scm"
-        ./test > "reports/$name-srfi-$srfi.log"
-    fi
+    make $srfi-$name > "reports/$name-srfi-$srfi.log"
+    #echo "Testing $srfi with command $cmd"
+    #if [ "$lib_cmd" = "" ]
+    #then
+        #$cmd "srfi-test/r7rs-programs/$srfi.scm" > "reports/$name-srfi-$srfi.log"
+    #else
+        #$cmd "srfi-test/r7rs-programs/$srfi.scm"
+        #./test > "reports/$name-srfi-$srfi.log"
+    #fi
 
-    # Some implementations do not use the proejcts SRFI-64 yet, so copy their logfiles too
+    # Some implementations do not use the projects SRFI-64 yet, so copy their logfiles too
     if [ -f "srfi-$srfi.log" ]
     then
         cp "srfi-$srfi.log" "reports/$name-srfi-$srfi.log"
