@@ -8,6 +8,7 @@
           (scheme write)
           (scheme process-context)
           (srfi 1)
+          (only (srfi 13) string-trim-both)
           (srfi 26)
           (srfi 28)
           (srfi 39))
@@ -77,5 +78,6 @@
     test-runner-reset
     test-on-final-simple)
   (cond-expand
-    (guile (include "64.scm"))
-    (foment (include "srfi/64.scm"))))
+    (chicken (include "64.scm"))
+    (foment (include "srfi/64.scm"))
+    (guile (include "64.scm"))))

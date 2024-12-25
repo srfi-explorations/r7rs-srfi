@@ -28,9 +28,9 @@
            (library-command (assoc 'library-command implementation)))
       (cond ((not library-command) #f)
             ; Note that Chicken needs to have the SRFI library as srfi-N.scm in same folder
-            ((string=? name "chicken")
-             (string-append " cp srfi/" number ".sld srfi-" number ".sld"
-                            " && " (cdr library-command) " srfi-" number ".sld"))
+            ((string=? name "chicken-compiler")
+             (string-append "cp srfi/srfi-" number ".scm ."
+                            " && " (cdr library-command) " srfi-" number ".scm"))
             (else (string-append (cdr library-command)
                                  " srfi/" number (if (string=? name "gambit") "" ".sld")))))))
 
@@ -44,10 +44,9 @@
                " srfi-test/r7rs-programs/" number ".scm"))
            (library-command (assoc 'library-command implementation)))
       (cond
-        (library-command
-          (string-append command
-                         " && srfi-test/r7rs-programs/test"
-                         " && ./srfi-test/r7rs-programs/test"))
+        ((and (assoc 'compiler? implementation)
+              (cdr (assoc 'compiler? implementation)))
+                     (string-append command " && ./test"))
         (else command)))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))

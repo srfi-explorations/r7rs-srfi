@@ -81,11 +81,6 @@
        (when (not found?) (set! result (cons (cons key value) result)))
        result))))
 
-(define string-trim-both
-  (lambda (str . args)
-    ;; TODO
-    str))
-
 (define (display-to-string value)
   (let ((output-string (open-output-string)))
     (display value output-string)

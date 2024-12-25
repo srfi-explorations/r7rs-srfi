@@ -89,5 +89,6 @@
           date->string
           string->date)
   (cond-expand
+    (chicken (include "19.scm"))
     (foment (include "srfi/19.scm"))
     (guile (include "19.scm"))))

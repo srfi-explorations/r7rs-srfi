@@ -7,10 +7,13 @@ cmd="$2"
 lib_cmd="$3"
 srfis=$(cat srfi-numbers.txt)
 
-## Build 64 always first
-make build-srfi-64-$name-library
 
-for srfi in $srfis
+## Build 64 and it's dependencies always first
+for n in 8 1 60 14 13 26 28 39 64
+do
+    make $n-$name-library
+done
+
 do
     make build-srfi-$srfi-$name-library
     echo "Testing $srfi with command $cmd"

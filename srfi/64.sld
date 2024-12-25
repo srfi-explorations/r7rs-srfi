@@ -8,6 +8,7 @@
           (scheme write)
           (scheme process-context)
           (srfi 1)
+          (only (srfi 13) string-trim-both)
           (srfi 26)
           (srfi 28)
           (srfi 39))

@@ -25,12 +25,20 @@ get built.
 
 With compiler implementations run the tests for SRFIs the SRFI you want to test needs to build them.
 
-So for example on Chicken to test SRFI-13 run:
+So for example on chicken-compiler to test SRFI-64 run:
 
-    make test-chicken-srfi-64
-    make test-chicken-srfi-33
-    make test-chicken-srfi-14
-    make test-chicken-srfi-13
+    make 8-chicken-compiler-library
+    make 1-chicken-compiler-library
+    make 60-chicken-compiler-library
+    make 14-chicken-compiler-library
+    make 13-chicken-compiler-library
+    make 26-chicken-compiler-library
+    make 28-chicken-compiler-library
+    make 39-chicken-compiler-library
+    make 64-chicken-compiler-library
+    make 64-chicken-compiler
+
+If you find yourself running this repeatedly you can add them into Makefile.shortcuts
 
 
 # Adding new srfi

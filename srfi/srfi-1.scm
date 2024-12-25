@@ -153,6 +153,7 @@
     ;set-cdr!
     )
   (cond-expand
-    (guile (include "1.scm"))
-    (foment (include "srfi/1.scm"))))
+    (chicken (include "1.scm"))
+    (foment (include "srfi/1.scm"))
+    (guile (include "1.scm"))))
 

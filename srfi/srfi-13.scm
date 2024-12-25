@@ -100,5 +100,6 @@
           string-tokenize
           string-replace)
   (cond-expand
+    (chicken (include "13.scm"))
     (foment (include "srfi/13.scm"))
     (guile (include "13.scm"))))

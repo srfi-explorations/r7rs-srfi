@@ -70,5 +70,6 @@
           char-set:empty
           char-set:full)
   (cond-expand
+    (chicken (include "14.scm"))
     (foment (include "srfi/14.scm"))
     (guile (include "14.scm"))))

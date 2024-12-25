@@ -31,6 +31,7 @@
           list->integer
           booleans->integer)
   (cond-expand
+    (chicken (include "60.scm"))
     (foment (include "srfi/60.scm"))
     (guile (include "60.scm"))))
 

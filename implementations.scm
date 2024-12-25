@@ -4,9 +4,9 @@
      (command . "chibi-scheme -I ."))
 
     ((name . chicken-compiler)
-     (command . "csc -X r7rs -R r7rs -o srfi-test/r7rs-programs/test -static")
-     (library-command . "ls")
-     ;(library-command . "csc -X r7rs -R r7rs -J")
+     (compiler? . #t)
+     (command . "csc -X r7rs -R r7rs -I ./srfi -o test")
+     (library-command . "csc -X r7rs -R r7rs -I ./srfi -s -J")
      (docker-image . "schemers/chicken"))
 
     ((name . chicken-interpreter)
@@ -14,6 +14,7 @@
      (docker-image . "schemers/chicken"))
 
     ((name . cyclone-compiler)
+     (compiler? . #t)
      (command . "cyclone -o srfi-test/r7rs-programs/test -I .")
      (library-command . "cyclone -I .")
      ; Library command so the executable gets run
@@ -31,9 +32,10 @@
     ;; Gambit propably needs proper syntax-rules support
     ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-compiler)
+     (compiler? . #t)
      ;(command . "gsc -exe -nopreload -o srfi-test/r7rs-programs/test -:search=.,s -debug -warnings")
      (command . "gsc -o srfi-test/r7rs-programs/test -exe -nopreload")
-     (library-command . "ls")
+     ;(library-command . "ls")
      ;(library-command . "gsc -debug -warnings -obj")
      (docker-image . "schemers/gambit"))
 
@@ -48,6 +50,7 @@
      (command . "gosh -r7 -I ."))
 
     ((name . gerbil-compiler)
+     (compiler? . #t)
      (command . "GERBIL_LOADPATH=.:./srfi gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe")
      (library-command . "gxc")
      (docker-image . "schemers/gerbil"))
