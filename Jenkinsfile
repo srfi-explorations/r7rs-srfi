@@ -22,7 +22,7 @@ pipeline {
                  'gerbil-interpreter',
                  'guile',
                  'kawa',
-                 'loko',
+                 'loko-compiler',
                  'mit-scheme',
                  'sagittarius',
                  'stklos',
