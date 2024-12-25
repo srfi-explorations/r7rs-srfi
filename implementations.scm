@@ -53,7 +53,7 @@
 
     ((name . gerbil-compiler)
      (compiler? . #t)
-     (command . "GERBIL_LOADPATH=.:./srfi gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe")
+     (command . "GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe")
      (library-command . "gxc")
      (docker-image . "schemers/gerbil"))
 
