@@ -20,16 +20,11 @@ do
     echo "Testing $srfi with command $cmd"
     if [ "$lib_cmd" = "" ]
     then
-        $cmd "srfi-test/r7rs-programs/$srfi.scm" > "srfi-$srfi.log"
+        $cmd "srfi-test/r7rs-programs/$srfi.scm" > "reports/$name-srfi-$srfi.log"
     else
         $cmd "srfi-test/r7rs-programs/$srfi.scm"
-        ./test > "srfi-$srfi.log"
+        ./test > "reports/$name-srfi-$srfi.log"
     fi
-done
-
-for f in *.log
-do
-    cp -- "$f" "reports/$name-$f"
 done
 
 ls reports
