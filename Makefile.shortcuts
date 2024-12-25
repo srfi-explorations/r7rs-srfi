@@ -22,7 +22,7 @@
 	make 64-gambit-compiler-library
 	make 64-gambit-compiler
 
-64-gerbilt-compiler:
+64-gerbil-compiler:
 	make 8-gerbil-compiler-library
 	make 1-gerbil-compiler-library
 	make 60-gerbil-compiler-library

@@ -14,6 +14,7 @@ do
     make $n-$name-library
 done
 
+for srfi in $srfis
 do
     make build-srfi-$srfi-$name-library
     echo "Testing $srfi with command $cmd"
