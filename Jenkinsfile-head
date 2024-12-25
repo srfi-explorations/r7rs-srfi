@@ -59,14 +59,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -84,14 +84,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "chicken-compiler" "csc -X r7rs -R r7rs -I ./srfi -o test" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -109,14 +109,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "chicken-interpreter" "csi -b -R r7rs -I ./ -I ./srfi -script" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -134,14 +134,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -o srfi-test/r7rs-programs/test -I ." "cyclone -I ."'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -159,14 +159,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I . -I ./srfi -s" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -184,14 +184,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "foment" "foment -I . -I ./srfi" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -209,14 +209,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o srfi-test/r7rs-programs/test -exe -nopreload" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -234,14 +234,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s,search=./srfi" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -259,14 +259,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -284,14 +284,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "gerbil-compiler" "GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe" "gxc"'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -309,14 +309,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "gerbil-interpreter" "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -334,14 +334,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L . -L ./srfi" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -359,14 +359,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -384,14 +384,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "loko" "loko -o srfi-test/r7rs-programs/test -std=r7rs --compile" "ls"'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -409,14 +409,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -434,14 +434,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -459,14 +459,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -484,14 +484,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -509,14 +509,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -534,14 +534,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "skint" "skint -I ./ --program" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -559,14 +559,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "tr7" "tr7i" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
@@ -584,14 +584,14 @@ pipeline {
                         }
                     }
                     steps {
-                        //catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh 'apt update && apt install -y make'
                             sh './jenkins_scripts/clean.sh'
                             unstash 'tests'
                         sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program" ""'
                             archiveArtifacts artifacts: 'reports/*.log'
                             sh 'rm -rf *.log'
-                        //}
+                        }
                     }
                 }
 
