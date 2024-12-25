@@ -61,7 +61,8 @@
 (define-syntax assq-ref
   (syntax-rules ()
     ((_ alist key)
-     (if (assq key alist)
+     (if (and (list? alist)
+              (assq key alist))
        (cdr (assq key alist))
        #f))))
 
