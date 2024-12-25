@@ -204,11 +204,7 @@
 (define (obj->specifier obj)
   ;"Convert an object to a specifier accounting for the convenience short-hands."
   (cond ((procedure? obj) obj)
-        ((string? obj)
-         (display "HERE: ")
-         (write obj)
-         (newline)
-         (test-match-name obj))
+        ((string? obj) (test-match-name obj))
         ((integer? obj) (test-match-nth 1 obj))))
 
 (define test-match-any
@@ -530,6 +526,8 @@
 
       (let ((expected-count (group-count group))
             (actual-count   (group-executed-count group)))
+        (map (lambda (i) (display i (current-error-port)))
+             (list "HERE: " expected-count "/" actual-count #\newline))
         (when (and expected-count (not (= expected-count actual-count)))
           ((test-runner-on-bad-count r) r actual-count expected-count)))
 
@@ -890,6 +888,9 @@
 
 (define test-apply
   (lambda (maybe-runner . args)
+    (display "HERE1: ")
+    (write maybe-runner)
+    (newline)
     (let ((thunk (car (reverse args)))
           (runner (if (test-runner? (car args))
                     (car args)

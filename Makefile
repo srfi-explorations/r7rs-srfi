@@ -441,21 +441,21 @@ build-srfi-8-tr7-library-docker-head:
 
 test-srfi-8-ypsilon:
 	
-	ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/8.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/8.scm
 
 build-srfi-8-ypsilon-library:
 	
 
 test-srfi-8-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-ypsilon-library-docker:
 	
 
 test-srfi-8-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/8.scm"
 
 build-srfi-8-ypsilon-library-docker-head:
 	
@@ -903,21 +903,21 @@ build-srfi-1-tr7-library-docker-head:
 
 test-srfi-1-ypsilon:
 	
-	ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/1.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/1.scm
 
 build-srfi-1-ypsilon-library:
 	
 
 test-srfi-1-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-ypsilon-library-docker:
 	
 
 test-srfi-1-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/1.scm"
 
 build-srfi-1-ypsilon-library-docker-head:
 	
@@ -1365,21 +1365,21 @@ build-srfi-14-tr7-library-docker-head:
 
 test-srfi-14-ypsilon:
 	
-	ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/14.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/14.scm
 
 build-srfi-14-ypsilon-library:
 	
 
 test-srfi-14-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-ypsilon-library-docker:
 	
 
 test-srfi-14-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/14.scm"
 
 build-srfi-14-ypsilon-library-docker-head:
 	
@@ -1827,21 +1827,21 @@ build-srfi-26-tr7-library-docker-head:
 
 test-srfi-26-ypsilon:
 	
-	ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/26.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/26.scm
 
 build-srfi-26-ypsilon-library:
 	
 
 test-srfi-26-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-ypsilon-library-docker:
 	
 
 test-srfi-26-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/26.scm"
 
 build-srfi-26-ypsilon-library-docker-head:
 	
@@ -2289,21 +2289,21 @@ build-srfi-28-tr7-library-docker-head:
 
 test-srfi-28-ypsilon:
 	
-	ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/28.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/28.scm
 
 build-srfi-28-ypsilon-library:
 	
 
 test-srfi-28-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-ypsilon-library-docker:
 	
 
 test-srfi-28-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/28.scm"
 
 build-srfi-28-ypsilon-library-docker-head:
 	
@@ -2751,21 +2751,21 @@ build-srfi-39-tr7-library-docker-head:
 
 test-srfi-39-ypsilon:
 	
-	ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/39.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/39.scm
 
 build-srfi-39-ypsilon-library:
 	
 
 test-srfi-39-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/39.scm"
 
 build-srfi-39-ypsilon-library-docker:
 	
 
 test-srfi-39-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/39.scm"
 
 build-srfi-39-ypsilon-library-docker-head:
 	
@@ -3213,21 +3213,21 @@ build-srfi-13-tr7-library-docker-head:
 
 test-srfi-13-ypsilon:
 	
-	ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/13.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/13.scm
 
 build-srfi-13-ypsilon-library:
 	
 
 test-srfi-13-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-ypsilon-library-docker:
 	
 
 test-srfi-13-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/13.scm"
 
 build-srfi-13-ypsilon-library-docker-head:
 	
@@ -3675,21 +3675,21 @@ build-srfi-60-tr7-library-docker-head:
 
 test-srfi-60-ypsilon:
 	
-	ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/60.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/60.scm
 
 build-srfi-60-ypsilon-library:
 	
 
 test-srfi-60-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/60.scm"
 
 build-srfi-60-ypsilon-library-docker:
 	
 
 test-srfi-60-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/60.scm"
 
 build-srfi-60-ypsilon-library-docker-head:
 	
@@ -4137,21 +4137,21 @@ build-srfi-64-tr7-library-docker-head:
 
 test-srfi-64-ypsilon:
 	
-	ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/64.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/64.scm
 
 build-srfi-64-ypsilon-library:
 	
 
 test-srfi-64-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-ypsilon-library-docker:
 	
 
 test-srfi-64-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/64.scm"
 
 build-srfi-64-ypsilon-library-docker-head:
 	
