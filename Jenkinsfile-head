@@ -367,17 +367,17 @@ pipeline {
             }
         }
 
-        stage("loko") {
+        stage("loko-compiler") {
             agent {
                 docker {
-                    image 'schemers/loko:head'
+                    image 'schemers/loko-compiler:head'
                     reuseNode true
                     args '--user=root'
                 }
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'loko'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'loko-compiler'
                 }
             }
             steps {
@@ -385,7 +385,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "loko" "loko -o srfi-test/r7rs-programs/test -std=r7rs --compile" "ls"'
+                    sh './jenkins_scripts/test.sh "loko-compiler" "loko -std=r7rs --compile" "ls"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

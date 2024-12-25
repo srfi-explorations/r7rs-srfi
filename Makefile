@@ -271,26 +271,26 @@
 1-kawa-library-docker-head:
 	
 
-1-loko:
+1-loko-compiler:
 	 ls srfi/1.sld 
-	loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/1.scm
+	loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test
 
-1-loko-library:
+1-loko-compiler-library:
 	 ls srfi/1.sld 
 
-1-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/1.scm"
+1-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test"
 
-1-loko-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/1.sld" 
+1-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/1.sld" 
 
-1-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/1.scm"
+1-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test"
 
-1-loko-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/1.sld" 
+1-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/1.sld" 
 
 1-mit-scheme:
 	
@@ -733,26 +733,26 @@
 8-kawa-library-docker-head:
 	
 
-8-loko:
+8-loko-compiler:
 	 ls srfi/8.sld 
-	loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/8.scm
+	loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && mv srfi-test/r7rs-programs/8 ./test && ./test
 
-8-loko-library:
+8-loko-compiler-library:
 	 ls srfi/8.sld 
 
-8-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/8.scm"
+8-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && mv srfi-test/r7rs-programs/8 ./test && ./test"
 
-8-loko-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/8.sld" 
+8-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/8.sld" 
 
-8-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/8.scm"
+8-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && mv srfi-test/r7rs-programs/8 ./test && ./test"
 
-8-loko-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/8.sld" 
+8-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/8.sld" 
 
 8-mit-scheme:
 	
@@ -1195,26 +1195,26 @@
 13-kawa-library-docker-head:
 	
 
-13-loko:
+13-loko-compiler:
 	 ls srfi/13.sld 
-	loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/13.scm
+	loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test
 
-13-loko-library:
+13-loko-compiler-library:
 	 ls srfi/13.sld 
 
-13-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/13.scm"
+13-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test"
 
-13-loko-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/13.sld" 
+13-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/13.sld" 
 
-13-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/13.scm"
+13-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test"
 
-13-loko-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/13.sld" 
+13-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/13.sld" 
 
 13-mit-scheme:
 	
@@ -1657,26 +1657,26 @@
 14-kawa-library-docker-head:
 	
 
-14-loko:
+14-loko-compiler:
 	 ls srfi/14.sld 
-	loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/14.scm
+	loko -std=r7rs --compile srfi-test/r7rs-programs/14.scm && mv srfi-test/r7rs-programs/14 ./test && ./test
 
-14-loko-library:
+14-loko-compiler-library:
 	 ls srfi/14.sld 
 
-14-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/14.scm"
+14-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/14.scm && mv srfi-test/r7rs-programs/14 ./test && ./test"
 
-14-loko-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/14.sld" 
+14-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/14.sld" 
 
-14-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/14.scm"
+14-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/14.scm && mv srfi-test/r7rs-programs/14 ./test && ./test"
 
-14-loko-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/14.sld" 
+14-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/14.sld" 
 
 14-mit-scheme:
 	
@@ -2119,26 +2119,26 @@
 26-kawa-library-docker-head:
 	
 
-26-loko:
+26-loko-compiler:
 	 ls srfi/26.sld 
-	loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/26.scm
+	loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test
 
-26-loko-library:
+26-loko-compiler-library:
 	 ls srfi/26.sld 
 
-26-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/26.scm"
+26-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test"
 
-26-loko-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/26.sld" 
+26-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/26.sld" 
 
-26-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/26.scm"
+26-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test"
 
-26-loko-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/26.sld" 
+26-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/26.sld" 
 
 26-mit-scheme:
 	
@@ -2581,26 +2581,26 @@
 28-kawa-library-docker-head:
 	
 
-28-loko:
+28-loko-compiler:
 	 ls srfi/28.sld 
-	loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/28.scm
+	loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && mv srfi-test/r7rs-programs/28 ./test && ./test
 
-28-loko-library:
+28-loko-compiler-library:
 	 ls srfi/28.sld 
 
-28-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/28.scm"
+28-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && mv srfi-test/r7rs-programs/28 ./test && ./test"
 
-28-loko-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/28.sld" 
+28-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/28.sld" 
 
-28-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/28.scm"
+28-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && mv srfi-test/r7rs-programs/28 ./test && ./test"
 
-28-loko-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/28.sld" 
+28-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/28.sld" 
 
 28-mit-scheme:
 	
@@ -3043,26 +3043,26 @@
 39-kawa-library-docker-head:
 	
 
-39-loko:
+39-loko-compiler:
 	 ls srfi/39.sld 
-	loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/39.scm
+	loko -std=r7rs --compile srfi-test/r7rs-programs/39.scm && mv srfi-test/r7rs-programs/39 ./test && ./test
 
-39-loko-library:
+39-loko-compiler-library:
 	 ls srfi/39.sld 
 
-39-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/39.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/39.scm"
+39-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/39.scm && mv srfi-test/r7rs-programs/39 ./test && ./test"
 
-39-loko-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/39.sld" 
+39-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/39.sld" 
 
-39-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/39.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/39.scm"
+39-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/39.scm && mv srfi-test/r7rs-programs/39 ./test && ./test"
 
-39-loko-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/39.sld" 
+39-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/39.sld" 
 
 39-mit-scheme:
 	
@@ -3505,26 +3505,26 @@
 60-kawa-library-docker-head:
 	
 
-60-loko:
+60-loko-compiler:
 	 ls srfi/60.sld 
-	loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/60.scm
+	loko -std=r7rs --compile srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test
 
-60-loko-library:
+60-loko-compiler-library:
 	 ls srfi/60.sld 
 
-60-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/60.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/60.scm"
+60-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test"
 
-60-loko-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/60.sld" 
+60-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/60.sld" 
 
-60-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/60.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/60.scm"
+60-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test"
 
-60-loko-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/60.sld" 
+60-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/60.sld" 
 
 60-mit-scheme:
 	
@@ -3967,26 +3967,26 @@
 64-kawa-library-docker-head:
 	
 
-64-loko:
+64-loko-compiler:
 	 ls srfi/64.sld 
-	loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/64.scm
+	loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && mv srfi-test/r7rs-programs/64 ./test && ./test
 
-64-loko-library:
+64-loko-compiler-library:
 	 ls srfi/64.sld 
 
-64-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/64.scm"
+64-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && mv srfi-test/r7rs-programs/64 ./test && ./test"
 
-64-loko-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/64.sld" 
+64-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/64.sld" 
 
-64-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -o srfi-test/r7rs-programs/test -std=r7rs --compile srfi-test/r7rs-programs/64.scm"
+64-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && mv srfi-test/r7rs-programs/64 ./test && ./test"
 
-64-loko-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/64.sld" 
+64-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko-compiler:latest bash -c "cd workdir && ls srfi/64.sld" 
 
 64-mit-scheme:
 	

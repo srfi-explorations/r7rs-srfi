@@ -66,9 +66,9 @@
     #;((name . larceny)
      (command . "larceny -utf8 -r7rs -program"))
 
-    ((name . loko)
-     (command . "loko -o srfi-test/r7rs-programs/test -std=r7rs --compile")
-     ; Library command so the executable gets run
+    ((name . loko-compiler)
+     (compiler? . #t)
+     (command . "loko -std=r7rs --compile")
      (library-command . "ls"))
 
     ; FIXME Temporarily loading needed stuff to run srfi-64

@@ -27,7 +27,8 @@
 (define-syntax assoc-ref
   (syntax-rules ()
     ((_ alist key)
-     (if (assoc key alist)
+     (if (and (list? alist)
+              (assoc key alist))
        (cdr (assoc key alist))
        #f))))
 
@@ -38,7 +39,8 @@
            (found? #f))
        (for-each
          (lambda (item)
-           (if (equal? (car item) key)
+           (if (and (list? item)
+                    (equal? (car item) key))
              (begin
                (set! found? #t)
                (set! result (cons (cons key value) result)))
@@ -53,7 +55,7 @@
      (let ((result (list)))
        (for-each
          (lambda (item)
-           (when (not (equal? (car item) key))
+           (when (and (list? item) (not (equal? (car item) key)))
              (set! result (cons item result))))
          alist)
        result))))
@@ -73,7 +75,8 @@
            (found? #f))
        (for-each
          (lambda (item)
-           (if (eq? (car item) key)
+           (if (and (pair? item)
+                    (eq? (car item) key))
              (begin
                (set! found? #t)
                (set! result (cons (cons key value) result)))

@@ -47,7 +47,9 @@
       (cond
         ((and (assoc 'compiler? implementation)
               (cdr (assoc 'compiler? implementation)))
-                     (string-append command " && ./test"))
+         (if (string=? name "loko-compiler")
+           (string-append command " && mv srfi-test/r7rs-programs/" number " ./test && ./test")
+           (string-append command " && ./test")))
         (else command)))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
