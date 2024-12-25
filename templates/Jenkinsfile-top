@@ -41,3 +41,6 @@ pipeline {
                 stash name: 'tests', includes: 'srfi-test/*'
             }
         }
+
+        stage ("Run tests") {
+            parallel {

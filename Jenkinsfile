@@ -42,556 +42,561 @@ pipeline {
             }
         }
 
-        stage("chibi") {
-            agent {
-                docker {
-                    image 'schemers/chibi:latest'
-                    reuseNode true
-                    args '--user=root'
-                }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chibi'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
+        stage ("Run tests") {
+            parallel {
 
-        stage("chicken-compiler") {
-            agent {
-                docker {
-                    image 'schemers/chicken'
-                    reuseNode true
-                    args '--user=root'
+                stage("chibi") {
+                    agent {
+                        docker {
+                            image 'schemers/chibi:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chibi'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken-compiler'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken-compiler" "csc -X r7rs -R r7rs -I ./srfi -o test" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("chicken-interpreter") {
-            agent {
-                docker {
-                    image 'schemers/chicken'
-                    reuseNode true
-                    args '--user=root'
+                stage("chicken-compiler") {
+                    agent {
+                        docker {
+                            image 'schemers/chicken'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken-compiler'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "chicken-compiler" "csc -X r7rs -R r7rs -I ./srfi -o test" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken-interpreter'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken-interpreter" "csi -b -R r7rs -I ./ -I ./srfi -script" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("cyclone-compiler") {
-            agent {
-                docker {
-                    image 'schemers/cyclone'
-                    reuseNode true
-                    args '--user=root'
+                stage("chicken-interpreter") {
+                    agent {
+                        docker {
+                            image 'schemers/chicken'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken-interpreter'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "chicken-interpreter" "csi -b -R r7rs -I ./ -I ./srfi -script" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-compiler'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -o srfi-test/r7rs-programs/test -I ." "cyclone -I ."'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("cyclone-interpreter") {
-            agent {
-                docker {
-                    image 'schemers/cyclone'
-                    reuseNode true
-                    args '--user=root'
+                stage("cyclone-compiler") {
+                    agent {
+                        docker {
+                            image 'schemers/cyclone'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-compiler'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -o srfi-test/r7rs-programs/test -I ." "cyclone -I ."'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-interpreter'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I . -I ./srfi -s" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("foment") {
-            agent {
-                docker {
-                    image 'schemers/foment:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("cyclone-interpreter") {
+                    agent {
+                        docker {
+                            image 'schemers/cyclone'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-interpreter'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I . -I ./srfi -s" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'foment'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "foment" "foment -I . -I ./srfi" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("gambit-compiler") {
-            agent {
-                docker {
-                    image 'schemers/gambit'
-                    reuseNode true
-                    args '--user=root'
+                stage("foment") {
+                    agent {
+                        docker {
+                            image 'schemers/foment:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'foment'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "foment" "foment -I . -I ./srfi" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit-compiler'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o srfi-test/r7rs-programs/test -exe -nopreload" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("gambit-interpreter") {
-            agent {
-                docker {
-                    image 'schemers/gambit'
-                    reuseNode true
-                    args '--user=root'
+                stage("gambit-compiler") {
+                    agent {
+                        docker {
+                            image 'schemers/gambit'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit-compiler'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o srfi-test/r7rs-programs/test -exe -nopreload" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit-interpreter'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s,search=./srfi" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("gauche") {
-            agent {
-                docker {
-                    image 'schemers/gauche:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("gambit-interpreter") {
+                    agent {
+                        docker {
+                            image 'schemers/gambit'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit-interpreter'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s,search=./srfi" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gauche'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("gerbil-compiler") {
-            agent {
-                docker {
-                    image 'schemers/gerbil'
-                    reuseNode true
-                    args '--user=root'
+                stage("gauche") {
+                    agent {
+                        docker {
+                            image 'schemers/gauche:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gauche'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-compiler'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil-compiler" "GERBIL_LOADPATH=.:./srfi gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe" "gxc"'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("gerbil-interpreter") {
-            agent {
-                docker {
-                    image 'schemers/gerbil'
-                    reuseNode true
-                    args '--user=root'
+                stage("gerbil-compiler") {
+                    agent {
+                        docker {
+                            image 'schemers/gerbil'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-compiler'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "gerbil-compiler" "GERBIL_LOADPATH=.:./srfi gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe" "gxc"'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-interpreter'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil-interpreter" "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("guile") {
-            agent {
-                docker {
-                    image 'schemers/guile:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("gerbil-interpreter") {
+                    agent {
+                        docker {
+                            image 'schemers/gerbil'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-interpreter'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "gerbil-interpreter" "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'guile'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L . -L ./srfi" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("kawa") {
-            agent {
-                docker {
-                    image 'schemers/kawa:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("guile") {
+                    agent {
+                        docker {
+                            image 'schemers/guile:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'guile'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L . -L ./srfi" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'kawa'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("loko") {
-            agent {
-                docker {
-                    image 'schemers/loko:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("kawa") {
+                    agent {
+                        docker {
+                            image 'schemers/kawa:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'kawa'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'loko'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "loko" "loko -o srfi-test/r7rs-programs/test -std=r7rs --compile" "ls"'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("mit-scheme") {
-            agent {
-                docker {
-                    image 'schemers/mit-scheme:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("loko") {
+                    agent {
+                        docker {
+                            image 'schemers/loko:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'loko'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "loko" "loko -o srfi-test/r7rs-programs/test -std=r7rs --compile" "ls"'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'mit-scheme'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("mosh") {
-            agent {
-                docker {
-                    image 'schemers/mosh:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("mit-scheme") {
+                    agent {
+                        docker {
+                            image 'schemers/mit-scheme:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'mit-scheme'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'mosh'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("racket") {
-            agent {
-                docker {
-                    image 'schemers/racket:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("mosh") {
+                    agent {
+                        docker {
+                            image 'schemers/mosh:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'mosh'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'racket'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("sagittarius") {
-            agent {
-                docker {
-                    image 'schemers/sagittarius:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("racket") {
+                    agent {
+                        docker {
+                            image 'schemers/racket:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'racket'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'sagittarius'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("stklos") {
-            agent {
-                docker {
-                    image 'schemers/stklos:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("sagittarius") {
+                    agent {
+                        docker {
+                            image 'schemers/sagittarius:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'sagittarius'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'stklos'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("skint") {
-            agent {
-                docker {
-                    image 'schemers/skint:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("stklos") {
+                    agent {
+                        docker {
+                            image 'schemers/stklos:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'stklos'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'skint'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "skint" "skint -I ./ --program" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("tr7") {
-            agent {
-                docker {
-                    image 'schemers/tr7:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("skint") {
+                    agent {
+                        docker {
+                            image 'schemers/skint:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'skint'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "skint" "skint -I ./ --program" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'tr7'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "tr7" "tr7i" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
-        stage("ypsilon") {
-            agent {
-                docker {
-                    image 'schemers/ypsilon:latest'
-                    reuseNode true
-                    args '--user=root'
+                stage("tr7") {
+                    agent {
+                        docker {
+                            image 'schemers/tr7:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'tr7'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "tr7" "tr7i" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
                 }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'ypsilon'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program" ""'
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
 
+                stage("ypsilon") {
+                    agent {
+                        docker {
+                            image 'schemers/ypsilon:latest'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'ypsilon'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
+                        sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program" ""'
+                            archiveArtifacts artifacts: 'reports/*.log'
+                            sh 'rm -rf *.log'
+                        }
+                    }
+                }
+
+
+        }
 
         stage("Report") {
             steps {

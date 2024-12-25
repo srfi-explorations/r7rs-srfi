@@ -1,4 +1,6 @@
 
+        }
+
         stage("Report") {
             steps {
                 unstash 'reports'

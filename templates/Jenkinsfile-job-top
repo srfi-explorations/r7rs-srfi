@@ -1,18 +1,18 @@
-        stage("{{name}}") {
-            agent {
-                docker {
-                    image '{{{dockerimage}}}'
-                    reuseNode true
-                    args '--user=root'
-                }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == '{{name}}'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
+                stage("{{name}}") {
+                    agent {
+                        docker {
+                            image '{{{dockerimage}}}'
+                            reuseNode true
+                            args '--user=root'
+                        }
+                    }
+                    when {
+                        expression {
+                            params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == '{{name}}'
+                        }
+                    }
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'apt update && apt install -y make'
+                            sh './jenkins_scripts/clean.sh'
+                            unstash 'tests'
