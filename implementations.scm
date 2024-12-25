@@ -30,22 +30,16 @@
     ((name . foment)
      (command . "foment -I . -I ./srfi"))
 
-    ;; FIXME
-    ;; Gambit propably needs proper syntax-rules support
-    ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-compiler)
      (compiler? . #t)
-     ;(command . "gsc -exe -nopreload -o srfi-test/r7rs-programs/test -:search=.,s -debug -warnings")
-     (command . "gsc -o srfi-test/r7rs-programs/test -exe -nopreload")
-     ;(library-command . "ls")
-     ;(library-command . "gsc -debug -warnings -obj")
+     (command . "gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/")
      (docker-image . "schemers/gambit"))
 
     ;; FIXME
     ;; Gambit propably needs proper syntax-rules support
     ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-interpreter)
-     (command . "gsi -:s,search=./srfi")
+     (command . "gsi -:s ./")
      (docker-image . "schemers/gambit"))
 
     ((name . gauche)

@@ -28,7 +28,8 @@
            (library-command (assoc 'library-command implementation)))
       (cond ((not library-command) #f)
             ; Note that Chicken needs to have the SRFI library as srfi-N.scm in same folder
-            ((string=? name "chicken-compiler")
+            ((or (string=? name "chicken-compiler")
+                 (string=? name "chicken-interpreter"))
              (string-append "cp srfi/srfi-" number ".scm ."
                             " && " (cdr library-command) " srfi-" number ".scm"))
             (else (string-append (cdr library-command)

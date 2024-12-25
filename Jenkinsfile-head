@@ -210,7 +210,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o srfi-test/r7rs-programs/test -exe -nopreload" ""'
+                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -235,7 +235,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s,search=./srfi" ""'
+                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s ./" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
