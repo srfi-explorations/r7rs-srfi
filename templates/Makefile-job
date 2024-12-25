@@ -6,15 +6,15 @@ build-srfi-{{number}}-{{name}}-library:
 	{{#library-command}} {{{library-command}}} {{/library-command}}
 
 test-srfi-{{number}}-{{name}}-docker:
-	{{#library-command}}docker run -it -v ${PWD}:/workdir:z schemers/{{name}}:latest bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
+	{{#library-command}}docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
 	docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{command}}}"
 
 build-srfi-{{number}}-{{name}}-library-docker:
-	{{#library-command}}docker run -it -v ${PWD}:/workdir:z schemers/{{name}}:latest bash -c "cd workdir && {{{library-command}}}" {{/library-command}}
+	{{#library-command}}docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{library-command}}}" {{/library-command}}
 
 test-srfi-{{number}}-{{name}}-docker-head:
-	{{#library-command}}docker run -it -v ${PWD}:/workdir:z schemers/{{name}}:head bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
+	{{#library-command}}docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
 	docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{command}}}"
 
 build-srfi-{{number}}-{{name}}-library-docker-head:
-	{{#library-command}}docker run -it -v ${PWD}:/workdir:z schemers/{{name}}:head bash -c "cd workdir && {{{library-command}}}" {{/library-command}}
+	{{#library-command}}docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{library-command}}}" {{/library-command}}

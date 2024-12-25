@@ -7,6 +7,7 @@
   (export make-parameter parameterize)
   (cond-expand
     (mit-scheme (include "39.scm"))
+    (foment (include "39.scm"))
     (chibi (include-shared "39/param")
            (cond-expand
              (threads (include "39/syntax.scm"))

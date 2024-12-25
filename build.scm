@@ -115,10 +115,7 @@
               (let* ((name (symbol->string (cdr (assoc 'name implementation))))
                      (dockerimage (if (assoc 'docker-image implementation)
                                        (cdr (assoc 'docker-image implementation))
-                                       (string-append "schemers/"
-                                                      name
-                                                      ":latest"))))
-
+                                       (string-append "schemers/" name ":latest"))))
                 (execute makefile-job
                          `((name . ,name)
                            (command . ,(full-command implementation srfi))

@@ -90,4 +90,4 @@
      (command . "tr7i"))
 
     ((name . ypsilon)
-     (command . "ypsilon --r7rs --loadpath=. --loadpath=./srfi"))))
+     (command . "ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program"))))

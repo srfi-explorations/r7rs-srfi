@@ -204,7 +204,11 @@
 (define (obj->specifier obj)
   ;"Convert an object to a specifier accounting for the convenience short-hands."
   (cond ((procedure? obj) obj)
-        ((string? obj) (test-match-name obj))
+        ((string? obj)
+         (display "HERE: ")
+         (write obj)
+         (newline)
+         (test-match-name obj))
         ((integer? obj) (test-match-nth 1 obj))))
 
 (define test-match-any

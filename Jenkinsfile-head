@@ -585,7 +585,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=. --loadpath=./srfi" ""'
+                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --verbose --warning --loadpath=. --top-level-program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
