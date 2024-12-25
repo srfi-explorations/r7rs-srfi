@@ -25,6 +25,12 @@ do
         $cmd "srfi-test/r7rs-programs/$srfi.scm"
         ./test > "reports/$name-srfi-$srfi.log"
     fi
+
+    # Some implementations do not use the proejcts SRFI-64 yet, so copy their logfiles too
+    if [ -f "srfi-$srfi.log" ]
+        cp "srfi-$srfi.log" "reports/$name-srfi-$srfi.log"
+    then
+    fi
 done
 
 ls reports
