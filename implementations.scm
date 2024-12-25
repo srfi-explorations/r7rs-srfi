@@ -1,3 +1,5 @@
+; If compiler then somekind of library command is mandatory, use "ls" if not needed actually
+
 (define implementations
 
   '(((name . chibi)
