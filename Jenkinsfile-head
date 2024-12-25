@@ -85,7 +85,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken-compiler" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J"'
+                    sh './jenkins_scripts/test.sh "chicken-compiler" "csc -X r7rs -R r7rs -o srfi-test/r7rs-programs/test -static" "ls"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -135,7 +135,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -I ." "cyclone -I ."'
+                    sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -o srfi-test/r7rs-programs/test -I ." "cyclone -I ."'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -210,7 +210,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -:search=.,s -debug -warnings -exe ./  -nopreload" "gsc -:search=.,s -debug -warnings -obj"'
+                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o srfi-test/r7rs-programs/test -exe -nopreload" "ls"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -235,7 +235,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s ./ ./srfi/" ""'
+                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s,search=./srfi" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -285,7 +285,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil-compiler" "gxc --lang r7rs" "gxc -O"'
+                    sh './jenkins_scripts/test.sh "gerbil-compiler" "GERBIL_LOADPATH=.:./srfi gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe" "gxc"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -310,7 +310,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil-interpreter" "gxi --lang r7rs" ""'
+                    sh './jenkins_scripts/test.sh "gerbil-interpreter" "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -360,7 +360,32 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../../*.sld" ""'
+                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("larceny") {
+            agent {
+                docker {
+                    image 'schemers/larceny:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'larceny'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make'
+                    sh './jenkins_scripts/clean.sh'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "larceny" "larceny -utf8 -r7rs -program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -385,7 +410,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls"'
+                    sh './jenkins_scripts/test.sh "loko" "loko -o srfi-test/r7rs-programs/test -std=r7rs --compile" "ls"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

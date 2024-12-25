@@ -888,9 +888,6 @@
 
 (define test-apply
   (lambda (maybe-runner . args)
-    (display "HERE1: ")
-    (write maybe-runner)
-    (newline)
     (let ((thunk (car (reverse args)))
           (runner (if (test-runner? (car args))
                     (car args)

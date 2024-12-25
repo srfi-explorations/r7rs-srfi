@@ -47,9 +47,9 @@
         (library-command
           (string-append command
                          (if (string=? name "gambit")
-                           (string-append " && srfi-test/r7rs-programs/" number " -:search=.")
-                           (string-append " && srfi-test/r7rs-programs/" number))
-                         " && rm srfi-test/r7rs-programs/" number))
+                           " && srfi-test/r7rs-programs/test"
+                           " && srfi-test/r7rs-programs/test")
+                         " && ./srfi-test/r7rs-programs/test"))
         (else command)))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))

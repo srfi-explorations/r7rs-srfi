@@ -17,3 +17,4 @@ clean:
 	find . -name "srfi-*.import.scm" -delete
 	find . -name "*.log" -delete
 	find . -name "*@gambit*" -delete
+	rm -rf srfi-test/r7rs-procrams/test

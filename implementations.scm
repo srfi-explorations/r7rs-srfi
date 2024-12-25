@@ -4,8 +4,9 @@
      (command . "chibi-scheme -I ."))
 
     ((name . chicken-compiler)
-     (command . "csc -include-path ./srfi -X r7rs -R r7rs")
-     (library-command . "csc -include-path ./srfi -X r7rs -R r7rs -s -J")
+     (command . "csc -X r7rs -R r7rs -o srfi-test/r7rs-programs/test -static")
+     (library-command . "ls")
+     ;(library-command . "csc -X r7rs -R r7rs -J")
      (docker-image . "schemers/chicken"))
 
     ((name . chicken-interpreter)
@@ -13,7 +14,7 @@
      (docker-image . "schemers/chicken"))
 
     ((name . cyclone-compiler)
-     (command . "cyclone -I .")
+     (command . "cyclone -o srfi-test/r7rs-programs/test -I .")
      (library-command . "cyclone -I .")
      ; Library command so the executable gets run
      ;(library-command . "ls")
@@ -30,40 +31,43 @@
     ;; Gambit propably needs proper syntax-rules support
     ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-compiler)
-     (command . "gsc -:search=.,s -debug -warnings -exe ./  -nopreload")
-     (library-command . "gsc -:search=.,s -debug -warnings -obj")
+     ;(command . "gsc -exe -nopreload -o srfi-test/r7rs-programs/test -:search=.,s -debug -warnings")
+     (command . "gsc -o srfi-test/r7rs-programs/test -exe -nopreload")
+     (library-command . "ls")
+     ;(library-command . "gsc -debug -warnings -obj")
      (docker-image . "schemers/gambit"))
 
     ;; FIXME
     ;; Gambit propably needs proper syntax-rules support
     ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-interpreter)
-     (command . "gsi -:s ./ ./srfi/")
+     (command . "gsi -:s,search=./srfi")
      (docker-image . "schemers/gambit"))
 
     ((name . gauche)
      (command . "gosh -r7 -I ."))
 
     ((name . gerbil-compiler)
-     (command . "gxc --lang r7rs")
-     (library-command . "gxc -O")
+     (command . "GERBIL_LOADPATH=.:./srfi gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe")
+     (library-command . "gxc")
      (docker-image . "schemers/gerbil"))
 
     ((name . gerbil-interpreter)
-     (command . "gxi --lang r7rs")
+     (command . "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs")
+     ;(library-command . "gxc --lang r7rs")
      (docker-image . "schemers/gerbil"))
 
     ((name . guile)
      (command . "guile --fresh-auto-compile --r7rs -L . -L ./srfi"))
 
     ((name . kawa)
-     (command . "kawa --r7rs -Dkawa.import.path=../../*.sld"))
+     (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld"))
 
-    #;((name . larceny)
+    ((name . larceny)
      (command . "larceny -utf8 -r7rs -program"))
 
     ((name . loko)
-     (command . "loko -std=r7rs --compile")
+     (command . "loko -o srfi-test/r7rs-programs/test -std=r7rs --compile")
      ; Library command so the executable gets run
      (library-command . "ls"))
 
