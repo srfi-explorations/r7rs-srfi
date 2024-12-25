@@ -1,5 +1,3 @@
-            }
-        }
 
         stage("Report") {
             steps {
