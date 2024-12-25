@@ -69,7 +69,8 @@
     ((name . loko-compiler)
      (compiler? . #t)
      (command . "loko -std=r7rs --compile")
-     (library-command . "ls"))
+     (library-command . "ls")
+     (docker-image . "schemers/loko"))
 
     ; FIXME Temporarily loading needed stuff to run srfi-64
     ((name . mit-scheme)

@@ -370,7 +370,7 @@ pipeline {
         stage("loko-compiler") {
             agent {
                 docker {
-                    image 'schemers/loko-compiler:latest'
+                    image 'schemers/loko'
                     reuseNode true
                     args '--user=root'
                 }
