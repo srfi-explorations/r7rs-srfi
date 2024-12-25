@@ -110,7 +110,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken-interpreter" "csi -b -R r7rs -I ./ -I ./srfi -script" ""'
+                    sh './jenkins_scripts/test.sh "chicken-interpreter" "csi -b -R r7rs -I ./ -I ./srfi -script" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

@@ -13,6 +13,7 @@
 
     ((name . chicken-interpreter)
      (command . "csi -b -R r7rs -I ./ -I ./srfi -script")
+     (library-command . "csc -X r7rs -R r7rs -I ./srfi -s -J")
      (docker-image . "schemers/chicken"))
 
     ((name . cyclone-compiler)

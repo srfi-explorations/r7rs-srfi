@@ -41,25 +41,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm" 
 
 1-chicken-interpreter:
-	
+	 cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm 
 	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/1.scm
 
 1-chicken-interpreter-library:
-	
+	 cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm 
 
 1-chicken-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/1.scm"
 
 1-chicken-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm" 
 
 1-chicken-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/1.scm"
 
 1-chicken-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm" 
 
 1-cyclone-compiler:
 	 cyclone -I . srfi/1.sld 
@@ -503,25 +503,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm" 
 
 8-chicken-interpreter:
-	
+	 cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm 
 	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/8.scm
 
 8-chicken-interpreter-library:
-	
+	 cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm 
 
 8-chicken-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/8.scm"
 
 8-chicken-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm" 
 
 8-chicken-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/8.scm"
 
 8-chicken-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm" 
 
 8-cyclone-compiler:
 	 cyclone -I . srfi/8.sld 
@@ -965,25 +965,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm" 
 
 13-chicken-interpreter:
-	
+	 cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm 
 	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/13.scm
 
 13-chicken-interpreter-library:
-	
+	 cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm 
 
 13-chicken-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/13.scm"
 
 13-chicken-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm" 
 
 13-chicken-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/13.scm"
 
 13-chicken-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm" 
 
 13-cyclone-compiler:
 	 cyclone -I . srfi/13.sld 
@@ -1427,25 +1427,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm" 
 
 14-chicken-interpreter:
-	
+	 cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm 
 	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/14.scm
 
 14-chicken-interpreter-library:
-	
+	 cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm 
 
 14-chicken-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/14.scm"
 
 14-chicken-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm" 
 
 14-chicken-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/14.scm"
 
 14-chicken-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm" 
 
 14-cyclone-compiler:
 	 cyclone -I . srfi/14.sld 
@@ -1889,25 +1889,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm" 
 
 26-chicken-interpreter:
-	
+	 cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm 
 	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/26.scm
 
 26-chicken-interpreter-library:
-	
+	 cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm 
 
 26-chicken-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/26.scm"
 
 26-chicken-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm" 
 
 26-chicken-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/26.scm"
 
 26-chicken-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm" 
 
 26-cyclone-compiler:
 	 cyclone -I . srfi/26.sld 
@@ -2351,25 +2351,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm" 
 
 28-chicken-interpreter:
-	
+	 cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm 
 	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/28.scm
 
 28-chicken-interpreter-library:
-	
+	 cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm 
 
 28-chicken-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/28.scm"
 
 28-chicken-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm" 
 
 28-chicken-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/28.scm"
 
 28-chicken-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm" 
 
 28-cyclone-compiler:
 	 cyclone -I . srfi/28.sld 
@@ -2813,25 +2813,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm" 
 
 39-chicken-interpreter:
-	
+	 cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm 
 	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/39.scm
 
 39-chicken-interpreter-library:
-	
+	 cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm 
 
 39-chicken-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/39.scm"
 
 39-chicken-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm" 
 
 39-chicken-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/39.scm"
 
 39-chicken-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm" 
 
 39-cyclone-compiler:
 	 cyclone -I . srfi/39.sld 
@@ -3275,25 +3275,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm" 
 
 60-chicken-interpreter:
-	
+	 cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm 
 	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/60.scm
 
 60-chicken-interpreter-library:
-	
+	 cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm 
 
 60-chicken-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/60.scm"
 
 60-chicken-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm" 
 
 60-chicken-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/60.scm"
 
 60-chicken-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm" 
 
 60-cyclone-compiler:
 	 cyclone -I . srfi/60.sld 
@@ -3737,25 +3737,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm" 
 
 64-chicken-interpreter:
-	
+	 cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm 
 	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/64.scm
 
 64-chicken-interpreter-library:
-	
+	 cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm 
 
 64-chicken-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/64.scm"
 
 64-chicken-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm" 
 
 64-chicken-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm"
 	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/64.scm"
 
 64-chicken-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm" 
 
 64-cyclone-compiler:
 	 cyclone -I . srfi/64.sld 
