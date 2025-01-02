@@ -149,7 +149,7 @@
     ;; End from
     )
   (else
-    (define-syntax let-optionals
+    (define-syntax let-optionals*
       (syntax-rules ()
         ((let-optionals arg (opt-clause ...) body ...)
          (let ((rest arg))
