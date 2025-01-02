@@ -112,8 +112,7 @@
         test-on-final-simple))
     (cyclone
       (export
-        ; Need to export these for stklos to work
-        ; See: https://github.com/egallesio/STklos/issues/703
+        ; Need to export these for Cyclone to work
         internal-test-assert
         test-thunk
         test-runner-test-name!
