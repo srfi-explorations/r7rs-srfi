@@ -114,7 +114,7 @@
 ;(cond-expand-provide (current-module) '(srfi-64))
 
 (define-record-type <test-runner>
-  (%make-test-runner)
+  (internal-make-test-runner)
   test-runner?
   ;; Test result properties
   (result-alist test-runner-result-alist test-runner-result-alist!)
@@ -407,7 +407,7 @@
 (define (test-runner-simple)
   ;  "Creates a new simple test-runner, that prints errors and a summary on the
   ;standard output port."
-  (let ((r (%make-test-runner)))
+  (let ((r (internal-make-test-runner)))
     (test-runner-reset r)
 
     (test-runner-on-bad-count!    r test-on-bad-count-simple)
@@ -444,7 +444,7 @@
   ((test-runner-factory)))
 
 (define (test-runner-null)
-  (let ((r (%make-test-runner))
+  (let ((r (internal-make-test-runner))
         (dummy-1 (lambda (_) #f))
         (dummy-3 (lambda (_ __ ___) #f)))
     (test-runner-reset r)
@@ -505,7 +505,7 @@
 
     ((test-runner-on-group-begin r) r suite-name count)))
 
-(define (%cmp-group-name a b)
+(define (internal-cmp-group-name a b)
   (cond ((and (string? a) (string? b)) (string=? a b))
         ((and (symbol? a) (symbol? b)) (eq? a b))
         (else #f)))
@@ -519,7 +519,7 @@
       (let* ((suite-name (if (null? suite-name-arg) #f (car suite-name-arg)))
              (begin-name (car (test-runner-group-stack r)))
              (end-name suite-name))
-        (when (and end-name (not (%cmp-group-name begin-name end-name)))
+        (when (and end-name (not (internal-cmp-group-name begin-name end-name)))
           ((test-runner-on-bad-end-name r) r begin-name end-name)
           (error "Bad end name" begin-name end-name)))
 
@@ -671,7 +671,7 @@
 ;
 ;@end defspec")
 
-(define-syntax %%test-2
+(define-syntax internal-test-2
   (syntax-rules ()
     ((_ test-proc test-name expected test-expr)
      (test-thunk (let () test-name)
@@ -683,40 +683,40 @@
                      (test-result-set! r 'actual-value   a)
                      (test-proc e a)))))))
 
-#;(define-syntax %test-2
+#;(define-syntax internal-test-2
 (syntax-rules ()
   ((_ name test-proc)
    (define-syntax name
      (syntax-rules ()
        ((_ test-name expected test-expr)
-        (%%test-2 test-proc test-name expected test-expr))
+        (internal-test-2 test-proc test-name expected test-expr))
        ((_ expected test-expr)
-        (%%test-2 test-proc #f expected test-expr)))))))
+        (internal-test-2 test-proc #f expected test-expr)))))))
 
-;(%test-2 test-eq eq?)
-;(%test-2 test-eqv eqv?)
-;(%test-2 test-equal equal?)
+;(test-2 test-eq eq?)
+;(internal-test-2 test-eqv eqv?)
+;(internal-test-2 test-equal equal?)
 
 (define-syntax test-eq
   (syntax-rules ()
     ((_ test-name expected test-expr)
-     (%%test-2 eq? test-name expected test-expr))
+     (internal-test-2 eq? test-name expected test-expr))
     ((_ expected test-expr)
-     (%%test-2 eq? #f expected test-expr))))
+     (internal-test-2 eq? #f expected test-expr))))
 
 (define-syntax test-eqv
   (syntax-rules ()
     ((_ test-name expected test-expr)
-     (%%test-2 eqv? test-name expected test-expr))
+     (internal-test-2 eqv? test-name expected test-expr))
     ((_ expected test-expr)
-     (%%test-2 eqv? #f expected test-expr))))
+     (internal-test-2 eqv? #f expected test-expr))))
 
 (define-syntax test-equal
   (syntax-rules ()
     ((_ test-name expected test-expr)
-     (%%test-2 equal? test-name expected test-expr))
+     (internal-test-2 equal? test-name expected test-expr))
     ((_ expected test-expr)
-     (%%test-2 equal? #f expected test-expr))))
+     (internal-test-2 equal? #f expected test-expr))))
 
 ;(set-documentation! 'test-eq
 ;  "@defspec test-eq test-name expected test-expr
@@ -745,7 +745,7 @@
     (and (>= actual (- expected eps))
          (<= actual (+ expected eps)))))
 
-(define-syntax %test-approximate
+(define-syntax internal-test-approximate
   (syntax-rules ()
     ((_ test-name expected test-expr error)
      (test-thunk (let () test-name)
@@ -762,9 +762,9 @@
 (define-syntax test-approximate
   (syntax-rules ()
     ((_ test-name expected test-expr error)
-     (%test-approximate test-name expected test-expr error))
+     (internal-test-approximate test-name expected test-expr error))
     ((_ expected test-expr error)
-     (%test-approximate #f expected test-expr error))))
+     (internal-test-approximate #f expected test-expr error))))
 ;(set-documentation! 'test-approximate
 ;  "@defspec test-approximate test-name expected test-expr error
 ;@defspecx test-approximate expected test-expr error
@@ -773,7 +773,7 @@
 ;
 ;@end defspec")
 
-(define-syntax %test-error
+(define-syntax internal-test-error
   (syntax-rules ()
     ((_ test-name error-type test-expr)
      (test-thunk (let () test-name)
@@ -793,7 +793,7 @@
                                  ((symbol? e-type)
                                   ;; TODO
                                   ;(eq? e-type (exception-kind exc))
-                                  (display "%test-error 1 :")
+                                  (display "internal-test-error 1 :")
                                   (display e-type)
                                   (newline)
                                   #f
@@ -803,7 +803,7 @@
                                  ;; TODO
                                  ;((exception-type? e-type) ((exception-predicate e-type) exc))
                                  (else
-                                   (display "%test-error 2 :")
+                                   (display "internal-test-error 2 :")
                                    (display e-type)
                                    (newline)))))
                            (lambda ()
@@ -813,11 +813,11 @@
 (define-syntax test-error
   (syntax-rules ()
     ((_ test-name error-type test-expr)
-     (%test-error test-name error-type test-expr))
+     (internal-test-error test-name error-type test-expr))
     ((_ error-type test-expr)
-     (%test-error #f error-type test-expr))
+     (internal-test-error #f error-type test-expr))
     ((_ test-expr)
-     (%test-error #f #t test-expr))))
+     (internal-test-error #f #t test-expr))))
 ;(set-documentation! 'test-error
 ;  "@defspec test-error test-name error-type test-expr
 ;@defspecx test-error error-type test-expr
