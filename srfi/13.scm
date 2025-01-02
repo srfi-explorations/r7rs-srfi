@@ -128,49 +128,71 @@
 
 (define optional (lambda (a b) (if (null? a) b (car a))))
 
-(define-syntax let-optionals*
-  (syntax-rules ()
-    ((let-optionals arg (opt-clause ...) body ...)
-     (let ((rest arg))
-       (internal-let-optionals rest (opt-clause ...) body ...)))))
+(cond-expand
+  (tr7
+    ;; Begin from https://cookbook.scheme.org/bind-optional-arguments/
 
-(define-syntax internal-let-optionals
-  (syntax-rules ()
-    ((internal-let-optionals arg (((var ...) xparser) opt-clause ...) body ...)
-     (call-with-values (lambda () (xparser arg))
-                       (lambda (rest var ...)
-                         (internal-let-optionals rest (opt-clause ...) body ...))))
+    (define-syntax let-optionals
+      (syntax-rules ()
+        ((_ expr ((v d) ... . tail) . body)
+         ($let-optionals (v ...) () (d ...) () f tail expr body))))
 
-    ((internal-let-optionals arg ((var default) opt-clause ...) body ...)
-     (call-with-values (lambda () (if (null? arg) (values default '())
-                                    (values (car arg) (cdr arg))))
-                       (lambda (var rest)
-                         (internal-let-optionals rest (opt-clause ...) body ...))))
+    (define-syntax $let-optionals
+      (syntax-rules ()
 
-    ((internal-let-optionals arg ((var default test) opt-clause ...) body ...)
-     (call-with-values (lambda ()
-                         (if (null? arg) (values default '())
-                           (let ((var (car arg)))
-                             (if test (values var (cdr arg))
-                               (error "arg failed LET-OPT test" var)))))
-                       (lambda (var rest)
-                         (internal-let-optionals rest (opt-clause ...) body ...))))
+        ((_ () (vt ...) _ (cl ...) f tail expr body)
+         (letrec ((f (case-lambda cl ... ((vt ... . tail) . body))))
+           (apply f expr)))
 
-    ((internal-let-optionals arg ((var default test supplied?) opt-clause ...) body ...)
-     (call-with-values (lambda ()
-                         (if (null? arg) (values default #f '())
-                           (let ((var (car arg)))
-                             (if test (values var #t (cdr arg))
-                               (error "arg failed LET-OPT test" var)))))
-                       (lambda (var supplied? rest)
-                         (internal-let-optionals rest (opt-clause ...) body ...))))
+        ((_ (vrf . vr*) (vt ...) (df . dr*) (cl ...) f . tailexprbody)
+         ($let-optionals vr* (vt ... vrf) dr* (cl ... ((vt ...) (f vt ... df))) f . tailexprbody))))
+    ;; End from
+    )
+  (else
+    (define-syntax let-optionals
+      (syntax-rules ()
+        ((let-optionals arg (opt-clause ...) body ...)
+         (let ((rest arg))
+           (internal-let-optionals rest (opt-clause ...) body ...)))))
 
-    ((internal-let-optionals arg (rest) body ...)
-     (let ((rest arg)) body ...))
+    (define-syntax internal-let-optionals
+      (syntax-rules ()
+        ((internal-let-optionals arg (((var ...) xparser) opt-clause ...) body ...)
+         (call-with-values (lambda () (xparser arg))
+                           (lambda (rest var ...)
+                             (internal-let-optionals rest (opt-clause ...) body ...))))
 
-    ((internal-let-optionals arg () body ...)
-     (if (null? arg) (begin body ...)
-       (error "Too many arguments in let-opt" arg)))))
+        ((internal-let-optionals arg ((var default) opt-clause ...) body ...)
+         (call-with-values (lambda () (if (null? arg) (values default '())
+                                        (values (car arg) (cdr arg))))
+                           (lambda (var rest)
+                             (internal-let-optionals rest (opt-clause ...) body ...))))
+
+        ((internal-let-optionals arg ((var default test) opt-clause ...) body ...)
+         (call-with-values (lambda ()
+                             (if (null? arg) (values default '())
+                               (let ((var (car arg)))
+                                 (if test (values var (cdr arg))
+                                   (error "arg failed LET-OPT test" var)))))
+                           (lambda (var rest)
+                             (internal-let-optionals rest (opt-clause ...) body ...))))
+
+        ((internal-let-optionals arg ((var default test supplied?) opt-clause ...) body ...)
+         (call-with-values (lambda ()
+                             (if (null? arg) (values default #f '())
+                               (let ((var (car arg)))
+                                 (if test (values var #t (cdr arg))
+                                   (error "arg failed LET-OPT test" var)))))
+                           (lambda (var supplied? rest)
+                             (internal-let-optionals rest (opt-clause ...) body ...))))
+
+        ((internal-let-optionals arg (rest) body ...)
+         (let ((rest arg)) body ...))
+
+        ((internal-let-optionals arg () body ...)
+         (if (null? arg) (begin body ...)
+           (error "Too many arguments in let-opt" arg)))))))
+
 ;; r7rs-srfi util end
 
 ;; r7rs-srfi additions begin
