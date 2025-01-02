@@ -2,7 +2,7 @@
   (srfi 14)
   (import (scheme base)
           (scheme char)
-          (srfi 151))
+          (srfi 60))
   (export char-set?
           char-set=
           char-set<=

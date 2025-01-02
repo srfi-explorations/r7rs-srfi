@@ -1,6 +1,6 @@
 (define-library
   (srfi 64)
-  (import (scheme base)
+  (import (except (scheme base) make-parameter parameterize)
           (scheme char)
           (scheme eval)
           (scheme file)
@@ -8,8 +8,10 @@
           (scheme write)
           (scheme process-context)
           (srfi 1)
+          (only (srfi 13) string-trim-both)
           (srfi 26)
-          (srfi 28))
+          (srfi 28)
+          (srfi 39))
   (export
     test-assert
     test-eqv
@@ -75,4 +77,7 @@
     test-runner-aux-value!
     test-runner-reset
     test-on-final-simple)
-  (include "64.scm"))
+  (cond-expand
+    (chicken (include "64.scm"))
+    (foment (include "srfi/64.scm"))
+    (guile (include "64.scm"))))

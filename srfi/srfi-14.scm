@@ -2,7 +2,7 @@
   (srfi 14)
   (import (scheme base)
           (scheme char)
-          (srfi 151))
+          (srfi 60))
   (export char-set?
           char-set=
           char-set<=
@@ -69,4 +69,7 @@
           char-set:ascii
           char-set:empty
           char-set:full)
-  (begin (include "14.scm")))
+  (cond-expand
+    (chicken (include "14.scm"))
+    (foment (include "srfi/14.scm"))
+    (guile (include "14.scm"))))

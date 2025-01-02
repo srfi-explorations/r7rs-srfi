@@ -1,12 +1,6 @@
 pipeline {
 
-    agent {
-        dockerfile {
-            filename 'Dockerfile.jenkins'
-            dir '.'
-            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
@@ -18,18 +12,23 @@ pipeline {
                choices: [
                  'all',
                  'chibi',
-                 'chicken',
+                 'chicken-compiler',
+                 'chicken-interpreter',
                  'cyclone',
-                 'gambit',
+                 'gambit-compiler',
+                 'gambit-interpreter',
                  'gauche',
+                 'gerbil-compiler',
+                 'gerbil-interpreter',
                  'guile',
                  'kawa',
-                 'loko',
+                 'loko-compiler',
                  'mit-scheme',
                  'sagittarius',
                  'stklos',
                  'skint',
                  'tr7',
+                 'ypsilon',
                ])
     }
 
@@ -61,24 +60,24 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
             }
         }
 
-        stage("chicken") {
+        stage("chicken-compiler") {
             agent {
                 docker {
-                    image 'schemers/chicken:latest'
+                    image 'schemers/chicken'
                     reuseNode true
                     args '--user=root'
                 }
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken-compiler'
                 }
             }
             steps {
@@ -86,24 +85,24 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chicken" "csc -include-path ./srfi -X r7rs -R r7rs" "csc -include-path ./srfi -X r7rs -R r7rs -s -J" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "chicken-compiler" "csc -X r7rs -R r7rs -I ./srfi -o test" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
             }
         }
 
-        stage("cyclone") {
+        stage("chicken-interpreter") {
             agent {
                 docker {
-                    image 'schemers/cyclone:latest'
+                    image 'schemers/chicken'
                     reuseNode true
                     args '--user=root'
                 }
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken-interpreter'
                 }
             }
             steps {
@@ -111,7 +110,57 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone" "cyclone -I ." "cyclone -I ." 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "chicken-interpreter" "csi -b -R r7rs -I ./ -I ./srfi -script" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("cyclone-compiler") {
+            agent {
+                docker {
+                    image 'schemers/cyclone'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-compiler'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make'
+                    sh './jenkins_scripts/clean.sh'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -o srfi-test/r7rs-programs/test -I ." "cyclone -I ."'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("cyclone-interpreter") {
+            agent {
+                docker {
+                    image 'schemers/cyclone'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-interpreter'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make'
+                    sh './jenkins_scripts/clean.sh'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I . -I ./srfi -s" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -136,24 +185,24 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "foment" "foment -I . -I ./srfi" "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "foment" "foment -I . -I ./srfi" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
             }
         }
 
-        stage("gambit") {
+        stage("gambit-compiler") {
             agent {
                 docker {
-                    image 'schemers/gambit:latest'
+                    image 'schemers/gambit'
                     reuseNode true
                     args '--user=root'
                 }
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit-compiler'
                 }
             }
             steps {
@@ -161,7 +210,32 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit" "gsc -exe ./ -nopreload" "gsc -:search=." 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/" "ls"'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("gambit-interpreter") {
+            agent {
+                docker {
+                    image 'schemers/gambit'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit-interpreter'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make'
+                    sh './jenkins_scripts/clean.sh'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:s ./" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -186,24 +260,24 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
             }
         }
 
-        stage("gerbil") {
+        stage("gerbil-compiler") {
             agent {
                 docker {
-                    image 'schemers/gerbil:latest'
+                    image 'schemers/gerbil'
                     reuseNode true
                     args '--user=root'
                 }
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-compiler'
                 }
             }
             steps {
@@ -211,7 +285,32 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil" "gxi --lang r7rs" "gxc -O" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "gerbil-compiler" "GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe" "gxc"'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("gerbil-interpreter") {
+            agent {
+                docker {
+                    image 'schemers/gerbil'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-interpreter'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make'
+                    sh './jenkins_scripts/clean.sh'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "gerbil-interpreter" "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -236,7 +335,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L ." "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L . -L ./srfi" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -261,24 +360,24 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs -Dkawa.import.path=../.." "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
             }
         }
 
-        stage("larceny") {
+        stage("loko-compiler") {
             agent {
                 docker {
-                    image 'schemers/larceny:latest'
+                    image 'schemers/loko'
                     reuseNode true
                     args '--user=root'
                 }
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'larceny'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'loko-compiler'
                 }
             }
             steps {
@@ -286,32 +385,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "larceny" "larceny -r7 -I ." "" 8 1 14 26 28 13 64 151 '
-                    archiveArtifacts artifacts: 'reports/*.log'
-                    sh 'rm -rf *.log'
-                }
-            }
-        }
-
-        stage("loko") {
-            agent {
-                docker {
-                    image 'schemers/loko:latest'
-                    reuseNode true
-                    args '--user=root'
-                }
-            }
-            when {
-                expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'loko'
-                }
-            }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'apt update && apt install -y make'
-                    sh './jenkins_scripts/clean.sh'
-                    unstash 'tests'
-                    sh './jenkins_scripts/test.sh "loko" "loko -std=r7rs --compile" "ls" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "loko-compiler" "loko -std=r7rs --compile" "ls"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -336,7 +410,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld" "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -361,7 +435,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -386,7 +460,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -411,7 +485,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -436,7 +510,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "stklos" "stklos -I . -I ./srfi -f" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -461,7 +535,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "skint" "skint -I ./" "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "skint" "skint -I ./ --program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -486,7 +560,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "tr7" "tr7i" "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "tr7" "tr7i" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -511,7 +585,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --loadpath=. --loadpath=./srfi" "" 8 1 14 26 28 13 64 151 '
+                    sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

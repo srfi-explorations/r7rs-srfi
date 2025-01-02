@@ -27,28 +27,28 @@
     ;cddr
     ;caar
     ;caadr
-    cadar
-    caddr
+    ;cadar
+    ;caddr
     ;cdaar
-    cdadr
-    cddar
+    ;cdadr
+    ;cddar
     ;cddr
-    caaaar
-    caaadr
-    caadar
-    caaddr
-    cadaar
-    cadadr
-    caddar
-    cadddr
-    cdaaar
-    cdaadr
-    cdadar
-    cdaddr
-    cddaar
-    cddadr
-    cdddar
-    cddddr
+    ;caaaar
+    ;caaadr
+    ;caadar
+    ;caaddr
+    ;cadaar
+    ;cadadr
+    ;caddar
+    ;cadddr
+    ;cdaaar
+    ;cdaadr
+    ;cdadar
+    ;cdaddr
+    ;cddaar
+    ;cddadr
+    ;cdddar
+    ;cddddr
     ;list-ref
     first
     second
@@ -153,3 +153,4 @@
     ;set-cdr!
     )
   (include "1.scm"))
+

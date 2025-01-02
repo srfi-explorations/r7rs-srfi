@@ -12,8 +12,8 @@ clean:
 	find . -name "compiled" -delete
 	find . -name "srfi.*.sld" -delete
 	find . -name "srfi.*.scm" -delete
-	find . -name "srfi-*.sld" -delete
 	find . -name "srfi.*.import.scm" -delete
 	find . -name "srfi-*.import.scm" -delete
 	find . -name "*.log" -delete
 	find . -name "*@gambit*" -delete
+	rm -rf srfi-test/r7rs-procrams/test

@@ -9,7 +9,7 @@ test-prefix
 *.zo
 *.meta
 compiled
-./srfi-*.scm
+srfi-*.scm
 ./srfi-*.sld
 ./srfi.*.scm
 ./srfi.*.sld
@@ -21,3 +21,4 @@ packages
 srfi-test
 Makefile.tests
 *@gambit*
+test

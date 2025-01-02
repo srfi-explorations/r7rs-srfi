@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 rm -rf srfi-test && git clone https://github.com/srfi-explorations/srfi-test.git
 make -C srfi-test
 mkdir -p reports

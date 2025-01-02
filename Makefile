@@ -1,3193 +1,4159 @@
-test-srfi-8-chibi:
-	
-	chibi-scheme -I . srfi-test/r7rs-programs/8.scm
-
-srfi-8-chibi-build-library:
-	
-
-test-srfi-8-chibi-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/8.scm"
-
-srfi-8-chibi-build-library-docker:
-	
-
-test-srfi-8-chibi-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/8.scm"
-
-srfi-8-chibi-build-library-docker-head:
-	
-
-test-srfi-8-chicken:
-	  cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld 
-	csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8
-
-srfi-8-chicken-build-library:
-	  cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld 
-
-test-srfi-8-chicken-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
-
-srfi-8-chicken-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld" 
-
-test-srfi-8-chicken-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
-
-srfi-8-chicken-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/8.sld srfi-8.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-8.sld" 
-
-test-srfi-8-cyclone:
-	 cyclone -I . srfi/8.sld 
-	cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8
-
-srfi-8-cyclone-build-library:
-	 cyclone -I . srfi/8.sld 
-
-test-srfi-8-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
-
-srfi-8-cyclone-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/8.sld" 
-
-test-srfi-8-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
-
-srfi-8-cyclone-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/8.sld" 
-
-test-srfi-8-foment:
-	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm
-
-srfi-8-foment-build-library:
-	
-
-test-srfi-8-foment-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
-
-srfi-8-foment-build-library-docker:
-	
-
-test-srfi-8-foment-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
-
-srfi-8-foment-build-library-docker-head:
-	
-
-test-srfi-8-gambit:
-	 gsc -:search=. srfi/8 
-	gsc -exe ./ -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 -:search=. && rm srfi-test/r7rs-programs/8
-
-srfi-8-gambit-build-library:
-	 gsc -:search=. srfi/8 
-
-test-srfi-8-gambit-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/8"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 -:search=. && rm srfi-test/r7rs-programs/8"
-
-srfi-8-gambit-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/8" 
-
-test-srfi-8-gambit-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/8"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 -:search=. && rm srfi-test/r7rs-programs/8"
-
-srfi-8-gambit-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/8" 
-
-test-srfi-8-gauche:
-	
-	gosh -r7 -I . srfi-test/r7rs-programs/8.scm
-
-srfi-8-gauche-build-library:
-	
-
-test-srfi-8-gauche-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/8.scm"
-
-srfi-8-gauche-build-library-docker:
-	
-
-test-srfi-8-gauche-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/8.scm"
-
-srfi-8-gauche-build-library-docker-head:
-	
-
-test-srfi-8-gerbil:
-	 gxc -O srfi/8.sld 
-	gxi --lang r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8
-
-srfi-8-gerbil-build-library:
-	 gxc -O srfi/8.sld 
-
-test-srfi-8-gerbil-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
-
-srfi-8-gerbil-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/8.sld" 
-
-test-srfi-8-gerbil-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
-
-srfi-8-gerbil-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/8.sld" 
-
-test-srfi-8-guile:
-	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm
-
-srfi-8-guile-build-library:
-	
-
-test-srfi-8-guile-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm"
-
-srfi-8-guile-build-library-docker:
-	
-
-test-srfi-8-guile-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/8.scm"
-
-srfi-8-guile-build-library-docker-head:
-	
-
-test-srfi-8-kawa:
-	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/8.scm
-
-srfi-8-kawa-build-library:
-	
-
-test-srfi-8-kawa-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/8.scm"
-
-srfi-8-kawa-build-library-docker:
-	
-
-test-srfi-8-kawa-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/8.scm"
-
-srfi-8-kawa-build-library-docker-head:
-	
-
-test-srfi-8-larceny:
-	
-	larceny -r7 -I . srfi-test/r7rs-programs/8.scm
-
-srfi-8-larceny-build-library:
-	
-
-test-srfi-8-larceny-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/8.scm"
-
-srfi-8-larceny-build-library-docker:
-	
-
-test-srfi-8-larceny-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:head bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/8.scm"
-
-srfi-8-larceny-build-library-docker-head:
-	
-
-test-srfi-8-loko:
-	 ls srfi/8.sld 
-	loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8
-
-srfi-8-loko-build-library:
-	 ls srfi/8.sld 
-
-test-srfi-8-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
-
-srfi-8-loko-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/8.sld" 
-
-test-srfi-8-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && srfi-test/r7rs-programs/8 && rm srfi-test/r7rs-programs/8"
-
-srfi-8-loko-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/8.sld" 
-
-test-srfi-8-mit-scheme:
-	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
-
-srfi-8-mit-scheme-build-library:
-	
-
-test-srfi-8-mit-scheme-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
-
-srfi-8-mit-scheme-build-library-docker:
-	
-
-test-srfi-8-mit-scheme-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
-
-srfi-8-mit-scheme-build-library-docker-head:
-	
-
-test-srfi-8-mosh:
-	
-	mosh --loadpath=. srfi-test/r7rs-programs/8.scm
-
-srfi-8-mosh-build-library:
-	
-
-test-srfi-8-mosh-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/8.scm"
-
-srfi-8-mosh-build-library-docker:
-	
-
-test-srfi-8-mosh-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:head bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/8.scm"
-
-srfi-8-mosh-build-library-docker-head:
-	
-
-test-srfi-8-racket:
-	
-	racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm
-
-srfi-8-racket-build-library:
-	
-
-test-srfi-8-racket-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm"
-
-srfi-8-racket-build-library-docker:
-	
-
-test-srfi-8-racket-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm"
-
-srfi-8-racket-build-library-docker-head:
-	
-
-test-srfi-8-sagittarius:
-	
-	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm
-
-srfi-8-sagittarius-build-library:
-	
-
-test-srfi-8-sagittarius-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
-
-srfi-8-sagittarius-build-library-docker:
-	
-
-test-srfi-8-sagittarius-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
-
-srfi-8-sagittarius-build-library-docker-head:
-	
-
-test-srfi-8-stklos:
-	
-	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm
-
-srfi-8-stklos-build-library:
-	
-
-test-srfi-8-stklos-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
-
-srfi-8-stklos-build-library-docker:
-	
-
-test-srfi-8-stklos-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
-
-srfi-8-stklos-build-library-docker-head:
-	
-
-test-srfi-8-skint:
-	
-	skint -I ./ srfi-test/r7rs-programs/8.scm
-
-srfi-8-skint-build-library:
-	
-
-test-srfi-8-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/8.scm"
-
-srfi-8-skint-build-library-docker:
-	
-
-test-srfi-8-skint-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/8.scm"
-
-srfi-8-skint-build-library-docker-head:
-	
-
-test-srfi-8-tr7:
-	
-	tr7i srfi-test/r7rs-programs/8.scm
-
-srfi-8-tr7-build-library:
-	
-
-test-srfi-8-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/8.scm"
-
-srfi-8-tr7-build-library-docker:
-	
-
-test-srfi-8-tr7-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/8.scm"
-
-srfi-8-tr7-build-library-docker-head:
-	
-
-test-srfi-8-ypsilon:
-	
-	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/8.scm
-
-srfi-8-ypsilon-build-library:
-	
-
-test-srfi-8-ypsilon-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/8.scm"
-
-srfi-8-ypsilon-build-library-docker:
-	
-
-test-srfi-8-ypsilon-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/8.scm"
-
-srfi-8-ypsilon-build-library-docker-head:
-	
-
-test-srfi-1-chibi:
+1-chibi:
 	
 	chibi-scheme -I . srfi-test/r7rs-programs/1.scm
 
-srfi-1-chibi-build-library:
+1-chibi-library:
 	
 
-test-srfi-1-chibi-docker:
+1-chibi-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/1.scm"
 
-srfi-1-chibi-build-library-docker:
+1-chibi-library-docker:
 	
 
-test-srfi-1-chibi-docker-head:
+1-chibi-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/1.scm"
 
-srfi-1-chibi-build-library-docker-head:
+1-chibi-library-docker-head:
 	
 
-test-srfi-1-chicken:
-	  cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld 
-	csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1
+1-chicken-compiler:
+	 cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm 
+	csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/1.scm && ./test
 
-srfi-1-chicken-build-library:
-	  cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld 
+1-chicken-compiler-library:
+	 cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm 
 
-test-srfi-1-chicken-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+1-chicken-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/1.scm && ./test"
 
-srfi-1-chicken-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld" 
+1-chicken-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm" 
 
-test-srfi-1-chicken-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+1-chicken-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/1.scm && ./test"
 
-srfi-1-chicken-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/1.sld srfi-1.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-1.sld" 
+1-chicken-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm" 
 
-test-srfi-1-cyclone:
+1-chicken-interpreter:
+	 cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm 
+	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/1.scm
+
+1-chicken-interpreter-library:
+	 cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm 
+
+1-chicken-interpreter-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/1.scm"
+
+1-chicken-interpreter-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm" 
+
+1-chicken-interpreter-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/1.scm"
+
+1-chicken-interpreter-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-1.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-1.scm" 
+
+1-cyclone-compiler:
 	 cyclone -I . srfi/1.sld 
-	cyclone -I . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1
+	cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/1.scm && ./test
 
-srfi-1-cyclone-build-library:
+1-cyclone-compiler-library:
 	 cyclone -I . srfi/1.sld 
 
-test-srfi-1-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+1-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/1.scm && ./test"
 
-srfi-1-cyclone-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/1.sld" 
+1-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/1.sld" 
 
-test-srfi-1-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+1-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/1.scm && ./test"
 
-srfi-1-cyclone-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/1.sld" 
+1-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/1.sld" 
 
-test-srfi-1-foment:
+1-cyclone-interpreter:
+	
+	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/1.scm
+
+1-cyclone-interpreter-library:
+	
+
+1-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/1.scm"
+
+1-cyclone-interpreter-library-docker:
+	
+
+1-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/1.scm"
+
+1-cyclone-interpreter-library-docker-head:
+	
+
+1-foment:
 	
 	foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm
 
-srfi-1-foment-build-library:
+1-foment-library:
 	
 
-test-srfi-1-foment-docker:
+1-foment-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
 
-srfi-1-foment-build-library-docker:
+1-foment-library-docker:
 	
 
-test-srfi-1-foment-docker-head:
+1-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
 
-srfi-1-foment-build-library-docker-head:
+1-foment-library-docker-head:
 	
 
-test-srfi-1-gambit:
-	 gsc -:search=. srfi/1 
-	gsc -exe ./ -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 -:search=. && rm srfi-test/r7rs-programs/1
+1-gambit-compiler:
+	 ls srfi/1.sld 
+	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/1.scm && ./test
 
-srfi-1-gambit-build-library:
-	 gsc -:search=. srfi/1 
+1-gambit-compiler-library:
+	 ls srfi/1.sld 
 
-test-srfi-1-gambit-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/1"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 -:search=. && rm srfi-test/r7rs-programs/1"
+1-gambit-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/1.scm && ./test"
 
-srfi-1-gambit-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/1" 
+1-gambit-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld" 
 
-test-srfi-1-gambit-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/1"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 -:search=. && rm srfi-test/r7rs-programs/1"
+1-gambit-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/1.scm && ./test"
 
-srfi-1-gambit-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/1" 
+1-gambit-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld" 
 
-test-srfi-1-gauche:
+1-gambit-interpreter:
+	
+	gsi -:s ./ srfi-test/r7rs-programs/1.scm
+
+1-gambit-interpreter-library:
+	
+
+1-gambit-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/1.scm"
+
+1-gambit-interpreter-library-docker:
+	
+
+1-gambit-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/1.scm"
+
+1-gambit-interpreter-library-docker-head:
+	
+
+1-gauche:
 	
 	gosh -r7 -I . srfi-test/r7rs-programs/1.scm
 
-srfi-1-gauche-build-library:
+1-gauche-library:
 	
 
-test-srfi-1-gauche-docker:
+1-gauche-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/1.scm"
 
-srfi-1-gauche-build-library-docker:
+1-gauche-library-docker:
 	
 
-test-srfi-1-gauche-docker-head:
+1-gauche-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/1.scm"
 
-srfi-1-gauche-build-library-docker-head:
-	
-
-test-srfi-1-gerbil:
-	 gxc -O srfi/1.sld 
-	gxi --lang r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1
-
-srfi-1-gerbil-build-library:
-	 gxc -O srfi/1.sld 
-
-test-srfi-1-gerbil-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
-
-srfi-1-gerbil-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/1.sld" 
-
-test-srfi-1-gerbil-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
-
-srfi-1-gerbil-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/1.sld" 
-
-test-srfi-1-guile:
-	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm
-
-srfi-1-guile-build-library:
+1-gauche-library-docker-head:
 	
 
-test-srfi-1-guile-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm"
+1-gerbil-compiler:
+	 gxc srfi/1.sld 
+	GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/1.scm && ./test
 
-srfi-1-guile-build-library-docker:
-	
+1-gerbil-compiler-library:
+	 gxc srfi/1.sld 
 
-test-srfi-1-guile-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/1.scm"
+1-gerbil-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/1.scm && ./test"
 
-srfi-1-guile-build-library-docker-head:
-	
+1-gerbil-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/1.sld" 
 
-test-srfi-1-kawa:
-	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/1.scm
+1-gerbil-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/1.scm && ./test"
 
-srfi-1-kawa-build-library:
-	
+1-gerbil-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/1.sld" 
 
-test-srfi-1-kawa-docker:
+1-gerbil-interpreter:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/1.scm"
+	GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/1.scm
 
-srfi-1-kawa-build-library-docker:
-	
-
-test-srfi-1-kawa-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/1.scm"
-
-srfi-1-kawa-build-library-docker-head:
+1-gerbil-interpreter-library:
 	
 
-test-srfi-1-larceny:
+1-gerbil-interpreter-docker:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/1.scm
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/1.scm"
 
-srfi-1-larceny-build-library:
-	
-
-test-srfi-1-larceny-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/1.scm"
-
-srfi-1-larceny-build-library-docker:
+1-gerbil-interpreter-library-docker:
 	
 
-test-srfi-1-larceny-docker-head:
+1-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:head bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/1.scm"
 
-srfi-1-larceny-build-library-docker-head:
+1-gerbil-interpreter-library-docker-head:
 	
 
-test-srfi-1-loko:
+1-guile:
+	
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/1.scm
+
+1-guile-library:
+	
+
+1-guile-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/1.scm"
+
+1-guile-library-docker:
+	
+
+1-guile-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/1.scm"
+
+1-guile-library-docker-head:
+	
+
+1-kawa:
+	
+	kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm
+
+1-kawa-library:
+	
+
+1-kawa-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm"
+
+1-kawa-library-docker:
+	
+
+1-kawa-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/1.scm"
+
+1-kawa-library-docker-head:
+	
+
+1-loko-compiler:
 	 ls srfi/1.sld 
-	loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1
+	loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test
 
-srfi-1-loko-build-library:
+1-loko-compiler-library:
 	 ls srfi/1.sld 
 
-test-srfi-1-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+1-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test"
 
-srfi-1-loko-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/1.sld" 
+1-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/1.sld" 
 
-test-srfi-1-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && srfi-test/r7rs-programs/1 && rm srfi-test/r7rs-programs/1"
+1-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/1.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test"
 
-srfi-1-loko-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/1.sld" 
+1-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/1.sld" 
 
-test-srfi-1-mit-scheme:
+1-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
 
-srfi-1-mit-scheme-build-library:
-	
-
-test-srfi-1-mit-scheme-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
-
-srfi-1-mit-scheme-build-library-docker:
+1-mit-scheme-library:
 	
 
-test-srfi-1-mit-scheme-docker-head:
+1-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
-srfi-1-mit-scheme-build-library-docker-head:
+1-mit-scheme-library-docker:
 	
 
-test-srfi-1-mosh:
+1-mit-scheme-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
+
+1-mit-scheme-library-docker-head:
+	
+
+1-mosh:
 	
 	mosh --loadpath=. srfi-test/r7rs-programs/1.scm
 
-srfi-1-mosh-build-library:
+1-mosh-library:
 	
 
-test-srfi-1-mosh-docker:
+1-mosh-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/1.scm"
 
-srfi-1-mosh-build-library-docker:
+1-mosh-library-docker:
 	
 
-test-srfi-1-mosh-docker-head:
+1-mosh-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:head bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/1.scm"
 
-srfi-1-mosh-build-library-docker-head:
+1-mosh-library-docker-head:
 	
 
-test-srfi-1-racket:
+1-racket:
 	
 	racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm
 
-srfi-1-racket-build-library:
+1-racket-library:
 	
 
-test-srfi-1-racket-docker:
+1-racket-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm"
 
-srfi-1-racket-build-library-docker:
+1-racket-library-docker:
 	
 
-test-srfi-1-racket-docker-head:
+1-racket-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/1.scm"
 
-srfi-1-racket-build-library-docker-head:
+1-racket-library-docker-head:
 	
 
-test-srfi-1-sagittarius:
+1-sagittarius:
 	
 	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm
 
-srfi-1-sagittarius-build-library:
+1-sagittarius-library:
 	
 
-test-srfi-1-sagittarius-docker:
+1-sagittarius-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm"
 
-srfi-1-sagittarius-build-library-docker:
+1-sagittarius-library-docker:
 	
 
-test-srfi-1-sagittarius-docker-head:
+1-sagittarius-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/1.scm"
 
-srfi-1-sagittarius-build-library-docker-head:
+1-sagittarius-library-docker-head:
 	
 
-test-srfi-1-stklos:
+1-stklos:
 	
 	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm
 
-srfi-1-stklos-build-library:
+1-stklos-library:
 	
 
-test-srfi-1-stklos-docker:
+1-stklos-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
 
-srfi-1-stklos-build-library-docker:
+1-stklos-library-docker:
 	
 
-test-srfi-1-stklos-docker-head:
+1-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
 
-srfi-1-stklos-build-library-docker-head:
-	
-
-test-srfi-1-skint:
-	
-	skint -I ./ srfi-test/r7rs-programs/1.scm
-
-srfi-1-skint-build-library:
+1-stklos-library-docker-head:
 	
 
-test-srfi-1-skint-docker:
+1-skint:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/1.scm"
+	skint -I ./ --program srfi-test/r7rs-programs/1.scm
 
-srfi-1-skint-build-library-docker:
-	
-
-test-srfi-1-skint-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/1.scm"
-
-srfi-1-skint-build-library-docker-head:
+1-skint-library:
 	
 
-test-srfi-1-tr7:
+1-skint-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/1.scm"
+
+1-skint-library-docker:
+	
+
+1-skint-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/1.scm"
+
+1-skint-library-docker-head:
+	
+
+1-tr7:
 	
 	tr7i srfi-test/r7rs-programs/1.scm
 
-srfi-1-tr7-build-library:
+1-tr7-library:
 	
 
-test-srfi-1-tr7-docker:
+1-tr7-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/1.scm"
 
-srfi-1-tr7-build-library-docker:
+1-tr7-library-docker:
 	
 
-test-srfi-1-tr7-docker-head:
+1-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/1.scm"
 
-srfi-1-tr7-build-library-docker-head:
+1-tr7-library-docker-head:
 	
 
-test-srfi-1-ypsilon:
+1-ypsilon:
 	
-	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/1.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/1.scm
 
-srfi-1-ypsilon-build-library:
+1-ypsilon-library:
 	
 
-test-srfi-1-ypsilon-docker:
+1-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/1.scm"
 
-srfi-1-ypsilon-build-library-docker:
+1-ypsilon-library-docker:
 	
 
-test-srfi-1-ypsilon-docker-head:
+1-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/1.scm"
 
-srfi-1-ypsilon-build-library-docker-head:
+1-ypsilon-library-docker-head:
 	
 
-test-srfi-14-chibi:
+8-chibi:
 	
-	chibi-scheme -I . srfi-test/r7rs-programs/14.scm
+	chibi-scheme -I . srfi-test/r7rs-programs/8.scm
 
-srfi-14-chibi-build-library:
+8-chibi-library:
 	
 
-test-srfi-14-chibi-docker:
+8-chibi-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/8.scm"
 
-srfi-14-chibi-build-library-docker:
+8-chibi-library-docker:
 	
 
-test-srfi-14-chibi-docker-head:
+8-chibi-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/8.scm"
 
-srfi-14-chibi-build-library-docker-head:
+8-chibi-library-docker-head:
 	
 
-test-srfi-14-chicken:
-	  cp srfi/14.sld srfi-14.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-14.sld 
-	csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14
+8-chicken-compiler:
+	 cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm 
+	csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/8.scm && ./test
 
-srfi-14-chicken-build-library:
-	  cp srfi/14.sld srfi-14.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-14.sld 
+8-chicken-compiler-library:
+	 cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm 
 
-test-srfi-14-chicken-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/14.sld srfi-14.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
+8-chicken-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/8.scm && ./test"
 
-srfi-14-chicken-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/14.sld srfi-14.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-14.sld" 
+8-chicken-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm" 
 
-test-srfi-14-chicken-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/14.sld srfi-14.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
+8-chicken-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/8.scm && ./test"
 
-srfi-14-chicken-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/14.sld srfi-14.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-14.sld" 
+8-chicken-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm" 
 
-test-srfi-14-cyclone:
-	 cyclone -I . srfi/14.sld 
-	cyclone -I . srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14
+8-chicken-interpreter:
+	 cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm 
+	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/8.scm
 
-srfi-14-cyclone-build-library:
-	 cyclone -I . srfi/14.sld 
+8-chicken-interpreter-library:
+	 cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm 
 
-test-srfi-14-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
+8-chicken-interpreter-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/8.scm"
 
-srfi-14-cyclone-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/14.sld" 
+8-chicken-interpreter-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm" 
 
-test-srfi-14-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
+8-chicken-interpreter-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/8.scm"
 
-srfi-14-cyclone-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/14.sld" 
+8-chicken-interpreter-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-8.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-8.scm" 
 
-test-srfi-14-foment:
-	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm
-
-srfi-14-foment-build-library:
-	
-
-test-srfi-14-foment-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm"
-
-srfi-14-foment-build-library-docker:
-	
-
-test-srfi-14-foment-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm"
-
-srfi-14-foment-build-library-docker-head:
-	
-
-test-srfi-14-gambit:
-	 gsc -:search=. srfi/14 
-	gsc -exe ./ -nopreload srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 -:search=. && rm srfi-test/r7rs-programs/14
-
-srfi-14-gambit-build-library:
-	 gsc -:search=. srfi/14 
-
-test-srfi-14-gambit-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/14"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 -:search=. && rm srfi-test/r7rs-programs/14"
-
-srfi-14-gambit-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/14" 
-
-test-srfi-14-gambit-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/14"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 -:search=. && rm srfi-test/r7rs-programs/14"
-
-srfi-14-gambit-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/14" 
-
-test-srfi-14-gauche:
-	
-	gosh -r7 -I . srfi-test/r7rs-programs/14.scm
-
-srfi-14-gauche-build-library:
-	
-
-test-srfi-14-gauche-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/14.scm"
-
-srfi-14-gauche-build-library-docker:
-	
-
-test-srfi-14-gauche-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/14.scm"
-
-srfi-14-gauche-build-library-docker-head:
-	
-
-test-srfi-14-gerbil:
-	 gxc -O srfi/14.sld 
-	gxi --lang r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14
-
-srfi-14-gerbil-build-library:
-	 gxc -O srfi/14.sld 
-
-test-srfi-14-gerbil-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
-
-srfi-14-gerbil-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/14.sld" 
-
-test-srfi-14-gerbil-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
-
-srfi-14-gerbil-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/14.sld" 
-
-test-srfi-14-guile:
-	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/14.scm
-
-srfi-14-guile-build-library:
-	
-
-test-srfi-14-guile-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/14.scm"
-
-srfi-14-guile-build-library-docker:
-	
-
-test-srfi-14-guile-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/14.scm"
-
-srfi-14-guile-build-library-docker-head:
-	
-
-test-srfi-14-kawa:
-	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/14.scm
-
-srfi-14-kawa-build-library:
-	
-
-test-srfi-14-kawa-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/14.scm"
-
-srfi-14-kawa-build-library-docker:
-	
-
-test-srfi-14-kawa-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/14.scm"
-
-srfi-14-kawa-build-library-docker-head:
-	
-
-test-srfi-14-larceny:
-	
-	larceny -r7 -I . srfi-test/r7rs-programs/14.scm
-
-srfi-14-larceny-build-library:
-	
-
-test-srfi-14-larceny-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/14.scm"
-
-srfi-14-larceny-build-library-docker:
-	
-
-test-srfi-14-larceny-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:head bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/14.scm"
-
-srfi-14-larceny-build-library-docker-head:
-	
-
-test-srfi-14-loko:
-	 ls srfi/14.sld 
-	loko -std=r7rs --compile srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14
-
-srfi-14-loko-build-library:
-	 ls srfi/14.sld 
-
-test-srfi-14-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
-
-srfi-14-loko-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/14.sld" 
-
-test-srfi-14-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/14.scm && srfi-test/r7rs-programs/14 && rm srfi-test/r7rs-programs/14"
-
-srfi-14-loko-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/14.sld" 
-
-test-srfi-14-mit-scheme:
-	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm
-
-srfi-14-mit-scheme-build-library:
-	
-
-test-srfi-14-mit-scheme-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
-
-srfi-14-mit-scheme-build-library-docker:
-	
-
-test-srfi-14-mit-scheme-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
-
-srfi-14-mit-scheme-build-library-docker-head:
-	
-
-test-srfi-14-mosh:
-	
-	mosh --loadpath=. srfi-test/r7rs-programs/14.scm
-
-srfi-14-mosh-build-library:
-	
-
-test-srfi-14-mosh-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/14.scm"
-
-srfi-14-mosh-build-library-docker:
-	
-
-test-srfi-14-mosh-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:head bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/14.scm"
-
-srfi-14-mosh-build-library-docker-head:
-	
-
-test-srfi-14-racket:
-	
-	racket -I r7rs -S . --script srfi-test/r7rs-programs/14.scm
-
-srfi-14-racket-build-library:
-	
-
-test-srfi-14-racket-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/14.scm"
-
-srfi-14-racket-build-library-docker:
-	
-
-test-srfi-14-racket-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/14.scm"
-
-srfi-14-racket-build-library-docker-head:
-	
-
-test-srfi-14-sagittarius:
-	
-	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/14.scm
-
-srfi-14-sagittarius-build-library:
-	
-
-test-srfi-14-sagittarius-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/14.scm"
-
-srfi-14-sagittarius-build-library-docker:
-	
-
-test-srfi-14-sagittarius-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/14.scm"
-
-srfi-14-sagittarius-build-library-docker-head:
-	
-
-test-srfi-14-stklos:
-	
-	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm
-
-srfi-14-stklos-build-library:
-	
-
-test-srfi-14-stklos-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm"
-
-srfi-14-stklos-build-library-docker:
-	
-
-test-srfi-14-stklos-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm"
-
-srfi-14-stklos-build-library-docker-head:
-	
-
-test-srfi-14-skint:
-	
-	skint -I ./ srfi-test/r7rs-programs/14.scm
-
-srfi-14-skint-build-library:
-	
-
-test-srfi-14-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/14.scm"
-
-srfi-14-skint-build-library-docker:
-	
-
-test-srfi-14-skint-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/14.scm"
-
-srfi-14-skint-build-library-docker-head:
-	
-
-test-srfi-14-tr7:
-	
-	tr7i srfi-test/r7rs-programs/14.scm
-
-srfi-14-tr7-build-library:
-	
-
-test-srfi-14-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/14.scm"
-
-srfi-14-tr7-build-library-docker:
-	
-
-test-srfi-14-tr7-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/14.scm"
-
-srfi-14-tr7-build-library-docker-head:
-	
-
-test-srfi-14-ypsilon:
-	
-	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/14.scm
-
-srfi-14-ypsilon-build-library:
-	
-
-test-srfi-14-ypsilon-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/14.scm"
-
-srfi-14-ypsilon-build-library-docker:
-	
-
-test-srfi-14-ypsilon-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/14.scm"
-
-srfi-14-ypsilon-build-library-docker-head:
-	
-
-test-srfi-26-chibi:
-	
-	chibi-scheme -I . srfi-test/r7rs-programs/26.scm
-
-srfi-26-chibi-build-library:
-	
-
-test-srfi-26-chibi-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/26.scm"
-
-srfi-26-chibi-build-library-docker:
-	
-
-test-srfi-26-chibi-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/26.scm"
+8-cyclone-compiler:
+	 cyclone -I . srfi/8.sld 
+	cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/8.scm && ./test
 
-srfi-26-chibi-build-library-docker-head:
-	
-
-test-srfi-26-chicken:
-	  cp srfi/26.sld srfi-26.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-26.sld 
-	csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26
-
-srfi-26-chicken-build-library:
-	  cp srfi/26.sld srfi-26.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-26.sld 
-
-test-srfi-26-chicken-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/26.sld srfi-26.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
-
-srfi-26-chicken-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/26.sld srfi-26.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-26.sld" 
-
-test-srfi-26-chicken-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/26.sld srfi-26.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
-
-srfi-26-chicken-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/26.sld srfi-26.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-26.sld" 
-
-test-srfi-26-cyclone:
-	 cyclone -I . srfi/26.sld 
-	cyclone -I . srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26
-
-srfi-26-cyclone-build-library:
-	 cyclone -I . srfi/26.sld 
-
-test-srfi-26-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
-
-srfi-26-cyclone-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/26.sld" 
-
-test-srfi-26-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
-
-srfi-26-cyclone-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/26.sld" 
-
-test-srfi-26-foment:
-	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm
-
-srfi-26-foment-build-library:
-	
-
-test-srfi-26-foment-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
-
-srfi-26-foment-build-library-docker:
-	
-
-test-srfi-26-foment-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
-
-srfi-26-foment-build-library-docker-head:
-	
-
-test-srfi-26-gambit:
-	 gsc -:search=. srfi/26 
-	gsc -exe ./ -nopreload srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 -:search=. && rm srfi-test/r7rs-programs/26
-
-srfi-26-gambit-build-library:
-	 gsc -:search=. srfi/26 
-
-test-srfi-26-gambit-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/26"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 -:search=. && rm srfi-test/r7rs-programs/26"
-
-srfi-26-gambit-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/26" 
-
-test-srfi-26-gambit-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/26"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 -:search=. && rm srfi-test/r7rs-programs/26"
-
-srfi-26-gambit-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/26" 
-
-test-srfi-26-gauche:
-	
-	gosh -r7 -I . srfi-test/r7rs-programs/26.scm
-
-srfi-26-gauche-build-library:
-	
-
-test-srfi-26-gauche-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/26.scm"
-
-srfi-26-gauche-build-library-docker:
-	
-
-test-srfi-26-gauche-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/26.scm"
-
-srfi-26-gauche-build-library-docker-head:
-	
-
-test-srfi-26-gerbil:
-	 gxc -O srfi/26.sld 
-	gxi --lang r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26
-
-srfi-26-gerbil-build-library:
-	 gxc -O srfi/26.sld 
-
-test-srfi-26-gerbil-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
-
-srfi-26-gerbil-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/26.sld" 
-
-test-srfi-26-gerbil-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
-
-srfi-26-gerbil-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/26.sld" 
-
-test-srfi-26-guile:
-	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/26.scm
-
-srfi-26-guile-build-library:
-	
-
-test-srfi-26-guile-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/26.scm"
-
-srfi-26-guile-build-library-docker:
-	
-
-test-srfi-26-guile-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/26.scm"
-
-srfi-26-guile-build-library-docker-head:
-	
-
-test-srfi-26-kawa:
-	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/26.scm
-
-srfi-26-kawa-build-library:
-	
-
-test-srfi-26-kawa-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/26.scm"
-
-srfi-26-kawa-build-library-docker:
-	
-
-test-srfi-26-kawa-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/26.scm"
-
-srfi-26-kawa-build-library-docker-head:
-	
-
-test-srfi-26-larceny:
-	
-	larceny -r7 -I . srfi-test/r7rs-programs/26.scm
-
-srfi-26-larceny-build-library:
-	
-
-test-srfi-26-larceny-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/26.scm"
-
-srfi-26-larceny-build-library-docker:
-	
-
-test-srfi-26-larceny-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:head bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/26.scm"
-
-srfi-26-larceny-build-library-docker-head:
-	
-
-test-srfi-26-loko:
-	 ls srfi/26.sld 
-	loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26
-
-srfi-26-loko-build-library:
-	 ls srfi/26.sld 
-
-test-srfi-26-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
-
-srfi-26-loko-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/26.sld" 
-
-test-srfi-26-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && srfi-test/r7rs-programs/26 && rm srfi-test/r7rs-programs/26"
-
-srfi-26-loko-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/26.sld" 
+8-cyclone-compiler-library:
+	 cyclone -I . srfi/8.sld 
 
-test-srfi-26-mit-scheme:
-	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
-
-srfi-26-mit-scheme-build-library:
-	
-
-test-srfi-26-mit-scheme-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
-
-srfi-26-mit-scheme-build-library-docker:
-	
-
-test-srfi-26-mit-scheme-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
-
-srfi-26-mit-scheme-build-library-docker-head:
-	
-
-test-srfi-26-mosh:
-	
-	mosh --loadpath=. srfi-test/r7rs-programs/26.scm
-
-srfi-26-mosh-build-library:
-	
-
-test-srfi-26-mosh-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/26.scm"
-
-srfi-26-mosh-build-library-docker:
-	
-
-test-srfi-26-mosh-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:head bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/26.scm"
-
-srfi-26-mosh-build-library-docker-head:
-	
-
-test-srfi-26-racket:
-	
-	racket -I r7rs -S . --script srfi-test/r7rs-programs/26.scm
-
-srfi-26-racket-build-library:
-	
-
-test-srfi-26-racket-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/26.scm"
-
-srfi-26-racket-build-library-docker:
-	
-
-test-srfi-26-racket-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/26.scm"
-
-srfi-26-racket-build-library-docker-head:
-	
-
-test-srfi-26-sagittarius:
-	
-	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/26.scm
-
-srfi-26-sagittarius-build-library:
-	
-
-test-srfi-26-sagittarius-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/26.scm"
-
-srfi-26-sagittarius-build-library-docker:
-	
-
-test-srfi-26-sagittarius-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/26.scm"
-
-srfi-26-sagittarius-build-library-docker-head:
-	
-
-test-srfi-26-stklos:
-	
-	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm
-
-srfi-26-stklos-build-library:
-	
-
-test-srfi-26-stklos-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
-
-srfi-26-stklos-build-library-docker:
-	
-
-test-srfi-26-stklos-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
-
-srfi-26-stklos-build-library-docker-head:
-	
-
-test-srfi-26-skint:
-	
-	skint -I ./ srfi-test/r7rs-programs/26.scm
-
-srfi-26-skint-build-library:
-	
-
-test-srfi-26-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/26.scm"
-
-srfi-26-skint-build-library-docker:
-	
-
-test-srfi-26-skint-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/26.scm"
+8-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/8.scm && ./test"
 
-srfi-26-skint-build-library-docker-head:
-	
-
-test-srfi-26-tr7:
-	
-	tr7i srfi-test/r7rs-programs/26.scm
-
-srfi-26-tr7-build-library:
-	
+8-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/8.sld" 
 
-test-srfi-26-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/26.scm"
-
-srfi-26-tr7-build-library-docker:
-	
+8-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/8.scm && ./test"
 
-test-srfi-26-tr7-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/26.scm"
-
-srfi-26-tr7-build-library-docker-head:
-	
+8-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/8.sld" 
 
-test-srfi-26-ypsilon:
+8-cyclone-interpreter:
 	
-	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/26.scm
+	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/8.scm
 
-srfi-26-ypsilon-build-library:
+8-cyclone-interpreter-library:
 	
 
-test-srfi-26-ypsilon-docker:
+8-cyclone-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/8.scm"
 
-srfi-26-ypsilon-build-library-docker:
+8-cyclone-interpreter-library-docker:
 	
 
-test-srfi-26-ypsilon-docker-head:
+8-cyclone-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/8.scm"
 
-srfi-26-ypsilon-build-library-docker-head:
+8-cyclone-interpreter-library-docker-head:
 	
 
-test-srfi-28-chibi:
+8-foment:
 	
-	chibi-scheme -I . srfi-test/r7rs-programs/28.scm
+	foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm
 
-srfi-28-chibi-build-library:
+8-foment-library:
 	
 
-test-srfi-28-chibi-docker:
+8-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
 
-srfi-28-chibi-build-library-docker:
+8-foment-library-docker:
 	
 
-test-srfi-28-chibi-docker-head:
+8-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
 
-srfi-28-chibi-build-library-docker-head:
+8-foment-library-docker-head:
 	
 
-test-srfi-28-chicken:
-	  cp srfi/28.sld srfi-28.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-28.sld 
-	csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28
+8-gambit-compiler:
+	 ls srfi/8.sld 
+	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/8.scm && ./test
 
-srfi-28-chicken-build-library:
-	  cp srfi/28.sld srfi-28.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-28.sld 
+8-gambit-compiler-library:
+	 ls srfi/8.sld 
 
-test-srfi-28-chicken-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/28.sld srfi-28.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+8-gambit-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/8.scm && ./test"
 
-srfi-28-chicken-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/28.sld srfi-28.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-28.sld" 
+8-gambit-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld" 
 
-test-srfi-28-chicken-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/28.sld srfi-28.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+8-gambit-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/8.scm && ./test"
 
-srfi-28-chicken-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/28.sld srfi-28.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-28.sld" 
+8-gambit-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld" 
 
-test-srfi-28-cyclone:
-	 cyclone -I . srfi/28.sld 
-	cyclone -I . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28
-
-srfi-28-cyclone-build-library:
-	 cyclone -I . srfi/28.sld 
-
-test-srfi-28-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
-
-srfi-28-cyclone-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/28.sld" 
-
-test-srfi-28-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
-
-srfi-28-cyclone-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/28.sld" 
-
-test-srfi-28-foment:
+8-gambit-interpreter:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm
+	gsi -:s ./ srfi-test/r7rs-programs/8.scm
 
-srfi-28-foment-build-library:
+8-gambit-interpreter-library:
 	
 
-test-srfi-28-foment-docker:
+8-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/8.scm"
 
-srfi-28-foment-build-library-docker:
+8-gambit-interpreter-library-docker:
 	
 
-test-srfi-28-foment-docker-head:
+8-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/8.scm"
 
-srfi-28-foment-build-library-docker-head:
+8-gambit-interpreter-library-docker-head:
 	
-
-test-srfi-28-gambit:
-	 gsc -:search=. srfi/28 
-	gsc -exe ./ -nopreload srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 -:search=. && rm srfi-test/r7rs-programs/28
-
-srfi-28-gambit-build-library:
-	 gsc -:search=. srfi/28 
-
-test-srfi-28-gambit-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/28"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 -:search=. && rm srfi-test/r7rs-programs/28"
-
-srfi-28-gambit-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/28" 
-
-test-srfi-28-gambit-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/28"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 -:search=. && rm srfi-test/r7rs-programs/28"
-
-srfi-28-gambit-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/28" 
 
-test-srfi-28-gauche:
+8-gauche:
 	
-	gosh -r7 -I . srfi-test/r7rs-programs/28.scm
+	gosh -r7 -I . srfi-test/r7rs-programs/8.scm
 
-srfi-28-gauche-build-library:
+8-gauche-library:
 	
 
-test-srfi-28-gauche-docker:
+8-gauche-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/8.scm"
 
-srfi-28-gauche-build-library-docker:
+8-gauche-library-docker:
 	
 
-test-srfi-28-gauche-docker-head:
+8-gauche-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/8.scm"
 
-srfi-28-gauche-build-library-docker-head:
+8-gauche-library-docker-head:
 	
 
-test-srfi-28-gerbil:
-	 gxc -O srfi/28.sld 
-	gxi --lang r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28
+8-gerbil-compiler:
+	 gxc srfi/8.sld 
+	GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/8.scm && ./test
 
-srfi-28-gerbil-build-library:
-	 gxc -O srfi/28.sld 
+8-gerbil-compiler-library:
+	 gxc srfi/8.sld 
 
-test-srfi-28-gerbil-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+8-gerbil-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/8.scm && ./test"
 
-srfi-28-gerbil-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/28.sld" 
+8-gerbil-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/8.sld" 
 
-test-srfi-28-gerbil-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+8-gerbil-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/8.scm && ./test"
 
-srfi-28-gerbil-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/28.sld" 
+8-gerbil-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/8.sld" 
 
-test-srfi-28-guile:
+8-gerbil-interpreter:
 	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/28.scm
+	GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/8.scm
 
-srfi-28-guile-build-library:
+8-gerbil-interpreter-library:
 	
 
-test-srfi-28-guile-docker:
+8-gerbil-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/8.scm"
 
-srfi-28-guile-build-library-docker:
+8-gerbil-interpreter-library-docker:
 	
 
-test-srfi-28-guile-docker-head:
+8-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/8.scm"
 
-srfi-28-guile-build-library-docker-head:
+8-gerbil-interpreter-library-docker-head:
 	
 
-test-srfi-28-kawa:
+8-guile:
 	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/28.scm
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/8.scm
 
-srfi-28-kawa-build-library:
+8-guile-library:
 	
 
-test-srfi-28-kawa-docker:
+8-guile-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
 
-srfi-28-kawa-build-library-docker:
+8-guile-library-docker:
 	
 
-test-srfi-28-kawa-docker-head:
+8-guile-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
 
-srfi-28-kawa-build-library-docker-head:
+8-guile-library-docker-head:
 	
 
-test-srfi-28-larceny:
+8-kawa:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/28.scm
+	kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm
 
-srfi-28-larceny-build-library:
+8-kawa-library:
 	
 
-test-srfi-28-larceny-docker:
+8-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm"
 
-srfi-28-larceny-build-library-docker:
+8-kawa-library-docker:
 	
 
-test-srfi-28-larceny-docker-head:
+8-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:head bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm"
 
-srfi-28-larceny-build-library-docker-head:
+8-kawa-library-docker-head:
 	
 
-test-srfi-28-loko:
-	 ls srfi/28.sld 
-	loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28
+8-loko-compiler:
+	 ls srfi/8.sld 
+	loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && mv srfi-test/r7rs-programs/8 ./test && ./test
 
-srfi-28-loko-build-library:
-	 ls srfi/28.sld 
+8-loko-compiler-library:
+	 ls srfi/8.sld 
 
-test-srfi-28-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+8-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && mv srfi-test/r7rs-programs/8 ./test && ./test"
 
-srfi-28-loko-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/28.sld" 
+8-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/8.sld" 
 
-test-srfi-28-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && srfi-test/r7rs-programs/28 && rm srfi-test/r7rs-programs/28"
+8-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/8.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/8.scm && mv srfi-test/r7rs-programs/8 ./test && ./test"
 
-srfi-28-loko-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/28.sld" 
+8-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/8.sld" 
 
-test-srfi-28-mit-scheme:
+8-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
 
-srfi-28-mit-scheme-build-library:
+8-mit-scheme-library:
 	
 
-test-srfi-28-mit-scheme-docker:
+8-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
-srfi-28-mit-scheme-build-library-docker:
+8-mit-scheme-library-docker:
 	
 
-test-srfi-28-mit-scheme-docker-head:
+8-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
-srfi-28-mit-scheme-build-library-docker-head:
+8-mit-scheme-library-docker-head:
 	
 
-test-srfi-28-mosh:
+8-mosh:
 	
-	mosh --loadpath=. srfi-test/r7rs-programs/28.scm
+	mosh --loadpath=. srfi-test/r7rs-programs/8.scm
 
-srfi-28-mosh-build-library:
+8-mosh-library:
 	
 
-test-srfi-28-mosh-docker:
+8-mosh-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/8.scm"
 
-srfi-28-mosh-build-library-docker:
+8-mosh-library-docker:
 	
 
-test-srfi-28-mosh-docker-head:
+8-mosh-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:head bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/8.scm"
 
-srfi-28-mosh-build-library-docker-head:
+8-mosh-library-docker-head:
 	
 
-test-srfi-28-racket:
+8-racket:
 	
-	racket -I r7rs -S . --script srfi-test/r7rs-programs/28.scm
+	racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm
 
-srfi-28-racket-build-library:
+8-racket-library:
 	
 
-test-srfi-28-racket-docker:
+8-racket-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm"
 
-srfi-28-racket-build-library-docker:
+8-racket-library-docker:
 	
 
-test-srfi-28-racket-docker-head:
+8-racket-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/8.scm"
 
-srfi-28-racket-build-library-docker-head:
+8-racket-library-docker-head:
 	
 
-test-srfi-28-sagittarius:
+8-sagittarius:
 	
-	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/28.scm
+	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm
 
-srfi-28-sagittarius-build-library:
+8-sagittarius-library:
 	
 
-test-srfi-28-sagittarius-docker:
+8-sagittarius-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
 
-srfi-28-sagittarius-build-library-docker:
+8-sagittarius-library-docker:
 	
 
-test-srfi-28-sagittarius-docker-head:
+8-sagittarius-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/8.scm"
 
-srfi-28-sagittarius-build-library-docker-head:
+8-sagittarius-library-docker-head:
 	
 
-test-srfi-28-stklos:
+8-stklos:
 	
-	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm
 
-srfi-28-stklos-build-library:
+8-stklos-library:
 	
 
-test-srfi-28-stklos-docker:
+8-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
 
-srfi-28-stklos-build-library-docker:
+8-stklos-library-docker:
 	
 
-test-srfi-28-stklos-docker-head:
+8-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
 
-srfi-28-stklos-build-library-docker-head:
+8-stklos-library-docker-head:
 	
 
-test-srfi-28-skint:
+8-skint:
 	
-	skint -I ./ srfi-test/r7rs-programs/28.scm
+	skint -I ./ --program srfi-test/r7rs-programs/8.scm
 
-srfi-28-skint-build-library:
+8-skint-library:
 	
 
-test-srfi-28-skint-docker:
+8-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/8.scm"
 
-srfi-28-skint-build-library-docker:
+8-skint-library-docker:
 	
 
-test-srfi-28-skint-docker-head:
+8-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/8.scm"
 
-srfi-28-skint-build-library-docker-head:
+8-skint-library-docker-head:
 	
 
-test-srfi-28-tr7:
+8-tr7:
 	
-	tr7i srfi-test/r7rs-programs/28.scm
+	tr7i srfi-test/r7rs-programs/8.scm
 
-srfi-28-tr7-build-library:
+8-tr7-library:
 	
 
-test-srfi-28-tr7-docker:
+8-tr7-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/8.scm"
 
-srfi-28-tr7-build-library-docker:
+8-tr7-library-docker:
 	
 
-test-srfi-28-tr7-docker-head:
+8-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/8.scm"
 
-srfi-28-tr7-build-library-docker-head:
+8-tr7-library-docker-head:
 	
 
-test-srfi-28-ypsilon:
+8-ypsilon:
 	
-	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/28.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/8.scm
 
-srfi-28-ypsilon-build-library:
+8-ypsilon-library:
 	
 
-test-srfi-28-ypsilon-docker:
+8-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/8.scm"
 
-srfi-28-ypsilon-build-library-docker:
+8-ypsilon-library-docker:
 	
 
-test-srfi-28-ypsilon-docker-head:
+8-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/8.scm"
 
-srfi-28-ypsilon-build-library-docker-head:
+8-ypsilon-library-docker-head:
 	
 
-test-srfi-13-chibi:
+13-chibi:
 	
 	chibi-scheme -I . srfi-test/r7rs-programs/13.scm
 
-srfi-13-chibi-build-library:
+13-chibi-library:
 	
 
-test-srfi-13-chibi-docker:
+13-chibi-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/13.scm"
 
-srfi-13-chibi-build-library-docker:
+13-chibi-library-docker:
 	
 
-test-srfi-13-chibi-docker-head:
+13-chibi-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/13.scm"
 
-srfi-13-chibi-build-library-docker-head:
+13-chibi-library-docker-head:
 	
 
-test-srfi-13-chicken:
-	  cp srfi/13.sld srfi-13.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-13.sld 
-	csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13
+13-chicken-compiler:
+	 cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm 
+	csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/13.scm && ./test
 
-srfi-13-chicken-build-library:
-	  cp srfi/13.sld srfi-13.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-13.sld 
+13-chicken-compiler-library:
+	 cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm 
 
-test-srfi-13-chicken-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/13.sld srfi-13.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+13-chicken-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/13.scm && ./test"
 
-srfi-13-chicken-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/13.sld srfi-13.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-13.sld" 
+13-chicken-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm" 
 
-test-srfi-13-chicken-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/13.sld srfi-13.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+13-chicken-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/13.scm && ./test"
 
-srfi-13-chicken-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/13.sld srfi-13.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-13.sld" 
+13-chicken-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm" 
 
-test-srfi-13-cyclone:
+13-chicken-interpreter:
+	 cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm 
+	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/13.scm
+
+13-chicken-interpreter-library:
+	 cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm 
+
+13-chicken-interpreter-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/13.scm"
+
+13-chicken-interpreter-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm" 
+
+13-chicken-interpreter-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/13.scm"
+
+13-chicken-interpreter-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-13.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-13.scm" 
+
+13-cyclone-compiler:
 	 cyclone -I . srfi/13.sld 
-	cyclone -I . srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13
+	cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/13.scm && ./test
 
-srfi-13-cyclone-build-library:
+13-cyclone-compiler-library:
 	 cyclone -I . srfi/13.sld 
 
-test-srfi-13-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+13-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/13.scm && ./test"
 
-srfi-13-cyclone-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/13.sld" 
+13-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/13.sld" 
 
-test-srfi-13-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+13-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/13.scm && ./test"
 
-srfi-13-cyclone-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/13.sld" 
+13-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/13.sld" 
 
-test-srfi-13-foment:
+13-cyclone-interpreter:
+	
+	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/13.scm
+
+13-cyclone-interpreter-library:
+	
+
+13-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/13.scm"
+
+13-cyclone-interpreter-library-docker:
+	
+
+13-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/13.scm"
+
+13-cyclone-interpreter-library-docker-head:
+	
+
+13-foment:
 	
 	foment -I . -I ./srfi srfi-test/r7rs-programs/13.scm
 
-srfi-13-foment-build-library:
+13-foment-library:
 	
 
-test-srfi-13-foment-docker:
+13-foment-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/13.scm"
 
-srfi-13-foment-build-library-docker:
+13-foment-library-docker:
 	
 
-test-srfi-13-foment-docker-head:
+13-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/13.scm"
 
-srfi-13-foment-build-library-docker-head:
+13-foment-library-docker-head:
 	
 
-test-srfi-13-gambit:
-	 gsc -:search=. srfi/13 
-	gsc -exe ./ -nopreload srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 -:search=. && rm srfi-test/r7rs-programs/13
+13-gambit-compiler:
+	 ls srfi/13.sld 
+	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/13.scm && ./test
 
-srfi-13-gambit-build-library:
-	 gsc -:search=. srfi/13 
+13-gambit-compiler-library:
+	 ls srfi/13.sld 
 
-test-srfi-13-gambit-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/13"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 -:search=. && rm srfi-test/r7rs-programs/13"
+13-gambit-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/13.scm && ./test"
 
-srfi-13-gambit-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/13" 
+13-gambit-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld" 
 
-test-srfi-13-gambit-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/13"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 -:search=. && rm srfi-test/r7rs-programs/13"
+13-gambit-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/13.scm && ./test"
 
-srfi-13-gambit-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/13" 
+13-gambit-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld" 
 
-test-srfi-13-gauche:
+13-gambit-interpreter:
+	
+	gsi -:s ./ srfi-test/r7rs-programs/13.scm
+
+13-gambit-interpreter-library:
+	
+
+13-gambit-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/13.scm"
+
+13-gambit-interpreter-library-docker:
+	
+
+13-gambit-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/13.scm"
+
+13-gambit-interpreter-library-docker-head:
+	
+
+13-gauche:
 	
 	gosh -r7 -I . srfi-test/r7rs-programs/13.scm
 
-srfi-13-gauche-build-library:
+13-gauche-library:
 	
 
-test-srfi-13-gauche-docker:
+13-gauche-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/13.scm"
 
-srfi-13-gauche-build-library-docker:
+13-gauche-library-docker:
 	
 
-test-srfi-13-gauche-docker-head:
+13-gauche-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/13.scm"
 
-srfi-13-gauche-build-library-docker-head:
-	
-
-test-srfi-13-gerbil:
-	 gxc -O srfi/13.sld 
-	gxi --lang r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13
-
-srfi-13-gerbil-build-library:
-	 gxc -O srfi/13.sld 
-
-test-srfi-13-gerbil-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
-
-srfi-13-gerbil-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/13.sld" 
-
-test-srfi-13-gerbil-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
-
-srfi-13-gerbil-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/13.sld" 
-
-test-srfi-13-guile:
-	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/13.scm
-
-srfi-13-guile-build-library:
+13-gauche-library-docker-head:
 	
 
-test-srfi-13-guile-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/13.scm"
+13-gerbil-compiler:
+	 gxc srfi/13.sld 
+	GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/13.scm && ./test
 
-srfi-13-guile-build-library-docker:
-	
+13-gerbil-compiler-library:
+	 gxc srfi/13.sld 
 
-test-srfi-13-guile-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/13.scm"
+13-gerbil-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/13.scm && ./test"
 
-srfi-13-guile-build-library-docker-head:
-	
+13-gerbil-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/13.sld" 
 
-test-srfi-13-kawa:
-	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/13.scm
+13-gerbil-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/13.scm && ./test"
 
-srfi-13-kawa-build-library:
-	
+13-gerbil-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/13.sld" 
 
-test-srfi-13-kawa-docker:
+13-gerbil-interpreter:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/13.scm"
+	GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/13.scm
 
-srfi-13-kawa-build-library-docker:
-	
-
-test-srfi-13-kawa-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/13.scm"
-
-srfi-13-kawa-build-library-docker-head:
+13-gerbil-interpreter-library:
 	
 
-test-srfi-13-larceny:
+13-gerbil-interpreter-docker:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/13.scm
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/13.scm"
 
-srfi-13-larceny-build-library:
-	
-
-test-srfi-13-larceny-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/13.scm"
-
-srfi-13-larceny-build-library-docker:
+13-gerbil-interpreter-library-docker:
 	
 
-test-srfi-13-larceny-docker-head:
+13-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:head bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/13.scm"
 
-srfi-13-larceny-build-library-docker-head:
+13-gerbil-interpreter-library-docker-head:
 	
 
-test-srfi-13-loko:
+13-guile:
+	
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/13.scm
+
+13-guile-library:
+	
+
+13-guile-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/13.scm"
+
+13-guile-library-docker:
+	
+
+13-guile-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/13.scm"
+
+13-guile-library-docker-head:
+	
+
+13-kawa:
+	
+	kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/13.scm
+
+13-kawa-library:
+	
+
+13-kawa-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/13.scm"
+
+13-kawa-library-docker:
+	
+
+13-kawa-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/13.scm"
+
+13-kawa-library-docker-head:
+	
+
+13-loko-compiler:
 	 ls srfi/13.sld 
-	loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13
+	loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test
 
-srfi-13-loko-build-library:
+13-loko-compiler-library:
 	 ls srfi/13.sld 
 
-test-srfi-13-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+13-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test"
 
-srfi-13-loko-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/13.sld" 
+13-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/13.sld" 
 
-test-srfi-13-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && srfi-test/r7rs-programs/13 && rm srfi-test/r7rs-programs/13"
+13-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/13.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test"
 
-srfi-13-loko-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/13.sld" 
+13-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/13.sld" 
 
-test-srfi-13-mit-scheme:
+13-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm
 
-srfi-13-mit-scheme-build-library:
-	
-
-test-srfi-13-mit-scheme-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
-
-srfi-13-mit-scheme-build-library-docker:
+13-mit-scheme-library:
 	
 
-test-srfi-13-mit-scheme-docker-head:
+13-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
 
-srfi-13-mit-scheme-build-library-docker-head:
+13-mit-scheme-library-docker:
 	
 
-test-srfi-13-mosh:
+13-mit-scheme-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
+
+13-mit-scheme-library-docker-head:
+	
+
+13-mosh:
 	
 	mosh --loadpath=. srfi-test/r7rs-programs/13.scm
 
-srfi-13-mosh-build-library:
+13-mosh-library:
 	
 
-test-srfi-13-mosh-docker:
+13-mosh-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/13.scm"
 
-srfi-13-mosh-build-library-docker:
+13-mosh-library-docker:
 	
 
-test-srfi-13-mosh-docker-head:
+13-mosh-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:head bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/13.scm"
 
-srfi-13-mosh-build-library-docker-head:
+13-mosh-library-docker-head:
 	
 
-test-srfi-13-racket:
+13-racket:
 	
 	racket -I r7rs -S . --script srfi-test/r7rs-programs/13.scm
 
-srfi-13-racket-build-library:
+13-racket-library:
 	
 
-test-srfi-13-racket-docker:
+13-racket-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/13.scm"
 
-srfi-13-racket-build-library-docker:
+13-racket-library-docker:
 	
 
-test-srfi-13-racket-docker-head:
+13-racket-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/13.scm"
 
-srfi-13-racket-build-library-docker-head:
+13-racket-library-docker-head:
 	
 
-test-srfi-13-sagittarius:
+13-sagittarius:
 	
 	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/13.scm
 
-srfi-13-sagittarius-build-library:
+13-sagittarius-library:
 	
 
-test-srfi-13-sagittarius-docker:
+13-sagittarius-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/13.scm"
 
-srfi-13-sagittarius-build-library-docker:
+13-sagittarius-library-docker:
 	
 
-test-srfi-13-sagittarius-docker-head:
+13-sagittarius-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/13.scm"
 
-srfi-13-sagittarius-build-library-docker-head:
+13-sagittarius-library-docker-head:
 	
 
-test-srfi-13-stklos:
+13-stklos:
 	
 	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/13.scm
 
-srfi-13-stklos-build-library:
+13-stklos-library:
 	
 
-test-srfi-13-stklos-docker:
+13-stklos-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/13.scm"
 
-srfi-13-stklos-build-library-docker:
+13-stklos-library-docker:
 	
 
-test-srfi-13-stklos-docker-head:
+13-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/13.scm"
 
-srfi-13-stklos-build-library-docker-head:
-	
-
-test-srfi-13-skint:
-	
-	skint -I ./ srfi-test/r7rs-programs/13.scm
-
-srfi-13-skint-build-library:
+13-stklos-library-docker-head:
 	
 
-test-srfi-13-skint-docker:
+13-skint:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/13.scm"
+	skint -I ./ --program srfi-test/r7rs-programs/13.scm
 
-srfi-13-skint-build-library-docker:
-	
-
-test-srfi-13-skint-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/13.scm"
-
-srfi-13-skint-build-library-docker-head:
+13-skint-library:
 	
 
-test-srfi-13-tr7:
+13-skint-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/13.scm"
+
+13-skint-library-docker:
+	
+
+13-skint-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/13.scm"
+
+13-skint-library-docker-head:
+	
+
+13-tr7:
 	
 	tr7i srfi-test/r7rs-programs/13.scm
 
-srfi-13-tr7-build-library:
+13-tr7-library:
 	
 
-test-srfi-13-tr7-docker:
+13-tr7-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/13.scm"
 
-srfi-13-tr7-build-library-docker:
+13-tr7-library-docker:
 	
 
-test-srfi-13-tr7-docker-head:
+13-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/13.scm"
 
-srfi-13-tr7-build-library-docker-head:
-	
-
-test-srfi-13-ypsilon:
-	
-	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/13.scm
-
-srfi-13-ypsilon-build-library:
+13-tr7-library-docker-head:
 	
 
-test-srfi-13-ypsilon-docker:
+13-ypsilon:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/13.scm"
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/13.scm
 
-srfi-13-ypsilon-build-library-docker:
-	
-
-test-srfi-13-ypsilon-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/13.scm"
-
-srfi-13-ypsilon-build-library-docker-head:
+13-ypsilon-library:
 	
 
-test-srfi-64-chibi:
+13-ypsilon-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/13.scm"
+
+13-ypsilon-library-docker:
+	
+
+13-ypsilon-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/13.scm"
+
+13-ypsilon-library-docker-head:
+	
+
+14-chibi:
+	
+	chibi-scheme -I . srfi-test/r7rs-programs/14.scm
+
+14-chibi-library:
+	
+
+14-chibi-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/14.scm"
+
+14-chibi-library-docker:
+	
+
+14-chibi-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/14.scm"
+
+14-chibi-library-docker-head:
+	
+
+14-chicken-compiler:
+	 cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm 
+	csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/14.scm && ./test
+
+14-chicken-compiler-library:
+	 cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm 
+
+14-chicken-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/14.scm && ./test"
+
+14-chicken-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm" 
+
+14-chicken-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/14.scm && ./test"
+
+14-chicken-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm" 
+
+14-chicken-interpreter:
+	 cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm 
+	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/14.scm
+
+14-chicken-interpreter-library:
+	 cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm 
+
+14-chicken-interpreter-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/14.scm"
+
+14-chicken-interpreter-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm" 
+
+14-chicken-interpreter-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/14.scm"
+
+14-chicken-interpreter-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-14.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-14.scm" 
+
+14-cyclone-compiler:
+	 cyclone -I . srfi/14.sld 
+	cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/14.scm && ./test
+
+14-cyclone-compiler-library:
+	 cyclone -I . srfi/14.sld 
+
+14-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/14.scm && ./test"
+
+14-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/14.sld" 
+
+14-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/14.scm && ./test"
+
+14-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/14.sld" 
+
+14-cyclone-interpreter:
+	
+	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/14.scm
+
+14-cyclone-interpreter-library:
+	
+
+14-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/14.scm"
+
+14-cyclone-interpreter-library-docker:
+	
+
+14-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/14.scm"
+
+14-cyclone-interpreter-library-docker-head:
+	
+
+14-foment:
+	
+	foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm
+
+14-foment-library:
+	
+
+14-foment-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm"
+
+14-foment-library-docker:
+	
+
+14-foment-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm"
+
+14-foment-library-docker-head:
+	
+
+14-gambit-compiler:
+	 ls srfi/14.sld 
+	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/14.scm && ./test
+
+14-gambit-compiler-library:
+	 ls srfi/14.sld 
+
+14-gambit-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/14.scm && ./test"
+
+14-gambit-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld" 
+
+14-gambit-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/14.scm && ./test"
+
+14-gambit-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld" 
+
+14-gambit-interpreter:
+	
+	gsi -:s ./ srfi-test/r7rs-programs/14.scm
+
+14-gambit-interpreter-library:
+	
+
+14-gambit-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/14.scm"
+
+14-gambit-interpreter-library-docker:
+	
+
+14-gambit-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/14.scm"
+
+14-gambit-interpreter-library-docker-head:
+	
+
+14-gauche:
+	
+	gosh -r7 -I . srfi-test/r7rs-programs/14.scm
+
+14-gauche-library:
+	
+
+14-gauche-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/14.scm"
+
+14-gauche-library-docker:
+	
+
+14-gauche-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/14.scm"
+
+14-gauche-library-docker-head:
+	
+
+14-gerbil-compiler:
+	 gxc srfi/14.sld 
+	GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/14.scm && ./test
+
+14-gerbil-compiler-library:
+	 gxc srfi/14.sld 
+
+14-gerbil-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/14.scm && ./test"
+
+14-gerbil-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/14.sld" 
+
+14-gerbil-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/14.scm && ./test"
+
+14-gerbil-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/14.sld" 
+
+14-gerbil-interpreter:
+	
+	GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/14.scm
+
+14-gerbil-interpreter-library:
+	
+
+14-gerbil-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/14.scm"
+
+14-gerbil-interpreter-library-docker:
+	
+
+14-gerbil-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/14.scm"
+
+14-gerbil-interpreter-library-docker-head:
+	
+
+14-guile:
+	
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/14.scm
+
+14-guile-library:
+	
+
+14-guile-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/14.scm"
+
+14-guile-library-docker:
+	
+
+14-guile-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/14.scm"
+
+14-guile-library-docker-head:
+	
+
+14-kawa:
+	
+	kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/14.scm
+
+14-kawa-library:
+	
+
+14-kawa-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/14.scm"
+
+14-kawa-library-docker:
+	
+
+14-kawa-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/14.scm"
+
+14-kawa-library-docker-head:
+	
+
+14-loko-compiler:
+	 ls srfi/14.sld 
+	loko -std=r7rs --compile srfi-test/r7rs-programs/14.scm && mv srfi-test/r7rs-programs/14 ./test && ./test
+
+14-loko-compiler-library:
+	 ls srfi/14.sld 
+
+14-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/14.scm && mv srfi-test/r7rs-programs/14 ./test && ./test"
+
+14-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/14.sld" 
+
+14-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/14.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/14.scm && mv srfi-test/r7rs-programs/14 ./test && ./test"
+
+14-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/14.sld" 
+
+14-mit-scheme:
+	
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm
+
+14-mit-scheme-library:
+	
+
+14-mit-scheme-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
+
+14-mit-scheme-library-docker:
+	
+
+14-mit-scheme-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
+
+14-mit-scheme-library-docker-head:
+	
+
+14-mosh:
+	
+	mosh --loadpath=. srfi-test/r7rs-programs/14.scm
+
+14-mosh-library:
+	
+
+14-mosh-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/14.scm"
+
+14-mosh-library-docker:
+	
+
+14-mosh-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/14.scm"
+
+14-mosh-library-docker-head:
+	
+
+14-racket:
+	
+	racket -I r7rs -S . --script srfi-test/r7rs-programs/14.scm
+
+14-racket-library:
+	
+
+14-racket-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/14.scm"
+
+14-racket-library-docker:
+	
+
+14-racket-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/14.scm"
+
+14-racket-library-docker-head:
+	
+
+14-sagittarius:
+	
+	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/14.scm
+
+14-sagittarius-library:
+	
+
+14-sagittarius-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/14.scm"
+
+14-sagittarius-library-docker:
+	
+
+14-sagittarius-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/14.scm"
+
+14-sagittarius-library-docker-head:
+	
+
+14-stklos:
+	
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm
+
+14-stklos-library:
+	
+
+14-stklos-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm"
+
+14-stklos-library-docker:
+	
+
+14-stklos-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm"
+
+14-stklos-library-docker-head:
+	
+
+14-skint:
+	
+	skint -I ./ --program srfi-test/r7rs-programs/14.scm
+
+14-skint-library:
+	
+
+14-skint-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/14.scm"
+
+14-skint-library-docker:
+	
+
+14-skint-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/14.scm"
+
+14-skint-library-docker-head:
+	
+
+14-tr7:
+	
+	tr7i srfi-test/r7rs-programs/14.scm
+
+14-tr7-library:
+	
+
+14-tr7-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/14.scm"
+
+14-tr7-library-docker:
+	
+
+14-tr7-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/14.scm"
+
+14-tr7-library-docker-head:
+	
+
+14-ypsilon:
+	
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/14.scm
+
+14-ypsilon-library:
+	
+
+14-ypsilon-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/14.scm"
+
+14-ypsilon-library-docker:
+	
+
+14-ypsilon-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/14.scm"
+
+14-ypsilon-library-docker-head:
+	
+
+26-chibi:
+	
+	chibi-scheme -I . srfi-test/r7rs-programs/26.scm
+
+26-chibi-library:
+	
+
+26-chibi-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/26.scm"
+
+26-chibi-library-docker:
+	
+
+26-chibi-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/26.scm"
+
+26-chibi-library-docker-head:
+	
+
+26-chicken-compiler:
+	 cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm 
+	csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/26.scm && ./test
+
+26-chicken-compiler-library:
+	 cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm 
+
+26-chicken-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/26.scm && ./test"
+
+26-chicken-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm" 
+
+26-chicken-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/26.scm && ./test"
+
+26-chicken-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm" 
+
+26-chicken-interpreter:
+	 cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm 
+	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/26.scm
+
+26-chicken-interpreter-library:
+	 cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm 
+
+26-chicken-interpreter-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/26.scm"
+
+26-chicken-interpreter-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm" 
+
+26-chicken-interpreter-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/26.scm"
+
+26-chicken-interpreter-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-26.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-26.scm" 
+
+26-cyclone-compiler:
+	 cyclone -I . srfi/26.sld 
+	cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/26.scm && ./test
+
+26-cyclone-compiler-library:
+	 cyclone -I . srfi/26.sld 
+
+26-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/26.scm && ./test"
+
+26-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/26.sld" 
+
+26-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/26.scm && ./test"
+
+26-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/26.sld" 
+
+26-cyclone-interpreter:
+	
+	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/26.scm
+
+26-cyclone-interpreter-library:
+	
+
+26-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/26.scm"
+
+26-cyclone-interpreter-library-docker:
+	
+
+26-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/26.scm"
+
+26-cyclone-interpreter-library-docker-head:
+	
+
+26-foment:
+	
+	foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm
+
+26-foment-library:
+	
+
+26-foment-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
+
+26-foment-library-docker:
+	
+
+26-foment-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
+
+26-foment-library-docker-head:
+	
+
+26-gambit-compiler:
+	 ls srfi/26.sld 
+	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/26.scm && ./test
+
+26-gambit-compiler-library:
+	 ls srfi/26.sld 
+
+26-gambit-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/26.scm && ./test"
+
+26-gambit-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld" 
+
+26-gambit-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/26.scm && ./test"
+
+26-gambit-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld" 
+
+26-gambit-interpreter:
+	
+	gsi -:s ./ srfi-test/r7rs-programs/26.scm
+
+26-gambit-interpreter-library:
+	
+
+26-gambit-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/26.scm"
+
+26-gambit-interpreter-library-docker:
+	
+
+26-gambit-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/26.scm"
+
+26-gambit-interpreter-library-docker-head:
+	
+
+26-gauche:
+	
+	gosh -r7 -I . srfi-test/r7rs-programs/26.scm
+
+26-gauche-library:
+	
+
+26-gauche-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/26.scm"
+
+26-gauche-library-docker:
+	
+
+26-gauche-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/26.scm"
+
+26-gauche-library-docker-head:
+	
+
+26-gerbil-compiler:
+	 gxc srfi/26.sld 
+	GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/26.scm && ./test
+
+26-gerbil-compiler-library:
+	 gxc srfi/26.sld 
+
+26-gerbil-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/26.scm && ./test"
+
+26-gerbil-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/26.sld" 
+
+26-gerbil-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/26.scm && ./test"
+
+26-gerbil-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/26.sld" 
+
+26-gerbil-interpreter:
+	
+	GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/26.scm
+
+26-gerbil-interpreter-library:
+	
+
+26-gerbil-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/26.scm"
+
+26-gerbil-interpreter-library-docker:
+	
+
+26-gerbil-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/26.scm"
+
+26-gerbil-interpreter-library-docker-head:
+	
+
+26-guile:
+	
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/26.scm
+
+26-guile-library:
+	
+
+26-guile-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/26.scm"
+
+26-guile-library-docker:
+	
+
+26-guile-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/26.scm"
+
+26-guile-library-docker-head:
+	
+
+26-kawa:
+	
+	kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm
+
+26-kawa-library:
+	
+
+26-kawa-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm"
+
+26-kawa-library-docker:
+	
+
+26-kawa-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/26.scm"
+
+26-kawa-library-docker-head:
+	
+
+26-loko-compiler:
+	 ls srfi/26.sld 
+	loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test
+
+26-loko-compiler-library:
+	 ls srfi/26.sld 
+
+26-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test"
+
+26-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/26.sld" 
+
+26-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/26.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test"
+
+26-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/26.sld" 
+
+26-mit-scheme:
+	
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
+
+26-mit-scheme-library:
+	
+
+26-mit-scheme-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
+
+26-mit-scheme-library-docker:
+	
+
+26-mit-scheme-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
+
+26-mit-scheme-library-docker-head:
+	
+
+26-mosh:
+	
+	mosh --loadpath=. srfi-test/r7rs-programs/26.scm
+
+26-mosh-library:
+	
+
+26-mosh-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/26.scm"
+
+26-mosh-library-docker:
+	
+
+26-mosh-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/26.scm"
+
+26-mosh-library-docker-head:
+	
+
+26-racket:
+	
+	racket -I r7rs -S . --script srfi-test/r7rs-programs/26.scm
+
+26-racket-library:
+	
+
+26-racket-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/26.scm"
+
+26-racket-library-docker:
+	
+
+26-racket-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/26.scm"
+
+26-racket-library-docker-head:
+	
+
+26-sagittarius:
+	
+	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/26.scm
+
+26-sagittarius-library:
+	
+
+26-sagittarius-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/26.scm"
+
+26-sagittarius-library-docker:
+	
+
+26-sagittarius-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/26.scm"
+
+26-sagittarius-library-docker-head:
+	
+
+26-stklos:
+	
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm
+
+26-stklos-library:
+	
+
+26-stklos-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
+
+26-stklos-library-docker:
+	
+
+26-stklos-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
+
+26-stklos-library-docker-head:
+	
+
+26-skint:
+	
+	skint -I ./ --program srfi-test/r7rs-programs/26.scm
+
+26-skint-library:
+	
+
+26-skint-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/26.scm"
+
+26-skint-library-docker:
+	
+
+26-skint-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/26.scm"
+
+26-skint-library-docker-head:
+	
+
+26-tr7:
+	
+	tr7i srfi-test/r7rs-programs/26.scm
+
+26-tr7-library:
+	
+
+26-tr7-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/26.scm"
+
+26-tr7-library-docker:
+	
+
+26-tr7-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/26.scm"
+
+26-tr7-library-docker-head:
+	
+
+26-ypsilon:
+	
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/26.scm
+
+26-ypsilon-library:
+	
+
+26-ypsilon-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/26.scm"
+
+26-ypsilon-library-docker:
+	
+
+26-ypsilon-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/26.scm"
+
+26-ypsilon-library-docker-head:
+	
+
+28-chibi:
+	
+	chibi-scheme -I . srfi-test/r7rs-programs/28.scm
+
+28-chibi-library:
+	
+
+28-chibi-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/28.scm"
+
+28-chibi-library-docker:
+	
+
+28-chibi-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/28.scm"
+
+28-chibi-library-docker-head:
+	
+
+28-chicken-compiler:
+	 cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm 
+	csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/28.scm && ./test
+
+28-chicken-compiler-library:
+	 cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm 
+
+28-chicken-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/28.scm && ./test"
+
+28-chicken-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm" 
+
+28-chicken-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/28.scm && ./test"
+
+28-chicken-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm" 
+
+28-chicken-interpreter:
+	 cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm 
+	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/28.scm
+
+28-chicken-interpreter-library:
+	 cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm 
+
+28-chicken-interpreter-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/28.scm"
+
+28-chicken-interpreter-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm" 
+
+28-chicken-interpreter-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/28.scm"
+
+28-chicken-interpreter-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-28.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-28.scm" 
+
+28-cyclone-compiler:
+	 cyclone -I . srfi/28.sld 
+	cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/28.scm && ./test
+
+28-cyclone-compiler-library:
+	 cyclone -I . srfi/28.sld 
+
+28-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/28.scm && ./test"
+
+28-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/28.sld" 
+
+28-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/28.scm && ./test"
+
+28-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/28.sld" 
+
+28-cyclone-interpreter:
+	
+	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/28.scm
+
+28-cyclone-interpreter-library:
+	
+
+28-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/28.scm"
+
+28-cyclone-interpreter-library-docker:
+	
+
+28-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/28.scm"
+
+28-cyclone-interpreter-library-docker-head:
+	
+
+28-foment:
+	
+	foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm
+
+28-foment-library:
+	
+
+28-foment-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
+
+28-foment-library-docker:
+	
+
+28-foment-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
+
+28-foment-library-docker-head:
+	
+
+28-gambit-compiler:
+	 ls srfi/28.sld 
+	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/28.scm && ./test
+
+28-gambit-compiler-library:
+	 ls srfi/28.sld 
+
+28-gambit-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/28.scm && ./test"
+
+28-gambit-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld" 
+
+28-gambit-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/28.scm && ./test"
+
+28-gambit-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld" 
+
+28-gambit-interpreter:
+	
+	gsi -:s ./ srfi-test/r7rs-programs/28.scm
+
+28-gambit-interpreter-library:
+	
+
+28-gambit-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/28.scm"
+
+28-gambit-interpreter-library-docker:
+	
+
+28-gambit-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/28.scm"
+
+28-gambit-interpreter-library-docker-head:
+	
+
+28-gauche:
+	
+	gosh -r7 -I . srfi-test/r7rs-programs/28.scm
+
+28-gauche-library:
+	
+
+28-gauche-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/28.scm"
+
+28-gauche-library-docker:
+	
+
+28-gauche-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/28.scm"
+
+28-gauche-library-docker-head:
+	
+
+28-gerbil-compiler:
+	 gxc srfi/28.sld 
+	GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/28.scm && ./test
+
+28-gerbil-compiler-library:
+	 gxc srfi/28.sld 
+
+28-gerbil-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/28.scm && ./test"
+
+28-gerbil-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/28.sld" 
+
+28-gerbil-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/28.scm && ./test"
+
+28-gerbil-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/28.sld" 
+
+28-gerbil-interpreter:
+	
+	GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/28.scm
+
+28-gerbil-interpreter-library:
+	
+
+28-gerbil-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/28.scm"
+
+28-gerbil-interpreter-library-docker:
+	
+
+28-gerbil-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/28.scm"
+
+28-gerbil-interpreter-library-docker-head:
+	
+
+28-guile:
+	
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/28.scm
+
+28-guile-library:
+	
+
+28-guile-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/28.scm"
+
+28-guile-library-docker:
+	
+
+28-guile-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/28.scm"
+
+28-guile-library-docker-head:
+	
+
+28-kawa:
+	
+	kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm
+
+28-kawa-library:
+	
+
+28-kawa-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm"
+
+28-kawa-library-docker:
+	
+
+28-kawa-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm"
+
+28-kawa-library-docker-head:
+	
+
+28-loko-compiler:
+	 ls srfi/28.sld 
+	loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && mv srfi-test/r7rs-programs/28 ./test && ./test
+
+28-loko-compiler-library:
+	 ls srfi/28.sld 
+
+28-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && mv srfi-test/r7rs-programs/28 ./test && ./test"
+
+28-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/28.sld" 
+
+28-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/28.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/28.scm && mv srfi-test/r7rs-programs/28 ./test && ./test"
+
+28-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/28.sld" 
+
+28-mit-scheme:
+	
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
+
+28-mit-scheme-library:
+	
+
+28-mit-scheme-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+
+28-mit-scheme-library-docker:
+	
+
+28-mit-scheme-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+
+28-mit-scheme-library-docker-head:
+	
+
+28-mosh:
+	
+	mosh --loadpath=. srfi-test/r7rs-programs/28.scm
+
+28-mosh-library:
+	
+
+28-mosh-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/28.scm"
+
+28-mosh-library-docker:
+	
+
+28-mosh-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/28.scm"
+
+28-mosh-library-docker-head:
+	
+
+28-racket:
+	
+	racket -I r7rs -S . --script srfi-test/r7rs-programs/28.scm
+
+28-racket-library:
+	
+
+28-racket-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/28.scm"
+
+28-racket-library-docker:
+	
+
+28-racket-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/28.scm"
+
+28-racket-library-docker-head:
+	
+
+28-sagittarius:
+	
+	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/28.scm
+
+28-sagittarius-library:
+	
+
+28-sagittarius-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/28.scm"
+
+28-sagittarius-library-docker:
+	
+
+28-sagittarius-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/28.scm"
+
+28-sagittarius-library-docker-head:
+	
+
+28-stklos:
+	
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm
+
+28-stklos-library:
+	
+
+28-stklos-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
+
+28-stklos-library-docker:
+	
+
+28-stklos-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
+
+28-stklos-library-docker-head:
+	
+
+28-skint:
+	
+	skint -I ./ --program srfi-test/r7rs-programs/28.scm
+
+28-skint-library:
+	
+
+28-skint-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/28.scm"
+
+28-skint-library-docker:
+	
+
+28-skint-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/28.scm"
+
+28-skint-library-docker-head:
+	
+
+28-tr7:
+	
+	tr7i srfi-test/r7rs-programs/28.scm
+
+28-tr7-library:
+	
+
+28-tr7-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/28.scm"
+
+28-tr7-library-docker:
+	
+
+28-tr7-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/28.scm"
+
+28-tr7-library-docker-head:
+	
+
+28-ypsilon:
+	
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/28.scm
+
+28-ypsilon-library:
+	
+
+28-ypsilon-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/28.scm"
+
+28-ypsilon-library-docker:
+	
+
+28-ypsilon-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/28.scm"
+
+28-ypsilon-library-docker-head:
+	
+
+39-chibi:
+	
+	chibi-scheme -I . srfi-test/r7rs-programs/39.scm
+
+39-chibi-library:
+	
+
+39-chibi-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/39.scm"
+
+39-chibi-library-docker:
+	
+
+39-chibi-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/39.scm"
+
+39-chibi-library-docker-head:
+	
+
+39-chicken-compiler:
+	 cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm 
+	csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/39.scm && ./test
+
+39-chicken-compiler-library:
+	 cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm 
+
+39-chicken-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/39.scm && ./test"
+
+39-chicken-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm" 
+
+39-chicken-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/39.scm && ./test"
+
+39-chicken-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm" 
+
+39-chicken-interpreter:
+	 cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm 
+	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/39.scm
+
+39-chicken-interpreter-library:
+	 cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm 
+
+39-chicken-interpreter-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/39.scm"
+
+39-chicken-interpreter-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm" 
+
+39-chicken-interpreter-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/39.scm"
+
+39-chicken-interpreter-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-39.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-39.scm" 
+
+39-cyclone-compiler:
+	 cyclone -I . srfi/39.sld 
+	cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/39.scm && ./test
+
+39-cyclone-compiler-library:
+	 cyclone -I . srfi/39.sld 
+
+39-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/39.scm && ./test"
+
+39-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/39.sld" 
+
+39-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/39.scm && ./test"
+
+39-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/39.sld" 
+
+39-cyclone-interpreter:
+	
+	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/39.scm
+
+39-cyclone-interpreter-library:
+	
+
+39-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/39.scm"
+
+39-cyclone-interpreter-library-docker:
+	
+
+39-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/39.scm"
+
+39-cyclone-interpreter-library-docker-head:
+	
+
+39-foment:
+	
+	foment -I . -I ./srfi srfi-test/r7rs-programs/39.scm
+
+39-foment-library:
+	
+
+39-foment-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/39.scm"
+
+39-foment-library-docker:
+	
+
+39-foment-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/39.scm"
+
+39-foment-library-docker-head:
+	
+
+39-gambit-compiler:
+	 ls srfi/39.sld 
+	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/39.scm && ./test
+
+39-gambit-compiler-library:
+	 ls srfi/39.sld 
+
+39-gambit-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/39.scm && ./test"
+
+39-gambit-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld" 
+
+39-gambit-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/39.scm && ./test"
+
+39-gambit-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld" 
+
+39-gambit-interpreter:
+	
+	gsi -:s ./ srfi-test/r7rs-programs/39.scm
+
+39-gambit-interpreter-library:
+	
+
+39-gambit-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/39.scm"
+
+39-gambit-interpreter-library-docker:
+	
+
+39-gambit-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/39.scm"
+
+39-gambit-interpreter-library-docker-head:
+	
+
+39-gauche:
+	
+	gosh -r7 -I . srfi-test/r7rs-programs/39.scm
+
+39-gauche-library:
+	
+
+39-gauche-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/39.scm"
+
+39-gauche-library-docker:
+	
+
+39-gauche-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/39.scm"
+
+39-gauche-library-docker-head:
+	
+
+39-gerbil-compiler:
+	 gxc srfi/39.sld 
+	GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/39.scm && ./test
+
+39-gerbil-compiler-library:
+	 gxc srfi/39.sld 
+
+39-gerbil-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/39.scm && ./test"
+
+39-gerbil-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/39.sld" 
+
+39-gerbil-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/39.scm && ./test"
+
+39-gerbil-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/39.sld" 
+
+39-gerbil-interpreter:
+	
+	GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/39.scm
+
+39-gerbil-interpreter-library:
+	
+
+39-gerbil-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/39.scm"
+
+39-gerbil-interpreter-library-docker:
+	
+
+39-gerbil-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/39.scm"
+
+39-gerbil-interpreter-library-docker-head:
+	
+
+39-guile:
+	
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/39.scm
+
+39-guile-library:
+	
+
+39-guile-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/39.scm"
+
+39-guile-library-docker:
+	
+
+39-guile-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/39.scm"
+
+39-guile-library-docker-head:
+	
+
+39-kawa:
+	
+	kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/39.scm
+
+39-kawa-library:
+	
+
+39-kawa-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/39.scm"
+
+39-kawa-library-docker:
+	
+
+39-kawa-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/39.scm"
+
+39-kawa-library-docker-head:
+	
+
+39-loko-compiler:
+	 ls srfi/39.sld 
+	loko -std=r7rs --compile srfi-test/r7rs-programs/39.scm && mv srfi-test/r7rs-programs/39 ./test && ./test
+
+39-loko-compiler-library:
+	 ls srfi/39.sld 
+
+39-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/39.scm && mv srfi-test/r7rs-programs/39 ./test && ./test"
+
+39-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/39.sld" 
+
+39-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/39.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/39.scm && mv srfi-test/r7rs-programs/39 ./test && ./test"
+
+39-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/39.sld" 
+
+39-mit-scheme:
+	
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm
+
+39-mit-scheme-library:
+	
+
+39-mit-scheme-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
+
+39-mit-scheme-library-docker:
+	
+
+39-mit-scheme-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
+
+39-mit-scheme-library-docker-head:
+	
+
+39-mosh:
+	
+	mosh --loadpath=. srfi-test/r7rs-programs/39.scm
+
+39-mosh-library:
+	
+
+39-mosh-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/39.scm"
+
+39-mosh-library-docker:
+	
+
+39-mosh-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/39.scm"
+
+39-mosh-library-docker-head:
+	
+
+39-racket:
+	
+	racket -I r7rs -S . --script srfi-test/r7rs-programs/39.scm
+
+39-racket-library:
+	
+
+39-racket-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/39.scm"
+
+39-racket-library-docker:
+	
+
+39-racket-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/39.scm"
+
+39-racket-library-docker-head:
+	
+
+39-sagittarius:
+	
+	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/39.scm
+
+39-sagittarius-library:
+	
+
+39-sagittarius-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/39.scm"
+
+39-sagittarius-library-docker:
+	
+
+39-sagittarius-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/39.scm"
+
+39-sagittarius-library-docker-head:
+	
+
+39-stklos:
+	
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/39.scm
+
+39-stklos-library:
+	
+
+39-stklos-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/39.scm"
+
+39-stklos-library-docker:
+	
+
+39-stklos-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/39.scm"
+
+39-stklos-library-docker-head:
+	
+
+39-skint:
+	
+	skint -I ./ --program srfi-test/r7rs-programs/39.scm
+
+39-skint-library:
+	
+
+39-skint-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/39.scm"
+
+39-skint-library-docker:
+	
+
+39-skint-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/39.scm"
+
+39-skint-library-docker-head:
+	
+
+39-tr7:
+	
+	tr7i srfi-test/r7rs-programs/39.scm
+
+39-tr7-library:
+	
+
+39-tr7-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/39.scm"
+
+39-tr7-library-docker:
+	
+
+39-tr7-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/39.scm"
+
+39-tr7-library-docker-head:
+	
+
+39-ypsilon:
+	
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/39.scm
+
+39-ypsilon-library:
+	
+
+39-ypsilon-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/39.scm"
+
+39-ypsilon-library-docker:
+	
+
+39-ypsilon-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/39.scm"
+
+39-ypsilon-library-docker-head:
+	
+
+60-chibi:
+	
+	chibi-scheme -I . srfi-test/r7rs-programs/60.scm
+
+60-chibi-library:
+	
+
+60-chibi-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/60.scm"
+
+60-chibi-library-docker:
+	
+
+60-chibi-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/60.scm"
+
+60-chibi-library-docker-head:
+	
+
+60-chicken-compiler:
+	 cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm 
+	csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/60.scm && ./test
+
+60-chicken-compiler-library:
+	 cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm 
+
+60-chicken-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/60.scm && ./test"
+
+60-chicken-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm" 
+
+60-chicken-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/60.scm && ./test"
+
+60-chicken-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm" 
+
+60-chicken-interpreter:
+	 cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm 
+	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/60.scm
+
+60-chicken-interpreter-library:
+	 cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm 
+
+60-chicken-interpreter-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/60.scm"
+
+60-chicken-interpreter-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm" 
+
+60-chicken-interpreter-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/60.scm"
+
+60-chicken-interpreter-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-60.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-60.scm" 
+
+60-cyclone-compiler:
+	 cyclone -I . srfi/60.sld 
+	cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/60.scm && ./test
+
+60-cyclone-compiler-library:
+	 cyclone -I . srfi/60.sld 
+
+60-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/60.scm && ./test"
+
+60-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/60.sld" 
+
+60-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/60.scm && ./test"
+
+60-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/60.sld" 
+
+60-cyclone-interpreter:
+	
+	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/60.scm
+
+60-cyclone-interpreter-library:
+	
+
+60-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/60.scm"
+
+60-cyclone-interpreter-library-docker:
+	
+
+60-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/60.scm"
+
+60-cyclone-interpreter-library-docker-head:
+	
+
+60-foment:
+	
+	foment -I . -I ./srfi srfi-test/r7rs-programs/60.scm
+
+60-foment-library:
+	
+
+60-foment-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/60.scm"
+
+60-foment-library-docker:
+	
+
+60-foment-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/60.scm"
+
+60-foment-library-docker-head:
+	
+
+60-gambit-compiler:
+	 ls srfi/60.sld 
+	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/60.scm && ./test
+
+60-gambit-compiler-library:
+	 ls srfi/60.sld 
+
+60-gambit-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/60.scm && ./test"
+
+60-gambit-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld" 
+
+60-gambit-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/60.scm && ./test"
+
+60-gambit-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld" 
+
+60-gambit-interpreter:
+	
+	gsi -:s ./ srfi-test/r7rs-programs/60.scm
+
+60-gambit-interpreter-library:
+	
+
+60-gambit-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/60.scm"
+
+60-gambit-interpreter-library-docker:
+	
+
+60-gambit-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/60.scm"
+
+60-gambit-interpreter-library-docker-head:
+	
+
+60-gauche:
+	
+	gosh -r7 -I . srfi-test/r7rs-programs/60.scm
+
+60-gauche-library:
+	
+
+60-gauche-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/60.scm"
+
+60-gauche-library-docker:
+	
+
+60-gauche-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/60.scm"
+
+60-gauche-library-docker-head:
+	
+
+60-gerbil-compiler:
+	 gxc srfi/60.sld 
+	GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/60.scm && ./test
+
+60-gerbil-compiler-library:
+	 gxc srfi/60.sld 
+
+60-gerbil-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/60.scm && ./test"
+
+60-gerbil-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/60.sld" 
+
+60-gerbil-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/60.scm && ./test"
+
+60-gerbil-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/60.sld" 
+
+60-gerbil-interpreter:
+	
+	GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/60.scm
+
+60-gerbil-interpreter-library:
+	
+
+60-gerbil-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/60.scm"
+
+60-gerbil-interpreter-library-docker:
+	
+
+60-gerbil-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/60.scm"
+
+60-gerbil-interpreter-library-docker-head:
+	
+
+60-guile:
+	
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/60.scm
+
+60-guile-library:
+	
+
+60-guile-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/60.scm"
+
+60-guile-library-docker:
+	
+
+60-guile-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/60.scm"
+
+60-guile-library-docker-head:
+	
+
+60-kawa:
+	
+	kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/60.scm
+
+60-kawa-library:
+	
+
+60-kawa-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/60.scm"
+
+60-kawa-library-docker:
+	
+
+60-kawa-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/60.scm"
+
+60-kawa-library-docker-head:
+	
+
+60-loko-compiler:
+	 ls srfi/60.sld 
+	loko -std=r7rs --compile srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test
+
+60-loko-compiler-library:
+	 ls srfi/60.sld 
+
+60-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test"
+
+60-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/60.sld" 
+
+60-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/60.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test"
+
+60-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/60.sld" 
+
+60-mit-scheme:
+	
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm
+
+60-mit-scheme-library:
+	
+
+60-mit-scheme-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
+
+60-mit-scheme-library-docker:
+	
+
+60-mit-scheme-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
+
+60-mit-scheme-library-docker-head:
+	
+
+60-mosh:
+	
+	mosh --loadpath=. srfi-test/r7rs-programs/60.scm
+
+60-mosh-library:
+	
+
+60-mosh-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/60.scm"
+
+60-mosh-library-docker:
+	
+
+60-mosh-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/60.scm"
+
+60-mosh-library-docker-head:
+	
+
+60-racket:
+	
+	racket -I r7rs -S . --script srfi-test/r7rs-programs/60.scm
+
+60-racket-library:
+	
+
+60-racket-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/60.scm"
+
+60-racket-library-docker:
+	
+
+60-racket-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/60.scm"
+
+60-racket-library-docker-head:
+	
+
+60-sagittarius:
+	
+	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/60.scm
+
+60-sagittarius-library:
+	
+
+60-sagittarius-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/60.scm"
+
+60-sagittarius-library-docker:
+	
+
+60-sagittarius-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/60.scm"
+
+60-sagittarius-library-docker-head:
+	
+
+60-stklos:
+	
+	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/60.scm
+
+60-stklos-library:
+	
+
+60-stklos-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/60.scm"
+
+60-stklos-library-docker:
+	
+
+60-stklos-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/60.scm"
+
+60-stklos-library-docker-head:
+	
+
+60-skint:
+	
+	skint -I ./ --program srfi-test/r7rs-programs/60.scm
+
+60-skint-library:
+	
+
+60-skint-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/60.scm"
+
+60-skint-library-docker:
+	
+
+60-skint-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/60.scm"
+
+60-skint-library-docker-head:
+	
+
+60-tr7:
+	
+	tr7i srfi-test/r7rs-programs/60.scm
+
+60-tr7-library:
+	
+
+60-tr7-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/60.scm"
+
+60-tr7-library-docker:
+	
+
+60-tr7-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/60.scm"
+
+60-tr7-library-docker-head:
+	
+
+60-ypsilon:
+	
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/60.scm
+
+60-ypsilon-library:
+	
+
+60-ypsilon-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/60.scm"
+
+60-ypsilon-library-docker:
+	
+
+60-ypsilon-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/60.scm"
+
+60-ypsilon-library-docker-head:
+	
+
+64-chibi:
 	
 	chibi-scheme -I . srfi-test/r7rs-programs/64.scm
 
-srfi-64-chibi-build-library:
+64-chibi-library:
 	
 
-test-srfi-64-chibi-docker:
+64-chibi-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/64.scm"
 
-srfi-64-chibi-build-library-docker:
+64-chibi-library-docker:
 	
 
-test-srfi-64-chibi-docker-head:
+64-chibi-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/64.scm"
 
-srfi-64-chibi-build-library-docker-head:
+64-chibi-library-docker-head:
 	
 
-test-srfi-64-chicken:
-	  cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld 
-	csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64
+64-chicken-compiler:
+	 cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm 
+	csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/64.scm && ./test
 
-srfi-64-chicken-build-library:
-	  cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld 
+64-chicken-compiler-library:
+	 cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm 
 
-test-srfi-64-chicken-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+64-chicken-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/64.scm && ./test"
 
-srfi-64-chicken-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld" 
+64-chicken-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm" 
 
-test-srfi-64-chicken-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+64-chicken-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csc -X r7rs -R r7rs -I ./srfi -o test srfi-test/r7rs-programs/64.scm && ./test"
 
-srfi-64-chicken-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/64.sld srfi-64.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-64.sld" 
+64-chicken-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm" 
 
-test-srfi-64-cyclone:
+64-chicken-interpreter:
+	 cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm 
+	csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/64.scm
+
+64-chicken-interpreter-library:
+	 cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm 
+
+64-chicken-interpreter-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/64.scm"
+
+64-chicken-interpreter-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm" 
+
+64-chicken-interpreter-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && csi -b -R r7rs -I ./ -I ./srfi -script srfi-test/r7rs-programs/64.scm"
+
+64-chicken-interpreter-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/chicken bash -c "cd workdir && cp srfi/srfi-64.scm . && csc -X r7rs -R r7rs -I ./srfi -s -J srfi-64.scm" 
+
+64-cyclone-compiler:
 	 cyclone -I . srfi/64.sld 
-	cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64
+	cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/64.scm && ./test
 
-srfi-64-cyclone-build-library:
+64-cyclone-compiler-library:
 	 cyclone -I . srfi/64.sld 
 
-test-srfi-64-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+64-cyclone-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/64.scm && ./test"
 
-srfi-64-cyclone-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/64.sld" 
+64-cyclone-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld" 
 
-test-srfi-64-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+64-cyclone-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o srfi-test/r7rs-programs/test -I . srfi-test/r7rs-programs/64.scm && ./test"
 
-srfi-64-cyclone-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/64.sld" 
+64-cyclone-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld" 
 
-test-srfi-64-foment:
+64-cyclone-interpreter:
+	
+	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/64.scm
+
+64-cyclone-interpreter-library:
+	
+
+64-cyclone-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/64.scm"
+
+64-cyclone-interpreter-library-docker:
+	
+
+64-cyclone-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/64.scm"
+
+64-cyclone-interpreter-library-docker-head:
+	
+
+64-foment:
 	
 	foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm
 
-srfi-64-foment-build-library:
+64-foment-library:
 	
 
-test-srfi-64-foment-docker:
+64-foment-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm"
 
-srfi-64-foment-build-library-docker:
+64-foment-library-docker:
 	
 
-test-srfi-64-foment-docker-head:
+64-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm"
 
-srfi-64-foment-build-library-docker-head:
+64-foment-library-docker-head:
 	
 
-test-srfi-64-gambit:
-	 gsc -:search=. srfi/64 
-	gsc -exe ./ -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 -:search=. && rm srfi-test/r7rs-programs/64
+64-gambit-compiler:
+	 ls srfi/64.sld 
+	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/64.scm && ./test
 
-srfi-64-gambit-build-library:
-	 gsc -:search=. srfi/64 
+64-gambit-compiler-library:
+	 ls srfi/64.sld 
 
-test-srfi-64-gambit-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/64"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 -:search=. && rm srfi-test/r7rs-programs/64"
+64-gambit-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/64.scm && ./test"
 
-srfi-64-gambit-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/64" 
+64-gambit-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld" 
 
-test-srfi-64-gambit-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/64"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 -:search=. && rm srfi-test/r7rs-programs/64"
+64-gambit-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/64.scm && ./test"
 
-srfi-64-gambit-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/64" 
+64-gambit-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld" 
 
-test-srfi-64-gauche:
+64-gambit-interpreter:
+	
+	gsi -:s ./ srfi-test/r7rs-programs/64.scm
+
+64-gambit-interpreter-library:
+	
+
+64-gambit-interpreter-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/64.scm"
+
+64-gambit-interpreter-library-docker:
+	
+
+64-gambit-interpreter-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/64.scm"
+
+64-gambit-interpreter-library-docker-head:
+	
+
+64-gauche:
 	
 	gosh -r7 -I . srfi-test/r7rs-programs/64.scm
 
-srfi-64-gauche-build-library:
+64-gauche-library:
 	
 
-test-srfi-64-gauche-docker:
+64-gauche-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/64.scm"
 
-srfi-64-gauche-build-library-docker:
+64-gauche-library-docker:
 	
 
-test-srfi-64-gauche-docker-head:
+64-gauche-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/64.scm"
 
-srfi-64-gauche-build-library-docker-head:
-	
-
-test-srfi-64-gerbil:
-	 gxc -O srfi/64.sld 
-	gxi --lang r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64
-
-srfi-64-gerbil-build-library:
-	 gxc -O srfi/64.sld 
-
-test-srfi-64-gerbil-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
-
-srfi-64-gerbil-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/64.sld" 
-
-test-srfi-64-gerbil-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
-
-srfi-64-gerbil-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/64.sld" 
-
-test-srfi-64-guile:
-	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm
-
-srfi-64-guile-build-library:
+64-gauche-library-docker-head:
 	
 
-test-srfi-64-guile-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm"
+64-gerbil-compiler:
+	 gxc srfi/64.sld 
+	GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/64.scm && ./test
 
-srfi-64-guile-build-library-docker:
-	
+64-gerbil-compiler-library:
+	 gxc srfi/64.sld 
 
-test-srfi-64-guile-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/64.scm"
+64-gerbil-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/64.scm && ./test"
 
-srfi-64-guile-build-library-docker-head:
-	
+64-gerbil-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/64.sld" 
 
-test-srfi-64-kawa:
-	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/64.scm
+64-gerbil-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe srfi-test/r7rs-programs/64.scm && ./test"
 
-srfi-64-kawa-build-library:
-	
+64-gerbil-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && gxc srfi/64.sld" 
 
-test-srfi-64-kawa-docker:
+64-gerbil-interpreter:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/64.scm"
+	GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/64.scm
 
-srfi-64-kawa-build-library-docker:
-	
-
-test-srfi-64-kawa-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/64.scm"
-
-srfi-64-kawa-build-library-docker-head:
+64-gerbil-interpreter-library:
 	
 
-test-srfi-64-larceny:
+64-gerbil-interpreter-docker:
 	
-	larceny -r7 -I . srfi-test/r7rs-programs/64.scm
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/64.scm"
 
-srfi-64-larceny-build-library:
-	
-
-test-srfi-64-larceny-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/64.scm"
-
-srfi-64-larceny-build-library-docker:
+64-gerbil-interpreter-library-docker:
 	
 
-test-srfi-64-larceny-docker-head:
+64-gerbil-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:head bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gerbil bash -c "cd workdir && GERBIL_LOADPATH=.:./srfi gxi --lang r7rs srfi-test/r7rs-programs/64.scm"
 
-srfi-64-larceny-build-library-docker-head:
+64-gerbil-interpreter-library-docker-head:
 	
 
-test-srfi-64-loko:
+64-guile:
+	
+	guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/64.scm
+
+64-guile-library:
+	
+
+64-guile-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/64.scm"
+
+64-guile-library-docker:
+	
+
+64-guile-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . -L ./srfi srfi-test/r7rs-programs/64.scm"
+
+64-guile-library-docker-head:
+	
+
+64-kawa:
+	
+	kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm
+
+64-kawa-library:
+	
+
+64-kawa-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm"
+
+64-kawa-library-docker:
+	
+
+64-kawa-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm"
+
+64-kawa-library-docker-head:
+	
+
+64-loko-compiler:
 	 ls srfi/64.sld 
-	loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64
+	loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && mv srfi-test/r7rs-programs/64 ./test && ./test
 
-srfi-64-loko-build-library:
+64-loko-compiler-library:
 	 ls srfi/64.sld 
 
-test-srfi-64-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+64-loko-compiler-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && mv srfi-test/r7rs-programs/64 ./test && ./test"
 
-srfi-64-loko-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/64.sld" 
+64-loko-compiler-library-docker:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/64.sld" 
 
-test-srfi-64-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && srfi-test/r7rs-programs/64 && rm srfi-test/r7rs-programs/64"
+64-loko-compiler-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/64.sld"
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/64.scm && mv srfi-test/r7rs-programs/64 ./test && ./test"
 
-srfi-64-loko-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/64.sld" 
+64-loko-compiler-library-docker-head:
+	docker run -it -v ${PWD}:/workdir:z schemers/loko bash -c "cd workdir && ls srfi/64.sld" 
 
-test-srfi-64-mit-scheme:
+64-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm
 
-srfi-64-mit-scheme-build-library:
-	
-
-test-srfi-64-mit-scheme-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
-
-srfi-64-mit-scheme-build-library-docker:
+64-mit-scheme-library:
 	
 
-test-srfi-64-mit-scheme-docker-head:
+64-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
 
-srfi-64-mit-scheme-build-library-docker-head:
+64-mit-scheme-library-docker:
 	
 
-test-srfi-64-mosh:
+64-mit-scheme-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
+
+64-mit-scheme-library-docker-head:
+	
+
+64-mosh:
 	
 	mosh --loadpath=. srfi-test/r7rs-programs/64.scm
 
-srfi-64-mosh-build-library:
+64-mosh-library:
 	
 
-test-srfi-64-mosh-docker:
+64-mosh-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/64.scm"
 
-srfi-64-mosh-build-library-docker:
+64-mosh-library-docker:
 	
 
-test-srfi-64-mosh-docker-head:
+64-mosh-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:head bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/64.scm"
 
-srfi-64-mosh-build-library-docker-head:
+64-mosh-library-docker-head:
 	
 
-test-srfi-64-racket:
+64-racket:
 	
 	racket -I r7rs -S . --script srfi-test/r7rs-programs/64.scm
 
-srfi-64-racket-build-library:
+64-racket-library:
 	
 
-test-srfi-64-racket-docker:
+64-racket-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/64.scm"
 
-srfi-64-racket-build-library-docker:
+64-racket-library-docker:
 	
 
-test-srfi-64-racket-docker-head:
+64-racket-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/64.scm"
 
-srfi-64-racket-build-library-docker-head:
+64-racket-library-docker-head:
 	
 
-test-srfi-64-sagittarius:
+64-sagittarius:
 	
 	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/64.scm
 
-srfi-64-sagittarius-build-library:
+64-sagittarius-library:
 	
 
-test-srfi-64-sagittarius-docker:
+64-sagittarius-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/64.scm"
 
-srfi-64-sagittarius-build-library-docker:
+64-sagittarius-library-docker:
 	
 
-test-srfi-64-sagittarius-docker-head:
+64-sagittarius-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/64.scm"
 
-srfi-64-sagittarius-build-library-docker-head:
+64-sagittarius-library-docker-head:
 	
 
-test-srfi-64-stklos:
+64-stklos:
 	
 	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm
 
-srfi-64-stklos-build-library:
+64-stklos-library:
 	
 
-test-srfi-64-stklos-docker:
+64-stklos-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
 
-srfi-64-stklos-build-library-docker:
+64-stklos-library-docker:
 	
 
-test-srfi-64-stklos-docker-head:
+64-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
 
-srfi-64-stklos-build-library-docker-head:
-	
-
-test-srfi-64-skint:
-	
-	skint -I ./ srfi-test/r7rs-programs/64.scm
-
-srfi-64-skint-build-library:
+64-stklos-library-docker-head:
 	
 
-test-srfi-64-skint-docker:
+64-skint:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/64.scm"
+	skint -I ./ --program srfi-test/r7rs-programs/64.scm
 
-srfi-64-skint-build-library-docker:
-	
-
-test-srfi-64-skint-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/64.scm"
-
-srfi-64-skint-build-library-docker-head:
+64-skint-library:
 	
 
-test-srfi-64-tr7:
+64-skint-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/64.scm"
+
+64-skint-library-docker:
+	
+
+64-skint-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/64.scm"
+
+64-skint-library-docker-head:
+	
+
+64-tr7:
 	
 	tr7i srfi-test/r7rs-programs/64.scm
 
-srfi-64-tr7-build-library:
+64-tr7-library:
 	
 
-test-srfi-64-tr7-docker:
+64-tr7-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/64.scm"
 
-srfi-64-tr7-build-library-docker:
+64-tr7-library-docker:
 	
 
-test-srfi-64-tr7-docker-head:
+64-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/64.scm"
 
-srfi-64-tr7-build-library-docker-head:
+64-tr7-library-docker-head:
 	
 
-test-srfi-64-ypsilon:
+64-ypsilon:
 	
-	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/64.scm
+	ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/64.scm
 
-srfi-64-ypsilon-build-library:
+64-ypsilon-library:
 	
 
-test-srfi-64-ypsilon-docker:
+64-ypsilon-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/64.scm"
 
-srfi-64-ypsilon-build-library-docker:
+64-ypsilon-library-docker:
 	
 
-test-srfi-64-ypsilon-docker-head:
+64-ypsilon-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program srfi-test/r7rs-programs/64.scm"
 
-srfi-64-ypsilon-build-library-docker-head:
-	
-
-test-srfi-151-chibi:
-	
-	chibi-scheme -I . srfi-test/r7rs-programs/151.scm
-
-srfi-151-chibi-build-library:
-	
-
-test-srfi-151-chibi-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:latest bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/151.scm"
-
-srfi-151-chibi-build-library-docker:
-	
-
-test-srfi-151-chibi-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/151.scm"
-
-srfi-151-chibi-build-library-docker-head:
-	
-
-test-srfi-151-chicken:
-	  cp srfi/151.sld srfi-151.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-151.sld 
-	csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151
-
-srfi-151-chicken-build-library:
-	  cp srfi/151.sld srfi-151.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-151.sld 
-
-test-srfi-151-chicken-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/151.sld srfi-151.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
-
-srfi-151-chicken-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:latest bash -c "cd workdir &&  cp srfi/151.sld srfi-151.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-151.sld" 
-
-test-srfi-151-chicken-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/151.sld srfi-151.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir && csc -include-path ./srfi -X r7rs -R r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
-
-srfi-151-chicken-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/chicken:head bash -c "cd workdir &&  cp srfi/151.sld srfi-151.sld && csc -include-path ./srfi -X r7rs -R r7rs -s -J srfi-151.sld" 
-
-test-srfi-151-cyclone:
-	 cyclone -I . srfi/151.sld 
-	cyclone -I . srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151
-
-srfi-151-cyclone-build-library:
-	 cyclone -I . srfi/151.sld 
-
-test-srfi-151-cyclone-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
-
-srfi-151-cyclone-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:latest bash -c "cd workdir && cyclone -I . srfi/151.sld" 
-
-test-srfi-151-cyclone-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
-
-srfi-151-cyclone-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/151.sld" 
-
-test-srfi-151-foment:
-	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/151.scm
-
-srfi-151-foment-build-library:
-	
-
-test-srfi-151-foment-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/151.scm"
-
-srfi-151-foment-build-library-docker:
-	
-
-test-srfi-151-foment-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/151.scm"
-
-srfi-151-foment-build-library-docker-head:
-	
-
-test-srfi-151-gambit:
-	 gsc -:search=. srfi/151 
-	gsc -exe ./ -nopreload srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 -:search=. && rm srfi-test/r7rs-programs/151
-
-srfi-151-gambit-build-library:
-	 gsc -:search=. srfi/151 
-
-test-srfi-151-gambit-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/151"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 -:search=. && rm srfi-test/r7rs-programs/151"
-
-srfi-151-gambit-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:latest bash -c "cd workdir && gsc -:search=. srfi/151" 
-
-test-srfi-151-gambit-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/151"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -exe ./ -nopreload srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 -:search=. && rm srfi-test/r7rs-programs/151"
-
-srfi-151-gambit-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit:head bash -c "cd workdir && gsc -:search=. srfi/151" 
-
-test-srfi-151-gauche:
-	
-	gosh -r7 -I . srfi-test/r7rs-programs/151.scm
-
-srfi-151-gauche-build-library:
-	
-
-test-srfi-151-gauche-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:latest bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/151.scm"
-
-srfi-151-gauche-build-library-docker:
-	
-
-test-srfi-151-gauche-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/gauche:head bash -c "cd workdir && gosh -r7 -I . srfi-test/r7rs-programs/151.scm"
-
-srfi-151-gauche-build-library-docker-head:
-	
-
-test-srfi-151-gerbil:
-	 gxc -O srfi/151.sld 
-	gxi --lang r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151
-
-srfi-151-gerbil-build-library:
-	 gxc -O srfi/151.sld 
-
-test-srfi-151-gerbil-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
-
-srfi-151-gerbil-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:latest bash -c "cd workdir && gxc -O srfi/151.sld" 
-
-test-srfi-151-gerbil-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxi --lang r7rs srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
-
-srfi-151-gerbil-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/gerbil:head bash -c "cd workdir && gxc -O srfi/151.sld" 
-
-test-srfi-151-guile:
-	
-	guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/151.scm
-
-srfi-151-guile-build-library:
-	
-
-test-srfi-151-guile-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:latest bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/151.scm"
-
-srfi-151-guile-build-library-docker:
-	
-
-test-srfi-151-guile-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/guile:head bash -c "cd workdir && guile --fresh-auto-compile --r7rs -L . srfi-test/r7rs-programs/151.scm"
-
-srfi-151-guile-build-library-docker-head:
-	
-
-test-srfi-151-kawa:
-	
-	kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/151.scm
-
-srfi-151-kawa-build-library:
-	
-
-test-srfi-151-kawa-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/151.scm"
-
-srfi-151-kawa-build-library-docker:
-	
-
-test-srfi-151-kawa-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs -Dkawa.import.path=../.. srfi-test/r7rs-programs/151.scm"
-
-srfi-151-kawa-build-library-docker-head:
-	
-
-test-srfi-151-larceny:
-	
-	larceny -r7 -I . srfi-test/r7rs-programs/151.scm
-
-srfi-151-larceny-build-library:
-	
-
-test-srfi-151-larceny-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/151.scm"
-
-srfi-151-larceny-build-library-docker:
-	
-
-test-srfi-151-larceny-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/larceny:head bash -c "cd workdir && larceny -r7 -I . srfi-test/r7rs-programs/151.scm"
-
-srfi-151-larceny-build-library-docker-head:
-	
-
-test-srfi-151-loko:
-	 ls srfi/151.sld 
-	loko -std=r7rs --compile srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151
-
-srfi-151-loko-build-library:
-	 ls srfi/151.sld 
-
-test-srfi-151-loko-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
-
-srfi-151-loko-build-library-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:latest bash -c "cd workdir && ls srfi/151.sld" 
-
-test-srfi-151-loko-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/151.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && loko -std=r7rs --compile srfi-test/r7rs-programs/151.scm && srfi-test/r7rs-programs/151 && rm srfi-test/r7rs-programs/151"
-
-srfi-151-loko-build-library-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/loko:head bash -c "cd workdir && ls srfi/151.sld" 
-
-test-srfi-151-mit-scheme:
-	
-	mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/151.scm
-
-srfi-151-mit-scheme-build-library:
-	
-
-test-srfi-151-mit-scheme-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/151.scm"
-
-srfi-151-mit-scheme-build-library-docker:
-	
-
-test-srfi-151-mit-scheme-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:head bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/26.sld ./srfi/28.sld ./srfi/64.sld srfi-test/r7rs-programs/151.scm"
-
-srfi-151-mit-scheme-build-library-docker-head:
-	
-
-test-srfi-151-mosh:
-	
-	mosh --loadpath=. srfi-test/r7rs-programs/151.scm
-
-srfi-151-mosh-build-library:
-	
-
-test-srfi-151-mosh-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:latest bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/151.scm"
-
-srfi-151-mosh-build-library-docker:
-	
-
-test-srfi-151-mosh-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/mosh:head bash -c "cd workdir && mosh --loadpath=. srfi-test/r7rs-programs/151.scm"
-
-srfi-151-mosh-build-library-docker-head:
-	
-
-test-srfi-151-racket:
-	
-	racket -I r7rs -S . --script srfi-test/r7rs-programs/151.scm
-
-srfi-151-racket-build-library:
-	
-
-test-srfi-151-racket-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:latest bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/151.scm"
-
-srfi-151-racket-build-library-docker:
-	
-
-test-srfi-151-racket-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/racket:head bash -c "cd workdir && racket -I r7rs -S . --script srfi-test/r7rs-programs/151.scm"
-
-srfi-151-racket-build-library-docker-head:
-	
-
-test-srfi-151-sagittarius:
-	
-	sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/151.scm
-
-srfi-151-sagittarius-build-library:
-	
-
-test-srfi-151-sagittarius-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:latest bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/151.scm"
-
-srfi-151-sagittarius-build-library-docker:
-	
-
-test-srfi-151-sagittarius-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/sagittarius:head bash -c "cd workdir && sash -r7 -L . -L ./srfi srfi-test/r7rs-programs/151.scm"
-
-srfi-151-sagittarius-build-library-docker-head:
-	
-
-test-srfi-151-stklos:
-	
-	stklos -I . -I ./srfi -f srfi-test/r7rs-programs/151.scm
-
-srfi-151-stklos-build-library:
-	
-
-test-srfi-151-stklos-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/151.scm"
-
-srfi-151-stklos-build-library-docker:
-	
-
-test-srfi-151-stklos-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos -I . -I ./srfi -f srfi-test/r7rs-programs/151.scm"
-
-srfi-151-stklos-build-library-docker-head:
-	
-
-test-srfi-151-skint:
-	
-	skint -I ./ srfi-test/r7rs-programs/151.scm
-
-srfi-151-skint-build-library:
-	
-
-test-srfi-151-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/151.scm"
-
-srfi-151-skint-build-library-docker:
-	
-
-test-srfi-151-skint-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ srfi-test/r7rs-programs/151.scm"
-
-srfi-151-skint-build-library-docker-head:
-	
-
-test-srfi-151-tr7:
-	
-	tr7i srfi-test/r7rs-programs/151.scm
-
-srfi-151-tr7-build-library:
-	
-
-test-srfi-151-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:latest bash -c "cd workdir && tr7i srfi-test/r7rs-programs/151.scm"
-
-srfi-151-tr7-build-library-docker:
-	
-
-test-srfi-151-tr7-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && tr7i srfi-test/r7rs-programs/151.scm"
-
-srfi-151-tr7-build-library-docker-head:
-	
-
-test-srfi-151-ypsilon:
-	
-	ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/151.scm
-
-srfi-151-ypsilon-build-library:
-	
-
-test-srfi-151-ypsilon-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:latest bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/151.scm"
-
-srfi-151-ypsilon-build-library-docker:
-	
-
-test-srfi-151-ypsilon-docker-head:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/ypsilon:head bash -c "cd workdir && ypsilon --r7rs --loadpath=. --loadpath=./srfi srfi-test/r7rs-programs/151.scm"
-
-srfi-151-ypsilon-build-library-docker-head:
+64-ypsilon-library-docker-head:
 	
 
 

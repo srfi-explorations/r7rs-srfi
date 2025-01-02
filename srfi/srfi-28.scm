@@ -1,8 +1,10 @@
-; This file exists for Guile compability
 (define-library
   (srfi 28)
   (import (scheme base)
           (scheme write))
   (export format)
-  (include "28.scm"))
+  (cond-expand
+    (chicken (include "28.scm"))
+    (foment (include "srfi/28.scm"))
+    (guile (include "28.scm"))))
 

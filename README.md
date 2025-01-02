@@ -25,12 +25,20 @@ get built.
 
 With compiler implementations run the tests for SRFIs the SRFI you want to test needs to build them.
 
-So for example on Chicken to test SRFI-13 run:
+So for example on chicken-compiler to test SRFI-64 run:
 
-    make test-chicken-srfi-64
-    make test-chicken-srfi-33
-    make test-chicken-srfi-14
-    make test-chicken-srfi-13
+    make 8-chicken-compiler-library
+    make 1-chicken-compiler-library
+    make 60-chicken-compiler-library
+    make 14-chicken-compiler-library
+    make 13-chicken-compiler-library
+    make 26-chicken-compiler-library
+    make 28-chicken-compiler-library
+    make 39-chicken-compiler-library
+    make 64-chicken-compiler-library
+    make 64-chicken-compiler
+
+If you find yourself running this repeatedly you can add them into Makefile.shortcuts
 
 
 # Adding new srfi
@@ -43,8 +51,9 @@ Add files:
         - Library body/content
     - srfi/N.rkt
         - Shim file to support Racket
-    - srfi/srfi-N.rkt
-        - Shim file to support Guile
+    - srfi/srfi-N.scm
+        - Shim file to support Guile and Foment
+        - Should have identical exports to N.sld but cond-expanded include for Foment and Guile only
 
 
 You should be able to deduct what the contents of these files are from other SRFI implementations

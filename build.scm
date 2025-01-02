@@ -9,6 +9,18 @@
 (include "implementations.scm")
 (include "srfis.scm")
 
+(when (file-exists? "srfi-numbers.txt")
+  (delete-file "srfi-numbers.txt"))
+(with-output-to-file
+  "srfi-numbers.txt"
+  (lambda ()
+    (for-each
+      (lambda (srfi)
+        (display (cdr (assoc 'number srfi)))
+        (display " "))
+      srfis)))
+
+
 (define full-library-command
   (lambda (implementation srfi)
     (let* ((name (symbol->string (cdr (assoc 'name implementation))))
@@ -16,9 +28,10 @@
            (library-command (assoc 'library-command implementation)))
       (cond ((not library-command) #f)
             ; Note that Chicken needs to have the SRFI library as srfi-N.scm in same folder
-            ((string=? name "chicken")
-             (string-append " cp srfi/" number ".sld srfi-" number ".sld"
-                            " && " (cdr library-command) " srfi-" number ".sld"))
+            ((or (string=? name "chicken-compiler")
+                 (string=? name "chicken-interpreter"))
+             (string-append "cp srfi/srfi-" number ".scm ."
+                            " && " (cdr library-command) " srfi-" number ".scm"))
             (else (string-append (cdr library-command)
                                  " srfi/" number (if (string=? name "gambit") "" ".sld")))))))
 
@@ -32,12 +45,11 @@
                " srfi-test/r7rs-programs/" number ".scm"))
            (library-command (assoc 'library-command implementation)))
       (cond
-        (library-command
-          (string-append command
-                         (if (string=? name "gambit")
-                           (string-append " && srfi-test/r7rs-programs/" number " -:search=.")
-                           (string-append " && srfi-test/r7rs-programs/" number))
-                         " && rm srfi-test/r7rs-programs/" number))
+        ((and (assoc 'compiler? implementation)
+              (cdr (assoc 'compiler? implementation)))
+         (if (string=? name "loko-compiler")
+           (string-append command " && mv srfi-test/r7rs-programs/" number " ./test && ./test")
+           (string-append command " && ./test")))
         (else command)))))
 
 (define jenkinsfile-top (compile (slurp "templates/Jenkinsfile-top")))
@@ -100,11 +112,15 @@
         (let ((number (number->string (cdr (assoc 'number srfi)))))
           (for-each
             (lambda (implementation)
-              (let* ((name (symbol->string (cdr (assoc 'name implementation)))))
+              (let* ((name (symbol->string (cdr (assoc 'name implementation))))
+                     (dockerimage (if (assoc 'docker-image implementation)
+                                       (cdr (assoc 'docker-image implementation))
+                                       (string-append "schemers/" name ":latest"))))
                 (execute makefile-job
                          `((name . ,name)
                            (command . ,(full-command implementation srfi))
                            (library-command . ,(full-library-command implementation srfi))
+                           (dockerimage . ,dockerimage)
                            (number . ,number))
                          out))
               (newline out))

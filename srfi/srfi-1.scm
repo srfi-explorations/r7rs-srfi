@@ -1,8 +1,8 @@
-; This file exists for Guile compability
 (define-library
   (srfi 1)
   (import (scheme base)
-          (scheme cxr))
+          (scheme cxr)
+          (srfi 8))
   (export
     ;cons
     ;list
@@ -27,28 +27,28 @@
     ;cddr
     ;caar
     ;caadr
-    cadar
-    caddr
+    ;cadar
+    ;caddr
     ;cdaar
-    cdadr
-    cddar
+    ;cdadr
+    ;cddar
     ;cddr
-    caaaar
-    caaadr
-    caadar
-    caaddr
-    cadaar
-    cadadr
-    caddar
-    cadddr
-    cdaaar
-    cdaadr
-    cdadar
-    cdaddr
-    cddaar
-    cddadr
-    cdddar
-    cddddr
+    ;caaaar
+    ;caaadr
+    ;caadar
+    ;caaddr
+    ;cadaar
+    ;cadadr
+    ;caddar
+    ;cadddr
+    ;cdaaar
+    ;cdaadr
+    ;cdadar
+    ;cdaddr
+    ;cddaar
+    ;cddadr
+    ;cdddar
+    ;cddddr
     ;list-ref
     first
     second
@@ -152,4 +152,8 @@
     ;set-car!
     ;set-cdr!
     )
-  (include "1.scm"))
+  (cond-expand
+    (chicken (include "1.scm"))
+    (foment (include "srfi/1.scm"))
+    (guile (include "1.scm"))))
+
