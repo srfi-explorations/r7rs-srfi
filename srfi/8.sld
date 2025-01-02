@@ -1,6 +1,9 @@
 (define-library
   (srfi 8)
-  (import (scheme base))
+  (cond-expand
+    (stklos (import (scheme base)
+                    (only (stklos) %find-macro-clause)))
+    (else (import (scheme base))))
   (export receive)
   (cond-expand
     (foment (include "srfi/8.scm"))

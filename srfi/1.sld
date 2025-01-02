@@ -1,8 +1,15 @@
 (define-library
   (srfi 1)
-  (import (scheme base)
-          (scheme cxr)
-          (srfi 8))
+  (cond-expand
+    (stklos
+      (import (scheme base)
+              (scheme cxr)
+              (srfi 8)
+              (only (stklos) %find-macro-clause)))
+    (else
+      (import (scheme base)
+              (scheme cxr)
+              (srfi 8))))
   (export
     ;cons
     ;list

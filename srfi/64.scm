@@ -645,7 +645,7 @@
          ((test-runner-on-test-end r) r)
          (increment-test-count r))))))
 
-(define-syntax %test-assert
+(define-syntax internal-test-assert
   (syntax-rules ()
     ((_ test-name expression)
      (test-thunk (let () test-name)
@@ -658,9 +658,9 @@
 (define-syntax test-assert
   (syntax-rules ()
     ((_ test-name expression)
-     (%test-assert test-name expression))
+     (internal-test-assert test-name expression))
     ((_ expression)
-     (%test-assert #f expression))))
+     (internal-test-assert #f expression))))
 ;(set-documentation! 'test-assert
 ;  "@defspec test-assert test-name expression
 ;@defspecx test-assert expression
