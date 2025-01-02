@@ -63,21 +63,21 @@
 
 1-cyclone-compiler:
 	 cyclone -I . srfi/1.sld 
-	cyclone -o ./test -I . srfi-test/r7rs-programs/1.scm && ./test
+	cyclone -o ./test -I . srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test
 
 1-cyclone-compiler-library:
 	 cyclone -I . srfi/1.sld 
 
 1-cyclone-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/1.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test"
 
 1-cyclone-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/1.sld" 
 
 1-cyclone-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/1.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test"
 
 1-cyclone-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/1.sld" 
@@ -525,21 +525,21 @@
 
 8-cyclone-compiler:
 	 cyclone -I . srfi/8.sld 
-	cyclone -o ./test -I . srfi-test/r7rs-programs/8.scm && ./test
+	cyclone -o ./test -I . srfi-test/r7rs-programs/8.scm && mv srfi-test/r7rs-programs/8 ./test && ./test
 
 8-cyclone-compiler-library:
 	 cyclone -I . srfi/8.sld 
 
 8-cyclone-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/8.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/8.scm && mv srfi-test/r7rs-programs/8 ./test && ./test"
 
 8-cyclone-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/8.sld" 
 
 8-cyclone-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/8.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/8.scm && mv srfi-test/r7rs-programs/8 ./test && ./test"
 
 8-cyclone-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/8.sld" 
@@ -987,21 +987,21 @@
 
 13-cyclone-compiler:
 	 cyclone -I . srfi/13.sld 
-	cyclone -o ./test -I . srfi-test/r7rs-programs/13.scm && ./test
+	cyclone -o ./test -I . srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test
 
 13-cyclone-compiler-library:
 	 cyclone -I . srfi/13.sld 
 
 13-cyclone-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/13.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test"
 
 13-cyclone-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/13.sld" 
 
 13-cyclone-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/13.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test"
 
 13-cyclone-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/13.sld" 
@@ -1449,21 +1449,21 @@
 
 14-cyclone-compiler:
 	 cyclone -I . srfi/14.sld 
-	cyclone -o ./test -I . srfi-test/r7rs-programs/14.scm && ./test
+	cyclone -o ./test -I . srfi-test/r7rs-programs/14.scm && mv srfi-test/r7rs-programs/14 ./test && ./test
 
 14-cyclone-compiler-library:
 	 cyclone -I . srfi/14.sld 
 
 14-cyclone-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/14.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/14.scm && mv srfi-test/r7rs-programs/14 ./test && ./test"
 
 14-cyclone-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/14.sld" 
 
 14-cyclone-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/14.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/14.scm && mv srfi-test/r7rs-programs/14 ./test && ./test"
 
 14-cyclone-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/14.sld" 
@@ -1911,21 +1911,21 @@
 
 26-cyclone-compiler:
 	 cyclone -I . srfi/26.sld 
-	cyclone -o ./test -I . srfi-test/r7rs-programs/26.scm && ./test
+	cyclone -o ./test -I . srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test
 
 26-cyclone-compiler-library:
 	 cyclone -I . srfi/26.sld 
 
 26-cyclone-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/26.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test"
 
 26-cyclone-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/26.sld" 
 
 26-cyclone-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/26.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test"
 
 26-cyclone-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/26.sld" 
@@ -2373,21 +2373,21 @@
 
 28-cyclone-compiler:
 	 cyclone -I . srfi/28.sld 
-	cyclone -o ./test -I . srfi-test/r7rs-programs/28.scm && ./test
+	cyclone -o ./test -I . srfi-test/r7rs-programs/28.scm && mv srfi-test/r7rs-programs/28 ./test && ./test
 
 28-cyclone-compiler-library:
 	 cyclone -I . srfi/28.sld 
 
 28-cyclone-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/28.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/28.scm && mv srfi-test/r7rs-programs/28 ./test && ./test"
 
 28-cyclone-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/28.sld" 
 
 28-cyclone-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/28.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/28.scm && mv srfi-test/r7rs-programs/28 ./test && ./test"
 
 28-cyclone-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/28.sld" 
@@ -2835,21 +2835,21 @@
 
 39-cyclone-compiler:
 	 cyclone -I . srfi/39.sld 
-	cyclone -o ./test -I . srfi-test/r7rs-programs/39.scm && ./test
+	cyclone -o ./test -I . srfi-test/r7rs-programs/39.scm && mv srfi-test/r7rs-programs/39 ./test && ./test
 
 39-cyclone-compiler-library:
 	 cyclone -I . srfi/39.sld 
 
 39-cyclone-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/39.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/39.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/39.scm && mv srfi-test/r7rs-programs/39 ./test && ./test"
 
 39-cyclone-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/39.sld" 
 
 39-cyclone-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/39.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/39.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/39.scm && mv srfi-test/r7rs-programs/39 ./test && ./test"
 
 39-cyclone-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/39.sld" 
@@ -3297,21 +3297,21 @@
 
 60-cyclone-compiler:
 	 cyclone -I . srfi/60.sld 
-	cyclone -o ./test -I . srfi-test/r7rs-programs/60.scm && ./test
+	cyclone -o ./test -I . srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test
 
 60-cyclone-compiler-library:
 	 cyclone -I . srfi/60.sld 
 
 60-cyclone-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/60.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/60.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test"
 
 60-cyclone-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/60.sld" 
 
 60-cyclone-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/60.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/60.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test"
 
 60-cyclone-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/60.sld" 
@@ -3759,21 +3759,21 @@
 
 64-cyclone-compiler:
 	 cyclone -I . srfi/64.sld 
-	cyclone -o ./test -I . srfi-test/r7rs-programs/64.scm && ./test
+	cyclone -o ./test -I . srfi-test/r7rs-programs/64.scm && mv srfi-test/r7rs-programs/64 ./test && ./test
 
 64-cyclone-compiler-library:
 	 cyclone -I . srfi/64.sld 
 
 64-cyclone-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/64.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/64.scm && mv srfi-test/r7rs-programs/64 ./test && ./test"
 
 64-cyclone-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld" 
 
 64-cyclone-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/64.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -o ./test -I . srfi-test/r7rs-programs/64.scm && mv srfi-test/r7rs-programs/64 ./test && ./test"
 
 64-cyclone-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone bash -c "cd workdir && cyclone -I . srfi/64.sld" 

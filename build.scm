@@ -47,7 +47,8 @@
       (cond
         ((and (assoc 'compiler? implementation)
               (cdr (assoc 'compiler? implementation)))
-         (if (string=? name "loko-compiler")
+         (if (or (string=? name "loko-compiler")
+                 (string=? name "cyclone-compiler"))
            (string-append command " && mv srfi-test/r7rs-programs/" number " ./test && ./test")
            (string-append command " && ./test")))
         (else command)))))
