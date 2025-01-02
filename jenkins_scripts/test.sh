@@ -29,7 +29,7 @@ do
     # Some implementations do not use the projects SRFI-64 yet, so copy their logfiles too
     if [ -f "srfi-$srfi.log" ]
     then
-        cp "srfi-$srfi.log" "reports/$name-srfi-$srfi.log"
+        mv "srfi-$srfi.log" "reports/$name-srfi-$srfi.log"
     fi
 done
 

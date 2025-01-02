@@ -34,6 +34,7 @@
     ((name . gambit-compiler)
      (compiler? . #t)
      (command . "gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/")
+     (library-command . "ls")
      (docker-image . "schemers/gambit"))
 
     ;; FIXME

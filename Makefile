@@ -125,25 +125,25 @@
 	
 
 1-gambit-compiler:
-	
+	 ls srfi/1.sld 
 	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/1.scm && ./test
 
 1-gambit-compiler-library:
-	
+	 ls srfi/1.sld 
 
 1-gambit-compiler-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/1.scm && ./test"
 
 1-gambit-compiler-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld" 
 
 1-gambit-compiler-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/1.scm && ./test"
 
 1-gambit-compiler-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld" 
 
 1-gambit-interpreter:
 	
@@ -587,25 +587,25 @@
 	
 
 8-gambit-compiler:
-	
+	 ls srfi/8.sld 
 	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/8.scm && ./test
 
 8-gambit-compiler-library:
-	
+	 ls srfi/8.sld 
 
 8-gambit-compiler-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/8.scm && ./test"
 
 8-gambit-compiler-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld" 
 
 8-gambit-compiler-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/8.scm && ./test"
 
 8-gambit-compiler-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld" 
 
 8-gambit-interpreter:
 	
@@ -1049,25 +1049,25 @@
 	
 
 13-gambit-compiler:
-	
+	 ls srfi/13.sld 
 	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/13.scm && ./test
 
 13-gambit-compiler-library:
-	
+	 ls srfi/13.sld 
 
 13-gambit-compiler-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/13.scm && ./test"
 
 13-gambit-compiler-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld" 
 
 13-gambit-compiler-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/13.scm && ./test"
 
 13-gambit-compiler-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld" 
 
 13-gambit-interpreter:
 	
@@ -1511,25 +1511,25 @@
 	
 
 14-gambit-compiler:
-	
+	 ls srfi/14.sld 
 	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/14.scm && ./test
 
 14-gambit-compiler-library:
-	
+	 ls srfi/14.sld 
 
 14-gambit-compiler-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/14.scm && ./test"
 
 14-gambit-compiler-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld" 
 
 14-gambit-compiler-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/14.scm && ./test"
 
 14-gambit-compiler-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld" 
 
 14-gambit-interpreter:
 	
@@ -1973,25 +1973,25 @@
 	
 
 26-gambit-compiler:
-	
+	 ls srfi/26.sld 
 	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/26.scm && ./test
 
 26-gambit-compiler-library:
-	
+	 ls srfi/26.sld 
 
 26-gambit-compiler-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/26.scm && ./test"
 
 26-gambit-compiler-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld" 
 
 26-gambit-compiler-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/26.scm && ./test"
 
 26-gambit-compiler-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld" 
 
 26-gambit-interpreter:
 	
@@ -2435,25 +2435,25 @@
 	
 
 28-gambit-compiler:
-	
+	 ls srfi/28.sld 
 	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/28.scm && ./test
 
 28-gambit-compiler-library:
-	
+	 ls srfi/28.sld 
 
 28-gambit-compiler-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/28.scm && ./test"
 
 28-gambit-compiler-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld" 
 
 28-gambit-compiler-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/28.scm && ./test"
 
 28-gambit-compiler-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld" 
 
 28-gambit-interpreter:
 	
@@ -2897,25 +2897,25 @@
 	
 
 39-gambit-compiler:
-	
+	 ls srfi/39.sld 
 	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/39.scm && ./test
 
 39-gambit-compiler-library:
-	
+	 ls srfi/39.sld 
 
 39-gambit-compiler-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/39.scm && ./test"
 
 39-gambit-compiler-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld" 
 
 39-gambit-compiler-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/39.scm && ./test"
 
 39-gambit-compiler-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld" 
 
 39-gambit-interpreter:
 	
@@ -3359,25 +3359,25 @@
 	
 
 60-gambit-compiler:
-	
+	 ls srfi/60.sld 
 	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/60.scm && ./test
 
 60-gambit-compiler-library:
-	
+	 ls srfi/60.sld 
 
 60-gambit-compiler-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/60.scm && ./test"
 
 60-gambit-compiler-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld" 
 
 60-gambit-compiler-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/60.scm && ./test"
 
 60-gambit-compiler-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld" 
 
 60-gambit-interpreter:
 	
@@ -3821,25 +3821,25 @@
 	
 
 64-gambit-compiler:
-	
+	 ls srfi/64.sld 
 	gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/64.scm && ./test
 
 64-gambit-compiler-library:
-	
+	 ls srfi/64.sld 
 
 64-gambit-compiler-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/64.scm && ./test"
 
 64-gambit-compiler-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld" 
 
 64-gambit-compiler-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/64.scm && ./test"
 
 64-gambit-compiler-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld" 
 
 64-gambit-interpreter:
 	
