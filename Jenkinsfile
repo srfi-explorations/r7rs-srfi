@@ -135,7 +135,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -o srfi-test/r7rs-programs/test -I ." "cyclone -I ."'
+                    sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -o ./test -I ." "cyclone -I ."'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -210,7 +210,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/" "ls"'
+                    sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o ./test -exe -nopreload ./ ./srfi/" "ls"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -285,7 +285,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil-compiler" "GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe" "gxc"'
+                    sh './jenkins_scripts/test.sh "gerbil-compiler" "GERBIL_LOADPATH=. gxc -o ./test --lang r7rs -exe" "gxc"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

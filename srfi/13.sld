@@ -1,21 +1,41 @@
 (define-library
   (srfi 13)
-  (import (except (scheme base)
-                  string-copy
-                  string-map
-                  string-for-each
-                  string-fill!
-                  string-copy!
-                  string->list)
-          (only (scheme char)
-                char-ci=?
-                char-ci<?
-                char-downcase
-                char-upcase
-                char-alphabetic?)
-          (srfi 8)
-          (srfi 14)
-          (srfi 60))
+  (cond-expand
+    (stklos
+      (import (except (scheme base)
+                      string-copy
+                      string-map
+                      string-for-each
+                      string-fill!
+                      string-copy!
+                      string->list)
+              (only (scheme char)
+                    char-ci=?
+                    char-ci<?
+                    char-downcase
+                    char-upcase
+                    char-alphabetic?)
+              (srfi 8)
+              (srfi 14)
+              (srfi 60)
+              (only (stklos) %find-macro-clause)))
+    (else
+      (import (except (scheme base)
+                      string-copy
+                      string-map
+                      string-for-each
+                      string-fill!
+                      string-copy!
+                      string->list)
+              (only (scheme char)
+                    char-ci=?
+                    char-ci<?
+                    char-downcase
+                    char-upcase
+                    char-alphabetic?)
+              (srfi 8)
+              (srfi 14)
+              (srfi 60))))
   (export string-map
           string-map!
           string-fold

@@ -1,6 +1,10 @@
 (define-library
   (srfi 60)
-  (import (scheme base))
+  (cond-expand
+    (stklos
+      (import (scheme base)
+              (only (stklos) %find-macro-clause)))
+    (else (import (scheme base))))
   (export logand
           bitwise-and
           logior

@@ -18,7 +18,7 @@
 
     ((name . cyclone-compiler)
      (compiler? . #t)
-     (command . "cyclone -o srfi-test/r7rs-programs/test -I .")
+     (command . "cyclone -o ./test -I .")
      (library-command . "cyclone -I .")
      ; Library command so the executable gets run
      ;(library-command . "ls")
@@ -33,7 +33,7 @@
 
     ((name . gambit-compiler)
      (compiler? . #t)
-     (command . "gsc -o srfi-test/r7rs-programs/test -exe -nopreload ./ ./srfi/")
+     (command . "gsc -o ./test -exe -nopreload ./ ./srfi/")
      (library-command . "ls")
      (docker-image . "schemers/gambit"))
 
@@ -49,7 +49,7 @@
 
     ((name . gerbil-compiler)
      (compiler? . #t)
-     (command . "GERBIL_LOADPATH=. gxc -o srfi-test/r7rs-programs/test --lang r7rs -exe")
+     (command . "GERBIL_LOADPATH=. gxc -o ./test --lang r7rs -exe")
      (library-command . "gxc")
      (docker-image . "schemers/gerbil"))
 
@@ -90,7 +90,7 @@
      (command . "stklos -I . -I ./srfi -f"))
 
     ((name . skint)
-     (command . "skint -I ./ --program"))
+     (command . "skint -I ../../ --program"))
 
     ((name . tr7)
      (command . "tr7i"))
