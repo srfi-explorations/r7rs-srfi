@@ -535,7 +535,7 @@ pipeline {
                     sh 'apt update && apt install -y make'
                     sh './jenkins_scripts/clean.sh'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "skint" "skint -I ./ --program" ""'
+                    sh './jenkins_scripts/test.sh "skint" "skint -I ./ --script" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

@@ -90,7 +90,7 @@
      (command . "stklos -I . -I ./srfi -f"))
 
     ((name . skint)
-     (command . "skint -I ../../ --program"))
+     (command . "skint -I ./ --script"))
 
     ((name . tr7)
      (command . "tr7i"))

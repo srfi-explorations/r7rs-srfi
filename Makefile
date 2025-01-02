@@ -399,21 +399,21 @@
 
 1-skint:
 	
-	skint -I ./ --program srfi-test/r7rs-programs/1.scm
+	skint -I ./ --script srfi-test/r7rs-programs/1.scm
 
 1-skint-library:
 	
 
 1-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/1.scm"
 
 1-skint-library-docker:
 	
 
 1-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/1.scm"
 
 1-skint-library-docker-head:
 	
@@ -861,21 +861,21 @@
 
 8-skint:
 	
-	skint -I ./ --program srfi-test/r7rs-programs/8.scm
+	skint -I ./ --script srfi-test/r7rs-programs/8.scm
 
 8-skint-library:
 	
 
 8-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/8.scm"
 
 8-skint-library-docker:
 	
 
 8-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/8.scm"
 
 8-skint-library-docker-head:
 	
@@ -1323,21 +1323,21 @@
 
 13-skint:
 	
-	skint -I ./ --program srfi-test/r7rs-programs/13.scm
+	skint -I ./ --script srfi-test/r7rs-programs/13.scm
 
 13-skint-library:
 	
 
 13-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/13.scm"
 
 13-skint-library-docker:
 	
 
 13-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/13.scm"
 
 13-skint-library-docker-head:
 	
@@ -1785,21 +1785,21 @@
 
 14-skint:
 	
-	skint -I ./ --program srfi-test/r7rs-programs/14.scm
+	skint -I ./ --script srfi-test/r7rs-programs/14.scm
 
 14-skint-library:
 	
 
 14-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/14.scm"
 
 14-skint-library-docker:
 	
 
 14-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/14.scm"
 
 14-skint-library-docker-head:
 	
@@ -2247,21 +2247,21 @@
 
 26-skint:
 	
-	skint -I ./ --program srfi-test/r7rs-programs/26.scm
+	skint -I ./ --script srfi-test/r7rs-programs/26.scm
 
 26-skint-library:
 	
 
 26-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/26.scm"
 
 26-skint-library-docker:
 	
 
 26-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/26.scm"
 
 26-skint-library-docker-head:
 	
@@ -2709,21 +2709,21 @@
 
 28-skint:
 	
-	skint -I ./ --program srfi-test/r7rs-programs/28.scm
+	skint -I ./ --script srfi-test/r7rs-programs/28.scm
 
 28-skint-library:
 	
 
 28-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/28.scm"
 
 28-skint-library-docker:
 	
 
 28-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/28.scm"
 
 28-skint-library-docker-head:
 	
@@ -3171,21 +3171,21 @@
 
 39-skint:
 	
-	skint -I ./ --program srfi-test/r7rs-programs/39.scm
+	skint -I ./ --script srfi-test/r7rs-programs/39.scm
 
 39-skint-library:
 	
 
 39-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/39.scm"
 
 39-skint-library-docker:
 	
 
 39-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/39.scm"
 
 39-skint-library-docker-head:
 	
@@ -3633,21 +3633,21 @@
 
 60-skint:
 	
-	skint -I ./ --program srfi-test/r7rs-programs/60.scm
+	skint -I ./ --script srfi-test/r7rs-programs/60.scm
 
 60-skint-library:
 	
 
 60-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/60.scm"
 
 60-skint-library-docker:
 	
 
 60-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/60.scm"
 
 60-skint-library-docker-head:
 	
@@ -4095,21 +4095,21 @@
 
 64-skint:
 	
-	skint -I ./ --program srfi-test/r7rs-programs/64.scm
+	skint -I ./ --script srfi-test/r7rs-programs/64.scm
 
 64-skint-library:
 	
 
 64-skint-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/64.scm"
 
 64-skint-library-docker:
 	
 
 64-skint-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --program srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:latest bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/64.scm"
 
 64-skint-library-docker-head:
 	
