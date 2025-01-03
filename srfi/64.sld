@@ -2,7 +2,7 @@
   (srfi 64)
   (cond-expand
     (stklos
-      (import (except (scheme base) make-parameter parameterize)
+      (import (scheme base)
               (scheme char)
               (scheme eval)
               (scheme file)
@@ -13,10 +13,9 @@
               (only (srfi 13) string-trim-both)
               (srfi 26)
               (srfi 28)
-              (srfi 39)
               (only (stklos) %find-macro-clause)))
     (else
-      (import (except (scheme base) make-parameter parameterize)
+      (import (scheme base)
               (scheme char)
               (scheme eval)
               (scheme file)
@@ -26,8 +25,7 @@
               (srfi 1)
               (only (srfi 13) string-trim-both)
               (srfi 26)
-              (srfi 28)
-              (srfi 39))))
+              (srfi 28))))
   (cond-expand
     (stklos
       (export

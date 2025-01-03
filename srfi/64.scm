@@ -204,7 +204,9 @@
   ;"Convert an object to a specifier accounting for the convenience short-hands."
   (cond ((procedure? obj) obj)
         ((string? obj) (test-match-name obj))
-        ((integer? obj) (test-match-nth 1 obj))))
+        ((integer? obj) (test-match-nth 1 obj))
+        (else (error "Invalid specifier object" obj))))
+
 
 (define test-match-any
   (lambda specifiers-arg
@@ -604,6 +606,9 @@
        (lambda (k)
          (with-exception-handler
            (lambda (exc)
+             (display "HERE-EXC:")
+             (write (error-object-message exc))
+             (newline)
              (test-result-set! (test-runner-current) 'actual-error exc)
              (k #f))
            (lambda () (thunk))))))))
@@ -884,22 +889,29 @@
       #t)))
 
 (define test-apply
-  (lambda (maybe-runner . args)
-    (let ((thunk (car (reverse args)))
-          (runner (if (test-runner? (car args))
-                    (car args)
-                    (if (test-runner-current)
-                      (test-runner-current)
-                      (test-runner-create))))
-          (specifiers (if (= (length args) 1)
-                        (list)
-                        (map obj->specifier (reverse (list-tail (reverse args) 1))))))
-      (test-with-runner runner
-                        (parameterize (((test-runner-run-list runner)
-                                        (if (null? specifiers)
-                                          #f
-                                          (map obj->specifier specifiers))))
-                          (thunk))))))
+  (lambda (runner . args)
+    (cond ((not (test-runner? runner))
+           (apply test-apply (cons (if (test-runner-current)
+                                     (test-runner-current)
+                                     (test-runner-create))
+                                   (cons runner args))))
+          (else
+      (display "HERE:1 ")
+      (write (car (test-runner-groups runner)))
+      (display " / ")
+      (display (group-count (car (test-runner-groups runner))))
+      (newline)
+
+            (let ((thunk (car (reverse args)))
+                  (specifiers (if (> (length args) 2)
+                                (cdr (reverse args))
+                                (list))))
+              (test-with-runner runner
+                                (parameterize (((test-runner-run-list runner)
+                                                (if (null? specifiers)
+                                                  #f
+                                                  specifiers)))
+                                  (thunk))))))))
 
 ;(set-documentation! 'test-apply
 ;  "@defunx test-apply runner specifier ... procedure

@@ -33,13 +33,6 @@
           (set-car! global-cell parameter)
           parameter)))))
 
-(define-syntax parameterize
-  (syntax-rules ()
-    ((parameterize ((expr1 expr2) ...) body ...)
-     (dynamic-bind (list expr1 ...)
-                   (list expr2 ...)
-                   (lambda () body ...)))))
-
 (define dynamic-bind
   (lambda (parameters values body)
     (let* ((old-local
@@ -55,6 +48,13 @@
         (lambda () (dynamic-env-local-set! new-local))
         body
         (lambda () (dynamic-env-local-set! old-local))))))
+
+(define-syntax parameterize
+  (syntax-rules ()
+    ((parameterize ((expr1 expr2) ...) body ...)
+     (dynamic-bind (list expr1 ...)
+                   (list expr2 ...)
+                   (lambda () body ...)))))
 
 (define dynamic-lookup
   (lambda (parameter global-cell)

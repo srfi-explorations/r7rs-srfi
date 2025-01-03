@@ -9,7 +9,7 @@ This is a project for collection of R7RS SRFI implementations.
 ## Building
 
     rm -rf srfi-test
-    git clone https://github.com/srfi-explorations/srfi-test.git
+    git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
     make -C srfi-test
     make -f Makefile.build
 
