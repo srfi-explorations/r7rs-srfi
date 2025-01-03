@@ -525,8 +525,6 @@
 
       (let ((expected-count (group-count group))
             (actual-count   (group-executed-count group)))
-        (map (lambda (i) (display i (current-error-port)))
-             (list "HERE: " expected-count "/" actual-count #\newline))
         (when (and expected-count (not (= expected-count actual-count)))
           ((test-runner-on-bad-count r) r actual-count expected-count)))
 

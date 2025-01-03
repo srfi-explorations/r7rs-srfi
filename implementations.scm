@@ -29,11 +29,11 @@
      (docker-image . "schemers/cyclone"))
 
     ((name . foment)
-     (command . "foment -I . -I ./srfi"))
+     (command . "foment -X .sld -I . -b"))
 
     ((name . gambit-compiler)
      (compiler? . #t)
-     (command . "gsc -o ./test -exe -nopreload ./ ./srfi/")
+     (command . "gsc -o ./test -exe -nopreload ./")
      (library-command . "ls")
      (docker-image . "schemers/gambit"))
 
@@ -41,7 +41,7 @@
     ;; Gambit propably needs proper syntax-rules support
     ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-interpreter)
-     (command . "gsi -:s ./")
+     (command . "gsi -:search=./")
      (docker-image . "schemers/gambit"))
 
     ((name . gauche)
@@ -75,7 +75,7 @@
 
     ; FIXME Temporarily loading needed stuff to run srfi-64
     ((name . mit-scheme)
-     (command . "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld"))
+     (command . "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld"))
 
     ((name . mosh)
      (command . "mosh --loadpath=."))

@@ -105,63 +105,63 @@
 
 1-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm
+	foment -X .sld -I . -b srfi-test/r7rs-programs/1.scm
 
 1-foment-library:
 	
 
 1-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/1.scm"
 
 1-foment-library-docker:
 	
 
 1-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/1.scm"
 
 1-foment-library-docker-head:
 	
 
 1-gambit-compiler:
 	 ls srfi/1.sld 
-	gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/1.scm && ./test
+	gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/1.scm && ./test
 
 1-gambit-compiler-library:
 	 ls srfi/1.sld 
 
 1-gambit-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/1.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/1.scm && ./test"
 
 1-gambit-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld" 
 
 1-gambit-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/1.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/1.scm && ./test"
 
 1-gambit-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/1.sld" 
 
 1-gambit-interpreter:
 	
-	gsi -:s ./ srfi-test/r7rs-programs/1.scm
+	gsi -:search=./ srfi-test/r7rs-programs/1.scm
 
 1-gambit-interpreter-library:
 	
 
 1-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/1.scm"
 
 1-gambit-interpreter-library-docker:
 	
 
 1-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/1.scm"
 
 1-gambit-interpreter-library-docker-head:
 	
@@ -294,21 +294,21 @@
 
 1-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
 
 1-mit-scheme-library:
 	
 
 1-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 1-mit-scheme-library-docker:
 	
 
 1-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 1-mit-scheme-library-docker-head:
 	
@@ -567,63 +567,63 @@
 
 8-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm
+	foment -X .sld -I . -b srfi-test/r7rs-programs/8.scm
 
 8-foment-library:
 	
 
 8-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/8.scm"
 
 8-foment-library-docker:
 	
 
 8-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/8.scm"
 
 8-foment-library-docker-head:
 	
 
 8-gambit-compiler:
 	 ls srfi/8.sld 
-	gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/8.scm && ./test
+	gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/8.scm && ./test
 
 8-gambit-compiler-library:
 	 ls srfi/8.sld 
 
 8-gambit-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/8.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/8.scm && ./test"
 
 8-gambit-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld" 
 
 8-gambit-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/8.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/8.scm && ./test"
 
 8-gambit-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/8.sld" 
 
 8-gambit-interpreter:
 	
-	gsi -:s ./ srfi-test/r7rs-programs/8.scm
+	gsi -:search=./ srfi-test/r7rs-programs/8.scm
 
 8-gambit-interpreter-library:
 	
 
 8-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/8.scm"
 
 8-gambit-interpreter-library-docker:
 	
 
 8-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/8.scm"
 
 8-gambit-interpreter-library-docker-head:
 	
@@ -756,21 +756,21 @@
 
 8-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
 
 8-mit-scheme-library:
 	
 
 8-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 8-mit-scheme-library-docker:
 	
 
 8-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 8-mit-scheme-library-docker-head:
 	
@@ -1029,63 +1029,63 @@
 
 13-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/13.scm
+	foment -X .sld -I . -b srfi-test/r7rs-programs/13.scm
 
 13-foment-library:
 	
 
 13-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/13.scm"
 
 13-foment-library-docker:
 	
 
 13-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/13.scm"
 
 13-foment-library-docker-head:
 	
 
 13-gambit-compiler:
 	 ls srfi/13.sld 
-	gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/13.scm && ./test
+	gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/13.scm && ./test
 
 13-gambit-compiler-library:
 	 ls srfi/13.sld 
 
 13-gambit-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/13.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/13.scm && ./test"
 
 13-gambit-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld" 
 
 13-gambit-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/13.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/13.scm && ./test"
 
 13-gambit-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/13.sld" 
 
 13-gambit-interpreter:
 	
-	gsi -:s ./ srfi-test/r7rs-programs/13.scm
+	gsi -:search=./ srfi-test/r7rs-programs/13.scm
 
 13-gambit-interpreter-library:
 	
 
 13-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/13.scm"
 
 13-gambit-interpreter-library-docker:
 	
 
 13-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/13.scm"
 
 13-gambit-interpreter-library-docker-head:
 	
@@ -1218,21 +1218,21 @@
 
 13-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm
 
 13-mit-scheme-library:
 	
 
 13-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
 
 13-mit-scheme-library-docker:
 	
 
 13-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
 
 13-mit-scheme-library-docker-head:
 	
@@ -1491,63 +1491,63 @@
 
 14-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm
+	foment -X .sld -I . -b srfi-test/r7rs-programs/14.scm
 
 14-foment-library:
 	
 
 14-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/14.scm"
 
 14-foment-library-docker:
 	
 
 14-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/14.scm"
 
 14-foment-library-docker-head:
 	
 
 14-gambit-compiler:
 	 ls srfi/14.sld 
-	gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/14.scm && ./test
+	gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/14.scm && ./test
 
 14-gambit-compiler-library:
 	 ls srfi/14.sld 
 
 14-gambit-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/14.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/14.scm && ./test"
 
 14-gambit-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld" 
 
 14-gambit-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/14.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/14.scm && ./test"
 
 14-gambit-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/14.sld" 
 
 14-gambit-interpreter:
 	
-	gsi -:s ./ srfi-test/r7rs-programs/14.scm
+	gsi -:search=./ srfi-test/r7rs-programs/14.scm
 
 14-gambit-interpreter-library:
 	
 
 14-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/14.scm"
 
 14-gambit-interpreter-library-docker:
 	
 
 14-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/14.scm"
 
 14-gambit-interpreter-library-docker-head:
 	
@@ -1680,21 +1680,21 @@
 
 14-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm
 
 14-mit-scheme-library:
 	
 
 14-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
 
 14-mit-scheme-library-docker:
 	
 
 14-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
 
 14-mit-scheme-library-docker-head:
 	
@@ -1953,63 +1953,63 @@
 
 26-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm
+	foment -X .sld -I . -b srfi-test/r7rs-programs/26.scm
 
 26-foment-library:
 	
 
 26-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/26.scm"
 
 26-foment-library-docker:
 	
 
 26-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/26.scm"
 
 26-foment-library-docker-head:
 	
 
 26-gambit-compiler:
 	 ls srfi/26.sld 
-	gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/26.scm && ./test
+	gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/26.scm && ./test
 
 26-gambit-compiler-library:
 	 ls srfi/26.sld 
 
 26-gambit-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/26.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/26.scm && ./test"
 
 26-gambit-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld" 
 
 26-gambit-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/26.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/26.scm && ./test"
 
 26-gambit-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/26.sld" 
 
 26-gambit-interpreter:
 	
-	gsi -:s ./ srfi-test/r7rs-programs/26.scm
+	gsi -:search=./ srfi-test/r7rs-programs/26.scm
 
 26-gambit-interpreter-library:
 	
 
 26-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/26.scm"
 
 26-gambit-interpreter-library-docker:
 	
 
 26-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/26.scm"
 
 26-gambit-interpreter-library-docker-head:
 	
@@ -2142,21 +2142,21 @@
 
 26-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
 
 26-mit-scheme-library:
 	
 
 26-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 26-mit-scheme-library-docker:
 	
 
 26-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 26-mit-scheme-library-docker-head:
 	
@@ -2415,63 +2415,63 @@
 
 28-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm
+	foment -X .sld -I . -b srfi-test/r7rs-programs/28.scm
 
 28-foment-library:
 	
 
 28-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/28.scm"
 
 28-foment-library-docker:
 	
 
 28-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/28.scm"
 
 28-foment-library-docker-head:
 	
 
 28-gambit-compiler:
 	 ls srfi/28.sld 
-	gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/28.scm && ./test
+	gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/28.scm && ./test
 
 28-gambit-compiler-library:
 	 ls srfi/28.sld 
 
 28-gambit-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/28.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/28.scm && ./test"
 
 28-gambit-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld" 
 
 28-gambit-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/28.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/28.scm && ./test"
 
 28-gambit-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/28.sld" 
 
 28-gambit-interpreter:
 	
-	gsi -:s ./ srfi-test/r7rs-programs/28.scm
+	gsi -:search=./ srfi-test/r7rs-programs/28.scm
 
 28-gambit-interpreter-library:
 	
 
 28-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/28.scm"
 
 28-gambit-interpreter-library-docker:
 	
 
 28-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/28.scm"
 
 28-gambit-interpreter-library-docker-head:
 	
@@ -2604,21 +2604,21 @@
 
 28-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
 
 28-mit-scheme-library:
 	
 
 28-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 28-mit-scheme-library-docker:
 	
 
 28-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 28-mit-scheme-library-docker-head:
 	
@@ -2877,63 +2877,63 @@
 
 39-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/39.scm
+	foment -X .sld -I . -b srfi-test/r7rs-programs/39.scm
 
 39-foment-library:
 	
 
 39-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/39.scm"
 
 39-foment-library-docker:
 	
 
 39-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/39.scm"
 
 39-foment-library-docker-head:
 	
 
 39-gambit-compiler:
 	 ls srfi/39.sld 
-	gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/39.scm && ./test
+	gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/39.scm && ./test
 
 39-gambit-compiler-library:
 	 ls srfi/39.sld 
 
 39-gambit-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/39.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/39.scm && ./test"
 
 39-gambit-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld" 
 
 39-gambit-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/39.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/39.scm && ./test"
 
 39-gambit-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/39.sld" 
 
 39-gambit-interpreter:
 	
-	gsi -:s ./ srfi-test/r7rs-programs/39.scm
+	gsi -:search=./ srfi-test/r7rs-programs/39.scm
 
 39-gambit-interpreter-library:
 	
 
 39-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/39.scm"
 
 39-gambit-interpreter-library-docker:
 	
 
 39-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/39.scm"
 
 39-gambit-interpreter-library-docker-head:
 	
@@ -3066,21 +3066,21 @@
 
 39-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm
 
 39-mit-scheme-library:
 	
 
 39-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
 
 39-mit-scheme-library-docker:
 	
 
 39-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
 
 39-mit-scheme-library-docker-head:
 	
@@ -3339,63 +3339,63 @@
 
 60-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/60.scm
+	foment -X .sld -I . -b srfi-test/r7rs-programs/60.scm
 
 60-foment-library:
 	
 
 60-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/60.scm"
 
 60-foment-library-docker:
 	
 
 60-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/60.scm"
 
 60-foment-library-docker-head:
 	
 
 60-gambit-compiler:
 	 ls srfi/60.sld 
-	gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/60.scm && ./test
+	gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/60.scm && ./test
 
 60-gambit-compiler-library:
 	 ls srfi/60.sld 
 
 60-gambit-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/60.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/60.scm && ./test"
 
 60-gambit-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld" 
 
 60-gambit-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/60.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/60.scm && ./test"
 
 60-gambit-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/60.sld" 
 
 60-gambit-interpreter:
 	
-	gsi -:s ./ srfi-test/r7rs-programs/60.scm
+	gsi -:search=./ srfi-test/r7rs-programs/60.scm
 
 60-gambit-interpreter-library:
 	
 
 60-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/60.scm"
 
 60-gambit-interpreter-library-docker:
 	
 
 60-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/60.scm"
 
 60-gambit-interpreter-library-docker-head:
 	
@@ -3528,21 +3528,21 @@
 
 60-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm
 
 60-mit-scheme-library:
 	
 
 60-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
 
 60-mit-scheme-library-docker:
 	
 
 60-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
 
 60-mit-scheme-library-docker-head:
 	
@@ -3801,63 +3801,63 @@
 
 64-foment:
 	
-	foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm
+	foment -X .sld -I . -b srfi-test/r7rs-programs/64.scm
 
 64-foment-library:
 	
 
 64-foment-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/64.scm"
 
 64-foment-library-docker:
 	
 
 64-foment-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -I . -I ./srfi srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:latest bash -c "cd workdir && foment -X .sld -I . -b srfi-test/r7rs-programs/64.scm"
 
 64-foment-library-docker-head:
 	
 
 64-gambit-compiler:
 	 ls srfi/64.sld 
-	gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/64.scm && ./test
+	gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/64.scm && ./test
 
 64-gambit-compiler-library:
 	 ls srfi/64.sld 
 
 64-gambit-compiler-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/64.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/64.scm && ./test"
 
 64-gambit-compiler-library-docker:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld" 
 
 64-gambit-compiler-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld"
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ ./srfi/ srfi-test/r7rs-programs/64.scm && ./test"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsc -o ./test -exe -nopreload ./ srfi-test/r7rs-programs/64.scm && ./test"
 
 64-gambit-compiler-library-docker-head:
 	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && ls srfi/64.sld" 
 
 64-gambit-interpreter:
 	
-	gsi -:s ./ srfi-test/r7rs-programs/64.scm
+	gsi -:search=./ srfi-test/r7rs-programs/64.scm
 
 64-gambit-interpreter-library:
 	
 
 64-gambit-interpreter-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/64.scm"
 
 64-gambit-interpreter-library-docker:
 	
 
 64-gambit-interpreter-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:s ./ srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/gambit bash -c "cd workdir && gsi -:search=./ srfi-test/r7rs-programs/64.scm"
 
 64-gambit-interpreter-library-docker-head:
 	
@@ -3990,21 +3990,21 @@
 
 64-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm
 
 64-mit-scheme-library:
 	
 
 64-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
 
 64-mit-scheme-library-docker:
 	
 
 64-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/26.sld ./srfi/28.sld ./srfi/39.sld ./srfi/60.sld ./srfi/14.sld ./srfi/13.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
 
 64-mit-scheme-library-docker-head:
 	
