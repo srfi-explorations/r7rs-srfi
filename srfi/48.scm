@@ -172,7 +172,7 @@
              (lambda (whatever last-was-newline)
                (or (eqv? whatever #\newline)
                    (and (string? whatever)
-                        (let ( (len (string-length whatever)) )
+                        (let ((len (string-length whatever)))
                           (if (zero? len)
                             last-was-newline
                             (eqv? #\newline (string-ref whatever (- len 1)))))))))

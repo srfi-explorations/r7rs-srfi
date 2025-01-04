@@ -4,7 +4,6 @@
           (scheme char)
           (scheme complex)
           (scheme write)
-          (scheme r5rs)
           (srfi 38))
   (export format)
   (include "48.scm"))
