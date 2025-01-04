@@ -6,4 +6,6 @@
           (scheme write)
           (srfi 38))
   (export format)
-  (include "48.scm"))
+  (cond-expand
+    (foment (include "srfi/48.scm"))
+    (else (include "48.scm"))))
