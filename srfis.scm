@@ -7,7 +7,7 @@
     ((number . 28))
     ((number . 38))
     ((number . 39))
-    ((number . 48))
+    ((number . 48) (depends . (38)))
     ((number . 60))
     ((number . 64) (depends . (1 8 13 26 28 39)))
     ))

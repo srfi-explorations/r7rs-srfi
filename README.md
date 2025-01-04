@@ -29,12 +29,8 @@ So for example on chicken-compiler to test SRFI-64 run:
 
     make 8-chicken-compiler-library
     make 1-chicken-compiler-library
-    make 60-chicken-compiler-library
-    make 14-chicken-compiler-library
-    make 13-chicken-compiler-library
-    make 26-chicken-compiler-library
-    make 28-chicken-compiler-library
-    make 39-chicken-compiler-library
+    make 38-chicken-compiler-library
+    make 48-chicken-compiler-library
     make 64-chicken-compiler-library
     make 64-chicken-compiler
 
@@ -54,6 +50,8 @@ Add files:
     - srfi/srfi-N.scm
         - Shim file to support Guile and Foment
         - Should have identical exports to N.sld but cond-expanded include for Foment and Guile only
+    - jenkins_scritps/test.sh
+        - Add to correct place in the library build part
 
 
 You should be able to deduct what the contents of these files are from other SRFI implementations
