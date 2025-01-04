@@ -24,6 +24,7 @@ pipeline {
                  'gerbil-interpreter',
                  'guile',
                  'kawa',
+                 'larceny',
                  'loko-compiler',
                  'mit-scheme',
                  'sagittarius',
