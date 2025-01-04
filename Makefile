@@ -271,6 +271,27 @@
 1-kawa-library-docker-head:
 	
 
+1-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/1.scm
+
+1-larceny-library:
+	
+
+1-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/1.scm"
+
+1-larceny-library-docker:
+	
+
+1-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/1.scm"
+
+1-larceny-library-docker-head:
+	
+
 1-loko-compiler:
 	 ls srfi/1.sld 
 	loko -std=r7rs --compile srfi-test/r7rs-programs/1.scm && mv srfi-test/r7rs-programs/1 ./test && ./test
@@ -731,6 +752,27 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/8.scm"
 
 8-kawa-library-docker-head:
+	
+
+8-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/8.scm
+
+8-larceny-library:
+	
+
+8-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/8.scm"
+
+8-larceny-library-docker:
+	
+
+8-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/8.scm"
+
+8-larceny-library-docker-head:
 	
 
 8-loko-compiler:
@@ -1195,6 +1237,27 @@
 13-kawa-library-docker-head:
 	
 
+13-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/13.scm
+
+13-larceny-library:
+	
+
+13-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/13.scm"
+
+13-larceny-library-docker:
+	
+
+13-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/13.scm"
+
+13-larceny-library-docker-head:
+	
+
 13-loko-compiler:
 	 ls srfi/13.sld 
 	loko -std=r7rs --compile srfi-test/r7rs-programs/13.scm && mv srfi-test/r7rs-programs/13 ./test && ./test
@@ -1655,6 +1718,27 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/14.scm"
 
 14-kawa-library-docker-head:
+	
+
+14-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/14.scm
+
+14-larceny-library:
+	
+
+14-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/14.scm"
+
+14-larceny-library-docker:
+	
+
+14-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/14.scm"
+
+14-larceny-library-docker-head:
 	
 
 14-loko-compiler:
@@ -2119,6 +2203,27 @@
 26-kawa-library-docker-head:
 	
 
+26-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/26.scm
+
+26-larceny-library:
+	
+
+26-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/26.scm"
+
+26-larceny-library-docker:
+	
+
+26-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/26.scm"
+
+26-larceny-library-docker-head:
+	
+
 26-loko-compiler:
 	 ls srfi/26.sld 
 	loko -std=r7rs --compile srfi-test/r7rs-programs/26.scm && mv srfi-test/r7rs-programs/26 ./test && ./test
@@ -2579,6 +2684,27 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/28.scm"
 
 28-kawa-library-docker-head:
+	
+
+28-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/28.scm
+
+28-larceny-library:
+	
+
+28-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/28.scm"
+
+28-larceny-library-docker:
+	
+
+28-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/28.scm"
+
+28-larceny-library-docker-head:
 	
 
 28-loko-compiler:
@@ -3043,6 +3169,27 @@
 38-kawa-library-docker-head:
 	
 
+38-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/38.scm
+
+38-larceny-library:
+	
+
+38-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/38.scm"
+
+38-larceny-library-docker:
+	
+
+38-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/38.scm"
+
+38-larceny-library-docker-head:
+	
+
 38-loko-compiler:
 	 ls srfi/38.sld 
 	loko -std=r7rs --compile srfi-test/r7rs-programs/38.scm && mv srfi-test/r7rs-programs/38 ./test && ./test
@@ -3503,6 +3650,27 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/39.scm"
 
 39-kawa-library-docker-head:
+	
+
+39-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/39.scm
+
+39-larceny-library:
+	
+
+39-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/39.scm"
+
+39-larceny-library-docker:
+	
+
+39-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/39.scm"
+
+39-larceny-library-docker-head:
 	
 
 39-loko-compiler:
@@ -3967,6 +4135,27 @@
 48-kawa-library-docker-head:
 	
 
+48-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/48.scm
+
+48-larceny-library:
+	
+
+48-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/48.scm"
+
+48-larceny-library-docker:
+	
+
+48-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/48.scm"
+
+48-larceny-library-docker-head:
+	
+
 48-loko-compiler:
 	 ls srfi/48.sld 
 	loko -std=r7rs --compile srfi-test/r7rs-programs/48.scm && mv srfi-test/r7rs-programs/48 ./test && ./test
@@ -4429,6 +4618,27 @@
 60-kawa-library-docker-head:
 	
 
+60-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/60.scm
+
+60-larceny-library:
+	
+
+60-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/60.scm"
+
+60-larceny-library-docker:
+	
+
+60-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/60.scm"
+
+60-larceny-library-docker-head:
+	
+
 60-loko-compiler:
 	 ls srfi/60.sld 
 	loko -std=r7rs --compile srfi-test/r7rs-programs/60.scm && mv srfi-test/r7rs-programs/60 ./test && ./test
@@ -4889,6 +5099,27 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld srfi-test/r7rs-programs/64.scm"
 
 64-kawa-library-docker-head:
+	
+
+64-larceny:
+	
+	larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/64.scm
+
+64-larceny-library:
+	
+
+64-larceny-docker:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/64.scm"
+
+64-larceny-library-docker:
+	
+
+64-larceny-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/larceny:latest bash -c "cd workdir && larceny -utf8 -r7rs -I . -program srfi-test/r7rs-programs/64.scm"
+
+64-larceny-library-docker-head:
 	
 
 64-loko-compiler:
