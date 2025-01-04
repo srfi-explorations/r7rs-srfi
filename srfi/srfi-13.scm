@@ -12,7 +12,9 @@
                 char-ci<?
                 char-downcase
                 char-upcase
-                char-alphabetic?)
+                char-alphabetic?
+                string-downcase
+                string-upcase)
           (srfi 8)
           (srfi 14)
           (srfi 60))
