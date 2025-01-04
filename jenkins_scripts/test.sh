@@ -13,11 +13,9 @@ do
     make $n-$name-library
 done
 
-## Build all libraries in dependency order first
-for n in 8 60 1 38 48 64
-do
-    make $n-$name-library
-done
+## Copy files for Chicken to find
+cp srfi/srfi*.sld .
+cp srfi/*.scm .
 
 for srfi in $srfis
 do
