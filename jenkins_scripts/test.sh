@@ -7,10 +7,6 @@ cmd="$2"
 lib_cmd="$3"
 srfis=$(cat srfi-numbers.txt)
 
-## Copy files for Chicken to find
-cp srfi/srfi*.sld .
-cp srfi/*.scm .
-
 ## Build 64 and it's dependencies always first
 for n in 8 1 38 48 64
 do

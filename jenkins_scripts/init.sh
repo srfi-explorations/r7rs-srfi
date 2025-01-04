@@ -9,3 +9,6 @@ touch reports/placeholder
 echo "<h1>Test results</h1>" > reports/results.html
 (cd srfi-test && make clean build)
 tree srfi-test
+
+## Copy files for Chicken to find
+cp srfi/*.scm .
