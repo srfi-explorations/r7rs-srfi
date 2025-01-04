@@ -13,6 +13,12 @@ do
     make $n-$name-library
 done
 
+## Build all libraries in dependency order first
+for n in 8 60 1 38 48 64
+do
+    make $n-$name-library
+done
+
 for srfi in $srfis
 do
     make $srfi-$name-library
