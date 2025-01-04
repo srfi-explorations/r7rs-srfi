@@ -251,11 +251,11 @@
       (print runner "Test suite end: ~a~%" name))))
 
 (define (test-on-final-simple runner)
-  (print runner "Passes:            ~a\n" (test-runner-pass-count runner))
-  (print runner "Expected failures: ~a\n" (test-runner-xfail-count runner))
-  (print runner "Failures:          ~a\n" (test-runner-fail-count runner))
-  (print runner "Unexpected passes: ~a\n" (test-runner-xpass-count runner))
-  (print runner "Skipped tests:     ~a~%" (test-runner-skip-count runner))
+  (print runner "# of passes:            ~a\n" (test-runner-pass-count runner))
+  (print runner "# of expected failures: ~a\n" (test-runner-xfail-count runner))
+  (print runner "# of failures:          ~a\n" (test-runner-fail-count runner))
+  (print runner "# of unexpected passes: ~a\n" (test-runner-xpass-count runner))
+  (print runner "# of skipped tests:     ~a~%" (test-runner-skip-count runner))
   (maybe-finish-logging runner))
 
 (define (maybe-start-logging runner)
