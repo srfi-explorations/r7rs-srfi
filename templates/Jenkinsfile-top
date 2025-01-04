@@ -26,6 +26,8 @@ options {
                  'larceny',
                  'loko-compiler',
                  'mit-scheme',
+                 'mosh',
+                 'raket',
                  'sagittarius',
                  'stklos',
                  'skint',
