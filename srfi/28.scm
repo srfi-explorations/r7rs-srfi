@@ -44,7 +44,8 @@
                     (write-char #\~ buffer)
                     (loop (cddr format-list) objects))
                    (else
-                     (error 'format "Unrecognized escape sequence")))))
+                     (error (string-append "Unrecognized escape sequence in: " format-string)
+                            (list->string (list (car format-list) (cadr format-list))))))))
               (else (write-char (car format-list) buffer)
                     (loop (cdr format-list) objects)))))))
 
