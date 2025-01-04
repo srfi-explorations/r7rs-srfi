@@ -31,9 +31,13 @@
     ((name . foment)
      (command . "foment -X .sld -I ."))
 
+    ;; FIXME
+    ;; Gambit propably needs proper syntax-rules support
+    ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-compiler)
      (compiler? . #t)
      (command . "gsc -o ./test -exe -nopreload ./")
+     ;(library-command . "gsc ./")
      (library-command . "ls")
      (docker-image . "schemers/gambit"))
 
