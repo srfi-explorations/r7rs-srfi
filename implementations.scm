@@ -29,7 +29,8 @@
      (docker-image . "schemers/cyclone"))
 
     ((name . foment)
-     (command . "foment -X .sld -I ."))
+     (command . "foment -X .sld -I .")
+     (docker-image . "schemers/foment:head"))
 
     ;; FIXME
     ;; Gambit propably needs proper syntax-rules support
