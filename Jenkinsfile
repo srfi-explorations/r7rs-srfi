@@ -14,7 +14,9 @@ pipeline {
                  'chibi',
                  'chicken-compiler',
                  'chicken-interpreter',
-                 'cyclone',
+                 'cyclone-compiler',
+                 'cyclone-interpreter',
+                 'foment',
                  'gambit-compiler',
                  'gambit-interpreter',
                  'gauche',
@@ -170,7 +172,7 @@ pipeline {
         stage("foment") {
             agent {
                 docker {
-                    image 'schemers/foment:latest'
+                    image 'schemers/foment:head'
                     reuseNode true
                     args '--user=root'
                 }
