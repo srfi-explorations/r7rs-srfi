@@ -13,7 +13,7 @@
                 char-downcase
                 char-upcase
                 char-alphabetic?
-                string-downcase
+                ;string-downcase
                 string-upcase)
           (srfi 8)
           (srfi 14)
@@ -45,7 +45,7 @@
           string-ci<=
           string-ci>=
           string-ci<>
-          string-downcase
+          ;string-downcase
           string-upcase
           string-titlecase
           string-downcase!
