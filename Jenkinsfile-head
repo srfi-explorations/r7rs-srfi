@@ -27,7 +27,7 @@ options {
                  'loko-compiler',
                  'mit-scheme',
                  'mosh',
-                 'raket',
+                 'racket',
                  'sagittarius',
                  'stklos',
                  'skint',
