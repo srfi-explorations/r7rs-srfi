@@ -8,7 +8,7 @@ lib_cmd="$3"
 srfis=$(cat srfi-numbers.txt)
 
 ## Build 64 and it's dependencies always first
-for n in 8 1 60 14 13 26 28 39 64
+for n in 8 1 38 48 64
 do
     make $n-$name-library
 done
