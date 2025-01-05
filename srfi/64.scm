@@ -525,19 +525,16 @@
 (define-syntax false-if-error
   (syntax-rules ()
     ((_ <expression> <runner>)
-     #;(guard (error
-             (else
-              (test-result-set! <runner> 'actual-error error)
-              #f))
-       <expression>)
-  (call-with-current-continuation
-    (lambda (k)
-      (with-exception-handler
-        (lambda (x)
-          (test-result-set! <runner> 'actual-error error)
-          (k #f))
-        (lambda ()
-          <expression>)))))))
+     (call-with-current-continuation
+       (lambda (k)
+         (with-exception-handler
+           (lambda (x)
+             (test-result-set! <runner>
+                               'actual-error
+                               (list (error-object-message x) (error-object-irritants x)))
+             (k #f))
+           (lambda ()
+             <expression>)))))))
 
 (define (test-prelude runner name form)
   (test-result-clear runner)
