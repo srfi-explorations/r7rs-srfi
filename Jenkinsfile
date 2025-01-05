@@ -62,7 +62,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "chibi" "chibi-scheme -I ." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -87,7 +87,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "chicken-compiler" "csc -X r7rs -R r7rs -I ./srfi -o test" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -112,7 +112,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "chicken-interpreter" "csi -b -R r7rs -I ./ -I ./srfi -script" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -137,7 +137,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "cyclone-compiler" "cyclone -o ./test -I ." "cyclone -I ."'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -162,7 +162,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I . -I ./srfi -s" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -187,7 +187,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "foment" "foment -X .sld -I ." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -212,7 +212,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "gambit-compiler" "gsc -o ./test -exe -nopreload ./" "ls"'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -237,7 +237,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:search=./" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -262,7 +262,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "gauche" "gosh -r7 -I ." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -287,7 +287,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "gerbil-compiler" "GERBIL_LOADPATH=. gxc -o ./test --lang r7rs -exe" "gxc"'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -312,7 +312,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "gerbil-interpreter" "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -337,7 +337,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "guile" "guile --fresh-auto-compile --r7rs -L . -L ./srfi" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -362,9 +362,9 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld" ""'
+                    sh './jenkins_scripts/test.sh "kawa" "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -387,7 +387,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "larceny" "larceny -utf8 -r7rs -I . -program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -412,7 +412,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "loko-compiler" "loko -std=r7rs --compile" "ls"'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -437,7 +437,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/48.sld ./srfi/64.sld" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -462,7 +462,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "mosh" "mosh --loadpath=." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -487,7 +487,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -512,7 +512,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "sagittarius" "sash -r7 -L . -L ./srfi" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -537,7 +537,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "stklos" "stklos --debug -I . -I ./srfi -f" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -562,7 +562,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "skint" "skint -I ./ --script" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -587,7 +587,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "tr7" "tr7i" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
@@ -612,7 +612,7 @@ options {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'

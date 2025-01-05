@@ -14,5 +14,5 @@
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh 'apt update && apt install -y make time tree file'
-                    sh './jenkins_scripts/clean.sh'
+                    sh 'make -f Makefile.build clean'
                     unstash 'tests'

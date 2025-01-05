@@ -67,7 +67,7 @@
      (command . "guile --fresh-auto-compile --r7rs -L . -L ./srfi"))
 
     ((name . kawa)
-     (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld"))
+     (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld"))
 
     ((name . larceny)
      (command . "larceny -utf8 -r7rs -I . -program"))

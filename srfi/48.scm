@@ -1,7 +1,7 @@
 ;; IMPLEMENTATION DEPENDENT options
 
 (define ascii-tab (integer->char  9))  ;; NB: assumes ASCII encoding
-(define dont-print (if (eq? #t #f) 1))
+(define dont-print (if (eq? #t #f) 1 1))
 ;;(define DONT-PRINT (string->symbol ""))
 ;;(define DONT-PRINT (void))
 ;;(define DONT-PRINT #!void)

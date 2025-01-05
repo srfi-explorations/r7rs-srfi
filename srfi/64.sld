@@ -18,6 +18,7 @@
               %test-error
               %test-group
               test-assert/source-info
+              test-compare/source-info
               ; Normal export begins
               test-begin
               test-end
