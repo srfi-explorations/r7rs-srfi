@@ -406,14 +406,14 @@
 
 1-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
 
 1-stklos-library-docker:
 	
 
 1-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/1.scm"
 
 1-stklos-library-docker-head:
 	
@@ -889,14 +889,14 @@
 
 8-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
 
 8-stklos-library-docker:
 	
 
 8-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/8.scm"
 
 8-stklos-library-docker-head:
 	
@@ -1372,14 +1372,14 @@
 
 13-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/13.scm"
 
 13-stklos-library-docker:
 	
 
 13-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/13.scm"
 
 13-stklos-library-docker-head:
 	
@@ -1855,14 +1855,14 @@
 
 14-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm"
 
 14-stklos-library-docker:
 	
 
 14-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/14.scm"
 
 14-stklos-library-docker-head:
 	
@@ -2338,14 +2338,14 @@
 
 26-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
 
 26-stklos-library-docker:
 	
 
 26-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/26.scm"
 
 26-stklos-library-docker-head:
 	
@@ -2821,14 +2821,14 @@
 
 28-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
 
 28-stklos-library-docker:
 	
 
 28-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/28.scm"
 
 28-stklos-library-docker-head:
 	
@@ -3304,14 +3304,14 @@
 
 38-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/38.scm"
 
 38-stklos-library-docker:
 	
 
 38-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/38.scm"
 
 38-stklos-library-docker-head:
 	
@@ -3787,14 +3787,14 @@
 
 39-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/39.scm"
 
 39-stklos-library-docker:
 	
 
 39-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/39.scm"
 
 39-stklos-library-docker-head:
 	
@@ -4270,14 +4270,14 @@
 
 48-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/48.scm"
 
 48-stklos-library-docker:
 	
 
 48-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/48.scm"
 
 48-stklos-library-docker-head:
 	
@@ -4753,14 +4753,14 @@
 
 60-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/60.scm"
 
 60-stklos-library-docker:
 	
 
 60-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/60.scm"
 
 60-stklos-library-docker-head:
 	
@@ -5236,14 +5236,14 @@
 
 64-stklos-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
 
 64-stklos-library-docker:
 	
 
 64-stklos-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/stklos:latest bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/stklos:head bash -c "cd workdir && stklos --debug -I . -I ./srfi -f srfi-test/r7rs-programs/64.scm"
 
 64-stklos-library-docker-head:
 	

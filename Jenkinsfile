@@ -524,7 +524,7 @@ options {
         stage("stklos") {
             agent {
                 docker {
-                    image 'schemers/stklos:latest'
+                    image 'schemers/stklos:head'
                     reuseNode true
                     args '--user=root'
                 }
