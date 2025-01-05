@@ -1,15 +1,8 @@
 (define-library
   (srfi 14)
-  (cond-expand
-    (stklos
-      (import (scheme base)
-              (scheme char)
-              (srfi 60)
-              (only (stklos) %find-macro-clause)))
-    (else
-      (import (scheme base)
-              (scheme char)
-              (srfi 60))))
+  (import (scheme base)
+          (scheme char)
+          (srfi 60))
   (export char-set?
           char-set=
           char-set<=

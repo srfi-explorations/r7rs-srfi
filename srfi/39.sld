@@ -3,8 +3,6 @@
   (cond-expand
     (chibi (import (chibi)))
     (racket (import (scheme base)))
-    (stklos (import (except (scheme base) make-parameter parameterize)
-                    (only (stklos) %find-macro-clause)))
     (else (import (except (scheme base) make-parameter parameterize))))
   (export make-parameter parameterize)
   (cond-expand
