@@ -199,7 +199,7 @@ options {
         stage("gambit-compiler") {
             agent {
                 docker {
-                    image 'schemers/gambit'
+                    image 'schemers/gambit:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -224,7 +224,7 @@ options {
         stage("gambit-interpreter") {
             agent {
                 docker {
-                    image 'schemers/gambit'
+                    image 'schemers/gambit:head'
                     reuseNode true
                     args '--user=root'
                 }

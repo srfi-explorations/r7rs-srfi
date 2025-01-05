@@ -691,7 +691,7 @@
      (%test-error <name> <error-type> '<expr>
                   (lambda () <expr>)))))
 
-(define (%test-error name error-type form thunk)
+#;(define (%test-error name error-type form thunk)
   (let ((runner (test-runner-get)))
     (when (test-prelude runner name form)
       (test-result-set! runner 'expected-error error-type)
@@ -701,6 +701,24 @@
                      (let ((val (thunk)))
                        (test-result-set! runner 'actual-value val))
                      #f)))
+        (set-result-kind! runner pass?)))
+    (test-postlude runner)))
+
+(define (%test-error name error-type form thunk)
+  (let ((runner (test-runner-get)))
+    (when (test-prelude runner name form)
+      (test-result-set! runner 'expected-error error-type)
+      (let ((pass? (call-with-current-continuation
+                     (lambda (k)
+                       (with-exception-handler
+                         (lambda (x)
+                           (test-result-set!  runner 'actual-error x)
+                           (error-matches? x error-type)
+                           (k #t))
+                         (lambda ()
+                           (let ((val (thunk)))
+                             (test-result-set! runner 'actual-value val))
+                           #f))))))
         (set-result-kind! runner pass?)))
     (test-postlude runner)))
 

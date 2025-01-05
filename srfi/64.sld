@@ -1,5 +1,20 @@
 (define-library
   (srfi 64)
+  (cond-expand
+    (stklos
+  (import (scheme base)
+          (scheme case-lambda)
+          (scheme complex)
+          (scheme eval)
+          (scheme file)
+          (scheme process-context)
+          (scheme read)
+          (scheme write)
+          (srfi 1)
+          (srfi 48)
+          (stklos)
+          ))
+    (else
   (import (scheme base)
           (scheme case-lambda)
           (scheme complex)
@@ -10,6 +25,7 @@
           (scheme write)
           (srfi 1)
           (srfi 48))
+      ))
   (cond-expand
     ((or cyclone stklos)
       ; Need to export extra for these to work

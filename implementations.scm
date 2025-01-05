@@ -40,14 +40,14 @@
      (command . "gsc -o ./test -exe -nopreload ./")
      ;(library-command . "gsc ./")
      (library-command . "ls")
-     (docker-image . "schemers/gambit"))
+     (docker-image . "schemers/gambit:head"))
 
     ;; FIXME
     ;; Gambit propably needs proper syntax-rules support
     ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-interpreter)
      (command . "gsi -:search=./")
-     (docker-image . "schemers/gambit"))
+     (docker-image . "schemers/gambit:head"))
 
     ((name . gauche)
      (command . "gosh -r7 -I ."))
