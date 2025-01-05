@@ -92,7 +92,8 @@
      (command . "sash -r7 -L . -L ./srfi"))
 
     ((name . stklos)
-     (command . "stklos --debug -I . -I ./srfi -f"))
+     (command . "stklos --debug -I . -I ./srfi -f")
+     (docker-image . "schemers/stklos:head"))
 
     ((name . skint)
      (command . "skint -I ./ --script"))
