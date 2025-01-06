@@ -19,25 +19,25 @@
 1-chibi-library-docker-head:
 	
 
-1-chibi-git:
+1-chibi-head:
 	
 	chibi-scheme -I . srfi-test/r7rs-programs/1.scm
 
-1-chibi-git-library:
+1-chibi-head-library:
 	
 
-1-chibi-git-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/1.scm"
-
-1-chibi-git-library-docker:
-	
-
-1-chibi-git-docker-head:
+1-chibi-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/1.scm"
 
-1-chibi-git-library-docker-head:
+1-chibi-head-library-docker:
+	
+
+1-chibi-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/1.scm"
+
+1-chibi-head-library-docker-head:
 	
 
 1-chicken-compiler:
@@ -523,25 +523,25 @@
 8-chibi-library-docker-head:
 	
 
-8-chibi-git:
+8-chibi-head:
 	
 	chibi-scheme -I . srfi-test/r7rs-programs/8.scm
 
-8-chibi-git-library:
+8-chibi-head-library:
 	
 
-8-chibi-git-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/8.scm"
-
-8-chibi-git-library-docker:
-	
-
-8-chibi-git-docker-head:
+8-chibi-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/8.scm"
 
-8-chibi-git-library-docker-head:
+8-chibi-head-library-docker:
+	
+
+8-chibi-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/8.scm"
+
+8-chibi-head-library-docker-head:
 	
 
 8-chicken-compiler:
@@ -1027,25 +1027,25 @@
 38-chibi-library-docker-head:
 	
 
-38-chibi-git:
+38-chibi-head:
 	
 	chibi-scheme -I . srfi-test/r7rs-programs/38.scm
 
-38-chibi-git-library:
+38-chibi-head-library:
 	
 
-38-chibi-git-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/38.scm"
-
-38-chibi-git-library-docker:
-	
-
-38-chibi-git-docker-head:
+38-chibi-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/38.scm"
 
-38-chibi-git-library-docker-head:
+38-chibi-head-library-docker:
+	
+
+38-chibi-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/38.scm"
+
+38-chibi-head-library-docker-head:
 	
 
 38-chicken-compiler:
@@ -1531,25 +1531,25 @@
 39-chibi-library-docker-head:
 	
 
-39-chibi-git:
+39-chibi-head:
 	
 	chibi-scheme -I . srfi-test/r7rs-programs/39.scm
 
-39-chibi-git-library:
+39-chibi-head-library:
 	
 
-39-chibi-git-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/39.scm"
-
-39-chibi-git-library-docker:
-	
-
-39-chibi-git-docker-head:
+39-chibi-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/39.scm"
 
-39-chibi-git-library-docker-head:
+39-chibi-head-library-docker:
+	
+
+39-chibi-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/39.scm"
+
+39-chibi-head-library-docker-head:
 	
 
 39-chicken-compiler:
@@ -2035,25 +2035,25 @@
 48-chibi-library-docker-head:
 	
 
-48-chibi-git:
+48-chibi-head:
 	
 	chibi-scheme -I . srfi-test/r7rs-programs/48.scm
 
-48-chibi-git-library:
+48-chibi-head-library:
 	
 
-48-chibi-git-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/48.scm"
-
-48-chibi-git-library-docker:
-	
-
-48-chibi-git-docker-head:
+48-chibi-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/48.scm"
 
-48-chibi-git-library-docker-head:
+48-chibi-head-library-docker:
+	
+
+48-chibi-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/48.scm"
+
+48-chibi-head-library-docker-head:
 	
 
 48-chicken-compiler:
@@ -2539,25 +2539,25 @@
 64-chibi-library-docker-head:
 	
 
-64-chibi-git:
+64-chibi-head:
 	
 	chibi-scheme -I . srfi-test/r7rs-programs/64.scm
 
-64-chibi-git-library:
+64-chibi-head-library:
 	
 
-64-chibi-git-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/64.scm"
-
-64-chibi-git-library-docker:
-	
-
-64-chibi-git-docker-head:
+64-chibi-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/64.scm"
 
-64-chibi-git-library-docker-head:
+64-chibi-head-library-docker:
+	
+
+64-chibi-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/chibi:head bash -c "cd workdir && chibi-scheme -I . srfi-test/r7rs-programs/64.scm"
+
+64-chibi-head-library-docker-head:
 	
 
 64-chicken-compiler:

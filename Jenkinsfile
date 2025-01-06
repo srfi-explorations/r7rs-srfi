@@ -71,7 +71,7 @@ options {
             }
         }
 
-        stage("chibi-git") {
+        stage("chibi-head") {
             agent {
                 docker {
                     image 'schemers/chibi:head'
@@ -81,7 +81,7 @@ options {
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chibi-git'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chibi-head'
                 }
             }
             steps {
@@ -89,7 +89,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "chibi-git" "chibi-scheme -I ." ""'
+                    sh './jenkins_scripts/test.sh "chibi-head" "chibi-scheme -I ." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

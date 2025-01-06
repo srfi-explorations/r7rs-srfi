@@ -5,7 +5,7 @@
   '(((name . chibi)
      (command . "chibi-scheme -I ."))
 
-    ((name . chibi-git)
+    ((name . chibi-head)
      (command . "chibi-scheme -I .")
      (docker-image . "schemers/chibi:head"))
 
