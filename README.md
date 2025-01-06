@@ -50,6 +50,7 @@ Add files:
     - srfi/srfi-N.scm
         - Shim file to support Guile and Foment
         - Should have identical exports to N.sld but cond-expanded include for Foment and Guile only
+        - Needs to be added by "git add -f srfi/srfi-N.scm" to repository
     - jenkins_scritps/test.sh
         - Add to correct place in the library build part
 
