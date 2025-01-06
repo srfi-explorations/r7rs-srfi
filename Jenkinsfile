@@ -324,7 +324,7 @@ options {
         stage("guile") {
             agent {
                 docker {
-                    image 'schemers/guile:latest'
+                    image 'schemers/guile:head'
                     reuseNode true
                     args '--user=root'
                 }

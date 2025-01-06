@@ -64,7 +64,8 @@
      (docker-image . "schemers/gerbil"))
 
     ((name . guile)
-     (command . "guile --fresh-auto-compile --r7rs -L . -L ./srfi"))
+     (command . "guile --fresh-auto-compile --r7rs -L . -L ./srfi")
+     (docker-image . "schemers/guile:head"))
 
     ((name . kawa)
      (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld"))

@@ -4,7 +4,9 @@
     (chibi (import (chibi)))
     (racket (import (scheme base)))
     (else (import (except (scheme base) make-parameter parameterize))))
-  (export make-parameter parameterize)
+  (cond-expand
+    (stklos (export make-parameter parameterize dynamic-bind))
+    (else (export make-parameter parameterize)))
   (cond-expand
     (mit-scheme (include "39.scm"))
     (foment (include "39.scm"))
