@@ -193,7 +193,7 @@
     ((name . skint)
      (command . "skint -I ./ --script"))
 
-    ((name . skint)
+    ((name . skint-head)
      (command . "skint -I ./ --script")
      (docker-image . "schemers/skint:head"))
 
@@ -201,7 +201,7 @@
      (command . "TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i")
      (docker-image . "schemers/tr7"))
 
-    ((name . tr7)
+    ((name . tr7-head)
      (command . "TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i")
      (docker-image . "schemers/tr7:head"))
 

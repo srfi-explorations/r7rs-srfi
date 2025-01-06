@@ -859,25 +859,25 @@
 1-skint-library-docker-head:
 	
 
-1-skint:
+1-skint-head:
 	
 	skint -I ./ --script srfi-test/r7rs-programs/1.scm
 
-1-skint-library:
+1-skint-head-library:
 	
 
-1-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/1.scm"
-
-1-skint-library-docker:
-	
-
-1-skint-docker-head:
+1-skint-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/1.scm"
 
-1-skint-library-docker-head:
+1-skint-head-library-docker:
+	
+
+1-skint-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/1.scm"
+
+1-skint-head-library-docker-head:
 	
 
 1-tr7:
@@ -901,25 +901,25 @@
 1-tr7-library-docker-head:
 	
 
-1-tr7:
+1-tr7-head:
 	
 	TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/1.scm
 
-1-tr7-library:
+1-tr7-head-library:
 	
 
-1-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/1.scm"
-
-1-tr7-library-docker:
-	
-
-1-tr7-docker-head:
+1-tr7-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/1.scm"
 
-1-tr7-library-docker-head:
+1-tr7-head-library-docker:
+	
+
+1-tr7-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/1.scm"
+
+1-tr7-head-library-docker-head:
 	
 
 1-ypsilon:
@@ -1825,25 +1825,25 @@
 8-skint-library-docker-head:
 	
 
-8-skint:
+8-skint-head:
 	
 	skint -I ./ --script srfi-test/r7rs-programs/8.scm
 
-8-skint-library:
+8-skint-head-library:
 	
 
-8-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/8.scm"
-
-8-skint-library-docker:
-	
-
-8-skint-docker-head:
+8-skint-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/8.scm"
 
-8-skint-library-docker-head:
+8-skint-head-library-docker:
+	
+
+8-skint-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/8.scm"
+
+8-skint-head-library-docker-head:
 	
 
 8-tr7:
@@ -1867,25 +1867,25 @@
 8-tr7-library-docker-head:
 	
 
-8-tr7:
+8-tr7-head:
 	
 	TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/8.scm
 
-8-tr7-library:
+8-tr7-head-library:
 	
 
-8-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/8.scm"
-
-8-tr7-library-docker:
-	
-
-8-tr7-docker-head:
+8-tr7-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/8.scm"
 
-8-tr7-library-docker-head:
+8-tr7-head-library-docker:
+	
+
+8-tr7-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/8.scm"
+
+8-tr7-head-library-docker-head:
 	
 
 8-ypsilon:
@@ -2791,25 +2791,25 @@
 38-skint-library-docker-head:
 	
 
-38-skint:
+38-skint-head:
 	
 	skint -I ./ --script srfi-test/r7rs-programs/38.scm
 
-38-skint-library:
+38-skint-head-library:
 	
 
-38-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/38.scm"
-
-38-skint-library-docker:
-	
-
-38-skint-docker-head:
+38-skint-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/38.scm"
 
-38-skint-library-docker-head:
+38-skint-head-library-docker:
+	
+
+38-skint-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/38.scm"
+
+38-skint-head-library-docker-head:
 	
 
 38-tr7:
@@ -2833,25 +2833,25 @@
 38-tr7-library-docker-head:
 	
 
-38-tr7:
+38-tr7-head:
 	
 	TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/38.scm
 
-38-tr7-library:
+38-tr7-head-library:
 	
 
-38-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/38.scm"
-
-38-tr7-library-docker:
-	
-
-38-tr7-docker-head:
+38-tr7-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/38.scm"
 
-38-tr7-library-docker-head:
+38-tr7-head-library-docker:
+	
+
+38-tr7-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/38.scm"
+
+38-tr7-head-library-docker-head:
 	
 
 38-ypsilon:
@@ -3757,25 +3757,25 @@
 39-skint-library-docker-head:
 	
 
-39-skint:
+39-skint-head:
 	
 	skint -I ./ --script srfi-test/r7rs-programs/39.scm
 
-39-skint-library:
+39-skint-head-library:
 	
 
-39-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/39.scm"
-
-39-skint-library-docker:
-	
-
-39-skint-docker-head:
+39-skint-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/39.scm"
 
-39-skint-library-docker-head:
+39-skint-head-library-docker:
+	
+
+39-skint-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/39.scm"
+
+39-skint-head-library-docker-head:
 	
 
 39-tr7:
@@ -3799,25 +3799,25 @@
 39-tr7-library-docker-head:
 	
 
-39-tr7:
+39-tr7-head:
 	
 	TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/39.scm
 
-39-tr7-library:
+39-tr7-head-library:
 	
 
-39-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/39.scm"
-
-39-tr7-library-docker:
-	
-
-39-tr7-docker-head:
+39-tr7-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/39.scm"
 
-39-tr7-library-docker-head:
+39-tr7-head-library-docker:
+	
+
+39-tr7-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/39.scm"
+
+39-tr7-head-library-docker-head:
 	
 
 39-ypsilon:
@@ -4723,25 +4723,25 @@
 48-skint-library-docker-head:
 	
 
-48-skint:
+48-skint-head:
 	
 	skint -I ./ --script srfi-test/r7rs-programs/48.scm
 
-48-skint-library:
+48-skint-head-library:
 	
 
-48-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/48.scm"
-
-48-skint-library-docker:
-	
-
-48-skint-docker-head:
+48-skint-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/48.scm"
 
-48-skint-library-docker-head:
+48-skint-head-library-docker:
+	
+
+48-skint-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/48.scm"
+
+48-skint-head-library-docker-head:
 	
 
 48-tr7:
@@ -4765,25 +4765,25 @@
 48-tr7-library-docker-head:
 	
 
-48-tr7:
+48-tr7-head:
 	
 	TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/48.scm
 
-48-tr7-library:
+48-tr7-head-library:
 	
 
-48-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/48.scm"
-
-48-tr7-library-docker:
-	
-
-48-tr7-docker-head:
+48-tr7-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/48.scm"
 
-48-tr7-library-docker-head:
+48-tr7-head-library-docker:
+	
+
+48-tr7-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/48.scm"
+
+48-tr7-head-library-docker-head:
 	
 
 48-ypsilon:
@@ -5689,25 +5689,25 @@
 64-skint-library-docker-head:
 	
 
-64-skint:
+64-skint-head:
 	
 	skint -I ./ --script srfi-test/r7rs-programs/64.scm
 
-64-skint-library:
+64-skint-head-library:
 	
 
-64-skint-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/64.scm"
-
-64-skint-library-docker:
-	
-
-64-skint-docker-head:
+64-skint-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/64.scm"
 
-64-skint-library-docker-head:
+64-skint-head-library-docker:
+	
+
+64-skint-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/skint:head bash -c "cd workdir && skint -I ./ --script srfi-test/r7rs-programs/64.scm"
+
+64-skint-head-library-docker-head:
 	
 
 64-tr7:
@@ -5731,25 +5731,25 @@
 64-tr7-library-docker-head:
 	
 
-64-tr7:
+64-tr7-head:
 	
 	TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/64.scm
 
-64-tr7-library:
+64-tr7-head-library:
 	
 
-64-tr7-docker:
-	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/64.scm"
-
-64-tr7-library-docker:
-	
-
-64-tr7-docker-head:
+64-tr7-head-docker:
 	
 	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/64.scm"
 
-64-tr7-library-docker-head:
+64-tr7-head-library-docker:
+	
+
+64-tr7-head-docker-head:
+	
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/64.scm"
+
+64-tr7-head-library-docker-head:
 	
 
 64-ypsilon:

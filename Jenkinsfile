@@ -11,28 +11,51 @@ options {
                choices: [
                  'all',
                  'chibi',
+                 'chibi-head',
                  'chicken-compiler',
+                 'chicken-compiler-head',
                  'chicken-interpreter',
+                 'chicken-interpreter-head',
                  'cyclone-compiler',
+                 'cyclone-compiler-head',
                  'cyclone-interpreter',
+                 'cyclone-interpreter-head',
                  'foment',
+                 'foment-head',
                  'gambit-compiler',
+                 'gambit-compiler-head',
                  'gambit-interpreter',
+                 'gambit-interpreter-head',
                  'gauche',
+                 'gauche-head',
                  'gerbil-compiler',
+                 'gerbil-compiler-head',
                  'gerbil-interpreter',
+                 'gerbil-interpreter-head',
                  'guile',
+                 'guile-head',
                  'kawa',
+                 'kawa-head',
                  'larceny',
+                 'larceny-head',
                  'loko-compiler',
+                 'loko-compiler-head',
                  'mit-scheme',
+                 'mit-scheme-head',
                  'mosh',
+                 'mosh-head',
                  'racket',
+                 'racket-head',
                  'sagittarius',
+                 'sagittarius-head',
                  'stklos',
+                 'stklos-head',
                  'skint',
+                 'skint-head',
                  'tr7',
+                 'tr7-head',
                  'ypsilon',
+                 'ypsilon-head',
                ])
     }
 
@@ -1071,7 +1094,7 @@ options {
             }
         }
 
-        stage("skint") {
+        stage("skint-head") {
             agent {
                 docker {
                     image 'schemers/skint:head'
@@ -1081,7 +1104,7 @@ options {
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'skint'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'skint-head'
                 }
             }
             steps {
@@ -1089,7 +1112,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "skint" "skint -I ./ --script" ""'
+                    sh './jenkins_scripts/test.sh "skint-head" "skint -I ./ --script" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -1121,7 +1144,7 @@ options {
             }
         }
 
-        stage("tr7") {
+        stage("tr7-head") {
             agent {
                 docker {
                     image 'schemers/tr7:head'
@@ -1131,7 +1154,7 @@ options {
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'tr7'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'tr7-head'
                 }
             }
             steps {
@@ -1139,7 +1162,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "tr7" "TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i" ""'
+                    sh './jenkins_scripts/test.sh "tr7-head" "TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
