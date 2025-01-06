@@ -124,7 +124,7 @@ options {
         stage("cyclone-compiler") {
             agent {
                 docker {
-                    image 'schemers/cyclone'
+                    image 'schemers/cyclone:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -149,7 +149,7 @@ options {
         stage("cyclone-interpreter") {
             agent {
                 docker {
-                    image 'schemers/cyclone'
+                    image 'schemers/cyclone:head'
                     reuseNode true
                     args '--user=root'
                 }

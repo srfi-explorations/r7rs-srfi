@@ -14,8 +14,7 @@
                 char-upcase
                 char-alphabetic?
                 ;string-downcase
-                string-upcase
-                )
+                string-upcase)
           (srfi 8)
           (srfi 14)
           (srfi 60))

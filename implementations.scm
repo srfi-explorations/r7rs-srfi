@@ -22,11 +22,11 @@
      (library-command . "cyclone -I .")
      ; Library command so the executable gets run
      ;(library-command . "ls")
-     (docker-image . "schemers/cyclone"))
+     (docker-image . "schemers/cyclone:head"))
 
     ((name . cyclone-interpreter)
      (command . "icyc -I . -I ./srfi -s")
-     (docker-image . "schemers/cyclone"))
+     (docker-image . "schemers/cyclone:head"))
 
     ((name . foment)
      (command . "foment -X .sld -I .")
