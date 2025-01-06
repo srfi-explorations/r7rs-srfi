@@ -121,6 +121,31 @@ options {
             }
         }
 
+        stage("chicken-compiler-head") {
+            agent {
+                docker {
+                    image 'schemers/chicken:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken-compiler-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "chicken-compiler-head" "csc -X r7rs -R r7rs -I ./srfi -o test" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("chicken-interpreter") {
             agent {
                 docker {
@@ -146,10 +171,35 @@ options {
             }
         }
 
+        stage("chicken-interpreter-head") {
+            agent {
+                docker {
+                    image 'schemers/chicken:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chicken-interpreter-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "chicken-interpreter-head" "csi -b -R r7rs -I ./ -I ./srfi -script" "csc -X r7rs -R r7rs -I ./srfi -s -J"'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("cyclone-compiler") {
             agent {
                 docker {
-                    image 'schemers/cyclone:head'
+                    image 'schemers/cyclone'
                     reuseNode true
                     args '--user=root'
                 }
@@ -171,10 +221,35 @@ options {
             }
         }
 
-        stage("cyclone-interpreter") {
+        stage("cyclone-compiler-head") {
             agent {
                 docker {
                     image 'schemers/cyclone:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-compiler-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "cyclone-compiler-head" "cyclone -o ./test -I ." "cyclone -I ."'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("cyclone-interpreter") {
+            agent {
+                docker {
+                    image 'schemers/cyclone'
                     reuseNode true
                     args '--user=root'
                 }
@@ -196,10 +271,35 @@ options {
             }
         }
 
+        stage("cyclone-interpreter-head") {
+            agent {
+                docker {
+                    image 'schemers/cyclone:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'cyclone-interpreter-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "cyclone-interpreter-head" "icyc -I . -I ./srfi -s" "cyclone -I ."'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("foment") {
             agent {
                 docker {
-                    image 'schemers/foment:head'
+                    image 'schemers/foment'
                     reuseNode true
                     args '--user=root'
                 }
@@ -221,10 +321,35 @@ options {
             }
         }
 
+        stage("foment-head") {
+            agent {
+                docker {
+                    image 'schemers/foment:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'foment-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "foment-head" "foment -X .sld -I ." ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("gambit-compiler") {
             agent {
                 docker {
-                    image 'schemers/gambit:head'
+                    image 'schemers/gambit'
                     reuseNode true
                     args '--user=root'
                 }
@@ -246,10 +371,35 @@ options {
             }
         }
 
-        stage("gambit-interpreter") {
+        stage("gambit-compiler-head") {
             agent {
                 docker {
                     image 'schemers/gambit:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit-compiler-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "gambit-compiler-head" "gsc -o ./test -exe -nopreload ./" "ls"'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("gambit-interpreter") {
+            agent {
+                docker {
+                    image 'schemers/gambit'
                     reuseNode true
                     args '--user=root'
                 }
@@ -265,6 +415,31 @@ options {
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "gambit-interpreter" "gsi -:search=./" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("gambit-interpreter-head") {
+            agent {
+                docker {
+                    image 'schemers/gambit:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gambit-interpreter-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "gambit-interpreter-head" "gsi -:search=./" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -296,6 +471,31 @@ options {
             }
         }
 
+        stage("gauche-head") {
+            agent {
+                docker {
+                    image 'schemers/gauche:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gauche-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "gauche-head" "gosh -r7 -I ." ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("gerbil-compiler") {
             agent {
                 docker {
@@ -315,6 +515,31 @@ options {
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "gerbil-compiler" "GERBIL_LOADPATH=. gxc -o ./test --lang r7rs -exe" "gxc"'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("gerbil-compiler-head") {
+            agent {
+                docker {
+                    image 'schemers/gerbil:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-compiler-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "gerbil-compiler-head" "GERBIL_LOADPATH=. gxc -o ./test --lang r7rs -exe" "gxc"'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -346,10 +571,35 @@ options {
             }
         }
 
+        stage("gerbil-interpreter:head") {
+            agent {
+                docker {
+                    image 'schemers/gerbil:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-interpreter:head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "gerbil-interpreter:head" "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("guile") {
             agent {
                 docker {
-                    image 'schemers/guile:head'
+                    image 'schemers/guile'
                     reuseNode true
                     args '--user=root'
                 }
@@ -371,10 +621,35 @@ options {
             }
         }
 
+        stage("guile-head") {
+            agent {
+                docker {
+                    image 'schemers/guile:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'guile-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "guile-head" "guile --fresh-auto-compile --r7rs -L . -L ./srfi" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("kawa") {
             agent {
                 docker {
-                    image 'schemers/kawa:head'
+                    image 'schemers/kawa'
                     reuseNode true
                     args '--user=root'
                 }
@@ -396,10 +671,60 @@ options {
             }
         }
 
+        stage("kawa-head") {
+            agent {
+                docker {
+                    image 'schemers/kawa:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'kawa-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "kawa-head" "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("larceny") {
             agent {
                 docker {
                     image 'schemers/larceny:latest'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'larceny'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "larceny" "larceny -utf8 -r7strict -I . -program" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("larceny") {
+            agent {
+                docker {
+                    image 'schemers/larceny:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -446,6 +771,31 @@ options {
             }
         }
 
+        stage("loko-compiler-head") {
+            agent {
+                docker {
+                    image 'schemers/loko:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'loko-compiler-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "loko-compiler-head" "loko -std=r7rs --compile" "ls"'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("mit-scheme") {
             agent {
                 docker {
@@ -465,6 +815,31 @@ options {
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("mit-scheme-head") {
+            agent {
+                docker {
+                    image 'schemers/mit-scheme:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'mit-scheme-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "mit-scheme-head" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -496,6 +871,31 @@ options {
             }
         }
 
+        stage("mosh-head") {
+            agent {
+                docker {
+                    image 'schemers/mosh:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'mosh-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "mosh-head" "mosh --loadpath=." ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("racket") {
             agent {
                 docker {
@@ -515,6 +915,31 @@ options {
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "racket" "racket -I r7rs -S . --script" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("racket-head") {
+            agent {
+                docker {
+                    image 'schemers/racket:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'racket-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "racket-head" "racket -I r7rs -S . --script" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -546,10 +971,35 @@ options {
             }
         }
 
+        stage("sagittarius-head") {
+            agent {
+                docker {
+                    image 'schemers/sagittarius:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'sagittarius-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "sagittarius-head" "sash -r7 -L . -L ./srfi" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("stklos") {
             agent {
                 docker {
-                    image 'schemers/stklos:head'
+                    image 'schemers/stklos'
                     reuseNode true
                     args '--user=root'
                 }
@@ -565,6 +1015,31 @@ options {
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "stklos" "stklos --debug -I . -I ./srfi -f" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("stklos-head") {
+            agent {
+                docker {
+                    image 'schemers/stklos:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'stklos-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "stklos-head" "stklos --debug -I . -I ./srfi -f" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -590,6 +1065,56 @@ options {
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "skint" "skint -I ./ --script" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("skint") {
+            agent {
+                docker {
+                    image 'schemers/skint:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'skint'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "skint" "skint -I ./ --script" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("tr7") {
+            agent {
+                docker {
+                    image 'schemers/tr7'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'tr7'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "tr7" "TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -640,6 +1165,31 @@ options {
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
                     sh './jenkins_scripts/test.sh "ypsilon" "ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program" ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
+        stage("ypsilon-head") {
+            agent {
+                docker {
+                    image 'schemers/ypsilon:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'ypsilon-head'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "ypsilon-head" "ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
