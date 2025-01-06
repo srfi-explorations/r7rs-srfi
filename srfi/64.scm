@@ -125,8 +125,8 @@
   (let* ((alist (test-result-alist runner))
          (entry (assq key alist)))
     (if entry
-        (set-cdr! entry value)
-        (test-result-alist! runner (cons (cons key value) alist)))))
+      (set-cdr! entry value)
+      (test-result-alist! runner (cons (cons key value) alist)))))
 
 (define (test-result-remove runner key)
   (test-result-alist! runner (remove (lambda (entry)
@@ -195,13 +195,13 @@
 
 (define (string-join strings delimiter)
   (if (null? strings)
-      ""
-      (let loop ((result (car strings))
-                 (rest (cdr strings)))
-        (if (null? rest)
-            result
-            (loop (string-append result delimiter (car rest))
-                  (cdr rest))))))
+    ""
+    (let loop ((result (car strings))
+               (rest (cdr strings)))
+      (if (null? rest)
+        result
+        (loop (string-append result delimiter (car rest))
+              (cdr rest))))))
 
 (define (truncate-string string length)
   (define (newline->space c) (if (char=? #\newline c) #\space c))
@@ -210,14 +210,14 @@
          (fill-len (string-length fill))
          (string-len (string-length string)))
     (if (<= string-len (+ length fill-len))
-        string
-        (let-values (((q r) (floor/ length 4)))
-          ;; Left part gets 3/4 plus the remainder.
-          (let ((left-end (+ (* q 3) r))
-                (right-start (- string-len q)))
-            (string-append (substring string 0 left-end)
-                           fill
-                           (substring string right-start string-len)))))))
+      string
+      (let-values (((q r) (floor/ length 4)))
+        ;; Left part gets 3/4 plus the remainder.
+        (let ((left-end (+ (* q 3) r))
+              (right-start (- string-len q)))
+          (string-append (substring string 0 left-end)
+                         fill
+                         (substring string right-start string-len)))))))
 
 (define (print runner format-string . args)
   (apply format #t format-string args)
@@ -284,10 +284,10 @@
                              ((skip) "SKIP")))
          (name (let ((name (test-runner-test-name runner)))
                  (if (string=? "" name)
-                     (truncate-string
-                      (format #f "~a" (test-result-ref runner 'source-form))
-                      30)
-                     name)))
+                   (truncate-string
+                     (format #f "~a" (test-result-ref runner 'source-form))
+                     30)
+                   name)))
          (label (string-join (append (test-runner-group-path runner)
                                      (list name))
                              ": ")))
@@ -316,13 +316,12 @@
 
 (define (test-on-bad-count-simple runner count expected-count)
   (print runner "*** Total number of tests was ~a but should be ~a. ***~%"
-          count expected-count)
+         count expected-count)
   (print runner
          "*** Discrepancy indicates testsuite error or exceptions. ***~%"))
 
 (define (test-on-bad-end-name-simple runner begin-name end-name)
-  (error (format #f "Test-end \"~a\" does not match test-begin \"~a\"."
-                 end-name begin-name)))
+  (error (format #f "Test-end \"~a\" does not match test-begin \"~a\"." end-name begin-name)))
 
 (define (on-bad-error-type runner type error)
   (print runner "WARNING: unknown error type predicate: ~a~%" type)
@@ -442,17 +441,17 @@
   (syntax-rules ()
     ((_ <name> <body> <body>* ... <cleanup>)
      (test-group <name>
-       (dynamic-wind (lambda () #f)
-                     (lambda () <body> <body>* ...)
-                     (lambda () <cleanup>))))))
+                 (dynamic-wind (lambda () #f)
+                               (lambda () <body> <body>* ...)
+                               (lambda () <cleanup>))))))
 
 ;;; Skipping, expected-failing, matching
 
 (define (test-skip . specs)
   (let ((runner (test-runner-get)))
     (%test-runner-skip-list!
-     runner (cons (apply test-match-all specs)
-                  (%test-runner-skip-list runner)))))
+      runner (cons (apply test-match-all specs)
+                   (%test-runner-skip-list runner)))))
 
 (define (test-skip? runner)
   (let ((run-list (%test-runner-run-list runner))
@@ -463,8 +462,8 @@
 (define (test-expect-fail . specs)
   (let ((runner (test-runner-get)))
     (%test-runner-fail-list!
-     runner (cons (apply test-match-all specs)
-                  (%test-runner-fail-list runner)))))
+      runner (cons (apply test-match-all specs)
+                   (%test-runner-fail-list runner)))))
 
 (define (test-match-any . specs)
   (let ((preds (map make-pred specs)))
@@ -478,14 +477,14 @@
 
 (define (make-pred spec)
   (cond
-   ((procedure? spec)
-    spec)
-   ((integer? spec)
-    (test-match-nth 1 spec))
-   ((string? spec)
-    (test-match-name spec))
-   (else
-    (error "not a valid test specifier" spec))))
+    ((procedure? spec)
+     spec)
+    ((integer? spec)
+     (test-match-nth 1 spec))
+    ((string? spec)
+     (test-match-name spec))
+    (else
+      (error "not a valid test specifier" spec))))
 
 (define test-match-nth
   (case-lambda
@@ -507,19 +506,19 @@
   (let loop ((matched? #f)
              (preds preds))
     (if (null? preds)
-        matched?
-        (let ((result ((car preds) object)))
-          (loop (or matched? result)
-                (cdr preds))))))
+      matched?
+      (let ((result ((car preds) object)))
+        (loop (or matched? result)
+              (cdr preds))))))
 
 (define (every-pred preds object)
   (let loop ((failed? #f)
              (preds preds))
     (if (null? preds)
-        (not failed?)
-        (let ((result ((car preds) object)))
-          (loop (or failed? (not result))
-                (cdr preds))))))
+      (not failed?)
+      (let ((result ((car preds) object)))
+        (loop (or failed? (not result))
+              (cdr preds))))))
 ;;; Actual testing
 
 (define-syntax false-if-error
@@ -531,7 +530,8 @@
            (lambda (x)
              (test-result-set! <runner>
                                'actual-error
-                               (list (error-object-message x) (error-object-irritants x)))
+                               (list (error-object-message x)
+                                     (error-object-irritants x)))
              (k #f))
            (lambda ()
              <expression>)))))))
@@ -570,8 +570,8 @@
 (define (set-result-kind! runner pass?)
   (test-result-set! runner 'result-kind
                     (if (eq? (test-result-kind runner) 'xfail)
-                        (if pass? 'xpass 'xfail)
-                        (if pass? 'pass 'fail))))
+                      (if pass? 'xpass 'xfail)
+                      (if pass? 'pass 'fail))))
 
 ;;; We need to use some trickery to get the source info right.  The important
 ;;; thing is to pass a syntax object that is a pair to `source-info', and make
@@ -615,10 +615,10 @@
     (when (test-prelude runner name form)
       (test-result-set! runner 'expected-value expected)
       (let ((pass? (false-if-error
-                    (let ((val (thunk)))
-                      (test-result-set! runner 'actual-value val)
-                      (compare expected val))
-                    runner)))
+                     (let ((val (thunk)))
+                       (test-result-set! runner 'actual-value val)
+                       (compare expected val))
+                     runner)))
         (set-result-kind! runner pass?)))
     (test-postlude runner)))
 
@@ -662,13 +662,13 @@
 
 (define (error-matches? error type)
   (cond
-   ((eq? type #t)
-    #t)
-   #;((condition-type? type)
+    ((eq? type #t)
+     #t)
+    #;((condition-type? type)
     (and (condition? error) (condition-has-type? error type)))
-   ((procedure? type)
-    (type error))
-   (else
+  ((procedure? type)
+   (type error))
+  (else
     (let ((runner (test-runner-get)))
       ((%test-runner-on-bad-error-type runner) runner type error))
     #f)))
@@ -711,16 +711,16 @@
      (let* ((port (open-input-string string))
             (form (read port)))
        (if (eof-object? (read-char port))
-           (eval form (cond-expand
-                        (cyclone (create-environment))
-                        (else (environment '(scheme base)))))
-           (error "(not at eof)"))))
+         (eval form (cond-expand
+                      (cyclone (create-environment))
+                      (else (environment '(scheme base)))))
+         (error "(not at eof)"))))
     ((string env)
      (let* ((port (open-input-string string))
             (form (read port)))
        (if (eof-object? (read-char port))
-           (eval form env)
-           (error "(not at eof)"))))))
+         (eval form env)
+         (error "(not at eof)"))))))
 
 ;;; Test runner control flow
 
@@ -735,17 +735,17 @@
 
 (define (test-apply first . rest)
   (let ((runner (if (test-runner? first)
-                    first
-                    (or (test-runner-current) (test-runner-create))))
+                  first
+                  (or (test-runner-current) (test-runner-create))))
         (run-list (if (test-runner? first)
-                      (drop-right rest 1)
-                      (cons first (drop-right rest 1))))
+                    (drop-right rest 1)
+                    (cons first (drop-right rest 1))))
         (proc (last rest)))
     (test-with-runner runner
-      (let ((saved-run-list (%test-runner-run-list runner)))
-        (%test-runner-run-list! runner run-list)
-        (proc)
-        (%test-runner-run-list! runner saved-run-list)))))
+                      (let ((saved-run-list (%test-runner-run-list runner)))
+                        (%test-runner-run-list! runner run-list)
+                        (proc)
+                        (%test-runner-run-list! runner saved-run-list)))))
 
 ;;; Indicate success/failure via exit status
 
@@ -753,10 +753,12 @@
   (let ((runner (test-runner-current)))
     (if (and (zero? (test-runner-xpass-count runner))
              (zero? (test-runner-fail-count runner)))
-        (exit 0)
-        (exit 1))))
+      (exit 0)
+      (exit 1))))
 
 ;;; execution.scm ends here
-(when (not (test-runner-factory))
-  (test-runner-factory test-runner-simple))
+(cond-expand
+  (mit-scheme #t)
+  (else (when (not (test-runner-factory))
+          (test-runner-factory test-runner-simple))))
 

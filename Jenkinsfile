@@ -389,7 +389,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "larceny" "larceny -utf8 -r7rs -I . -program" ""'
+                    sh './jenkins_scripts/test.sh "larceny" "larceny -utf8 -r7strict -I . -program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -439,7 +439,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/48.sld ./srfi/64.sld" ""'
+                    sh './jenkins_scripts/test.sh "mit-scheme" "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -574,7 +574,7 @@ options {
         stage("tr7") {
             agent {
                 docker {
-                    image 'schemers/tr7:latest'
+                    image 'schemers/tr7:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -589,7 +589,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "tr7" "tr7i" ""'
+                    sh './jenkins_scripts/test.sh "tr7" "TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

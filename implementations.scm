@@ -70,7 +70,7 @@
      (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld"))
 
     ((name . larceny)
-     (command . "larceny -utf8 -r7rs -I . -program"))
+     (command . "larceny -utf8 -r7strict -I . -program"))
 
     ((name . loko-compiler)
      (compiler? . #t)
@@ -80,7 +80,7 @@
 
     ; FIXME Temporarily loading needed stuff to run srfi-64
     ((name . mit-scheme)
-     (command . "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/48.sld ./srfi/64.sld"))
+     (command . "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld"))
 
     ((name . mosh)
      (command . "mosh --loadpath=."))
@@ -99,7 +99,8 @@
      (command . "skint -I ./ --script"))
 
     ((name . tr7)
-     (command . "tr7i"))
+     (command . "TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i")
+     (docker-image . "schemers/tr7:head"))
 
     ((name . ypsilon)
      (command . "ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program"))))

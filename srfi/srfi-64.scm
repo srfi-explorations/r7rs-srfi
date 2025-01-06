@@ -1,6 +1,6 @@
 (define-library
   (srfi 64)
-  (import (scheme base)
+  (import (except (scheme base) make-parameter parameterize)
           (scheme case-lambda)
           (scheme complex)
           (scheme eval)
@@ -9,6 +9,7 @@
           (scheme read)
           (scheme write)
           (srfi 1)
+          (srfi 39)
           (srfi 48))
   (export test-begin
           test-end
