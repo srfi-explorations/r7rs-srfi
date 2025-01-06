@@ -113,7 +113,7 @@
      ;(library-command . "gxc --lang r7rs")
      (docker-image . "schemers/gerbil"))
 
-    ((name . gerbil-interpreter:head)
+    ((name . gerbil-interpreter-head)
      (command . "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs")
      ;(library-command . "gxc --lang r7rs")
      (docker-image . "schemers/gerbil:head"))
@@ -137,7 +137,7 @@
     ((name . larceny)
      (command . "larceny -utf8 -r7strict -I . -program"))
 
-    ((name . larceny)
+    ((name . larceny-head)
      (command . "larceny -utf8 -r7strict -I . -program")
      (docker-image . "schemers/larceny:head"))
 

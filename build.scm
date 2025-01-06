@@ -48,7 +48,9 @@
         ((and (assoc 'compiler? implementation)
               (cdr (assoc 'compiler? implementation)))
          (if (or (string=? name "loko-compiler")
-                 (string=? name "cyclone-compiler"))
+                 (string=? name "loko-compiler-head")
+                 (string=? name "cyclone-compiler")
+                 (string=? name "cyclone-compiler-head"))
            (string-append command " && mv srfi-test/r7rs-programs/" number " ./test && ./test")
            (string-append command " && ./test")))
         (else command)))))
@@ -74,9 +76,7 @@
                        `((name . ,name)
                          (dockerimage . ,(if (assoc 'docker-image implementation)
                                            (cdr (assoc 'docker-image implementation))
-                                           (string-append "schemers/"
-                                                          name
-                                                          ":latest")))) out)
+                                           (string-append "schemers/" name ":latest")))) out)
               (execute jenkinsfile-job
                            `((name . ,name)
                              (command . ,(cdr (assoc 'command implementation)))

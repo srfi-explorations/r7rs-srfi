@@ -571,7 +571,7 @@ options {
             }
         }
 
-        stage("gerbil-interpreter:head") {
+        stage("gerbil-interpreter-head") {
             agent {
                 docker {
                     image 'schemers/gerbil:head'
@@ -581,7 +581,7 @@ options {
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-interpreter:head'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'gerbil-interpreter-head'
                 }
             }
             steps {
@@ -589,7 +589,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "gerbil-interpreter:head" "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs" ""'
+                    sh './jenkins_scripts/test.sh "gerbil-interpreter-head" "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
@@ -721,7 +721,7 @@ options {
             }
         }
 
-        stage("larceny") {
+        stage("larceny-head") {
             agent {
                 docker {
                     image 'schemers/larceny:head'
@@ -731,7 +731,7 @@ options {
             }
             when {
                 expression {
-                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'larceny'
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'larceny-head'
                 }
             }
             steps {
@@ -739,7 +739,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "larceny" "larceny -utf8 -r7strict -I . -program" ""'
+                    sh './jenkins_scripts/test.sh "larceny-head" "larceny -utf8 -r7strict -I . -program" ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }
