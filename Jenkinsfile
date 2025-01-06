@@ -164,7 +164,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I . -I ./srfi -s" ""'
+                    sh './jenkins_scripts/test.sh "cyclone-interpreter" "icyc -I . -I ./srfi -s" "cyclone -I ."'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

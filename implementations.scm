@@ -26,6 +26,7 @@
 
     ((name . cyclone-interpreter)
      (command . "icyc -I . -I ./srfi -s")
+     (library-command . "cyclone -I .")
      (docker-image . "schemers/cyclone:head"))
 
     ((name . foment)

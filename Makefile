@@ -83,25 +83,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/1.sld" 
 
 1-cyclone-interpreter:
-	
+	 cyclone -I . srfi/1.sld 
 	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/1.scm
 
 1-cyclone-interpreter-library:
-	
+	 cyclone -I . srfi/1.sld 
 
 1-cyclone-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/1.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/1.scm"
 
 1-cyclone-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/1.sld" 
 
 1-cyclone-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/1.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/1.scm"
 
 1-cyclone-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/1.sld" 
 
 1-foment:
 	
@@ -566,25 +566,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/8.sld" 
 
 8-cyclone-interpreter:
-	
+	 cyclone -I . srfi/8.sld 
 	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/8.scm
 
 8-cyclone-interpreter-library:
-	
+	 cyclone -I . srfi/8.sld 
 
 8-cyclone-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/8.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/8.scm"
 
 8-cyclone-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/8.sld" 
 
 8-cyclone-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/8.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/8.scm"
 
 8-cyclone-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/8.sld" 
 
 8-foment:
 	
@@ -1049,25 +1049,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/38.sld" 
 
 38-cyclone-interpreter:
-	
+	 cyclone -I . srfi/38.sld 
 	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/38.scm
 
 38-cyclone-interpreter-library:
-	
+	 cyclone -I . srfi/38.sld 
 
 38-cyclone-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/38.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/38.scm"
 
 38-cyclone-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/38.sld" 
 
 38-cyclone-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/38.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/38.scm"
 
 38-cyclone-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/38.sld" 
 
 38-foment:
 	
@@ -1532,25 +1532,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/39.sld" 
 
 39-cyclone-interpreter:
-	
+	 cyclone -I . srfi/39.sld 
 	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/39.scm
 
 39-cyclone-interpreter-library:
-	
+	 cyclone -I . srfi/39.sld 
 
 39-cyclone-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/39.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/39.scm"
 
 39-cyclone-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/39.sld" 
 
 39-cyclone-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/39.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/39.scm"
 
 39-cyclone-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/39.sld" 
 
 39-foment:
 	
@@ -2015,25 +2015,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/48.sld" 
 
 48-cyclone-interpreter:
-	
+	 cyclone -I . srfi/48.sld 
 	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/48.scm
 
 48-cyclone-interpreter-library:
-	
+	 cyclone -I . srfi/48.sld 
 
 48-cyclone-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/48.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/48.scm"
 
 48-cyclone-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/48.sld" 
 
 48-cyclone-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/48.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/48.scm"
 
 48-cyclone-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/48.sld" 
 
 48-foment:
 	
@@ -2498,25 +2498,25 @@
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/64.sld" 
 
 64-cyclone-interpreter:
-	
+	 cyclone -I . srfi/64.sld 
 	icyc -I . -I ./srfi -s srfi-test/r7rs-programs/64.scm
 
 64-cyclone-interpreter-library:
-	
+	 cyclone -I . srfi/64.sld 
 
 64-cyclone-interpreter-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/64.scm"
 
 64-cyclone-interpreter-library-docker:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/64.sld" 
 
 64-cyclone-interpreter-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/64.sld"
 	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && icyc -I . -I ./srfi -s srfi-test/r7rs-programs/64.scm"
 
 64-cyclone-interpreter-library-docker-head:
-	
+	docker run -it -v ${PWD}:/workdir:z schemers/cyclone:head bash -c "cd workdir && cyclone -I . srfi/64.sld" 
 
 64-foment:
 	

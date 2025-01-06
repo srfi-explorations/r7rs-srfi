@@ -24,3 +24,12 @@
 	make 48-gerbil-compiler-library
 	make 64-gerbil-compiler-library
 	make 64-gerbil-compiler
+
+64-cyclone-interpreter:
+	make 8-cyclone-interpreter-library
+	make 1-cyclone-interpreter-library
+	make 38-cyclone-interpreter-library
+	make 39-cyclone-interpreter-library
+	make 48-cyclone-interpreter-library
+	make 64-cyclone-interpreter-library
+	make 64-cyclone-interpreter
