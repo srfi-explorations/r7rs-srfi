@@ -5,6 +5,10 @@
   '(((name . chibi)
      (command . "chibi-scheme -I ."))
 
+    ((name . chibi-git)
+     (command . "chibi-scheme -I .")
+     (docker-image . "schemers/chibi:head"))
+
     ((name . chicken-compiler)
      (compiler? . #t)
      (command . "csc -X r7rs -R r7rs -I ./srfi -o test")
@@ -20,8 +24,6 @@
      (compiler? . #t)
      (command . "cyclone -o ./test -I .")
      (library-command . "cyclone -I .")
-     ; Library command so the executable gets run
-     ;(library-command . "ls")
      (docker-image . "schemers/cyclone:head"))
 
     ((name . cyclone-interpreter)

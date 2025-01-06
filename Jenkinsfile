@@ -71,6 +71,31 @@ options {
             }
         }
 
+        stage("chibi-git") {
+            agent {
+                docker {
+                    image 'schemers/chibi:head'
+                    reuseNode true
+                    args '--user=root'
+                }
+            }
+            when {
+                expression {
+                    params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == 'chibi-git'
+                }
+            }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'apt update && apt install -y make time tree file'
+                    sh 'make -f Makefile.build clean'
+                    unstash 'tests'
+                    sh './jenkins_scripts/test.sh "chibi-git" "chibi-scheme -I ." ""'
+                    archiveArtifacts artifacts: 'reports/*.log'
+                    sh 'rm -rf *.log'
+                }
+            }
+        }
+
         stage("chicken-compiler") {
             agent {
                 docker {
