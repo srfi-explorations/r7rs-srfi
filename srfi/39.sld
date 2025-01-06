@@ -6,6 +6,7 @@
     (else (import (except (scheme base) make-parameter parameterize))))
   (cond-expand
     (stklos (export make-parameter parameterize dynamic-bind))
+    (cyclone (export make-parameter parameterize dynamic-bind))
     (else (export make-parameter parameterize)))
   (cond-expand
     (mit-scheme (include "39.scm"))
