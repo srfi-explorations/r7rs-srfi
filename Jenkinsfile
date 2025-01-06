@@ -51,7 +51,7 @@ options {
                 docker {
                     image 'schemers/chibi:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -76,7 +76,7 @@ options {
                 docker {
                     image 'schemers/chicken'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -101,7 +101,7 @@ options {
                 docker {
                     image 'schemers/chicken'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -126,7 +126,7 @@ options {
                 docker {
                     image 'schemers/cyclone:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -151,7 +151,7 @@ options {
                 docker {
                     image 'schemers/cyclone:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -176,7 +176,7 @@ options {
                 docker {
                     image 'schemers/foment:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -201,7 +201,7 @@ options {
                 docker {
                     image 'schemers/gambit:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -226,7 +226,7 @@ options {
                 docker {
                     image 'schemers/gambit:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -251,7 +251,7 @@ options {
                 docker {
                     image 'schemers/gauche:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -276,7 +276,7 @@ options {
                 docker {
                     image 'schemers/gerbil'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -301,7 +301,7 @@ options {
                 docker {
                     image 'schemers/gerbil'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -326,7 +326,7 @@ options {
                 docker {
                     image 'schemers/guile:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -351,7 +351,7 @@ options {
                 docker {
                     image 'schemers/kawa:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -376,7 +376,7 @@ options {
                 docker {
                     image 'schemers/larceny:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -401,7 +401,7 @@ options {
                 docker {
                     image 'schemers/loko'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -426,7 +426,7 @@ options {
                 docker {
                     image 'schemers/mit-scheme:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -451,7 +451,7 @@ options {
                 docker {
                     image 'schemers/mosh:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -476,7 +476,7 @@ options {
                 docker {
                     image 'schemers/racket:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -501,7 +501,7 @@ options {
                 docker {
                     image 'schemers/sagittarius:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -526,7 +526,7 @@ options {
                 docker {
                     image 'schemers/stklos:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -551,7 +551,7 @@ options {
                 docker {
                     image 'schemers/skint:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -576,7 +576,7 @@ options {
                 docker {
                     image 'schemers/tr7:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
@@ -601,7 +601,7 @@ options {
                 docker {
                     image 'schemers/ypsilon:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable --memory=8g --memory-swap=1g'
+                    args '--user=root --oom-kill-disable --memory 8g --memory-swap 10g'
                 }
             }
             when {
