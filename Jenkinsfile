@@ -349,7 +349,7 @@ options {
         stage("kawa") {
             agent {
                 docker {
-                    image 'schemers/kawa:latest'
+                    image 'schemers/kawa:head'
                     reuseNode true
                     args '--user=root'
                 }

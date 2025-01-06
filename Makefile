@@ -259,14 +259,14 @@
 
 1-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/1.scm"
 
 1-kawa-library-docker:
 	
 
 1-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/1.scm"
 
 1-kawa-library-docker-head:
 	
@@ -742,14 +742,14 @@
 
 8-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/8.scm"
 
 8-kawa-library-docker:
 	
 
 8-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/8.scm"
 
 8-kawa-library-docker-head:
 	
@@ -1225,14 +1225,14 @@
 
 38-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/38.scm"
 
 38-kawa-library-docker:
 	
 
 38-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/38.scm"
 
 38-kawa-library-docker-head:
 	
@@ -1708,14 +1708,14 @@
 
 39-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/39.scm"
 
 39-kawa-library-docker:
 	
 
 39-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/39.scm"
 
 39-kawa-library-docker-head:
 	
@@ -2191,14 +2191,14 @@
 
 48-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/48.scm"
 
 48-kawa-library-docker:
 	
 
 48-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/48.scm"
 
 48-kawa-library-docker-head:
 	
@@ -2674,14 +2674,14 @@
 
 64-kawa-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/64.scm"
 
 64-kawa-library-docker:
 	
 
 64-kawa-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/kawa:latest bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/kawa:head bash -c "cd workdir && kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld srfi-test/r7rs-programs/64.scm"
 
 64-kawa-library-docker-head:
 	

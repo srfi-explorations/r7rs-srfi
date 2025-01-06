@@ -69,7 +69,8 @@
      (docker-image . "schemers/guile:head"))
 
     ((name . kawa)
-     (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld"))
+     (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld")
+     (docker-image . "schemers/kawa:head"))
 
     ((name . larceny)
      (command . "larceny -utf8 -r7strict -I . -program"))

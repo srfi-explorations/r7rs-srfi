@@ -75,3 +75,6 @@ The srfi/srfi-N.scm files exist for Guile compability, their content should be i
 srfi/N.sld.
 
 The srfi/N.rkt files exists for racket-r7rs compability.
+
+The srfi/39.mit.sld should be identical to srfi/39.sld except the chibi "include-shared" part
+commented out.
