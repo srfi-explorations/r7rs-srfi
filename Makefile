@@ -315,21 +315,21 @@
 
 1-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm
 
 1-mit-scheme-library:
 	
 
 1-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 1-mit-scheme-library-docker:
 	
 
 1-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/1.scm"
 
 1-mit-scheme-library-docker-head:
 	
@@ -798,21 +798,21 @@
 
 8-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm
 
 8-mit-scheme-library:
 	
 
 8-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 8-mit-scheme-library-docker:
 	
 
 8-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/8.scm"
 
 8-mit-scheme-library-docker-head:
 	
@@ -1281,21 +1281,21 @@
 
 13-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm
 
 13-mit-scheme-library:
 	
 
 13-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
 
 13-mit-scheme-library-docker:
 	
 
 13-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/13.scm"
 
 13-mit-scheme-library-docker-head:
 	
@@ -1764,21 +1764,21 @@
 
 14-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm
 
 14-mit-scheme-library:
 	
 
 14-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
 
 14-mit-scheme-library-docker:
 	
 
 14-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/14.scm"
 
 14-mit-scheme-library-docker-head:
 	
@@ -2247,21 +2247,21 @@
 
 26-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm
 
 26-mit-scheme-library:
 	
 
 26-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 26-mit-scheme-library-docker:
 	
 
 26-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/26.scm"
 
 26-mit-scheme-library-docker-head:
 	
@@ -2730,21 +2730,21 @@
 
 28-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm
 
 28-mit-scheme-library:
 	
 
 28-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 28-mit-scheme-library-docker:
 	
 
 28-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/28.scm"
 
 28-mit-scheme-library-docker-head:
 	
@@ -3213,21 +3213,21 @@
 
 38-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/38.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/38.scm
 
 38-mit-scheme-library:
 	
 
 38-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/38.scm"
 
 38-mit-scheme-library-docker:
 	
 
 38-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/38.scm"
 
 38-mit-scheme-library-docker-head:
 	
@@ -3696,21 +3696,21 @@
 
 39-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm
 
 39-mit-scheme-library:
 	
 
 39-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
 
 39-mit-scheme-library-docker:
 	
 
 39-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/39.scm"
 
 39-mit-scheme-library-docker-head:
 	
@@ -4179,21 +4179,21 @@
 
 48-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/48.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/48.scm
 
 48-mit-scheme-library:
 	
 
 48-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/48.scm"
 
 48-mit-scheme-library-docker:
 	
 
 48-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/48.scm"
 
 48-mit-scheme-library-docker-head:
 	
@@ -4662,21 +4662,21 @@
 
 60-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm
 
 60-mit-scheme-library:
 	
 
 60-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
 
 60-mit-scheme-library-docker:
 	
 
 60-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/60.scm"
 
 60-mit-scheme-library-docker-head:
 	
@@ -5145,21 +5145,21 @@
 
 64-mit-scheme:
 	
-	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm
+	mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm
 
 64-mit-scheme-library:
 	
 
 64-mit-scheme-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
 
 64-mit-scheme-library-docker:
 	
 
 64-mit-scheme-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/mit-scheme:latest bash -c "cd workdir && mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld srfi-test/r7rs-programs/64.scm"
 
 64-mit-scheme-library-docker-head:
 	

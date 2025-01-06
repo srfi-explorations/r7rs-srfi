@@ -80,7 +80,7 @@
 
     ; FIXME Temporarily loading needed stuff to run srfi-64
     ((name . mit-scheme)
-     (command . "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.sld ./srfi/48.sld ./srfi/64.sld"))
+     (command . "mit-scheme --batch-mode --load ./srfi/8.sld ./srfi/1.sld ./srfi/38.sld ./srfi/39.mit.sld ./srfi/48.sld ./srfi/64.sld"))
 
     ((name . mosh)
      (command . "mosh --loadpath=."))
