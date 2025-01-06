@@ -60,11 +60,10 @@
 (define jenkinsfile-bottom (compile (slurp "templates/Jenkinsfile-bottom")))
 
 (define generate-jenkinsfile
-  (lambda (head?)
-    (when (file-exists? (string-append "Jenkinsfile" (if head? "-head" "")))
-      (delete-file (string-append "Jenkinsfile" (if head? "-head" ""))))
+  (lambda ()
+    (when (file-exists? "Jenkinsfile") (delete-file "Jenkinsfile"))
     (call-with-output-file
-      (string-append "Jenkinsfile" (if head? "-head" ""))
+      "Jenkinsfile"
       (lambda (out)
         (execute jenkinsfile-top '() out)
         (newline out)
@@ -77,7 +76,7 @@
                                            (cdr (assoc 'docker-image implementation))
                                            (string-append "schemers/"
                                                           name
-                                                          (if head? ":head" ":latest"))))) out)
+                                                          ":latest")))) out)
               (execute jenkinsfile-job
                            `((name . ,name)
                              (command . ,(cdr (assoc 'command implementation)))
@@ -96,8 +95,7 @@
         (execute jenkinsfile-bottom '() out)
         (newline out)))))
 
-(generate-jenkinsfile #f)
-(generate-jenkinsfile #t)
+(generate-jenkinsfile)
 
 (define makefile-top (compile (slurp "templates/Makefile-top")))
 (define makefile-job (compile (slurp "templates/Makefile-job")))
