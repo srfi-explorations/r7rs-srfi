@@ -3,6 +3,7 @@
   (cond-expand
     (chibi (import (chibi)))
     (racket (import (scheme base)))
+    (tr7 (import (scheme base)))
     (else (import (except (scheme base) make-parameter parameterize))))
   (cond-expand
     (stklos (export make-parameter parameterize dynamic-bind))
@@ -17,4 +18,5 @@
              (threads (include "39/syntax.scm"))
              (else (include "39/syntax-no-threads.scm"))))
     (racket (begin #t))
+    (tr7 (begin #t))
     (else (include "39.scm"))))
