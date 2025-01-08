@@ -11,51 +11,28 @@ options {
                choices: [
                  'all',
                  'chibi',
-                 'chibi-head',
                  'chicken-compiler',
-                 'chicken-compiler-head',
                  'chicken-interpreter',
-                 'chicken-interpreter-head',
                  'cyclone-compiler',
-                 'cyclone-compiler-head',
                  'cyclone-interpreter',
-                 'cyclone-interpreter-head',
                  'foment',
-                 'foment-head',
                  'gambit-compiler',
-                 'gambit-compiler-head',
                  'gambit-interpreter',
-                 'gambit-interpreter-head',
                  'gauche',
-                 'gauche-head',
                  'gerbil-compiler',
-                 'gerbil-compiler-head',
                  'gerbil-interpreter',
-                 'gerbil-interpreter-head',
                  'guile',
-                 'guile-head',
                  'kawa',
-                 'kawa-head',
                  'larceny',
-                 'larceny-head',
                  'loko-compiler',
-                 'loko-compiler-head',
                  'mit-scheme',
-                 'mit-scheme-head',
                  'mosh',
-                 'mosh-head',
                  'racket',
-                 'racket-head',
                  'sagittarius',
-                 'sagittarius-head',
                  'stklos',
-                 'stklos-head',
                  'skint',
-                 'skint-head',
                  'tr7',
-                 'tr7-head',
                  'ypsilon',
-                 'ypsilon-head',
                ])
     }
 
@@ -347,7 +324,7 @@ options {
         stage("guile") {
             agent {
                 docker {
-                    image 'schemers/guile'
+                    image 'schemers/guile:head'
                     reuseNode true
                     args '--user=root'
                 }
