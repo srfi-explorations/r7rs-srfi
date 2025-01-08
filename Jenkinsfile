@@ -51,7 +51,7 @@ pipeline {
                 docker {
                     image 'schemers/chibi:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -76,7 +76,7 @@ pipeline {
                 docker {
                     image 'schemers/chicken'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -101,7 +101,7 @@ pipeline {
                 docker {
                     image 'schemers/chicken'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -126,7 +126,7 @@ pipeline {
                 docker {
                     image 'schemers/cyclone:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -151,7 +151,7 @@ pipeline {
                 docker {
                     image 'schemers/cyclone:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -176,7 +176,7 @@ pipeline {
                 docker {
                     image 'schemers/foment:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -201,7 +201,7 @@ pipeline {
                 docker {
                     image 'schemers/gambit'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -226,7 +226,7 @@ pipeline {
                 docker {
                     image 'schemers/gambit'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -251,7 +251,7 @@ pipeline {
                 docker {
                     image 'schemers/gauche:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -276,7 +276,7 @@ pipeline {
                 docker {
                     image 'schemers/gerbil'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -301,7 +301,7 @@ pipeline {
                 docker {
                     image 'schemers/gerbil'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -326,7 +326,7 @@ pipeline {
                 docker {
                     image 'schemers/guile:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -351,7 +351,7 @@ pipeline {
                 docker {
                     image 'schemers/kawa'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -376,7 +376,7 @@ pipeline {
                 docker {
                     image 'schemers/larceny:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -401,7 +401,7 @@ pipeline {
                 docker {
                     image 'schemers/loko'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -426,7 +426,7 @@ pipeline {
                 docker {
                     image 'schemers/mit-scheme:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -451,7 +451,7 @@ pipeline {
                 docker {
                     image 'schemers/mosh:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -476,7 +476,7 @@ pipeline {
                 docker {
                     image 'schemers/racket:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -501,7 +501,7 @@ pipeline {
                 docker {
                     image 'schemers/sagittarius:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -526,7 +526,7 @@ pipeline {
                 docker {
                     image 'schemers/stklos:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -551,7 +551,7 @@ pipeline {
                 docker {
                     image 'schemers/skint:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -576,7 +576,7 @@ pipeline {
                 docker {
                     image 'schemers/tr7:head'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
@@ -601,7 +601,7 @@ pipeline {
                 docker {
                     image 'schemers/ypsilon:latest'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {

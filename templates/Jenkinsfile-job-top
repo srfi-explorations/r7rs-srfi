@@ -3,7 +3,7 @@
                 docker {
                     image '{{{dockerimage}}}'
                     reuseNode true
-                    args '--user=root --oom-kill-disable'
+                    args '--user=root --oom-kill-disable --memory=6g --cpus="7"'
                 }
             }
             when {
