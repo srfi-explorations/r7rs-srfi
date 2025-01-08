@@ -20,12 +20,12 @@
      (compiler? . #t)
      (command . "cyclone -o ./test -I .")
      (library-command . "cyclone -I .")
-     (docker-image . "schemers/cyclone"))
+     (docker-image . "schemers/cyclone:head"))
 
     ((name . cyclone-interpreter)
      (command . "icyc -I . -I ./srfi -s")
      (library-command . "cyclone -I .")
-     (docker-image . "schemers/cyclone"))
+     (docker-image . "schemers/cyclone:head"))
 
     ((name . foment)
      (command . "foment -X .sld -I .")
