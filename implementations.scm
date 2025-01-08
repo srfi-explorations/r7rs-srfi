@@ -29,7 +29,7 @@
 
     ((name . foment)
      (command . "foment -X .sld -I .")
-     (docker-image . "schemers/foment"))
+     (docker-image . "schemers/foment:head"))
 
     ;; FIXME
     ;; Gambit propably needs proper syntax-rules support

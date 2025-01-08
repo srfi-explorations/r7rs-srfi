@@ -19,14 +19,8 @@ for srfi in $srfis
 do
     make $srfi-$name-library
     echo "${PWD}"
-    ls
 
-    if [ "$name" = "foment" ] && [ "$srfi" = "1" ]
-    then
-        foment -X .sld -I . srfi-test/r7rs-programs/1.scm
-    else
-        make $srfi-$name > "reports/$name-srfi-$srfi.log"
-    fi
+    make $srfi-$name > "reports/$name-srfi-$srfi.log"
     #echo "Testing $srfi with command $cmd"
     #if [ "$lib_cmd" = "" ]
     #then

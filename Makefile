@@ -107,13 +107,13 @@
 	
 
 1-foment-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/1.scm"
 
 1-foment-library-docker:
 	
 
 1-foment-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/1.scm"
 
 1-foment-library-docker-head:
 	
@@ -542,13 +542,13 @@
 	
 
 8-foment-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/8.scm"
 
 8-foment-library-docker:
 	
 
 8-foment-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/8.scm"
 
 8-foment-library-docker-head:
 	
@@ -977,13 +977,13 @@
 	
 
 38-foment-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/38.scm"
 
 38-foment-library-docker:
 	
 
 38-foment-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/38.scm"
 
 38-foment-library-docker-head:
 	
@@ -1412,13 +1412,13 @@
 	
 
 39-foment-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/39.scm"
 
 39-foment-library-docker:
 	
 
 39-foment-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/39.scm"
 
 39-foment-library-docker-head:
 	
@@ -1847,13 +1847,13 @@
 	
 
 48-foment-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/48.scm"
 
 48-foment-library-docker:
 	
 
 48-foment-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/48.scm"
 
 48-foment-library-docker-head:
 	
@@ -2282,13 +2282,13 @@
 	
 
 64-foment-docker:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/64.scm"
 
 64-foment-library-docker:
 	
 
 64-foment-docker-head:
-	docker run -it -v ${PWD}:/workdir:z schemers/foment bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/foment:head bash -c "cd workdir && foment -X .sld -I . srfi-test/r7rs-programs/64.scm"
 
 64-foment-library-docker-head:
 	

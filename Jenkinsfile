@@ -1,7 +1,7 @@
 pipeline {
 
     agent any
-options {
+    options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
@@ -174,7 +174,7 @@ options {
         stage("foment") {
             agent {
                 docker {
-                    image 'schemers/foment'
+                    image 'schemers/foment:head'
                     reuseNode true
                     args '--user=root'
                 }
