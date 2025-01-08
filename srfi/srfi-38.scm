@@ -6,4 +6,6 @@
           (scheme write))
   (export write-with-shared-structure
           read-with-shared-structure)
-  (include "38.scm"))
+  (cond-expand
+    (foment (include "srfi/38.scm"))
+    (else (include "38.scm"))))
