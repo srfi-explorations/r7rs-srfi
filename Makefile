@@ -448,14 +448,14 @@
 
 1-tr7-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/1.scm"
 
 1-tr7-library-docker:
 	
 
 1-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/1.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/1.scm"
 
 1-tr7-library-docker-head:
 	
@@ -931,14 +931,14 @@
 
 8-tr7-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/8.scm"
 
 8-tr7-library-docker:
 	
 
 8-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/8.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/8.scm"
 
 8-tr7-library-docker-head:
 	
@@ -1414,14 +1414,14 @@
 
 38-tr7-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/38.scm"
 
 38-tr7-library-docker:
 	
 
 38-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/38.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/38.scm"
 
 38-tr7-library-docker-head:
 	
@@ -1897,14 +1897,14 @@
 
 39-tr7-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/39.scm"
 
 39-tr7-library-docker:
 	
 
 39-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/39.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/39.scm"
 
 39-tr7-library-docker-head:
 	
@@ -2380,14 +2380,14 @@
 
 48-tr7-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/48.scm"
 
 48-tr7-library-docker:
 	
 
 48-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/48.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/48.scm"
 
 48-tr7-library-docker-head:
 	
@@ -2863,14 +2863,14 @@
 
 64-tr7-docker:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/64.scm"
 
 64-tr7-library-docker:
 	
 
 64-tr7-docker-head:
 	
-	docker run -it -v ${PWD}:/workdir:z schemers/tr7 bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/64.scm"
+	docker run -it -v ${PWD}:/workdir:z schemers/tr7:head bash -c "cd workdir && TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i srfi-test/r7rs-programs/64.scm"
 
 64-tr7-library-docker-head:
 	

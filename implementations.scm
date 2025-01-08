@@ -101,7 +101,7 @@
 
     ((name . tr7)
      (command . "TR7_LIB_PATH=${TR7_LIB_PATH}:${PWD}/srfi tr7i")
-     (docker-image . "schemers/tr7"))
+     (docker-image . "schemers/tr7:head"))
 
     ((name . ypsilon)
      (command . "ypsilon --r7rs --verbose --warning --sitelib=. --top-level-program"))))

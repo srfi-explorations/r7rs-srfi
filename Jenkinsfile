@@ -574,7 +574,7 @@ options {
         stage("tr7") {
             agent {
                 docker {
-                    image 'schemers/tr7'
+                    image 'schemers/tr7:head'
                     reuseNode true
                     args '--user=root'
                 }
