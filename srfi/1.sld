@@ -152,5 +152,7 @@
     ;set-car!
     ;set-cdr!
     )
-  (include "1.scm"))
+  (cond-expand
+    (foment (include "srfi/1.scm"))
+    (else (include "1.scm"))))
 

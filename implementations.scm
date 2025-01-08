@@ -28,7 +28,7 @@
      (docker-image . "schemers/cyclone"))
 
     ((name . foment)
-     (command . "foment -X .sld -I .")
+     (command . "foment -X .sld -I ${PWD}")
      (docker-image . "schemers/foment"))
 
     ;; FIXME

@@ -130,26 +130,46 @@
         (format "FORMAT: ~F requires a number or a string, got ~s" number-or-string)))))
 
 (define documentation-string
-  "(format [<port>] <format-string> [<arg>...]) -- <port> is #t, #f or an output-port
-  OPTION  [MNEMONIC]      DESCRIPTION     -- Implementation Assumes ASCII Text Encoding
-  ~H      [Help]          output this text
-  ~A      [Any]           (display arg) for humans
-  ~S      [Slashified]    (write arg) for parsers
-  ~W      [WriteCircular] like ~s but outputs circular and recursive data structures
-  ~~      [tilde]         output a tilde
-  ~T      [Tab]           output a tab character
-  ~%      [Newline]       output a newline character
-  ~&      [Freshline]     output a newline character if the previous output was not a newline
-  ~D      [Decimal]       the arg is a number which is output in decimal radix
-  ~X      [heXadecimal]   the arg is a number which is output in hexdecimal radix
-  ~O      [Octal]         the arg is a number which is output in octal radix
-  ~B      [Binary]        the arg is a number which is output in binary radix
-  ~w,dF   [Fixed]         the arg is a string or number which has width w and d digits after the decimal
-  ~C      [Character]     charater arg is output by write-char
-  ~_      [Space]         a single space character is output
-  ~Y      [Yuppify]       the list arg is pretty-printed to the output
-  ~?      [Indirection]   recursive format: next 2 args are format-string and list of arguments
-  ~K      [Indirection]   same as ~?")
+  (string-append
+    "(format [<port>] <format-string> [<arg>...]) -- <port> is #t, #f or an output-port"
+    (string #\newline)
+    "OPTION  [MNEMONIC]      DESCRIPTION     -- Implementation Assumes ASCII Text Encoding"
+    (string #\newline)
+    "~H      [Help]          output this text"
+    (string #\newline)
+    "~A      [Any]           (display arg) for humans"
+    (string #\newline)
+    "~S      [Slashified]    (write arg) for parsers"
+    (string #\newline)
+    "~W      [WriteCircular] like ~s but outputs circular and recursive data structures"
+    (string #\newline)
+    "~~      [tilde]         output a tilde"
+    (string #\newline)
+    "~T      [Tab]           output a tab character"
+    (string #\newline)
+    "~%      [Newline]       output a newline character"
+    (string #\newline)
+    "~&      [Freshline]     output a newline character if the previous output was not a newline"
+    (string #\newline)
+    "~D      [Decimal]       the arg is a number which is output in decimal radix"
+    (string #\newline)
+    "~X      [heXadecimal]   the arg is a number which is output in hexdecimal radix"
+    (string #\newline)
+    "~O      [Octal]         the arg is a number which is output in octal radix"
+    (string #\newline)
+    "~B      [Binary]        the arg is a number which is output in binary radix"
+    (string #\newline)
+    "~w,dF   [Fixed]         the arg is a string or number which has width w and d digits after the decimal"
+    (string #\newline)
+    "~C      [Character]     charater arg is output by write-char"
+    (string #\newline)
+    "~_      [Space]         a single space character is output"
+    (string #\newline)
+    "~Y      [Yuppify]       the list arg is pretty-printed to the output"
+    (string #\newline)
+    "~?      [Indirection]   recursive format: next 2 args are format-string and list of arguments"
+    (string #\newline)
+    "~K      [Indirection]   same as ~?"))
 
 (define (require-an-arg args)
   (if (null? args)
