@@ -189,7 +189,7 @@ options {
                     sh 'apt update && apt install -y make time tree file'
                     sh 'make -f Makefile.build clean'
                     unstash 'tests'
-                    sh './jenkins_scripts/test.sh "foment" "foment -X .sld -I ${PWD}" ""'
+                    sh './jenkins_scripts/test.sh "foment" "foment -X .sld -I ." ""'
                     archiveArtifacts artifacts: 'reports/*.log'
                     sh 'rm -rf *.log'
                 }

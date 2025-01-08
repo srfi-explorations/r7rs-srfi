@@ -18,6 +18,8 @@ done
 for srfi in $srfis
 do
     make $srfi-$name-library
+    echo "${PWD}"
+    ls
     make $srfi-$name > "reports/$name-srfi-$srfi.log"
     #echo "Testing $srfi with command $cmd"
     #if [ "$lib_cmd" = "" ]
