@@ -22,7 +22,13 @@ do
     make $srfi-$name-library
     echo "${PWD}"
     ls
-    make $srfi-$name > "reports/$name-srfi-$srfi.log"
+
+    if [ "$name" = "foment" ] && [ "$srfi" = "1" ]
+    then
+        foment -X .sld -I . srfi-test/r7rs-programs/1.scm
+    else
+        make $srfi-$name > "reports/$name-srfi-$srfi.log"
+    fi
     #echo "Testing $srfi with command $cmd"
     #if [ "$lib_cmd" = "" ]
     #then
