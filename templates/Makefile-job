@@ -1,19 +1,19 @@
-{{number}}-{{name}}:
-	{{#library-command}}{{{library-command}}}{{/library-command}}
+{{number}}-{{name}}:{{#library-command}}
+	{{{library-command}}}{{/library-command}}
 	{{{command}}}
 
 {{number}}-{{name}}-library:
 	{{#library-command}}{{{library-command}}}{{/library-command}}
 
-{{number}}-{{name}}-docker:
-	{{#library-command}}docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
+{{number}}-{{name}}-docker:{{#library-command}}
+	docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
 	docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{command}}}"
 
 {{number}}-{{name}}-library-docker:
 	{{#library-command}}docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{library-command}}}" {{/library-command}}
 
-{{number}}-{{name}}-docker-head:
-	{{#library-command}}docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
+{{number}}-{{name}}-docker-head:{{#library-command}}
+	docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{library-command}}}"{{/library-command}}
 	docker run -it -v ${PWD}:/workdir:z {{dockerimage}} bash -c "cd workdir && {{{command}}}"
 
 {{number}}-{{name}}-library-docker-head:
