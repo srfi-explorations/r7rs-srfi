@@ -9,27 +9,32 @@
      (compiler? . #t)
      (command . "csc -X r7rs -R r7rs -I ./srfi -o test")
      (library-command . "csc -X r7rs -R r7rs -I ./srfi -s -J")
-     (docker-image . "schemers/chicken"))
+     (docker-image . "schemers/chicken")
+     (docker-image-head . "schemers/chicken:head"))
 
     ((name . chicken-interpreter)
      (command . "csi -b -R r7rs -I ./ -I ./srfi -script")
      (library-command . "csc -X r7rs -R r7rs -I ./srfi -s -J")
-     (docker-image . "schemers/chicken"))
+     (docker-image . "schemers/chicken")
+     (docker-image-head . "schemers/chicken:head"))
 
     ((name . cyclone-compiler)
      (compiler? . #t)
      (command . "cyclone -o ./test -I .")
      (library-command . "cyclone -I .")
-     (docker-image . "schemers/cyclone:head"))
+     (docker-image . "schemers/cyclone:head")
+     (docker-image-head . "schemers/cyclone:head"))
 
     ((name . cyclone-interpreter)
      (command . "icyc -I . -I ./srfi -s")
      (library-command . "cyclone -I .")
-     (docker-image . "schemers/cyclone:head"))
+     (docker-image . "schemers/cyclone:head")
+     (docker-image-head . "schemers/cyclone:head"))
 
     ((name . foment)
      (command . "foment -X .sld -I .")
-     (docker-image . "schemers/foment:head"))
+     (docker-image . "schemers/foment:head")
+     (docker-image-head . "schemers/foment:head"))
 
     ;; FIXME
     ;; Gambit propably needs proper syntax-rules support
@@ -39,14 +44,16 @@
      (command . "gsc -o ./test -exe -nopreload ./")
      ;(library-command . "gsc ./")
      (library-command . "ls")
-     (docker-image . "schemers/gambit"))
+     (docker-image . "schemers/gambit")
+     (docker-image-head . "schemers/gambit:head"))
 
     ;; FIXME
     ;; Gambit propably needs proper syntax-rules support
     ;; https://github.com/gambit/gambit/issues/855
     ((name . gambit-interpreter)
      (command . "gsi -:search=./")
-     (docker-image . "schemers/gambit"))
+     (docker-image . "schemers/gambit")
+     (docker-image-head . "schemers/gambit:head"))
 
     ((name . gauche)
      (command . "gosh -r7 -I ."))
@@ -55,20 +62,22 @@
      (compiler? . #t)
      (command . "GERBIL_LOADPATH=. gxc -o ./test --lang r7rs -exe")
      (library-command . "gxc")
-     (docker-image . "schemers/gerbil"))
+     (docker-image . "schemers/gerbil:head")
+     (docker-image-head . "schemers/gerbil:head"))
 
     ((name . gerbil-interpreter)
      (command . "GERBIL_LOADPATH=.:./srfi gxi --lang r7rs")
      ;(library-command . "gxc --lang r7rs")
-     (docker-image . "schemers/gerbil"))
+     (docker-image . "schemers/gerbil:head")
+     (docker-image-head . "schemers/gerbil:head"))
 
     ((name . guile)
      (command . "guile --fresh-auto-compile --r7rs -L . -L ./srfi")
-     (docker-image . "schemers/guile:head"))
+     (docker-image . "schemers/guile:head")
+     (docker-image-head . "schemers/guile:head"))
 
     ((name . kawa)
-     (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld")
-     (docker-image . "schemers/kawa"))
+     (command . "kawa --r7rs --full-tailcalls -Dkawa.import.path=../../*.sld:*.sld"))
 
     ((name . larceny)
      (command . "larceny -utf8 -r7strict -I . -program"))
@@ -77,7 +86,8 @@
      (compiler? . #t)
      (command . "loko -std=r7rs --compile")
      (library-command . "ls")
-     (docker-image . "schemers/loko"))
+     (docker-image . "schemers/loko")
+     (docker-image-head . "schemers/loko"))
 
     ; FIXME Temporarily loading needed stuff to run srfi-64
     ((name . mit-scheme)

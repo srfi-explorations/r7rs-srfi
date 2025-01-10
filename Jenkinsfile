@@ -274,7 +274,7 @@ pipeline {
         stage("gerbil-compiler") {
             agent {
                 docker {
-                    image 'schemers/gerbil'
+                    image 'schemers/gerbil:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -299,7 +299,7 @@ pipeline {
         stage("gerbil-interpreter") {
             agent {
                 docker {
-                    image 'schemers/gerbil'
+                    image 'schemers/gerbil:head'
                     reuseNode true
                     args '--user=root'
                 }
@@ -349,7 +349,7 @@ pipeline {
         stage("kawa") {
             agent {
                 docker {
-                    image 'schemers/kawa'
+                    image 'schemers/kawa:latest'
                     reuseNode true
                     args '--user=root'
                 }
