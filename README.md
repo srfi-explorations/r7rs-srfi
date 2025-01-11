@@ -17,7 +17,7 @@ This will generate Makefile to run tests.
 
 ## Running tests
 
-    make test-srfi-N-IMPLEMENTATION
+    make N-IMPLEMENTATION
 
 On implementation like Chicken that compile the libraries too you need to first run tests for
 SRFIs that the SRFI you want to the depends on. The tests will propably fail but the libraries will
