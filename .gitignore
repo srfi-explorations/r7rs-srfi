@@ -11,11 +11,9 @@ test-prefix
 *.meta
 compiled
 srfi-*.scm
-./srfi-*.sld
 ./srfi.*.scm
 ./srfi.*.sld
 srfi-*.import*
-srfi-*.sld
 test-prefix.txt
 reports
 packages
@@ -23,3 +21,5 @@ srfi-test
 Makefile.tests
 *@gambit*
 test
+*.rkt
+tmp
