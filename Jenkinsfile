@@ -3,6 +3,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile.jenkins'
+            args '--user=root'
         }
     }
     options {
