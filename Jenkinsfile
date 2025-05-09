@@ -57,7 +57,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'tmp/*.log', fingerprint: true
+            archiveArtifacts artifacts: "tmp/*.log"
         }
     }
 
