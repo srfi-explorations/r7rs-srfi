@@ -38,15 +38,15 @@ pipeline {
     stages {
         stage("chibi") {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
-            steps { catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') { sh 'make COMPILE_R7RS=${STAGE_NAME} test-all-compile-r7rs-docker' } }
+            steps { catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') { sh 'make COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all' } }
         }
         stage("chicken") {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
-            steps { catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') { sh 'make COMPILE_R7RS=${STAGE_NAME} test-all-compile-r7rs-docker' } }
+            steps { catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') { sh 'make COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all' } }
         }
         stage("sagittarius") {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
-            steps { catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') { sh 'make COMPILE_R7RS=${STAGE_NAME} test-all-compile-r7rs-docker' } }
+            steps { catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') { sh 'make COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all' } }
         }
     }
 
