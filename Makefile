@@ -20,9 +20,10 @@ srfi-test:
 	cd srfi-test && make
 
 copy-tmp:
+	mkdir -p tmp
+	mkdir -p tmp/srfi-test
 	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > tmp/srfis.txt
 	cp -r srfi tmp/
-	mkdir -p tmp/srfi-test
 	cp -r srfi-test/* tmp/srfi-test/
 
 clean:
