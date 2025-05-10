@@ -1,3 +1,5 @@
+current_dir=$(shell pwd)
+
 test-compile-r7rs: srfi-test copy-tmp
 	cd tmp && compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
 	cd tmp && LD_LIBRARY_PATH=. ./test-${SRFI}
@@ -5,17 +7,15 @@ test-compile-r7rs: srfi-test copy-tmp
 
 test-compile-r7rs-docker: srfi-test copy-tmp
 	docker build --build-arg COMPILE_R7RS=${COMPILE_R7RS} --tag=r7rs-srfi-test-${COMPILE_R7RS} -f Dockerfile.test .
-	docker run -v "${PWD}":/workdir -w /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make COMPILE_R7RS=${COMPILE_R7RS} SRFI=${SRFI} test-compile-r7rs"
+	docker run -v "${current_dir}":/workdir -w /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make COMPILE_R7RS=${COMPILE_R7RS} SRFI=${SRFI} test-compile-r7rs"
 
 test-compile-r7rs-docker-all: srfi-test copy-tmp
-	pwd
-	tree
 	for srfi in $(shell cat tmp/srfis.txt); \
 		do \
 		echo "Testing SRFI: $${srfi}"; \
 		docker build --build-arg COMPILE_R7RS=${COMPILE_R7RS} --tag=r7rs-srfi-test-${COMPILE_R7RS} -f Dockerfile.test .; \
 		pwd; \
-		docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "pwd && tree && make COMPILE_R7RS=${COMPILE_R7RS} SRFI=$${srfi} test-compile-r7rs"; \
+		docker run -v ${current_dir}:/workdir -w /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "pwd && tree && make COMPILE_R7RS=${COMPILE_R7RS} SRFI=$${srfi} test-compile-r7rs"; \
 		done
 
 srfi-test:
