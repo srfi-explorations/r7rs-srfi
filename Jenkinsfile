@@ -37,12 +37,6 @@ pipeline {
     }
 
     stages {
-        stage("info") {
-            steps {
-                sh 'ls'
-                sh 'tree'
-            }
-        }
         stage("chibi") {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
             steps {
