@@ -8,7 +8,7 @@ test-compile-r7rs-docker: srfi-test copy-tmp
 	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make COMPILE_R7RS=${COMPILE_R7RS} SRFI=${SRFI} test-compile-r7rs"
 
 test-compile-r7rs-docker-all: srfi-test copy-tmp
-	echo "${PWD}"
+	echo "HERE: ${PWD}"
 	@for srfi in $(shell cat tmp/srfis.txt); \
 		do \
 		echo "Testing SRFI: $${srfi}"; \
