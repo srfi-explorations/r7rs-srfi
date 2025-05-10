@@ -8,7 +8,6 @@ test-compile-r7rs-docker: srfi-test copy-tmp
 	docker run -v "${PWD}":/workdir -w /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make COMPILE_R7RS=${COMPILE_R7RS} SRFI=${SRFI} test-compile-r7rs"
 
 test-compile-r7rs-docker-all: srfi-test copy-tmp
-	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > tmp/srfis.txt
 	@for srfi in $(shell cat tmp/srfis.txt); \
 		do \
 		echo "Testing SRFI: $${srfi}"; \
@@ -21,6 +20,7 @@ srfi-test:
 	cd srfi-test && make
 
 copy-tmp:
+	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > tmp/srfis.txt
 	cp -r srfi tmp/
 	mkdir -p tmp/srfi-test
 	cp -r srfi-test/* tmp/srfi-test/
