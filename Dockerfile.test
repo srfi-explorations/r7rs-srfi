@@ -11,4 +11,5 @@ COPY --from=build /usr/local-other/ /usr/local-other/
 ENV PATH=${PATH}:/usr/local-other/bin
 RUN git clone https://gitea.scheme.org/Retropikzel/compile-r7rs.git --depth=1
 RUN cd compile-r7rs && make && make install
+WORKDIR /workdir
 
