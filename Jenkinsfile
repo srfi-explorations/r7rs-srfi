@@ -25,7 +25,7 @@ pipeline {
                  'guile',
                  'kawa',
                  'larceny',
-                 'loko-compiler',
+                 'loko',
                  'mit-scheme',
                  'mosh',
                  'racket',
@@ -49,6 +49,7 @@ pipeline {
             }
         }
 
+        /*
         stage("chicken") {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
             steps {
@@ -58,6 +59,7 @@ pipeline {
                 }
             }
         }
+        */
 
         stage("cyclone") {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
