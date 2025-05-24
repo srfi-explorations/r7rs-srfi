@@ -141,7 +141,7 @@ pipeline {
             }
         }
 
-        stage("Batch 3") {
+        stage("Batch 4") {
             parallel {
                 stage("loko") {
                     when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
@@ -175,7 +175,7 @@ pipeline {
             }
         }
 
-        stage("Batch 4") {
+        stage("Batch 5") {
             parallel {
                 stage("racket") {
                     when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
@@ -209,7 +209,7 @@ pipeline {
             }
         }
 
-        stage("Batch 4") {
+        stage("Batch 6") {
             parallel {
                 stage("stklos") {
                     when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
