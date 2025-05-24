@@ -252,25 +252,33 @@
 
 (define (test-on-group-end-simple runner)
   (let ((name (car (test-runner-group-stack runner))))
-    (when (= 1 (length (test-runner-group-stack runner)))
-      (print runner "Test suite end: ~a~%" name))))
+    (print runner "Group end: ~a~%" name)
+    #;(when (= 1 (length (test-runner-group-stack runner)))
+      (print runner "Test suite end: ~a~%" name))
+    ))
 
 (define (test-on-final-simple runner)
+
   (when (> (test-runner-pass-count runner) 0)
-    (format #t "# of passes:            ~a\n" (test-runner-pass-count runner))
-    (print runner "# of passes:            ~a\n" (test-runner-pass-count runner)))
+    (format #t "# of expected passes      ~a~%" (test-runner-pass-count runner))
+    (print runner "# of expected passes      ~a~%" (test-runner-pass-count runner)))
+
   (when (> (test-runner-xfail-count runner) 0)
-    (format #t "# of expected failures: ~a\n" (test-runner-xfail-count runner))
-    (print runner "# of expected failures: ~a\n" (test-runner-xfail-count runner)))
-  (when (> (test-runner-fail-count runner) 0)
-    (format #t "# of failures:          ~a\n" (test-runner-fail-count runner))
-    (print runner "# of failures:          ~a\n" (test-runner-fail-count runner)))
+    (format #t "# of expected failures   ~a~%" (test-runner-xfail-count runner))
+    (print runner "# of expected failures    ~a~%" (test-runner-xfail-count runner)))
+
   (when (> (test-runner-xpass-count runner) 0)
-    (format #t "# of unexpected passes: ~a\n" (test-runner-xpass-count runner))
-    (print runner "# of unexpected passes: ~a\n" (test-runner-xpass-count runner)))
+    (format #t "# of unexpected successes ~a~%" (test-runner-xpass-count runner))
+    (print runner "# of unexpected passes ~a~%" (test-runner-xpass-count runner)))
+
+  (when (> (test-runner-fail-count runner) 0)
+    (format #t "# of failures  ~a~%" (test-runner-fail-count runner))
+    (print runner "# of failures  ~a~%" (test-runner-fail-count runner)))
+
   (when (> (test-runner-skip-count runner) 0)
-    (format #t "# of skipped tests:     ~a~%" (test-runner-skip-count runner))
-    (print runner "# of skipped tests:     ~a~%" (test-runner-skip-count runner)))
+    (format #t "# of skipped tests       ~a~%" (test-runner-skip-count runner))
+    (print runner "# of skipped tests       ~a~%" (test-runner-skip-count runner)))
+
   (maybe-finish-logging runner))
 
 (define (maybe-start-logging runner)
