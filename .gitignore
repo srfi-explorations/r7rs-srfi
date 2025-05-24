@@ -10,7 +10,6 @@ test-prefix
 *.zo
 *.meta
 compiled
-srfi-*.scm
 ./srfi.*.scm
 ./srfi.*.sld
 srfi-*.import*
