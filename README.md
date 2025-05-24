@@ -6,36 +6,21 @@ This is a project for collection of R7RS SRFI implementations.
 
 [Test report](https://jenkins.scheme.org/job/r8rs/job/r7rs-srfi/job/main/R7RS-SRFI_20Test_20Report/)
 
-## Building
-
-    rm -rf srfi-test
-    git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
-    make -C srfi-test
-    make -f Makefile.build
-
-This will generate Makefile to run tests.
-
 ## Running tests
 
-    make N-IMPLEMENTATION
+You will need to install
+[https://gitea.scheme.org/Retropikzel/compile-r7rs](https://gitea.scheme.org/Retropikzel/compile-r7rs).
+And implementations you want to test with.
 
-On implementation like Chicken that compile the libraries too you need to first run tests for
-SRFIs that the SRFI you want to the depends on. The tests will propably fail but the libraries will
-get built.
+To run test:
 
-With compiler implementations run the tests for SRFIs the SRFI you want to test needs to build them.
+    make compile-r7rs COMPILE_R7RS=<IMPLEMENTATION> SRFI=<SRFI_NUMBER>
 
-So for example on chicken-compiler to test SRFI-64 run:
+## Running tests in docker
 
-    make 8-chicken-compiler-library
-    make 1-chicken-compiler-library
-    make 38-chicken-compiler-library
-    make 48-chicken-compiler-library
-    make 64-chicken-compiler-library
-    make 64-chicken-compiler
+Only make and docker is needed.
 
-If you find yourself running this repeatedly you can add them into Makefile.shortcuts
-
+    make test-compile-r7rs-docker COMPILE_R7RS=<IMPLEMENTATION> SRFI=<SRFI_NUMBER>
 
 # Adding new srfi
 
@@ -45,23 +30,14 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
-    - srfi/N.rkt
-        - Shim file to support Racket
     - srfi/srfi-N.scm
-        - Shim file to support Guile and Foment
-        - Should have identical exports to N.sld but cond-expanded include for Foment and Guile only
-        - Needs to be added by "git add -f srfi/srfi-N.scm" to repository
-    - jenkins_scritps/test.sh
-        - Add to correct place in the library build part
+        - Guile compability file, should have library definition
 
-
-You should be able to deduct what the contents of these files are from other SRFI implementations
-in this repository.
 
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
 The test file needs to be named N.scm.
 
-Add the SRFI data into srfis.scm. Keep the order by dependencies and mention them in the file.
+Add the SRFI number into srfis.scm.
 
 ## Adding new implementation
 
