@@ -81,6 +81,7 @@ pipeline {
             }
         }
 
+        /*
         stage("foment") {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
             steps {
@@ -90,6 +91,7 @@ pipeline {
                 }
             }
         }
+        */
 
         stage("gauche") {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
