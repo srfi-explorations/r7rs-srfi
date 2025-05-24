@@ -1,6 +1,6 @@
 test-compile-r7rs: srfi-test copy-tmp
-	cd tmp && compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
-	cd tmp && LD_LIBRARY_PATH=. ./test-${SRFI}
+	cd tmp && timeout --foreground 60 compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
+	cd tmp && LD_LIBRARY_PATH=. timeout --foreground 60 ./test-${SRFI}
 	mv tmp/srfi-${SRFI}.log tmp/${COMPILE_R7RS}-srfi-${SRFI}.log
 
 test-compile-r7rs-docker: srfi-test copy-tmp
@@ -12,7 +12,7 @@ test-compile-r7rs-docker-all: srfi-test copy-tmp
 		do \
 		echo "Testing SRFI: $${srfi}"; \
 		docker build --build-arg COMPILE_R7RS=${COMPILE_R7RS} --tag=r7rs-srfi-test-${COMPILE_R7RS} -f Dockerfile.test .; \
-		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "timeout 60 make clean COMPILE_R7RS=${COMPILE_R7RS} SRFI=$${srfi} test-compile-r7rs"; \
+		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make clean COMPILE_R7RS=${COMPILE_R7RS} SRFI=$${srfi} test-compile-r7rs"; \
 		done
 
 srfi-test:
