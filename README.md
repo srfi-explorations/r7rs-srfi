@@ -28,8 +28,8 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
-    - jenkins_scritps/test.sh
-        - Add to correct place in the library build part
+    - srfi/srfi-N.scm
+        - Guile compability file, should have library definition
 
 
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
