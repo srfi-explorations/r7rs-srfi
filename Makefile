@@ -1,7 +1,7 @@
 test-compile-r7rs: srfi-test copy-tmp
 	cd tmp && compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
 	cd tmp && LD_LIBRARY_PATH=. ./test-${SRFI}
-	#mv tmp/srfi-${SRFI}.log tmp/${COMPILE_R7RS}-srfi-${SRFI}.log
+	mv tmp/srfi-${SRFI}.log tmp/${COMPILE_R7RS}-srfi-${SRFI}.log
 
 test-compile-r7rs-docker: srfi-test copy-tmp
 	docker build --build-arg COMPILE_R7RS=${COMPILE_R7RS} --tag=r7rs-srfi-test-${COMPILE_R7RS} -f Dockerfile.test .

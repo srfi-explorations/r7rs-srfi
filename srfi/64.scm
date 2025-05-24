@@ -203,27 +203,52 @@
         (loop (string-append result delimiter (car rest))
               (cdr rest))))))
 
-(define (truncate-string string length)
-  (define (newline->space c) (if (char=? #\newline c) #\space c))
-  (let* ((string (string-map newline->space string))
-         (fill "...")
-         (fill-len (string-length fill))
-         (string-len (string-length string)))
-    (if (<= string-len (+ length fill-len))
-      string
-      (let-values (((q r) (floor/ length 4)))
-        ;; Left part gets 3/4 plus the remainder.
-        (let ((left-end (+ (* q 3) r))
-              (right-start (- string-len q)))
-          (string-append (substring string 0 left-end)
-                         fill
-                         (substring string right-start string-len)))))))
+;; From SRFI-1
+(define (filter pred lis)
+  (let recur ((lis lis))
+    (if (null? lis) lis
+      (let ((head (car lis))
+            (tail (cdr lis)))
+        (if (pred head)
+          (let ((new-tail (recur tail)))
+            (if (eq? tail new-tail) lis
+              (cons head new-tail)))
+          (recur tail))))))
 
-(define (print runner format-string . args)
-  ;(apply format #t format-string args)
-  (let ((port (%test-runner-log-port runner)))
-    (when port
-      (apply format port format-string args))))
+(define (remove  pred l) (filter (lambda (x) (not (pred x))) l))
+
+(define (last-pair lis)
+  (let lp ((lis lis))
+    (let ((tail (cdr lis)))
+      (if (pair? tail) (lp tail) lis))))
+
+(define (last lis) (car (last-pair lis)))
+
+(define (drop lis k)
+  (let iter ((lis lis) (k k))
+    (if (zero? k) lis (iter (cdr lis) (- k 1)))))
+
+(define (drop-right lis k)
+  (let recur ((lag lis) (lead (drop lis k)))
+    (if (pair? lead)
+      (cons (car lag) (recur (cdr lag) (cdr lead)))
+      '())))
+
+;; From SRFI-1 ends
+
+(define display-log
+  (lambda (runner . args)
+    (let ((port (%test-runner-log-port runner)))
+      (when port (map (lambda (item) (display item port)) args)))))
+
+(define display-map
+  (lambda args
+    (map (lambda (item) (display item)) args)))
+
+(define write-log
+  (lambda (runner . args)
+    (let ((port (%test-runner-log-port runner)))
+      (when port (map (lambda (item) (write item port)) args)))))
 
 ;;; Main
 
@@ -243,69 +268,93 @@
 (define (test-on-group-begin-simple runner name count)
   (if (null? (test-runner-group-stack runner))
     (begin (maybe-start-logging runner)
-           (format #t
-                   "%%%% Starting test ~a (Writing full log to \"~a.log\")~%"
-                   name
-                   name)
-           (print runner "%%%% Starting test ~a~%" name)))
-  (begin (print runner "Group begin: ~a~%" name)))
+           (display-map "%%%% Starting test "
+                        name
+                        "(Writing full log to \""
+                        name
+                        ".log\")"
+                        #\newline)
+           (display-log runner "%%%% Starting test " name #\newline)))
+  (begin (display-log runner "Group begin: " name #\newline)))
 
 (define (test-on-group-end-simple runner)
   (let ((name (car (test-runner-group-stack runner))))
-    (print runner "Group end: ~a~%" name)
-    #;(when (= 1 (length (test-runner-group-stack runner)))
-      (print runner "Test suite end: ~a~%" name))
-    ))
+    (display-log runner "Group end: " name #\newline)))
 
 (define (test-on-final-simple runner)
 
   (when (> (test-runner-pass-count runner) 0)
-    (format #t "# of expected passes      ~a~%" (test-runner-pass-count runner))
-    (print runner "# of expected passes      ~a~%" (test-runner-pass-count runner)))
+    (display-map "# of expected passes      "
+                 (test-runner-pass-count runner)
+                 #\newline)
+    (display-log runner
+                 "# of expected passes      "
+                 (test-runner-pass-count runner)
+                 #\newline))
 
   (when (> (test-runner-xfail-count runner) 0)
-    (format #t "# of expected failures   ~a~%" (test-runner-xfail-count runner))
-    (print runner "# of expected failures    ~a~%" (test-runner-xfail-count runner)))
+    (display-map "# of expected failures    "
+                 (test-runner-xfail-count runner)
+                 #\newline)
+    (display-log runner
+                 "# of expected failures    "
+                 (test-runner-xfail-count runner)
+                 #\newline))
 
   (when (> (test-runner-xpass-count runner) 0)
-    (format #t "# of unexpected successes ~a~%" (test-runner-xpass-count runner))
-    (print runner "# of unexpected passes ~a~%" (test-runner-xpass-count runner)))
+    (display-map "# of unexpected successes "
+                 (test-runner-xpass-count runner)
+                 #\newline)
+    (display-log runner
+                 "# of unexpected passes    "
+                 (test-runner-xpass-count runner)
+                 #\newline))
 
   (when (> (test-runner-fail-count runner) 0)
-    (format #t "# of failures  ~a~%" (test-runner-fail-count runner))
-    (print runner "# of failures  ~a~%" (test-runner-fail-count runner)))
+    (display-map "# of failures             "
+                 (test-runner-fail-count runner)
+                 #\newline)
+    (display-log runner
+                 "# of failures             "
+                 (test-runner-fail-count runner)
+                 #\newline))
 
   (when (> (test-runner-skip-count runner) 0)
-    (format #t "# of skipped tests       ~a~%" (test-runner-skip-count runner))
-    (print runner "# of skipped tests       ~a~%" (test-runner-skip-count runner)))
+    (display-map "# of skipped tests        "
+                 (test-runner-skip-count runner)
+                 #\newline)
+    (display-log runner
+                 "# of skipped tests        "
+                 (test-runner-skip-count runner)
+                 #\newline))
 
   (maybe-finish-logging runner))
 
 (define (maybe-start-logging runner)
   (let ((log-file (%test-runner-log-file runner)))
     (when log-file
-      ;; The possible race-condition here doesn't bother us.
-      (when (file-exists? log-file)
-        (delete-file log-file))
-      (%test-runner-log-port! runner (open-output-file log-file))
-      ;(print runner "Writing log file: ~a~%" log-file)
-      )))
+      (when (file-exists? log-file) (delete-file log-file))
+      (%test-runner-log-port! runner (open-output-file log-file)))))
 
 (define (maybe-finish-logging runner)
   (let ((log-file (%test-runner-log-file runner)))
     (when log-file
-      ;(print runner "Wrote log file: ~a~%" log-file)
       (close-output-port (%test-runner-log-port runner)))))
 
 (define (test-on-test-begin-simple runner)
   (let ((name (test-runner-test-name runner))
         (file (test-result-ref runner 'source-file "(unknown file)"))
         (line (test-result-ref runner 'source-line "(unknown line)")))
-    (print runner "Test begin:~%")
-    (print runner "  test-name: ~w~%" name)
-    (print runner "  source-file: ~w~%" file)
-    (print runner "  source-line: ~a~%" line)
-    (print runner "  source-form: ~w~%" (test-result-ref runner 'source-form))
+    (display-log runner "Test begin:" #\newline)
+    (display-log runner "  test-name: ")
+    (write-log runner name)
+    (display-log runner #\newline)
+    (display-log runner "  source-file: " file #\newline)
+    (display-log runner "  source-line: " line #\newline)
+    (display-log runner
+                 "  source-form: "
+                 (test-result-ref runner 'source-form)
+                 #\newline)
     (values)))
 
 (define (test-on-test-end-simple runner)
@@ -318,9 +367,7 @@
                              ((skip) "skip")))
          (name (let ((name (test-runner-test-name runner)))
                  (if (string=? "" name)
-                   (truncate-string
-                     (format #f "~a" (test-result-ref runner 'source-form))
-                     30)
+                   "" ;(test-result-ref runner 'source-form)
                    name)))
          (label (string-join (append (test-runner-group-path runner)
                                      (list name))
@@ -331,7 +378,7 @@
           (not (eq? nil value)))
         (define (maybe-print value message)
           (when (found? value)
-            (print runner message value)))
+            (display-log runner message value)))
         (let (
               ;(file (test-result-ref runner 'source-file "(unknown file)"))
               ;(line (test-result-ref runner 'source-line "(unknown line)"))
@@ -340,32 +387,45 @@
               (actual-value (test-result-ref runner 'actual-value nil))
               (expected-error (test-result-ref runner 'expected-error nil))
               (actual-error (test-result-ref runner 'actual-error nil)))
-          (print runner "Test end:~%")
-          (print runner "  result-kind: ~a~%" result-kind-name)
-          (print runner "  actual-value: ~w~%" (test-result-ref runner 'actual-value nil))
-          (print runner "  expected-value: ~w~%" (test-result-ref runner 'expected-value nil))
-          ;(print runner "[~a] ~a~%" result-kind-name label)
-          ;(print runner "~a:~a: ~s~%" file line expression)
-          ;(maybe-print expected-value "Expected value: ~s~%")
-          ;(maybe-print expected-error "Expected error: ~a~%")
-          #;(when (or (found? expected-value) (found? expected-error))
-          (maybe-print actual-value "Returned value: ~s~%"))
-          ;(maybe-print actual-error "Raised error: ~a~%")
-          ;(newline)
-          )))))
+          (display-log runner "Test end:" #\newline)
+          (display-log runner "  result-kind: " result-kind-name #\newline)
+          (display-log runner
+                       "  actual-value: "
+                       (test-result-ref runner 'actual-value nil)
+                       #\newline)
+          (display-log runner
+                       "  expected-value: "
+                       (test-result-ref runner 'expected-value nil)
+                       #\newline))))))
 
 (define (test-on-bad-count-simple runner count expected-count)
-  (print runner "*** Total number of tests was ~a but should be ~a. ***~%"
-         count expected-count)
-  (print runner
-         "*** Discrepancy indicates testsuite error or exceptions. ***~%"))
+  (display-log runner
+               "*** Total number of tests was "
+               count
+               " but should be "
+               expected-count
+               ". ***"
+               #\newline)
+  (display-log runner
+               "*** Discrepancy indicates testsuite error or exceptions. ***"
+               #\newline))
 
 (define (test-on-bad-end-name-simple runner begin-name end-name)
-  (error (format #f "Test-end \"~a\" does not match test-begin \"~a\"." end-name begin-name)))
+  (error (string-append "Test-end \""
+                        end-name
+                        "\" does not match test-begin \""
+                        begin-name
+                        "\".")))
 
 (define (on-bad-error-type runner type error)
-  (print runner "WARNING: unknown error type predicate: ~a~%" type)
-  (print runner "         error was: ~a~%" error))
+  (display-log runner
+               "WARNING: unknown error type predicate: "
+               type
+               #\newline)
+  (display-log runner
+               "         error was: "
+               error
+               #\newline))
 
 ;;; test-runner-simple.scm ends here
 
