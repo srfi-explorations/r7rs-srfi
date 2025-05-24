@@ -12,13 +12,15 @@ You will need to install
 [https://gitea.scheme.org/Retropikzel/compile-r7rs](https://gitea.scheme.org/Retropikzel/compile-r7rs).
 And implementations you want to test with.
 
-    make COMPILE_R7RS=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test-compile-r7rs
+To run test:
+
+    make compile-r7rs COMPILE_R7RS=<IMPLEMENTATION> SRFI=<SRFI_NUMBER>
 
 ## Running tests in docker
 
 Only make and docker is needed.
 
-    make COMPILE_R7RS=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test-compile-r7rs-docker
+    make test-compile-r7rs-docker COMPILE_R7RS=<IMPLEMENTATION> SRFI=<SRFI_NUMBER>
 
 # Adding new srfi
 
