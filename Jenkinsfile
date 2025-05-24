@@ -38,11 +38,18 @@ pipeline {
     }
 
     stages {
+
+        stage("Init") {
+            steps {
+                sh ''
+            }
+        }
+
         stage("chibi") {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "make clean COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
+                    sh "make COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
                     archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
@@ -51,7 +58,7 @@ pipeline {
             when { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" } }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "make clean COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
+                    sh "make COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
                     archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
