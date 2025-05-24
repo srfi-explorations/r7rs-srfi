@@ -1,2 +1,2 @@
-FROM debia
+FROM docker:dind
 RUN apk add make
