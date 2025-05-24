@@ -3,9 +3,10 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile.jenkins'
-            args '--user=root --privileged'
+            args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
+
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
