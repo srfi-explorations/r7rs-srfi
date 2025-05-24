@@ -28,3 +28,7 @@ copy-tmp:
 
 clean:
 	rm -rf tmp
+
+clean-all:
+	rm -rf tmp
+	rm -rf srfi-test
