@@ -7,6 +7,10 @@ pipeline {
         }
     }
 
+    triggers{
+        cron('* 1 * * *')
+    }
+
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
