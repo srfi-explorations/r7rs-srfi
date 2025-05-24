@@ -35,7 +35,8 @@ Add files:
 
 
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
-The test file needs to be named N.scm.
+The test file needs to be named N.scm. If you dont use SRFI-64 for testing then
+port your preferred test library first to be portable on all all implementations.
 
 Add the SRFI number into srfis.scm.
 
