@@ -12,7 +12,7 @@ test-compile-r7rs-docker-all: srfi-test copy-tmp
 		do \
 		echo "Testing SRFI: $${srfi}"; \
 		docker build --build-arg COMPILE_R7RS=${COMPILE_R7RS} --tag=r7rs-srfi-test-${COMPILE_R7RS} -f Dockerfile.test .; \
-		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make clean COMPILE_R7RS=${COMPILE_R7RS} SRFI=$${srfi} test-compile-r7rs"; \
+		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "timeout 60 make clean COMPILE_R7RS=${COMPILE_R7RS} SRFI=$${srfi} test-compile-r7rs"; \
 		done
 
 srfi-test:
