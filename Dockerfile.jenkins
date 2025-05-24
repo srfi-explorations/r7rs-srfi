@@ -1,13 +1,3 @@
-ARG COMPILE_R7RS=chibi
-FROM debian:bookworm AS build
-RUN apt-get update && apt-get install -y build-essential wget make cmake libgc-dev zlib1g-dev libffi-dev libssl-dev
-RUN wget https://bitbucket.org/ktakashi/sagittarius-scheme/downloads/sagittarius-0.9.12.tar.gz && tar -xf sagittarius-0.9.12.tar.gz
-RUN cd sagittarius-0.9.12 && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr/local-other .. && make && make install
-
-FROM schemers/${COMPILE_R7RS}
-RUN apt-get update && apt-get install -y \
-    git make libffi8 libgc1 libssl3 libuv1 build-essential libffi-dev libmbedtls-dev
-COPY --from=build /usr/local-other/ /usr/local-other/
-ENV PATH=${PATH}:/usr/local-other/bin
-RUN git clone https://github.com/Retropikzel/compile-r7rs.git --depth=1
-RUN cd compile-r7rs && make && make install
+FROM debian
+RUN apt update && apt install -y \
+    docker.io make bash curl wget tree file build-essential git
