@@ -23,3 +23,4 @@ test
 *.rkt
 tmp
 logs
+report.html
