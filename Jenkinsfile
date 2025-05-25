@@ -208,7 +208,7 @@ pipeline {
     }
 
     post {
-        always {
+        success {
             archiveArtifacts('logs/*.log')
         }
     }
