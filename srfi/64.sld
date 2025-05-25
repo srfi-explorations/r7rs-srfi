@@ -10,7 +10,7 @@
           (scheme write)
           (srfi 39))
   (cond-expand
-    ((or cyclone stklos mit)
+    ((or stklos mit)
      ; Need to export extra for these to work
      (export %test-assert
              %test-compare

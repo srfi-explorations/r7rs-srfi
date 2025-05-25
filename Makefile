@@ -2,7 +2,7 @@ TIMEOUT=120
 
 test-compile-r7rs: srfi-test copy-tmp
 	cd tmp && timeout --foreground ${TIMEOUT} compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
-	cd tmp && LD_LIBRARY_PATH=. timeout --foreground ${TIMEOUT} ./test-${SRFI}
+	cd tmp && LD_LIBRARY_PATH=. printf "\n" | timeout --foreground ${TIMEOUT} ./test-${SRFI}
 	mkdir -p logs
 	mv tmp/srfi-${SRFI}.log logs/${COMPILE_R7RS}-srfi-${SRFI}.log
 
