@@ -3,7 +3,8 @@
 echo "<table>"
 for srfi in $(cat tmp/srfis.txt)
 do
-    echo "<tr><th>$srfi</th>"
+    echo "<tr>"
+    echo "<th>$srfi</th>"
     echo "<th>expected passes</th>"
     echo "<th>expected failures</th>"
     echo "<th>failures</th>"
@@ -11,21 +12,24 @@ do
     echo "</tr>"
     for logfile in $(find logs -name "*$srfi*")
     do
-        name=$(basename "$logfile" | sed "s/-srfi-$srfi\.log//")
+        echo "<tr>"
 
-        printf "<tr><td>$name</td>"
+        name=$(basename "$logfile" | sed "s/-srfi-$srfi\.log//")
+        echo "<td>$name</td>"
 
         expected_passes=$(grep "# of expected passes" "$logfile" | sed 's/# of expected passes//' | xargs)
-        echo "<td>$expected_passes</td></tr>"
+        echo "<td>$expected_passes</td>"
 
         expected_failures=$(grep "# of expected failures" "$logfile" | sed 's/# of expected failures//' | xargs)
-        echo "<td>$expected_failures</td></tr>"
+        echo "<td>$expected_failures</td>"
 
         failures=$(grep "# of failures" "$logfile" | sed 's/# of failures//' | xargs)
-        echo "<td>$failures</td></tr>"
+        echo "<td>$failures</td>"
 
         skipped=$(grep "# of skipped tests" "$logfile" | sed 's/# of skipped tests//' | xargs)
-        echo "<td>$skipped</td></tr>"
+        echo "<td>$skipped</td>"
+
+        echo "</tr>"
     done
 done
 echo "</table>"
