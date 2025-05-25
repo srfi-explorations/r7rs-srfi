@@ -44,7 +44,7 @@ pipeline {
     stages {
 
         stage("chibi") {
-            when { anyOf { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" && env.BRANCH_NAME }; branch 'main' } }
+            when { anyOf { expression { params.BUILD_IMPLEMENTATION == 'all' || params.BUILD_IMPLEMENTATION == "${STAGE_NAME}" && env.BRANCH_NAME }; branch 'retropikzel-artifacting' } }
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
