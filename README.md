@@ -4,7 +4,13 @@ This is a project for collection of R7RS SRFI implementations.
 
 [Jenkins](https://jenkins.scheme.org/job/r7rs/job/r7rs-srfi/)
 
-[Test report](https://jenkins.scheme.org/job/r8rs/job/r7rs-srfi/job/main/R7RS-SRFI_20Test_20Report/)
+
+## Notes
+
+### SRFI-64
+
+Racket implementation waiting for
+[https://github.com/lexi-lambda/racket-r7rs/pull/26](https://github.com/lexi-lambda/racket-r7rs/pull/26).
 
 ## Running tests
 
@@ -18,9 +24,11 @@ To run test:
 
 ## Running tests in docker
 
-Only make and docker is needed.
+Only make and docker are needed.
 
     make test-compile-r7rs-docker COMPILE_R7RS=<IMPLEMENTATION> SRFI=<SRFI_NUMBER>
+
+If you are on windows look up the docker commands from the Makefile.
 
 # Adding new srfi
 
@@ -45,13 +53,3 @@ Add the SRFI number into srfis.scm.
 Add the implementation data into implementations.scm, keep the order alphabetical.
 The first SRFI you port to any new implementation should be SRFI-64. As it's the test suite used
 in SRFI tests.
-
-### Misc
-
-The srfi/srfi-N.scm files exist for Guile compability, their content should be identical to
-srfi/N.sld.
-
-The srfi/N.rkt files exists for racket-r7rs compability.
-
-The srfi/39.mit.sld should be identical to srfi/39.sld except the chibi "include-shared" part
-commented out.
