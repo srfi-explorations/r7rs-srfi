@@ -201,7 +201,8 @@ pipeline {
     post {
         success {
             sh 'ls -la logs'
-            archiveArtifacts('logs/*.log')
+            sh 'tar -czvf logs.tar.gz logs/*.log'
+            archiveArtifacts('logs.tar.gz')
         }
     }
 }
