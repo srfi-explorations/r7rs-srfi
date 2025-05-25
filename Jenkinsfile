@@ -48,7 +48,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -58,7 +57,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -68,7 +66,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -78,7 +75,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -88,7 +84,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -98,7 +93,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -108,7 +102,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -118,7 +111,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -128,7 +120,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -138,7 +129,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -148,7 +138,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -158,7 +147,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -168,7 +156,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -178,7 +165,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -188,7 +174,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -198,7 +183,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -208,7 +192,6 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
@@ -218,11 +201,16 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "make clean-all COMPILE_R7RS=${STAGE_NAME} test-compile-r7rs-docker-all"
-                    archiveArtifacts artifacts: "tmp/*.log"
                 }
             }
         }
 
+    }
+
+    post {
+        always {
+            archiveArtifacts('logs/*.log')
+        }
     }
 }
 
