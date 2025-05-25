@@ -15,6 +15,8 @@ Hopefully will work.
 
 - STklos include is fixed in git, waiting for next release. Then works.
 
+- tr7 does not have (scheme complex). Then should work.
+
 ## Running tests
 
 You will need to install
