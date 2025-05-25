@@ -6,14 +6,14 @@ test-compile-r7rs: srfi-test copy-tmp
 
 test-compile-r7rs-docker: srfi-test copy-tmp
 	docker build --build-arg COMPILE_R7RS=${COMPILE_R7RS} --tag=r7rs-srfi-test-${COMPILE_R7RS} -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make COMPILE_R7RS=${COMPILE_R7RS} SRFI=${SRFI} test-compile-r7rs"
+	docker run -i -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make COMPILE_R7RS=${COMPILE_R7RS} SRFI=${SRFI} test-compile-r7rs"
 
 test-compile-r7rs-docker-all: srfi-test copy-tmp
 	@for srfi in $(shell cat tmp/srfis.txt); \
 		do \
 		echo "Testing SRFI: $${srfi}"; \
 		docker build --build-arg COMPILE_R7RS=${COMPILE_R7RS} --tag=r7rs-srfi-test-${COMPILE_R7RS} -f Dockerfile.test .; \
-		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make clean COMPILE_R7RS=${COMPILE_R7RS} SRFI=$${srfi} test-compile-r7rs"; \
+		docker run -i -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make clean COMPILE_R7RS=${COMPILE_R7RS} SRFI=$${srfi} test-compile-r7rs"; \
 		done
 
 srfi-test:
@@ -29,6 +29,9 @@ copy-tmp:
 
 clean:
 	rm -rf tmp
+
+clean-logs:
+	rm -rf logs
 
 clean-all:
 	rm -rf tmp
