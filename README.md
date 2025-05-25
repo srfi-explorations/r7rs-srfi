@@ -7,7 +7,7 @@ This is a project for collection of R7RS SRFI implementations.
 
 ## Notes
 
-### SRFI-64
+- Cyclone not working, cause yet unknown.
 
 - Racket implementation waiting for
 [https://github.com/lexi-lambda/racket-r7rs/pull/26](https://github.com/lexi-lambda/racket-r7rs/pull/26).
