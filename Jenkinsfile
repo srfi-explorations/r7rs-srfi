@@ -200,6 +200,7 @@ pipeline {
 
     post {
         success {
+            sh 'ls logs'
             archiveArtifacts('logs/*.log')
         }
     }
