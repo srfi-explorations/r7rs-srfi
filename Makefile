@@ -17,6 +17,9 @@ test-compile-r7rs-docker-all: srfi-test copy-tmp logs
 		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${COMPILE_R7RS} sh -c "make clean && sleep 5 && make COMPILE_R7RS=${COMPILE_R7RS} SRFI=$${srfi} test-compile-r7rs"; \
 		done
 
+report:
+	sh scripts/report.sh > report.html
+
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
 	cd srfi-test && make
