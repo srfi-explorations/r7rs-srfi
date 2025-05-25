@@ -1,13 +1,14 @@
 (define-library
   (srfi 64)
-  (import (scheme base)
+  (import (except (scheme base) make-parameter parameterize)
           (scheme case-lambda)
           (scheme complex)
           (scheme eval)
           (scheme file)
           (scheme process-context)
           (scheme read)
-          (scheme write))
+          (scheme write)
+          (srfi 39))
   (cond-expand
     ((or cyclone stklos mit)
      ; Need to export extra for these to work
