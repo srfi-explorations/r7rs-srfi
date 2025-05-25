@@ -9,8 +9,11 @@ This is a project for collection of R7RS SRFI implementations.
 
 ### SRFI-64
 
-Racket implementation waiting for
+- Racket implementation waiting for
 [https://github.com/lexi-lambda/racket-r7rs/pull/26](https://github.com/lexi-lambda/racket-r7rs/pull/26).
+Hopefully will work.
+
+- STklos include is fixed in git, waiting for next release. Then works.
 
 ## Running tests
 

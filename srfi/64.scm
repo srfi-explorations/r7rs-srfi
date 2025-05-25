@@ -270,6 +270,7 @@
     (begin (maybe-start-logging runner)
            (display-map "%%%% Starting test "
                         name
+                        " "
                         "(Writing full log to \""
                         name
                         ".log\")"
