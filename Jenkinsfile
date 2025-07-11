@@ -14,8 +14,10 @@ pipeline {
 
     stages {
         stage('Prepare') {
-            sh "mkdir -p tmp"
-            sh "cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = \"\\^\$\$\" } {print \$0}' > tmp/srfis.txt"
+            steps {
+                sh "mkdir -p tmp"
+                sh "cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = \"\\^\$\$\" } {print \$0}' > tmp/srfis.txt"
+            }
         }
         stage('Tests') {
             steps {
