@@ -20,7 +20,7 @@ pipeline {
 
                     parallel implementations.collectEntries { implementation->
                         [(implementation): {
-                                stage("${implementation} install") {
+                                stage("${implementation}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "make clean-all SCHEME=${implementation} test-docker-all"
                                     }
