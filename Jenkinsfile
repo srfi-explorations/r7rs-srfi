@@ -22,7 +22,7 @@ pipeline {
                         [(implementation): {
                                 stage("${implementation}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "test-all.sh"
+                                        sh sh test-all.sh"
                                     }
                                 }
                             }
