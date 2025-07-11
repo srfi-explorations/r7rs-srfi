@@ -2,7 +2,7 @@
 
 This is a project for collection of R7RS SRFI implementations.
 
-[Jenkins](https://jenkins.scheme.org/job/r7rs/job/r7rs-srfi/)
+[Jenkins](https://jenkins.scheme.org/job/r7rs_srfi/job/r7rs-srfi/)
 
 
 ## Notes
