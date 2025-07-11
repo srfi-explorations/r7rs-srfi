@@ -12,6 +12,8 @@ RUN cd compile-r7rs && make && make install
 
 FROM schemers/${COMPILE_R7RS}
 RUN apt-get update && apt-get install -y \
-    make
+    make \
+    ca-certificates \
+    git
 COPY --from=build /usr/local/bin/compile-r7rs /usr/local/bin/compile-r7rs
 
