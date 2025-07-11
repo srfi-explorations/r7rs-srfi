@@ -1,4 +1,3 @@
-ARG COMPILE_R7RS=chibi
 FROM debian:bookworm AS build
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -16,4 +15,5 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     git
 COPY --from=build /usr/local/bin/compile-r7rs /usr/local/bin/compile-r7rs
-
+ARG SCHEME=chibi
+ENV COMPILE_R7RS=${SCHEME}
