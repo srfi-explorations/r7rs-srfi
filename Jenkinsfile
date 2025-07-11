@@ -22,7 +22,7 @@ pipeline {
                         [(implementation): {
                                 stage("${implementation} install") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make clean-all COMPILE_R7RS=${implementation} test-compile-r7rs-docker-all"
+                                        sh "make clean-all SCHEME=${implementation} test-docker-all"
                                     }
                                 }
                             }
