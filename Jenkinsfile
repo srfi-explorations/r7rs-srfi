@@ -14,9 +14,16 @@ pipeline {
 
     stages {
         stage('Prepare') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile.jenkins'
+                }
+            }
             steps {
                 sh "mkdir -p tmp"
                 sh "cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = \"\\^\$\$\" } {print \$0}' > tmp/srfis.txt"
+                sh "git clone https://github.com/srfi-explorations/srfi-test.git --depth=1"
+                sh "cd srfi-test && make"
             }
         }
         stage('Tests') {
