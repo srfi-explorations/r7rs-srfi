@@ -22,7 +22,7 @@ pipeline {
                         [(implementation): {
                                 stage("${implementation}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make clean-all SCHEME=${implementation} test-docker-all"
+                                        sh "test-all.sh"
                                     }
                                 }
                             }
