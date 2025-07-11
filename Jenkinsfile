@@ -1,46 +1,39 @@
 pipeline {
 
     agent {
-        dockerfile {
-            filename 'Dockerfile.jenkins'
-            args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        }
+        label 'linux'
     }
 
     triggers{
-        cron('* 1 * * *')
+        cron('0 1 * * *')
     }
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
-    parameters {
-        choice(name: 'BUILD_IMPLEMENTATION',
-               description: 'Build',
-               choices: [
-                 'all',
-                 'chibi',
-                 'chicken',
-                 'cyclone',
-                 'foment',
-                 'gambit',
-                 'gauche',
-                 'guile',
-                 'kawa',
-                 'larceny',
-                 'loko',
-                 'mit-scheme',
-                 'mosh',
-                 'racket',
-                 'sagittarius',
-                 'stklos',
-                 'skint',
-                 'tr7',
-                 'ypsilon',
-               ])
+    stages {
+        stage('Tests') {
+            steps {
+                script {
+                    def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
+
+                    parallel implementations.collectEntries { implementation->
+                        [(implementation): {
+                                stage("${implementation} install") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "make clean-all COMPILE_R7RS=${implementation} test-compile-r7rs-docker-all"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
     }
 
+    /*
     stages {
 
         stage("chibi") {
@@ -197,6 +190,7 @@ pipeline {
         }
 
     }
+    */
 
     post {
         success {
