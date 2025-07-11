@@ -1,5 +1,5 @@
 ARG SCHEME=chibi
-FROM debian:bookworm AS build
+FROM schemers/gauche AS build
 RUN apt-get update && apt-get install -y \
     build-essential \
     chicken-bin \
@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     make \
     ca-certificates \
     git
-COPY --from=build /usr/local/bin/compile-r7rs /usr/local/bin/compile-r7rs
+COPY --from=build /usr/local /usr/local-other
+ENV PATH=/usr/local-other/bin:${PATH}
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
