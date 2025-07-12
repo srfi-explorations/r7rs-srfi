@@ -1,0 +1,3 @@
+FROM schemers/gauche
+RUN apt update && apt install -y \
+    make bash curl wget tree file build-essential git ca-certificates
