@@ -1,5 +1,6 @@
-SRFI=64
 VERSION=1.0.0
+SRFI=64
+SCHEME=chibi
 
 all: srfi-${SRFI}-${VERSION}.tgz
 
