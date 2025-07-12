@@ -205,6 +205,10 @@ pipeline {
             sh 'make report'
             archiveArtifacts('report.html')
         }
+
+        always {
+            deleteDir()
+        }
     }
 }
 
