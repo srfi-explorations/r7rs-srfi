@@ -21,8 +21,8 @@ pipeline {
 
                     parallel implementations.collectEntries { scheme >
                         [(SCHEME): {
-                                srfis.each { srfi ->
-                                    timeout(10) {
+                                timeout(10) {
+                                    srfis.each { srfi ->
                                         stage("${scheme} ${srfi}") {
                                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                 sh "docker build --build-arg SCHEME=${scheme} --tag=r7rs-srfi-test-${scheme} -f Dockerfile.test ."
