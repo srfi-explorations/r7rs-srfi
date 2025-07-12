@@ -2,17 +2,17 @@ TIMEOUT=120
 SRFI=64
 VERSION=1.0.0
 
-all: build
+all: srfi-${SRFI}-${VERSION}.tgz
 
-build:
+srfi-${SRFI}-${VERSION}.tgz:
 	snow-chibi package \
 		--version=${VERSION} \
 		--authors="r7rs-srfi project" \
-		--doc=README.html \
+		--doc=README.md \
 		--description="SRFI ${SRFI}" \
 		srfi/${SRFI}.sld
 
-install:
+install: srfi-${SRFI}-${VERSION}.tgz
 	snow-chibi install srfi-${SRFI}-${VERSION}.tgz
 
 test: srfi-test copy-tmp logs
