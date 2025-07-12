@@ -20,7 +20,7 @@ install-jenkins: srfi-${SRFI}-${VERSION}.tgz
 
 test: srfi-test copy-tmp logs
 	cd tmp/${SCHEME} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
-	cd tmp/${SCHEME} && LD_LIBRARY_PATH=. ./test-${SRFI}
+	cd tmp/${SCHEME} && LD_LIBRARY_PATH=. printf "\n" | ./test-${SRFI}
 	cp tmp/${SCHEME}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 
 test-docker: srfi-test copy-tmp logs
