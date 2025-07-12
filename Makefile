@@ -1,4 +1,3 @@
-TIMEOUT=120
 SRFI=64
 VERSION=1.0.0
 
@@ -16,8 +15,8 @@ install: srfi-${SRFI}-${VERSION}.tgz
 	snow-chibi install --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
 
 test: srfi-test copy-tmp logs
-	cd tmp/${SCHEME} && COMPILE_R7RS=${SCHEME} timeout --foreground ${TIMEOUT} compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
-	cd tmp/${SCHEME} && LD_LIBRARY_PATH=. printf "\n" | timeout --foreground ${TIMEOUT} ./test-${SRFI}
+	cd tmp/${SCHEME} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
+	cd tmp/${SCHEME} && LD_LIBRARY_PATH=. ./test-${SRFI}
 	cp tmp/${SCHEME}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 
 test-docker: srfi-test copy-tmp logs
