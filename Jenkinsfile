@@ -13,12 +13,6 @@ pipeline {
     }
 
     stages {
-        stage('Prepare') {
-            steps {
-                sh "mkdir -p tmp"
-                sh "cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = \"\\^\$\$\" } {print \$0}' > tmp/srfis.txt"
-            }
-        }
         stage('Tests') {
             steps {
                 script {
@@ -31,7 +25,7 @@ pipeline {
                                     stage("${implementation} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "docker build --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"make SCHEME=${implementation} SRFI=${srfi} test\""
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"make build install SCHEME=${implementation} SRFI=${srfi} test\""
                                         }
                                     }
                                 }

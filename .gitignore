@@ -24,3 +24,4 @@ test
 tmp
 logs
 report.html
+*.tgz
