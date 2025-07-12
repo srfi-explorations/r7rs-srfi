@@ -36,7 +36,6 @@ srfi-test:
 copy-tmp: srfi-test
 	mkdir -p tmp/${SCHEME}
 	mkdir -p tmp/${SCHEME}/srfi-test
-	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $$0}' > tmp/${SCHEME}/srfis.txt
 	cp -r srfi tmp/${SCHEME}/
 	cp -r srfi-test/* tmp/${SCHEME}/srfi-test/
 
