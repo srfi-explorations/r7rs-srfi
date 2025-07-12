@@ -13,11 +13,16 @@ pipeline {
     }
 
     stages {
+        stage('Prepare') {
+            steps {
+                sh "cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = \"\^\$$\" } {print $$0}' > srfis.txt"
+            }
+        }
         stage('Tests') {
             steps {
                 script {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
-                    def srfis = sh(script: 'cat tmp/srfis.txt', returnStdout: true).split()
+                    def srfis = sh(script: 'cat srfis.txt', returnStdout: true).split()
 
                     parallel implementations.collectEntries { implementation->
                         [(implementation): {
