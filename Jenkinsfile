@@ -28,7 +28,7 @@ pipeline {
                                     timeout(10) {
                                         stage("${SCHEME} ${SRFI}") {
                                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                                sh "docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"make all install-jenkins SCHEME=${SCHEME} SRFI=${SRFI} test\""
+                                                sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"make all install-jenkins SCHEME=${SCHEME} SRFI=${SRFI} test\""
                                             }
                                         }
                                     }
