@@ -26,7 +26,7 @@ pipeline {
                                     stage("${SCHEME} ${SRFI}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                            sh "docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"make all install-jenkins SCHEME=${SCHEME} SRFI=${SRFI} test\""
+                                            sh "docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"make clean-jenkins all install-jenkins SCHEME=${SCHEME} SRFI=${SRFI} test clean-jenkins\""
                                         }
                                     }
                                 }
