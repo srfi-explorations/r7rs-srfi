@@ -16,9 +16,9 @@ install: srfi-${SRFI}-${VERSION}.tgz
 	snow-chibi install --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
 
 test: srfi-test copy-tmp logs
-	cd tmp && COMPILE_R7RS=${SCHEME} timeout --foreground ${TIMEOUT} compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
-	cd tmp && LD_LIBRARY_PATH=. printf "\n" | timeout --foreground ${TIMEOUT} ./test-${SRFI}
-	mv tmp/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
+	cd tmp/${SCHEME} && COMPILE_R7RS=${SCHEME} timeout --foreground ${TIMEOUT} compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
+	cd tmp/${SCHEME} && LD_LIBRARY_PATH=. printf "\n" | timeout --foreground ${TIMEOUT} ./test-${SRFI}
+	cp tmp/${SCHEME}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 
 test-docker: srfi-test copy-tmp logs
 	docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
@@ -40,11 +40,11 @@ srfi-test:
 	cd srfi-test && make
 
 copy-tmp:
-	mkdir -p tmp
-	mkdir -p tmp/srfi-test
-	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $$0}' > tmp/srfis.txt
-	cp -r srfi tmp/
-	cp -r srfi-test/* tmp/srfi-test/
+	mkdir -p tmp/${SCHEME}
+	mkdir -p tmp/${SCHEME}/srfi-test
+	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $$0}' > tmp/${SCHEME}/srfis.txt
+	cp -r srfi tmp/${SCHEME}/
+	cp -r srfi-test/* tmp/${SCHEME}/srfi-test/
 
 logs:
 	mkdir -p logs
