@@ -23,7 +23,9 @@ pipeline {
                         [(SCHEME): {
                                 stage("${SCHEME} docker build") {
                                     sh "docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                    sh "docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-prepare -f Dockerfile.prepare."
+                                }
+                                stage("${SCHEME} prepare") {
+                                    sh "docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-prepare -f Dockerfile.prepare ."
                                     sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-prepare sh -c \"make srfi-test copy-tmp SCHEME=${SCHEME}\""
                                 }
                                 srfis.each { SRFI ->
