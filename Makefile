@@ -14,6 +14,9 @@ srfi-${SRFI}-${VERSION}.tgz:
 install: srfi-${SRFI}-${VERSION}.tgz
 	snow-chibi install --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
 
+install-jenkins: srfi-${SRFI}-${VERSION}.tgz
+	snow-chibi install --impls=${SCHEME} --always-yes srfi-${SRFI}-${VERSION}.tgz
+
 test: srfi-test copy-tmp logs
 	cd tmp/${SCHEME} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
 	cd tmp/${SCHEME} && LD_LIBRARY_PATH=. ./test-${SRFI}
