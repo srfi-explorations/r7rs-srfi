@@ -47,6 +47,8 @@ pipeline {
         }
 
         always {
+            sh "docker build --tag=r7rs-srfi-test-clean -f Dockerfile.clean ."
+            sh "docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-clean sh -c \"make clean clean-all\""
             deleteDir()
         }
     }
