@@ -25,7 +25,7 @@ pipeline {
                                     stage("${implementation} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "docker build --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"make clean all install SCHEME=${implementation} SRFI=${srfi} test\""
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"make all install SCHEME=${implementation} SRFI=${srfi} test\""
                                         }
                                     }
                                 }

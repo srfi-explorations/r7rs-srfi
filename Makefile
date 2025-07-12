@@ -13,7 +13,7 @@ srfi-${SRFI}-${VERSION}.tgz:
 		srfi/${SRFI}.sld
 
 install: srfi-${SRFI}-${VERSION}.tgz
-	snow-chibi install srfi-${SRFI}-${VERSION}.tgz
+	snow-chibi install --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
 
 test: srfi-test copy-tmp logs
 	cd tmp && COMPILE_R7RS=${SCHEME} timeout --foreground ${TIMEOUT} compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
@@ -22,7 +22,7 @@ test: srfi-test copy-tmp logs
 
 test-docker: srfi-test copy-tmp logs
 	docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make build install SCHEME=${SCHEME} SRFI=${SRFI} test"
+	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make all install SCHEME=${SCHEME} SRFI=${SRFI} test"
 
 test-docker-all: srfi-test copy-tmp logs
 	@for srfi in $(shell cat tmp/srfis.txt); \
