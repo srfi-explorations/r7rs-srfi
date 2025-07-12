@@ -41,7 +41,7 @@ srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
 	cd srfi-test && make
 
-copy-tmp:
+copy-tmp: srfi-test
 	mkdir -p tmp/${SCHEME}
 	mkdir -p tmp/${SCHEME}/srfi-test
 	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $$0}' > tmp/${SCHEME}/srfis.txt
