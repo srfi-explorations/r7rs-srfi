@@ -46,9 +46,6 @@ logs:
 clean:
 	rm -rf tmp
 
-clean-jenkins:
-	rm -rf tmp/${SCHEME}
-
 clean-logs:
 	rm -rf logs
 
