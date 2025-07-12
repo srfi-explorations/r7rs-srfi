@@ -23,10 +23,12 @@ pipeline {
                     parallel implementations.collectEntries { implementation->
                         [(implementation): {
                                 srfis.each { srfi ->
-                                    stage("${implementation} ${srfi}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "docker build --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"make all install-jenkins SCHEME=${implementation} SRFI=${srfi} test\""
+                                    timeout(5) {
+                                        stage("${implementation} ${srfi}") {
+                                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                sh "docker build --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
+                                                sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"make all install-jenkins SCHEME=${implementation} SRFI=${srfi} test\""
+                                            }
                                         }
                                     }
                                 }
