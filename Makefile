@@ -26,14 +26,6 @@ test-docker: srfi-test copy-tmp logs
 	docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
 	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make all install SCHEME=${SCHEME} SRFI=${SRFI} test"
 
-test-docker-all: srfi-test copy-tmp logs
-	@for srfi in $(shell cat tmp/srfis.txt); \
-		do \
-		echo "Testing SRFI: $${srfi}"; \
-		docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .; \
-		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make && sleep 5 && make SCHEME=${SCHEME} SRFI=$${srfi} test"; \
-		done
-
 report:
 	sh scripts/report.sh > report.html
 
