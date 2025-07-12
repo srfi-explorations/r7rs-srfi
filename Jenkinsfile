@@ -19,15 +19,13 @@ pipeline {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
                     def srfis = sh(script: "cat srfis.scm | sed 's/(//' | sed 's/)//'", returnStdout: true).split()
 
-                    parallel implementations.collectEntries { scheme >
+                    parallel implementations.collectEntries { SCHEME >
                         [(SCHEME): {
-                                timeout(10) {
-                                    srfis.each { srfi ->
-                                        stage("${scheme} ${srfi}") {
-                                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                                sh "docker build --build-arg SCHEME=${scheme} --tag=r7rs-srfi-test-${scheme} -f Dockerfile.test ."
-                                                sh "docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${scheme} sh -c \"make clean-jenkins all install-jenkins SCHEME=${scheme} SRFI=${srfi} test clean-jenkins\""
-                                            }
+                                srfis.each { SRFI ->
+                                    stage("${SCHEME} ${SRFI}") {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
+                                            sh "docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"make clean-jenkins all install-jenkins SCHEME=${SCHEME} SRFI=${SRFI} test clean-jenkins\""
                                         }
                                     }
                                 }
