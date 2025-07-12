@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage("Prepare") {
             steps {
-                sh "docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-prepare -f Dockerfile.prepare ."
+                sh "docker build --tag=r7rs-srfi-test-prepare -f Dockerfile.prepare ."
                 sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-prepare sh -c \"make srfi-test\""
             }
         }
