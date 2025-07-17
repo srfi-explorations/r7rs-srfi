@@ -2,9 +2,9 @@ SRFI=64
 SCHEME=chibi
 TMPDIR=tmp/${SCHEME}
 ifdef WORKSPACE
-	CURRENTDIR=${WORKSPACE}
+CURRENTDIR := ${WORKSPACE}
 else
-	CURRENTDIR=${PWD}
+CURRENTDIR := ${PWD}
 endif
 
 test: ${TMPDIR} logs srfi-test
