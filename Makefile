@@ -1,11 +1,7 @@
 SRFI=64
 SCHEME=chibi
 TMPDIR=tmp/${SCHEME}
-ifdef WORKSPACE
-CURRENTDIR := ${WORKSPACE}
-else
-CURRENTDIR := ${PWD}
-endif
+WORKSPACE ?= ${PWD}
 
 test: ${TMPDIR} logs srfi-test
 	cd ${TMPDIR} && timeout 60 compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
@@ -14,14 +10,14 @@ test: ${TMPDIR} logs srfi-test
 
 test-docker:
 	docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v ${CURRENTDIR}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make clean SCHEME=${SCHEME} SRFI=${SRFI} test && chmod -R 755 logs && chmod -R 755 tmp"
+	docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make clean SCHEME=${SCHEME} SRFI=${SRFI} test && chmod -R 755 logs && chmod -R 755 tmp"
 
 test-docker-all:
 	@for srfi in $(shell cat tmp/srfis.txt); \
 		do \
 		echo "Testing SRFI: $${srfi}"; \
 		docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .; \
-		docker run -v ${CURRENTDIR}:/workdir --workdir /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make clean && sleep 5 && make SCHEME=${SCHEME} SRFI=$${srfi} test"; \
+		docker run -v ${WORKSPACE}:/workdir --workdir /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make clean && sleep 5 && make SCHEME=${SCHEME} SRFI=$${srfi} test"; \
 		done
 
 report:
