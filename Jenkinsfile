@@ -15,10 +15,10 @@ pipeline {
     stages {
         stage('Prepare') {
             steps {
-                sh "cat srfis.scm | sed 's/(//' | sed 's/)//' > /tmp/srfis.txt"
+                sh "cat srfis.scm | sed 's/(//' | sed 's/)//' > /tmp/srfis1.txt"
+                sh "printf '64' > /tmp/srfis.txt"
+                sh "cat /tmp/srfis1.txt >> /tmp/srfis.txt"
                 sh "cat /tmp/srfis.txt"
-                sh "docker build --tag=r7rs-srfi-test-init -f Dockerfile.test ."
-                sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-init sh -c \"make srfi-test \""
             }
         }
         stage('Tests') {

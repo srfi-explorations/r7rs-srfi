@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     build-essential
 RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
 RUN cd chibi-scheme && make -j 32
-RUN git clone https://gitea.scheme.org/Retropikzel/compile-r7rs.git --depth=1
+RUN git clone https://gitea.scheme.org/Retropikzel/compile-r7rs.git --depth=1 --branch=chicken-6
 RUN cd compile-r7rs && make
 
 ARG SCHEME=chibi
