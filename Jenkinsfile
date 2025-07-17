@@ -29,8 +29,10 @@ pipeline {
                                 srfis.each { srfi ->
                                     stage("${implementation} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "docker build --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"make clean && sleep 5 && make SCHEME=${implementation} SRFI=${srfi} test\""
+                                            sh "docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"make clean SCHEME=${SCHEME} SRFI=${SRFI} test && chmod -R 755 logs && chmod -R 755 tmp\""
+                                            //sh "docker build --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
+                                            //sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"make clean && sleep 5 && make SCHEME=${implementation} SRFI=${srfi} test\""
                                         }
                                     }
                                 }
