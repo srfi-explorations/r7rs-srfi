@@ -38,7 +38,6 @@ logs:
 
 clean:
 	rm -rf ${TMPDIR}
-	rm -rf srfi-test
 
 clean-logs:
 	rm -rf logs
