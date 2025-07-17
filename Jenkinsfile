@@ -14,7 +14,7 @@ pipeline {
 
     stages {
         stage('Prepare') {
-            sd "cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = \"\\^\\$$\" } {print $0}' > /tmp/r7rs-srfi-srfis.txt"
+            sh "cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = \"\\^\\$$\" } {print $0}' > /tmp/r7rs-srfi-srfis.txt"
         }
         stage('Tests') {
             steps {
