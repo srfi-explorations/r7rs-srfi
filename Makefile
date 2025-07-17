@@ -1,20 +1,22 @@
-TIMEOUT=120
+SRFI=64
+SCHEME=chibi
+TMPDIR=tmp/${SCHEME}
 
-test: srfi-test copy-tmp logs
-	cd tmp && timeout --foreground ${TIMEOUT} compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
-	cd tmp && LD_LIBRARY_PATH=. printf "\n" | timeout --foreground ${TIMEOUT} ./test-${SRFI}
-	mv tmp/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
+test: ${TMPDIR} logs srfi-test
+	cd ${TMPDIR} && timeout 60 compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
+	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 60 ./test-${SRFI}
+	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 
-test-docker: srfi-test copy-tmp logs
+test-docker:
 	docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-compile-r7rs"
+	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make clean SCHEME=${SCHEME} SRFI=${SRFI} test && chmod -R 755 logs && chmod -R 755 tmp"
 
-test-docker-all: srfi-test copy-tmp logs
+test-docker-all:
 	@for srfi in $(shell cat tmp/srfis.txt); \
 		do \
 		echo "Testing SRFI: $${srfi}"; \
 		docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .; \
-		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make clean && sleep 5 && make SCHEME=${SCHEME} SRFI=$${srfi} test-compile-r7rs"; \
+		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make clean && sleep 5 && make SCHEME=${SCHEME} SRFI=$${srfi} test"; \
 		done
 
 report:
@@ -22,24 +24,24 @@ report:
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
-	cd srfi-test && make
+	cd srfi-test && chibi-scheme convert.scm
 
-copy-tmp:
-	mkdir -p tmp
-	mkdir -p tmp/srfi-test
-	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > tmp/srfis.txt
-	cp -r srfi tmp/
-	cp -r srfi-test/* tmp/srfi-test/
+${TMPDIR}: srfi-test
+	mkdir -p ${TMPDIR}
+	mkdir -p ${TMPDIR}/srfi-test
+	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > ${TMPDIR}/srfis.txt
+	cp -r srfi ${TMPDIR}
+	cp -r srfi-test/* ${TMPDIR}/srfi-test/
 
 logs:
 	mkdir -p logs
 
 clean:
-	rm -rf tmp
+	rm -rf ${TMPDIR}
+	rm -rf srfi-test
 
 clean-logs:
 	rm -rf logs
 
 clean-all:
 	rm -rf tmp
-	rm -rf srfi-test

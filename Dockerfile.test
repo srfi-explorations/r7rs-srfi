@@ -1,15 +1,29 @@
-ARG COMPILE_R7RS=chibi
+ARG SCHEME=chibi
 FROM debian:bookworm AS build
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    chicken-bin \
     ca-certificates \
     git \
-    make
-RUN chicken-install r7rs
-RUN git clone https://github.com/Retropikzel/compile-r7rs.git --depth=1
-RUN cd compile-r7rs && make && make install
+    make \
+    build-essential
+RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
+RUN cd chibi-scheme && make -j 32
+RUN git clone https://gitea.scheme.org/Retropikzel/compile-r7rs.git --depth=1
+RUN cd compile-r7rs && make
 
-FROM schemers/${COMPILE_R7RS}
-COPY --from=build /usr/local/bin/compile-r7rs /usr/local/bin/compile-r7rs
+ARG SCHEME=chibi
+FROM schemers/${SCHEME}:head
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libffi-dev \
+    make \
+    ca-certificates \
+    git
+RUN mkdir ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
+COPY --from=build /chibi-scheme /chibi-scheme
+RUN cd /chibi-scheme && make -j 8 install
+COPY --from=build /compile-r7rs /compile-r7rs
+RUN cd /compile-r7rs && make install
+ARG SCHEME=${SCHEME}
+ENV COMPILE_R7RS=${SCHEME}
+
 

@@ -14,14 +14,13 @@ pipeline {
 
     stages {
         stage('Prepare') {
-            sh "mkdir -p tmp"
-            sd "cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = \"\\^\\$$\" } {print $0}' > tmp/srfis.txt"
+            sd "cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = \"\\^\\$$\" } {print $0}' > /tmp/r7rs-srfi-srfis.txt"
         }
         stage('Tests') {
             steps {
                 script {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
-                    def srfis = sh(script: 'cat tmp/srfis.txt', returnStdout: true).split()
+                    def srfis = sh(script: 'cat /tmp/r7rs-srfi-srfis.txt', returnStdout: true).split()
 
                     parallel implementations.collectEntries { implementation->
                         [(implementation): {
