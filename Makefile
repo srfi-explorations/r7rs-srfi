@@ -22,7 +22,7 @@ test-docker-all:
 report:
 	sh scripts/report.sh > report.html
 
-${TMPDIR}: srfi-test
+${TMPDIR}:
 	mkdir -p ${TMPDIR}
 	mkdir -p ${TMPDIR}/srfi-test
 	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > ${TMPDIR}/srfis.txt
