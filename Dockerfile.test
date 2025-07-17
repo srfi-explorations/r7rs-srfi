@@ -23,6 +23,7 @@ COPY --from=build /chibi-scheme /chibi-scheme
 RUN cd /chibi-scheme && make -j 8 install
 COPY --from=build /compile-r7rs /compile-r7rs
 RUN cd /compile-r7rs && make install
+ARG SCHEME=chibi
 ARG SCHEME=${SCHEME}
 ENV COMPILE_R7RS=${SCHEME}
 
