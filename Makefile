@@ -41,7 +41,6 @@ ${TMPDIR}: srfi-test
 	mkdir -p ${TMPDIR}
 	mkdir -p ${TMPDIR}/srfi-test
 	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > ${TMPDIR}/srfis.txt
-	cd srfi-test && git pull
 	cp -r srfi ${TMPDIR}
 	cp -r srfi-test ${TMPDIR}/
 
