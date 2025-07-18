@@ -123,7 +123,7 @@
                       cmd
                       (ec-simplify
                         (if ne2?
-                            (loop ls ...) )))))))))) ))
+                            (loop ls ...)))))))))))))
 
     
 ; (ec-simplify <expression>)
