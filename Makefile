@@ -8,31 +8,22 @@ all: package
 package:
 	snow-chibi package \
 		--version=${VERSION} \
-		--authors="Retropikzel" \
+		--authors="Schemeists" \
 		--doc=README.md \
-		--description="SRFI ${SRFI}" \
+		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
 install:
 	snow-chibi --impls=${SCHEME} install srfi-${SRFI}-${VERSION}.tgz
 
 test: ${TMPDIR} logs
-	snow-chibi 
 	cd ${TMPDIR} && timeout 600 compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
 	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 600 ./test-${SRFI}
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 
 test-docker:
 	docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make clean package install test SCHEME=${SCHEME} SRFI=${SRFI} && chmod -R 755 logs && chmod -R 755 tmp"
-
-test-docker-all:
-	@for srfi in $(shell cat tmp/srfis.txt); \
-		do \
-		echo "Testing SRFI: $${srfi}"; \
-		docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .; \
-		docker run -v ${PWD}:/workdir --workdir /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make clean && sleep 5 && make SCHEME=${SCHEME} SRFI=$${srfi} test"; \
-		done
+	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean package install test && chmod -R 755 logs && chmod -R 755 tmp"
 
 report:
 	sh scripts/report.sh > report.html
