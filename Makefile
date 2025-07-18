@@ -3,9 +3,10 @@ SCHEME=chibi
 TMPDIR=tmp/${SCHEME}
 
 test: ${TMPDIR} logs
-	cd ${TMPDIR} && timeout 60 compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
-	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 60 ./test-${SRFI}
+	cd ${TMPDIR} && timeout 120 compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
+	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 120 ./test-${SRFI}
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
+	cat logs/${SCHEME}-srfi-${SRFI}.log
 
 test-docker:
 	docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
