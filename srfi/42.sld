@@ -20,7 +20,22 @@
           first-ec
           last-ec
           fold-ec
-          fold3-ec)
+          fold3-ec
+          :
+          :list
+          :string
+          :vector
+          :integers
+          :range
+          :real-range
+          :char-range
+          :port
+          :dispatched
+          :do
+          :let
+          :parallel
+          :while
+          :until)
   (include "42.scm"))
 
 
