@@ -60,3 +60,6 @@ Add the SRFI number into srfis.scm.
 
 Add support for implementation
 into [https://gitea.scheme.org/Retropikzel/compile-r7rs](https://gitea.scheme.org/Retropikzel/compile-r7rs).
+
+Add support for implementation
+into [snow-chibi](https://github.com/ashinn/chibi-scheme).

@@ -14,7 +14,10 @@ package:
 	srfi/${SRFI}.sld
 
 install:
-	snow-chibi --impls=${SCHEME} install srfi-${SRFI}-${VERSION}.tgz
+	snow-chibi install --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
+
+force-install:
+	snow-chibi install --always-yes --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
 
 test: ${TMPDIR} logs
 	cd ${TMPDIR} && timeout 600 compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
@@ -23,21 +26,24 @@ test: ${TMPDIR} logs
 
 test-docker:
 	docker build --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean package install test && chmod -R 755 logs && chmod -R 755 tmp"
+	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean test && chmod -R 755 logs && chmod -R 755 tmp"
 
 report:
 	sh scripts/report.sh > report.html
 
-${TMPDIR}:
+srfi-test:
+	git clone https://github.com/srfi-explorations/srfi-test.git \
+		--depth=1 \
+		--branch=retropikzel-fixes
+	cd srfi-test && chibi-scheme convert.scm
+
+${TMPDIR}: srfi-test
 	mkdir -p ${TMPDIR}
 	mkdir -p ${TMPDIR}/srfi-test
 	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > ${TMPDIR}/srfis.txt
+	cd srfi-test && git pull
 	cp -r srfi ${TMPDIR}
-	git clone https://github.com/srfi-explorations/srfi-test.git \
-		--depth=1 \
-		--branch=retropikzel-fixes \
-		${TMPDIR}/srfi-test
-	cd ${TMPDIR}/srfi-test && chibi-scheme convert.scm
+	cp -r srfi-test ${TMPDIR}/
 
 logs:
 	mkdir -p logs
