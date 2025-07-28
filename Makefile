@@ -17,7 +17,7 @@ install:
 	snow-chibi install --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
 
 force-install:
-	snow-chibi install --always-yes --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
+	printf "\n" | snow-chibi install --always-yes --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
 
 test: ${TMPDIR} logs
 	cd ${TMPDIR} && printf "\n" | timeout 120 compile-r7rs -I . -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
