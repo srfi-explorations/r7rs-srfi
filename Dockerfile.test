@@ -4,7 +4,8 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     git \
     make \
-    build-essential
+    build-essential \
+    pandoc
 RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
 RUN cd chibi-scheme && make -j 32
 RUN git clone https://gitea.scheme.org/Retropikzel/compile-r7rs.git --depth=1
