@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     git
 RUN mkdir ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
 COPY --from=build /chibi-scheme /chibi-scheme
-RUN cd /chibi-scheme && make -j 8 install
+RUN cd /chibi-scheme && make -j 32 install
 COPY --from=build /compile-r7rs /compile-r7rs
 RUN cd /compile-r7rs && make install
 ARG SCHEME=chibi
