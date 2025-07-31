@@ -2,9 +2,9 @@
 
 (define-library (srfi 4)
   (import (except (scheme base)
-                  bytevector-copy)
-          (except (r6rs bytevectors)
-                  bytevector-copy!))
+                  bytevector-copy
+                  bytevector-copy!)
+          (r6rs bytevectors))
   (export make-u8vector
           make-s8vector
           make-u16vector
