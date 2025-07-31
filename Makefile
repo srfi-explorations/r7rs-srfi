@@ -29,7 +29,7 @@ force-install:
 	printf "\n" | snow-chibi install --always-yes --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
 
 test: ${TMPDIR} logs
-	cd ${TMPDIR} && printf "\n" | timeout 60 compile-r7rs ${INCDIRS} -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
+	cd ${TMPDIR} && printf "\n" | timeout 120 compile-r7rs ${INCDIRS} -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
 	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 60 ./test-${SRFI}
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 
@@ -60,6 +60,8 @@ logs:
 
 clean:
 	rm -rf ${TMPDIR}
+	find . -name "*.o" -delete
+	find . -name "*.so" -delete
 
 clean-logs:
 	rm -rf logs

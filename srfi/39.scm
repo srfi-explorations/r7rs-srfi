@@ -19,8 +19,7 @@
   (lambda (init . conv)
     (let ((converter
             (if (null? conv) (lambda (x) x) (car conv))))
-      (let ((global-cell
-              (cons #f (converter init))))
+      (let ((global-cell (cons #f (converter init))))
         (letrec ((parameter
                    (lambda new-val
                      (let ((cell (dynamic-lookup parameter global-cell)))
