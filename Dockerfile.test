@@ -1,29 +1,25 @@
 ARG SCHEME=chibi
-FROM debian:bookworm AS build
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
+ARG IMAGE=chibi:head
+FROM schemers/${IMAGE}
+RUN apt-get update && apt-get install \
+    --no-install-recommends \
+    --no-install-suggests \
+    -y \
+    gcc \
+    libc6-dev \
     git \
-    make \
-    build-essential \
-    pandoc
-RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
-RUN cd chibi-scheme && make -j 32
-
-ARG SCHEME=chibi
-FROM schemers/${SCHEME}:head
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libffi-dev \
-    make \
     ca-certificates \
-    git
-RUN mkdir ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
-COPY --from=build /chibi-scheme /chibi-scheme
-RUN cd /chibi-scheme && make -j 32 install
+    make \
+    libffi-dev \
+    pandoc
+RUN mkdir -p ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
 COPY --from=retropikzel1/compile-r7rs /opt/compile-r7rs /opt/compile-r7rs
+#RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
+RUN git clone https://github.com/Retropikzel/chibi-scheme.git --depth=1 --branch=snow-chibi-chicken-static
+RUN cd chibi-scheme && make -j 32 && make -j 32 install
 ENV PATH=/opt/compile-r7rs/bin:${PATH}
 ARG SCHEME=chibi
-ARG SCHEME=${SCHEME}
 ENV COMPILE_R7RS=${SCHEME}
-
+ENV GUILE_AUTO_COMPILE=0
+ENV STKLOS_FRAMES=1000
 
