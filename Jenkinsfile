@@ -25,18 +25,18 @@ pipeline {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
                     def srfis = sh(script: 'cat /tmp/srfis.txt', returnStdout: true).split()
 
-                    parallel implementations.collectEntries { implementation->
-                        [(implementation): {
+                    parallel implementations.collectEntries { SCHEME ->
+                        [(SCHEME): {
                                 srfis.each { srfi ->
-                                    stage("${implementation} ${srfi}") {
+                                    stage("${SCHEME} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            if("${implementation}" == "chicken") {
+                                            if("${SCHEME}" == "chicken") {
                                                 DOCKERIMG="chicken:5"
                                             } else {
-                                                DOCKERIMG="${implementation}:head"
+                                                DOCKERIMG="${SCHEME}:head"
                                             }
-                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"timeout 120 make SCHEME=${implementation} SRFI=${srfi} clean package force-install test && chmod -R 755 logs && chmod -R 755 tmp\""
+                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 120 make SCHEME=${SCHEME} SRFI=${srfi} clean package force-install test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
                                         }
                                     }
                                 }
