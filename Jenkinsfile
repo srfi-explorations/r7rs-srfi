@@ -36,7 +36,7 @@ pipeline {
                                                 DOCKERIMG="${implementation}:head"
                                             }
                                             sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"timeout 600 make SCHEME=${implementation} SRFI=${srfi} clean package force-install test && chmod -R 755 logs && chmod -R 755 tmp\""
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"timeout 120 make SCHEME=${implementation} SRFI=${srfi} clean package force-install test && chmod -R 755 logs && chmod -R 755 tmp\""
                                         }
                                     }
                                 }
