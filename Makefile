@@ -35,7 +35,7 @@ test: ${TMPDIR} logs
 
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean package force-install test && chmod -R 755 logs && chmod -R 755 tmp"
+	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean test && chmod -R 755 logs && chmod -R 755 tmp"
 
 report:
 	sh scripts/report.sh > report.html
