@@ -16,6 +16,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 sh "cat srfis.scm | sed 's/(//' | sed 's/)//' > /tmp/srfis.txt"
+                sh "rm -rf srfi-test"
             }
         }
         stage('Tests') {
