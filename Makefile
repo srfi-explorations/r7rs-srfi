@@ -12,6 +12,10 @@ ifeq "${SCHEME}" "ypsilon"
 INCDIRS=-I . #-I ${TMPDIR}/deps
 endif
 
+ifeq "${SCHEME}" "cyclone"
+INCDIRS=-I .
+endif
+
 all: package
 
 package:
@@ -29,13 +33,17 @@ force-install:
 	printf "\n" | snow-chibi install --always-yes --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
 
 test: ${TMPDIR} logs
-	cd ${TMPDIR} && printf "\n" | timeout 120 compile-r7rs ${INCDIRS} -o test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm
+	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
+	cd ${TMPDIR} && printf "\n" | timeout 120 compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
 	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 60 ./test-${SRFI}
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean test && chmod -R 755 logs && chmod -R 755 tmp"
+	if [ ! "${SCHEME}" = "cyclone" ]; then \
+		docker run -it -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean"; \
+	fi
+	docker run -it -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test"
 
 report:
 	sh scripts/report.sh > report.html
