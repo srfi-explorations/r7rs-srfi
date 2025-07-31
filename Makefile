@@ -2,6 +2,7 @@ SRFI=64
 SCHEME=chibi
 TMPDIR=tmp/${SCHEME}
 VERSION=1.0.0
+DOCKERIMG="${SCHEME}:head"
 ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
 endif

@@ -22,4 +22,5 @@ ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
 ENV GUILE_AUTO_COMPILE=0
 ENV STKLOS_FRAMES=1000
+RUN snow-chibi --impls=${SCHEME} install r6rs.bytevectors
 
