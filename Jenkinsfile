@@ -16,7 +16,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 sh "cat srfis.scm | sed 's/(//' | sed 's/)//' > /tmp/srfis.txt"
-                sh "docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c 'rm -rf srfi-test'"
+                sh "docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c 'rm -rf srfi-test && make srfi-test'"
             }
         }
         stage('Tests') {
