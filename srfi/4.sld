@@ -1,8 +1,10 @@
 ; From https://github.com/scheme-requests-for-implementation/srfi-4/tree/master
 
 (define-library (srfi 4)
-  (import (scheme base)
-          (r6rs bytevectors))
+  (import (except (scheme base)
+                  bytevector-copy)
+          (except (r6rs bytevectors)
+                  bytevector-copy!))
   (export make-u8vector
           make-s8vector
           make-u16vector
