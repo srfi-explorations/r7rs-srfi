@@ -29,7 +29,12 @@ pipeline {
                                 srfis.each { srfi ->
                                     stage("${implementation} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "docker build --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
+                                            if("${implementation}" == "chicken") {
+                                                DOCKERIMG="chicken:5"
+                                            } else {
+                                                DOCKERIMG="${implementation}:head"
+                                            }
+                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${implementation} --tag=r7rs-srfi-test-${implementation} -f Dockerfile.test ."
                                             sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${implementation} sh -c \"timeout 600 make SCHEME=${implementation} SRFI=${srfi} clean package force-install test && chmod -R 755 logs && chmod -R 755 tmp\""
                                         }
                                     }
