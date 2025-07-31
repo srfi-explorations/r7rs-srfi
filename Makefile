@@ -68,8 +68,6 @@ logs:
 
 clean:
 	rm -rf ${TMPDIR}
-	find . -name "*.o" -delete
-	find . -name "*.so" -delete
 
 clean-logs:
 	rm -rf logs
