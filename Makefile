@@ -37,6 +37,8 @@ test: ${TMPDIR} logs
 	cd ${TMPDIR} && printf "\n" | timeout 120 compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
 	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 60 ./test-${SRFI}
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
+	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
+	chmod 755 logs/${SCHEME}-srfi-${SRFI}.log
 
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
@@ -46,8 +48,7 @@ test-docker:
 	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test"
 
 report:
-	#sh scripts/report.sh > report.html
-	sh scripts/report.sh #> report.html
+	sh scripts/report.sh > report.html
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git \
@@ -59,7 +60,8 @@ ${TMPDIR}: srfi-test
 	mkdir -p ${TMPDIR}
 	mkdir -p ${TMPDIR}/srfi-test
 	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > ${TMPDIR}/srfis.txt
-	cp -r srfi ${TMPDIR}
+	cp -r srfi ${TMPDIR}/
+	find ${TMPDIR} -name "*.swp" -delete
 	cp -r srfi-test ${TMPDIR}/
 	mkdir -p ${TMPDIR}/deps
 	snow-chibi install --impls=${SCHEME} --always-yes --install-source-dir=${TMPDIR}/deps --install-library-dir=${TPMDIR}/deps "(r6rs bytevectors)"
