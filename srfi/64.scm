@@ -413,11 +413,11 @@
 
 ;;; Factory and current instance
 
-(define test-runner-factory (make-parameter #f))
+(define test-runner-factory (srfi-39:make-parameter #f))
 
 (define (test-runner-create) ((test-runner-factory)))
 
-(define test-runner-current (make-parameter #f))
+(define test-runner-current (srfi-39:make-parameter #f))
 
 (define (test-runner-get)
   (or (test-runner-current)

@@ -9,7 +9,7 @@ endif
 
 INCDIRS=-I . -I /usr/local/share/kawa/lib -I ./deps
 ifeq "${SCHEME}" "ypsilon"
-INCDIRS=-I . #-I ${TMPDIR}/deps
+INCDIRS=-I .
 endif
 
 ifeq "${SCHEME}" "cyclone"
@@ -74,6 +74,9 @@ clean:
 
 clean-logs:
 	rm -rf logs
+
+clean-tgz:
+	find . -name "*.tgz" -delete
 
 clean-all:
 	rm -rf tmp

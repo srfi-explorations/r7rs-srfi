@@ -15,14 +15,13 @@
 ;DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 ;OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-(define make-parameter
+(define srfi-39:make-parameter
   (lambda (init . conv)
-    (let ((converter
-            (if (null? conv) (lambda (x) x) (car conv))))
+    (let ((converter (if (null? conv) (lambda (x) x) (car conv))))
       (let ((global-cell (cons #f (converter init))))
         (letrec ((parameter
                    (lambda new-val
-                     (let ((cell (dynamic-lookup parameter global-cell)))
+                     (let ((cell (srfi-39:dynamic-lookup parameter global-cell)))
                        (cond ((null? new-val)
                               (cdr cell))
                              ((null? (cdr new-val))
@@ -32,17 +31,17 @@
           (set-car! global-cell parameter)
           parameter)))))
 
-(define-syntax parameterize
+(define-syntax srfi-39:parameterize
   (syntax-rules ()
     ((parameterize ((expr1 expr2) ...) body ...)
-     (dynamic-bind (list expr1 ...)
+     (srfi-39:dynamic-bind (list expr1 ...)
                    (list expr2 ...)
                    (lambda () body ...)))))
 
-(define dynamic-bind
+(define srfi-39:dynamic-bind
   (lambda (parameters values body)
     (let* ((old-local
-             (dynamic-env-local-get))
+             (srfi-39:dynamic-env-local-get))
            (new-cells
              (map (lambda (parameter value)
                     (cons parameter (parameter value #f)))
@@ -51,20 +50,20 @@
            (new-local
              (append new-cells old-local)))
       (dynamic-wind
-        (lambda () (dynamic-env-local-set! new-local))
+        (lambda () (srfi-39:dynamic-env-local-set! new-local))
         body
-        (lambda () (dynamic-env-local-set! old-local))))))
+        (lambda () (srfi-39:dynamic-env-local-set! old-local))))))
 
-(define dynamic-lookup
+(define srfi-39:dynamic-lookup
   (lambda (parameter global-cell)
-    (or (assq parameter (dynamic-env-local-get))
+    (or (assq parameter (srfi-39:dynamic-env-local-get))
         global-cell)))
 
-(define dynamic-env-local '())
+(define srfi-39:dynamic-env-local '())
 
-(define dynamic-env-local-get
-  (lambda () dynamic-env-local))
+(define srfi-39:dynamic-env-local-get
+  (lambda () srfi-39:dynamic-env-local))
 
-(define dynamic-env-local-set!
-  (lambda (new-env) (set! dynamic-env-local new-env)))
+(define srfi-39:dynamic-env-local-set!
+  (lambda (new-env) (set! srfi-39:dynamic-env-local new-env)))
 

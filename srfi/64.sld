@@ -1,24 +1,23 @@
 (define-library
   (srfi 64)
   (cond-expand
-    (tr7 (import (except (scheme base) make-parameter parameterize)
+    (tr7
+      (import (scheme base)
               (scheme case-lambda)
               (scheme eval)
               (scheme file)
               (scheme process-context)
               (scheme read)
-              (scheme write)
-              (srfi 39)))
+              (scheme write)))
     (else
-      (import (except (scheme base) make-parameter parameterize)
+      (import (scheme base)
               (scheme case-lambda)
               (scheme complex)
               (scheme eval)
               (scheme file)
               (scheme process-context)
               (scheme read)
-              (scheme write)
-              (srfi 39))))
+              (scheme write))))
   (cond-expand
     ((or stklos mit cyclone)
      ; Need to export extra for these to work
@@ -157,4 +156,5 @@
               test-on-test-end-simple
               test-on-bad-count-simple
               test-on-bad-end-name-simple)))
+  (include "64-39.scm")
   (include "64.scm"))
