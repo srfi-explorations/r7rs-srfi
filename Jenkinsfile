@@ -51,11 +51,17 @@ pipeline {
         }
     }
 
+
+    stage("Report") {
+        steps {
+            sh "sh scripts/report.sh > report.html"
+        }
+    }
+
     post {
         success {
             sh 'tar -czvf logs.tar.gz logs/*.log'
             archiveArtifacts('logs.tar.gz')
-            sh "sh scripts/report.sh > report.html"
             archiveArtifacts('report.html')
         }
     }
