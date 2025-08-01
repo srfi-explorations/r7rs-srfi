@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "<table>"
-for srfi in $(cat tmp/srfis.txt)
+for srfi in $(cat srfis.scm | sed 's/(//' | sed 's/)//')
 do
     echo "<tr>"
     echo "<th>$srfi</th>"
