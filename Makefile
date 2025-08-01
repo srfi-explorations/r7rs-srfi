@@ -46,7 +46,8 @@ test-docker:
 	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test"
 
 report:
-	sh scripts/report.sh > report.html
+	#sh scripts/report.sh > report.html
+	sh scripts/report.sh #> report.html
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git \
