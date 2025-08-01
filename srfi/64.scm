@@ -28,53 +28,315 @@
 
 ;;; The data type
 
-(define-record-type <test-runner>
-  (make-test-runner)
-  test-runner?
+(cond-expand
+  ;; racket-r7rs has bug with records https://github.com/lexi-lambda/racket-r7rs/pull/26
+  (racket
 
-  (result-alist test-result-alist test-result-alist!)
+    (define-record-type <test-runner>
+      (internal-make-test-runner data)
+      test-runner?
+      (data test-runner:data test-runner:data!))
 
-  (pass-count test-runner-pass-count test-runner-pass-count!)
-  (fail-count test-runner-fail-count test-runner-fail-count!)
-  (xpass-count test-runner-xpass-count test-runner-xpass-count!)
-  (xfail-count test-runner-xfail-count test-runner-xfail-count!)
-  (skip-count test-runner-skip-count test-runner-skip-count!)
-  (total-count %test-runner-total-count %test-runner-total-count!)
+    (define-syntax test-runner-get-value
+      (syntax-rules ()
+        ((_ key r)
+         (let ((data (test-runner:data r)))
+           (if (assoc key data)
+             (if (null? (assoc key data))
+               (list)
+               (car (cdr (assoc key data))))
+             (list))))))
 
-  ;; Stack (list) of (count-at-start . expected-count):
-  (count-list %test-runner-count-list %test-runner-count-list!)
+    (define-syntax test-runner-set!
+      (syntax-rules ()
+        ((_ r key value)
+         (test-runner:data! r
+                            (let ((found? #f))
+                              (append
+                                (map (lambda (pair)
+                                       (if (equal? (car pair) key)
+                                         (begin
+                                           (set! found? #t)
+                                           (list (car pair) value))
+                                         pair))
+                                     (test-runner:data r))
+                                (if found? (list) (list (list key value)))))))))
 
-  ;; Normally #f, except when in a test-apply.
-  (run-list %test-runner-run-list %test-runner-run-list!)
+    (define (make-test-runner)
+      (internal-make-test-runner
+        (list (list 'result-alist '())
+              (list 'pass-count 0)
+              (list 'fail-count 0)
+              (list 'xpass-count 0)
+              (list 'xfail-count 0)
+              (list 'skip-count 0)
+              (list 'total-count 0)
+              (list 'count-list '())
+              (list 'run-list '())
+              (list 'skip-list '())
+              (list 'fail-list '())
+              (list 'skip-save '())
+              (list 'fail-save '())
+              (list 'group-stack '())
+              (list 'on-group-begin '())
+              (list 'on-test-begin '())
+              (list 'on-test-end '())
+              (list 'on-group-end '())
+              (list 'on-final '())
+              (list 'on-bad-count '())
+              (list 'on-bad-end-name '())
+              (list 'on-bad-error-type '())
+              (list 'aux-value 0)
+              (list 'log-file #f)
+              (list 'log-port #f))))
 
-  (skip-list %test-runner-skip-list %test-runner-skip-list!)
-  (fail-list %test-runner-fail-list %test-runner-fail-list!)
+    (define (test-result-alist test-runner)
+      (test-runner-get-value 'result-alist test-runner))
 
-  (skip-save %test-runner-skip-save %test-runner-skip-save!)
-  (fail-save %test-runner-fail-save %test-runner-fail-save!)
+    (define-syntax test-result-alist!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'result-alist value))))
 
-  (group-stack test-runner-group-stack test-runner-group-stack!)
+    (define (test-runner-pass-count test-runner)
+      (test-runner-get-value 'pass-count test-runner))
 
-  ;; Note: on-test-begin and on-test-end are unrelated to the test-begin and
-  ;; test-end forms in the execution library.  They're called at the
-  ;; beginning/end of each individual test, whereas the test-begin and test-end
-  ;; forms demarcate test groups.
+    (define-syntax test-runner-pass-count!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'pass-count value))))
 
-  (on-group-begin test-runner-on-group-begin test-runner-on-group-begin!)
-  (on-test-begin test-runner-on-test-begin test-runner-on-test-begin!)
-  (on-test-end test-runner-on-test-end test-runner-on-test-end!)
-  (on-group-end test-runner-on-group-end test-runner-on-group-end!)
-  (on-final test-runner-on-final test-runner-on-final!)
-  (on-bad-count test-runner-on-bad-count test-runner-on-bad-count!)
-  (on-bad-end-name test-runner-on-bad-end-name test-runner-on-bad-end-name!)
+    (define (test-runner-fail-count test-runner)
+      (test-runner-get-value 'fail-count test-runner))
 
-  (on-bad-error-type %test-runner-on-bad-error-type
-                     %test-runner-on-bad-error-type!)
+    (define-syntax test-runner-fail-count!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'fail-count value))))
 
-  (aux-value test-runner-aux-value test-runner-aux-value!)
+    (define (test-runner-xpass-count test-runner)
+      (test-runner-get-value 'xpass-count test-runner))
 
-  (log-file %test-runner-log-file %test-runner-log-file!)
-  (log-port %test-runner-log-port %test-runner-log-port!))
+    (define-syntax test-runner-xpass-count!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'xpass-count value))))
+
+    (define (test-runner-xfail-count test-runner)
+      (test-runner-get-value 'xfail-count test-runner))
+
+    (define-syntax test-runner-xfail-count!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'xfail-count value))))
+
+    (define (test-runner-skip-count test-runner)
+      (test-runner-get-value 'skip-count test-runner))
+
+    (define-syntax test-runner-skip-count!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'skip-count value))))
+
+    (define (%test-runner-total-count test-runner)
+      (test-runner-get-value 'total-count test-runner))
+
+    (define-syntax %test-runner-total-count!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'total-count value))))
+
+    (define (%test-runner-count-list test-runner)
+      (test-runner-get-value 'count-list test-runner))
+
+    (define-syntax %test-runner-count-list!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'count-list value))))
+
+    (define (%test-runner-run-list test-runner)
+      (test-runner-get-value 'run-list test-runner))
+
+    (define-syntax %test-runner-run-list!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'run-list value))))
+
+    (define (%test-runner-skip-list test-runner)
+      (test-runner-get-value 'skip-list test-runner))
+
+    (define-syntax %test-runner-skip-list!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'skip-list value))))
+
+    (define (%test-runner-fail-list test-runner)
+      (test-runner-get-value 'fail-list test-runner))
+
+    (define-syntax %test-runner-fail-list!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'fail-list value))))
+
+    (define (%test-runner-skip-save test-runner)
+      (test-runner-get-value 'skip-save test-runner))
+
+    (define-syntax %test-runner-skip-save!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'skip-save value))))
+
+    (define (%test-runner-fail-save test-runner)
+      (test-runner-get-value 'fail-save test-runner))
+
+    (define-syntax %test-runner-fail-save!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'fail-save value))))
+
+    (define (test-runner-group-stack test-runner)
+      (test-runner-get-value 'group-stack test-runner))
+
+    (define-syntax test-runner-group-stack!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'group-stack value))))
+
+    (define (test-runner-on-group-begin test-runner)
+      (test-runner-get-value 'on-group-begin test-runner))
+
+    (define-syntax test-runner-on-group-begin!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'on-group-begin value))))
+
+    (define (test-runner-on-test-begin test-runner)
+      (test-runner-get-value 'on-test-begin test-runner))
+
+    (define-syntax test-runner-on-test-begin!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'on-test-begin value))))
+
+    (define (test-runner-on-test-end test-runner)
+      (test-runner-get-value 'on-test-end test-runner))
+
+    (define-syntax test-runner-on-test-end!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'on-test-end value))))
+
+    (define (test-runner-on-group-end test-runner)
+      (test-runner-get-value 'on-group-end test-runner))
+
+    (define-syntax test-runner-on-group-end!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'on-group-end value))))
+
+    (define (test-runner-on-final test-runner)
+      (test-runner-get-value 'on-final test-runner))
+
+    (define-syntax test-runner-on-final!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'on-final value))))
+
+    (define (test-runner-on-bad-count test-runner)
+      (test-runner-get-value 'on-bad-count test-runner))
+
+    (define-syntax test-runner-on-bad-count!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'on-bad-count value))))
+
+    (define (test-runner-on-bad-end-name test-runner)
+      (test-runner-get-value 'on-bad-end-name test-runner))
+
+    (define-syntax test-runner-on-bad-end-name!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'on-bad-end-name value))))
+
+    (define (%test-runner-on-bad-error-type test-runner)
+      (test-runner-get-value 'on-bad-error-type test-runner))
+
+    (define-syntax %test-runner-on-bad-error-type!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'on-bad-error-type value))))
+
+    (define (test-runner-aux-value test-runner)
+      (test-runner-get-value 'aux-value test-runner))
+
+    (define-syntax test-runner-aux-value!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'aux-value value))))
+
+    (define (%test-runner-log-file test-runner)
+      (test-runner-get-value 'log-file test-runner))
+
+    (define-syntax %test-runner-log-file!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'log-file value))))
+
+    (define (%test-runner-log-port test-runner)
+      (test-runner-get-value 'log-port test-runner))
+
+    (define-syntax %test-runner-log-port!
+      (syntax-rules ()
+        ((_ test-runner value)
+         (test-runner-set! test-runner 'log-port value)))))
+  (else
+    (define-record-type <test-runner>
+      (make-test-runner)
+      test-runner?
+
+      (result-alist test-result-alist test-result-alist!)
+
+      (pass-count test-runner-pass-count test-runner-pass-count!)
+      (fail-count test-runner-fail-count test-runner-fail-count!)
+      (xpass-count test-runner-xpass-count test-runner-xpass-count!)
+      (xfail-count test-runner-xfail-count test-runner-xfail-count!)
+      (skip-count test-runner-skip-count test-runner-skip-count!)
+      (total-count %test-runner-total-count %test-runner-total-count!)
+
+      ;; Stack (list) of (count-at-start . expected-count):
+      (count-list %test-runner-count-list %test-runner-count-list!)
+
+      ;; Normally #f, except when in a test-apply.
+      (run-list %test-runner-run-list %test-runner-run-list!)
+
+      (skip-list %test-runner-skip-list %test-runner-skip-list!)
+      (fail-list %test-runner-fail-list %test-runner-fail-list!)
+
+      (skip-save %test-runner-skip-save %test-runner-skip-save!)
+      (fail-save %test-runner-fail-save %test-runner-fail-save!)
+
+      (group-stack test-runner-group-stack test-runner-group-stack!)
+
+      ;; Note: on-test-begin and on-test-end are unrelated to the test-begin and
+      ;; test-end forms in the execution library.  They're called at the
+      ;; beginning/end of each individual test, whereas the test-begin and test-end
+      ;; forms demarcate test groups.
+
+      (on-group-begin test-runner-on-group-begin test-runner-on-group-begin!)
+      (on-test-begin test-runner-on-test-begin test-runner-on-test-begin!)
+      (on-test-end test-runner-on-test-end test-runner-on-test-end!)
+      (on-group-end test-runner-on-group-end test-runner-on-group-end!)
+      (on-final test-runner-on-final test-runner-on-final!)
+      (on-bad-count test-runner-on-bad-count test-runner-on-bad-count!)
+      (on-bad-end-name test-runner-on-bad-end-name test-runner-on-bad-end-name!)
+
+      (on-bad-error-type %test-runner-on-bad-error-type
+                         %test-runner-on-bad-error-type!)
+
+      (aux-value test-runner-aux-value test-runner-aux-value!)
+
+      (log-file %test-runner-log-file %test-runner-log-file!)
+      (log-port %test-runner-log-port %test-runner-log-port!))))
 
 (define (test-runner-group-path runner)
   (reverse (test-runner-group-stack runner)))
