@@ -15,7 +15,7 @@ do
     do
         echo "<tr>"
 
-        logfile="tmp/$name/srfi-$srfi.log"
+        logfile="logs/$name-srfi-$srfi.log"
 
         echo "<td>$name</td>"
 
