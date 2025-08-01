@@ -55,7 +55,7 @@ pipeline {
         success {
             sh 'tar -czvf logs.tar.gz logs/*.log'
             archiveArtifacts('logs.tar.gz')
-            sh 'make report'
+            sh "sh scripts/report.sh > report.html"
             archiveArtifacts('report.html')
         }
     }
