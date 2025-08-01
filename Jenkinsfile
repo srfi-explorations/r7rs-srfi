@@ -49,12 +49,11 @@ pipeline {
                 }
             }
         }
-    }
 
-
-    stage("Report") {
-        steps {
-            sh "sh scripts/report.sh > report.html"
+        stage("Report") {
+            steps {
+                sh "sh scripts/report.sh > report.html"
+            }
         }
     }
 
