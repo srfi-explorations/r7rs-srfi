@@ -72,4 +72,5 @@
           test-on-test-end-simple
           test-on-bad-count-simple
           test-on-bad-end-name-simple)
+  (include "64-39.scm")
   (include "64.scm"))

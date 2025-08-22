@@ -1,16 +1,27 @@
 (define-library
   (srfi 64)
-  (import (except (scheme base) make-parameter parameterize)
-          (scheme case-lambda)
-          (scheme complex)
-          (scheme eval)
-          (scheme file)
-          (scheme process-context)
-          (scheme read)
-          (scheme write)
-          (srfi 39))
   (cond-expand
-    ((or stklos mit)
+    (tr7
+      (import (except (scheme base) make-parameter parameterize)
+              (scheme case-lambda)
+              (scheme eval)
+              (scheme file)
+              (scheme process-context)
+              (scheme read)
+              (scheme write)
+              (srfi 39)))
+    (else
+      (import (except (scheme base) make-parameter parameterize)
+              (scheme case-lambda)
+              (scheme complex)
+              (scheme eval)
+              (scheme file)
+              (scheme process-context)
+              (scheme read)
+              (scheme write)
+              (srfi 39))))
+  (cond-expand
+    ((or stklos mit cyclone meevax)
      ; Need to export extra for these to work
      (export %test-assert
              %test-compare
