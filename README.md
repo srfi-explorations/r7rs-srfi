@@ -2,7 +2,10 @@
 
 This is a project for collection of R7RS SRFI implementations.
 
+[Repository](https://github.com/srfi-explorations/r7rs-srfi)
+[Issues](https://github.com/srfi-explorations/r7rs-srfi/issues)
 [Jenkins](https://jenkins.scheme.org/job/r7rs_srfi/job/r7rs-srfi/)
+
 
 ## Running tests
 

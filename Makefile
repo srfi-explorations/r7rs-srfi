@@ -1,7 +1,8 @@
+.PHONY: README.html
 SRFI=64
 SCHEME=chibi
 TMPDIR=tmp/${SCHEME}
-VERSION=1.0.0
+VERSION=2025.08.22
 DOCKERIMG="${SCHEME}:head"
 ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
@@ -10,7 +11,7 @@ endif
 INCDIRS=-I . -I /usr/local/share/kawa/lib -I ./deps
 
 ifeq "${SCHEME}" "chibi"
-INCDIRS=-I .
+INCDIRS=-A .
 endif
 
 ifeq "${SCHEME}" "ypsilon"
@@ -23,13 +24,16 @@ endif
 
 all: package
 
-package:
+package: README.html
 	snow-chibi package \
 		--version=${VERSION} \
 		--authors="Schemeists" \
-		--doc=README.md \
+		--doc=README.html \
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
+
+README.html: README.md
+	pandoc --metadata title="SRFI-${SRFI}" --standalone README.md > README.html
 
 install:
 	snow-chibi install --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
