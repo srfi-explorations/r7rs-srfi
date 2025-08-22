@@ -4,21 +4,6 @@ This is a project for collection of R7RS SRFI implementations.
 
 [Jenkins](https://jenkins.scheme.org/job/r7rs_srfi/job/r7rs-srfi/)
 
-
-## Notes
-
-- Chicken 6 not working
-    - Cause unknown
-- Cyclone not working
-    - Cause unknown
-- Gambit not working
-    - Does not support syntax-rules enough
-- Racket implementation waiting for
-[https://github.com/lexi-lambda/racket-r7rs/pull/26](https://github.com/lexi-lambda/racket-r7rs/pull/26).
-    - After this should work
-- tr7 does not have (scheme complex) needed for SRFI-64
-    - After this should work
-
 ## Running tests
 
 You will need to install

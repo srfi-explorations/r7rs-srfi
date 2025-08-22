@@ -8,6 +8,11 @@ DOCKERIMG="chicken:5"
 endif
 
 INCDIRS=-I . -I /usr/local/share/kawa/lib -I ./deps
+
+ifeq "${SCHEME}" "chibi"
+INCDIRS=-I .
+endif
+
 ifeq "${SCHEME}" "ypsilon"
 INCDIRS=-I .
 endif

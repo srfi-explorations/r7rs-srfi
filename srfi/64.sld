@@ -2,24 +2,26 @@
   (srfi 64)
   (cond-expand
     (tr7
-      (import (scheme base)
+      (import (except (scheme base) make-parameter parameterize)
               (scheme case-lambda)
               (scheme eval)
               (scheme file)
               (scheme process-context)
               (scheme read)
-              (scheme write)))
+              (scheme write)
+              (srfi 39)))
     (else
-      (import (scheme base)
+      (import (except (scheme base) make-parameter parameterize)
               (scheme case-lambda)
               (scheme complex)
               (scheme eval)
               (scheme file)
               (scheme process-context)
               (scheme read)
-              (scheme write))))
+              (scheme write)
+              (srfi 39))))
   (cond-expand
-    ((or stklos mit cyclone)
+    ((or stklos mit cyclone meevax)
      ; Need to export extra for these to work
      (export %test-assert
              %test-compare
@@ -156,5 +158,4 @@
               test-on-test-end-simple
               test-on-bad-count-simple
               test-on-bad-end-name-simple)))
-  (include "64-39.scm")
   (include "64.scm"))
