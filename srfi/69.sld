@@ -2,6 +2,9 @@
   (srfi 69)
   (cond-expand
     (chibi (import (chibi) (srfi 9)))
+    (tr7 (import (scheme base)
+                  (scheme char)
+                  (scheme cxr)))
     (else (import (scheme base)
                   (scheme char)
                   (scheme complex)
