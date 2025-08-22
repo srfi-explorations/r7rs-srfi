@@ -10,8 +10,6 @@
     (mit (export make-parameter parameterize dynamic-bind))
     (else (export make-parameter parameterize)))
   (cond-expand
-    (mit (include "39.scm"))
-    (foment (include "39.scm"))
     (racket (begin #t))
     (tr7 (begin #t))
     (else (include "39.scm"))))
