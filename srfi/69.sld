@@ -1,10 +1,9 @@
 (define-library
   (srfi 69)
   (cond-expand
-    (chibi (import (chibi) (srfi 9)))
     (tr7 (import (scheme base)
-                  (scheme char)
-                  (scheme cxr)))
+                 (scheme char)
+                 (scheme cxr)))
     (else (import (scheme base)
                   (scheme char)
                   (scheme complex)
@@ -33,11 +32,7 @@
           string-hash
           string-ci-hash
           hash-by-identity)
-  (cond-expand
-    (chibi
-       (include-shared "69/hash")
-       (include "69/type.scm" "69/interface.scm"))
-    (else (include "69.scm"))))
+  (include "69.scm"))
 
 
 

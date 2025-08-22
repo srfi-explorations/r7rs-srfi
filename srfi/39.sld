@@ -1,7 +1,6 @@
 (define-library
   (srfi 39)
   (cond-expand
-    (chibi (import (chibi)))
     (racket (import (scheme base)))
     (tr7 (import (scheme base)))
     (else (import (except (scheme base) make-parameter parameterize))))
