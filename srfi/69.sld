@@ -1,9 +1,11 @@
 (define-library
   (srfi 69)
-  (import (scheme base)
-          (scheme char)
-          (scheme complex)
-          (scheme cxr))
+  (cond-expand
+    (chibi (import (chibi) (srfi 9)))
+    (else (import (scheme base)
+                  (scheme char)
+                  (scheme complex)
+                  (scheme cxr))))
   (export make-hash-table
           hash-table?
           alist->hash-table
@@ -28,7 +30,11 @@
           string-hash
           string-ci-hash
           hash-by-identity)
-  (include "69.scm"))
+  (cond-expand
+    (chibi
+       (include-shared "69/hash")
+       (include "69/type.scm" "69/interface.scm"))
+    (else (include "69.scm"))))
 
 
 
