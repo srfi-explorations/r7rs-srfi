@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Prepare') {
             steps {
-                sh "cat srfis.scm | tr -d '()' > /tmp/srfis.txt"
+                sh "cat srfis.scm | tr -d '()' | sed 's/gambit//' > /tmp/srfis.txt"
                 sh "docker build --build-arg IMAGE=chibi:head --build-arg SCHEME=chibi --tag=r7rs-srfi-prepare -f Dockerfile.test ."
                 sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-prepare sh -c \"rm -rf srfi-test && make srfi-test\""
             }
@@ -32,15 +32,13 @@ pipeline {
                                 srfis.each { srfi ->
                                     stage("${SCHEME} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            if("${SCHEME}" != "gambit") {
-                                                if("${SCHEME}" == "chicken") {
-                                                    DOCKERIMG="chicken:5"
-                                                } else {
-                                                    DOCKERIMG="${SCHEME}:head"
-                                                }
-                                                sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                                sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 60 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
+                                            if("${SCHEME}" == "chicken") {
+                                                DOCKERIMG="chicken:5"
+                                            } else {
+                                                DOCKERIMG="${SCHEME}:head"
                                             }
+                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 60 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
                                         }
                                     }
                                 }

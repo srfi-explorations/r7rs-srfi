@@ -58,8 +58,8 @@ test-docker:
 	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test"
 
 test-docker-all:
-	docker build -f Dockerfile.test . --tag=impls 
-	for i in $(shell docker run impls sh -c 'compile-r7rs --list-r7rs-schemes'); \
+	docker build -f Dockerfile.test . --tag=impls
+	for i in $(shell docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed 's/gambit//'"); \
 		do \
 			make SCHEME="$$i" SRFI=${SRFI} test-docker; \
 		done
