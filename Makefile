@@ -59,7 +59,7 @@ test-docker:
 
 test-docker-all:
 	docker build -f Dockerfile.test . --tag=impls
-	for i in $(shell docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed 's/gambit//'"); \
+	for i in $(shell docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed 's/gambit\n//'"); \
 		do \
 			make SCHEME="$$i" SRFI=${SRFI} test-docker; \
 		done
