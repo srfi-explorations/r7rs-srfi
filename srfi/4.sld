@@ -1,10 +1,10 @@
 ; From https://github.com/scheme-requests-for-implementation/srfi-4/tree/master
 
 (define-library (srfi 4)
-  (import (except (scheme base)
-                  bytevector-copy
-                  bytevector-copy!)
-          (scheme inexact))
+    (import (except (scheme base)
+                    bytevector-copy
+                    bytevector-copy!)
+            (scheme inexact))
   (export make-u8vector
           make-s8vector
           make-u16vector
