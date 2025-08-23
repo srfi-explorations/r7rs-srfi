@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Prepare') {
             steps {
-                sh "cat srfis.scm | sed 's/(//' | sed 's/)//' > /tmp/srfis.txt"
+                sh "cat srfis.scm | tr -d '()' > /tmp/srfis.txt"
                 sh "docker build --build-arg IMAGE=chibi:head --build-arg SCHEME=chibi --tag=r7rs-srfi-prepare -f Dockerfile.test ."
                 sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-prepare sh -c \"rm -rf srfi-test && make srfi-test\""
             }

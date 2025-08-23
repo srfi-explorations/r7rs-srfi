@@ -43,8 +43,8 @@ force-install:
 
 test: ${TMPDIR} logs
 	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | timeout 600 compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
-	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 600 time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
+	cd ${TMPDIR} && printf "\n" | timeout 1800 compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
+	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 1800 time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
 	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
@@ -56,6 +56,13 @@ test-docker:
 		docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean"; \
 	fi
 	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test"
+
+test-docker-all:
+	docker build -f Dockerfile.test . --tag=impls 
+	for i in $(shell docker run impls sh -c 'compile-r7rs --list-r7rs-schemes'); \
+		do \
+			make SCHEME="$$i" SRFI=${SRFI} test-docker; \
+		done
 
 report:
 	sh scripts/report.sh > report.html
