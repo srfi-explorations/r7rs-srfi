@@ -44,10 +44,11 @@ force-install:
 test: ${TMPDIR} logs
 	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
 	cd ${TMPDIR} && printf "\n" | timeout 600 compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
-	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 600 ./test-${SRFI}
+	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 600 time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
+	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
 	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
-	chmod 755 logs/${SCHEME}-srfi-${SRFI}.log
+	chmod -R 755 logs
 
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
