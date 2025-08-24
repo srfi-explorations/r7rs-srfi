@@ -48,31 +48,31 @@
 
 (define-syntax unspecified
   (syntax-rules ()
-   ((_) (if #f #f))))
+    ((_) (if #f #f))))
 
 (define-syntax bytevector:div
   (syntax-rules ()
-   ((_ x y) (quotient x y))))
+    ((_ x y) (quotient x y))))
 
 (define-syntax bytevector:mod
   (syntax-rules ()
-   ((_ x y) (remainder x y))))
+    ((_ x y) (remainder x y))))
 
 (define-syntax u8->s8
   (syntax-rules ()
-   ((_ octet0)
-    (let ((octet octet0))
-      (if (> octet 127)
-          (- octet 256)
-          octet)))))
+    ((_ octet0)
+     (let ((octet octet0))
+       (if (> octet 127)
+         (- octet 256)
+         octet)))))
 
 (define-syntax s8->u8
   (syntax-rules ()
-   ((_ val0)
-    (let ((val val0))
-      (if (negative? val)
-          (+ val 256)
-          val)))))
+    ((_ val0)
+     (let ((val val0))
+       (if (negative? val)
+         (+ val 256)
+         val)))))
 
 (define (make-uint-ref size)
   (lambda (bytevector k endianness)
@@ -102,29 +102,29 @@
 
 (define (ensure-aligned index base)
   (if (not (zero? (bytevector:mod index base)))
-      (error "non-aligned bytevector access" index base)))
+    (error "non-aligned bytevector access" index base)))
 
 (define (make-bytevector->int-list bytevector-ref)
   (lambda (b endness size)
     (let ((ref (lambda (i) (bytevector-ref b i endness size)))
-	  (length (bytevector-length b)))
+          (length (bytevector-length b)))
       (let loop ((i 0) (r '()))
-	(if (>= i length)
-	    (reverse r)
-	    (loop (+ i size)
-		  (cons (ref i) r)))))))
+        (if (>= i length)
+          (reverse r)
+          (loop (+ i size)
+                (cons (ref i) r)))))))
 
 (define (make-int-list->bytevector bytevector-set!)
   (lambda (l endness size)
     (let* ((bytevector (make-bytevector (* size (length l))))
-	   (setter! (lambda (i n)
+           (setter! (lambda (i n)
                       (bytevector-set! bytevector i n endness size))))
       (let loop ((i 0) (l l))
-	(if (null? l)
-	    bytevector
-	    (begin
-	      (setter! i (car l))
-	      (loop (+ i size) (cdr l))))))))
+        (if (null? l)
+          bytevector
+          (begin
+            (setter! i (car l))
+            (loop (+ i size) (cdr l))))))))
 
 ;;; Magic numbers for IEEE-754 single and double precision:
 ;;;
@@ -177,15 +177,15 @@
   (cond ((< p q)
          (do ((p p (+ p p))
               (e 0 (- e 1)))
-             ((>= p q)
-              (values e p q))))
+           ((>= p q)
+            (values e p q))))
         ((<= (+ q q) p)
          (do ((q q (+ q q))
               (e 0 (+ e 1)))
-             ((< p (+ q q))
-              (values e p q))))
+           ((< p (+ q q))
+            (values e p q))))
         (else
-         (values 0 p q))))
+          (values 0 p q))))
 
 ;;; Given an inexact real x, an exponent bias, and an exact positive
 ;;; integer q that is a power of 2 representing the integer value of
@@ -214,39 +214,39 @@
         ((zero? x)
          (values (if (eqv? x -0.0) 1 0) 0 0))
         (else
-         (let* ((sign (if (negative? x) 1 0))
-                (y (exact (abs x)))
-                (num (numerator y))
-                (den (denominator y)))
-           (call-with-values
-            (lambda () (bytevector:normalized-ieee-parts num den))
-            (lambda (exponent num den)
-              (let ((biased-exponent (+ exponent bias)))
-                (cond ((< 0 biased-exponent (+ bias bias 1))
-                       ; within the range of normalized numbers
-                       (if (<= den q)
+          (let* ((sign (if (negative? x) 1 0))
+                 (y (exact (abs x)))
+                 (num (numerator y))
+                 (den (denominator y)))
+            (call-with-values
+              (lambda () (bytevector:normalized-ieee-parts num den))
+              (lambda (exponent num den)
+                (let ((biased-exponent (+ exponent bias)))
+                  (cond ((< 0 biased-exponent (+ bias bias 1))
+                         ; within the range of normalized numbers
+                         (if (<= den q)
                            (let* ((factor (/ q den))
                                   (num*factor (* num factor)))
                              (if (integer? factor)
-                                 (values sign biased-exponent num*factor)
-                                 (error 'bytevector:ieee-parts
-                                        "this shouldn't happen: " x bias q)))
+                               (values sign biased-exponent num*factor)
+                               (error 'bytevector:ieee-parts
+                                      "this shouldn't happen: " x bias q)))
                            (let* ((factor (/ den q))
                                   (num*factor (/ num factor)))
                              (values sign
                                      biased-exponent
                                      (round num*factor)))))
-                      ((>= biased-exponent (+ bias bias 1))
-                       ; infinity
-                       (values (if (positive? x) 0 1) (+ bias bias 1) 0))
-                      (else
-                       ; denormalized
-                       ; FIXME: this has the double rounding bug
-                       (do ((biased biased-exponent (+ biased 1))
-                            (num (round (/ (* q num) den))
-                                 (round (bytevector:div num 2))))
-                           ((and (< num q) (= biased 1))
-                            (values sign biased num))))))))))))
+                        ((>= biased-exponent (+ bias bias 1))
+                         ; infinity
+                         (values (if (positive? x) 0 1) (+ bias bias 1) 0))
+                        (else
+                          ; denormalized
+                          ; FIXME: this has the double rounding bug
+                          (do ((biased biased-exponent (+ biased 1))
+                               (num (round (/ (* q num) den))
+                                    (round (bytevector:div num 2))))
+                            ((and (< num q) (= biased 1))
+                             (values sign biased num))))))))))))
 
 ;;; This procedure should work even if
 ;;;     exact integers are limited to as little as 20 bits
@@ -341,45 +341,45 @@
 (define (make-ieee-double sign biased-exponent hibits midbits lobits)
   (cond ((= biased-exponent bytevector:double-maxexponent)
          (if (zero? (+ hibits midbits lobits))
-             (if (= 0 sign)
-                 +inf.0
-                 -inf.0)
-             (if (= 0 sign)
-                 +nan.0
-                 -nan.0)))
+           (if (= 0 sign)
+             +inf.0
+             -inf.0)
+           (if (= 0 sign)
+             +nan.0
+             -nan.0)))
         ((= 0 biased-exponent)
          (if (and (= 0 hibits)
                   (= 0 midbits)
                   (= 0 lobits))
-             (if (= 0 sign)
-                 +0.0
-                 -0.0)
-             (let* ((x (inexact hibits))
-                    (x (+ (* 65536.0 x)
-                          (inexact midbits)))
-                    (x (+ (* 65536.0 x)
-                          (inexact lobits)))
-                    (two^51 2.251799813685248e15)
-                    (x (/ x two^51))
-                    (x (* x (expt 2.0 (- bytevector:double-bias)))))
-               (if (= 0 sign)
-                   x
-                   (- x)))))
-        (else
-         (let* ((hibits (+ #x100000    ; hidden bit
-                           hibits))
-                (x (inexact hibits))
-                (x (+ (* 65536.0 x)
-                      (inexact midbits)))
-                (x (+ (* 65536.0 x)
-                      (inexact lobits)))
-                (two^52 4.503599627370496e15)
-                (x (/ x two^52))
-                (x (* x (expt 2.0
-                              (- biased-exponent bytevector:double-bias)))))
            (if (= 0 sign)
+             +0.0
+             -0.0)
+           (let* ((x (inexact hibits))
+                  (x (+ (* 65536.0 x)
+                        (inexact midbits)))
+                  (x (+ (* 65536.0 x)
+                        (inexact lobits)))
+                  (two^51 2.251799813685248e15)
+                  (x (/ x two^51))
+                  (x (* x (expt 2.0 (- bytevector:double-bias)))))
+             (if (= 0 sign)
                x
-               (- x))))))
+               (- x)))))
+        (else
+          (let* ((hibits (+ #x100000    ; hidden bit
+                            hibits))
+                 (x (inexact hibits))
+                 (x (+ (* 65536.0 x)
+                       (inexact midbits)))
+                 (x (+ (* 65536.0 x)
+                       (inexact lobits)))
+                 (two^52 4.503599627370496e15)
+                 (x (/ x two^52))
+                 (x (* x (expt 2.0
+                               (- biased-exponent bytevector:double-bias)))))
+            (if (= 0 sign)
+              x
+              (- x))))))
 
 ;;; Given
 ;;;
@@ -397,35 +397,35 @@
 (define (make-ieee-single sign biased-exponent bits)
   (cond ((= biased-exponent bytevector:single-maxexponent)
          (if (zero? bits)
-             (if (= 0 sign)
-                 +inf.0
-                 -inf.0)
-             (if (= 0 sign)
-                 +nan.0
-                 -nan.0)))
+           (if (= 0 sign)
+             +inf.0
+             -inf.0)
+           (if (= 0 sign)
+             +nan.0
+             -nan.0)))
         ((= 0 biased-exponent)
          (if (= 0 bits)
-             (if (= 0 sign)
-                 +0.0
-                 -0.0)
-             (let* ((x (inexact bits))
-                    (two^22 4194304.0)
-                    (x (/ x two^22))
-                    (x (* x (expt 2.0 (- bytevector:single-bias)))))
-               (if (= 0 sign)
-                   x
-                   (- x)))))
-        (else
-         (let* ((bits (+ #x800000   ; hidden bit
-                         bits))
-                (x (inexact bits))
-                (two^23 8388608.0)
-                (x (/ x two^23))
-                (x (* x (expt 2.0
-                              (- biased-exponent bytevector:single-bias)))))
            (if (= 0 sign)
+             +0.0
+             -0.0)
+           (let* ((x (inexact bits))
+                  (two^22 4194304.0)
+                  (x (/ x two^22))
+                  (x (* x (expt 2.0 (- bytevector:single-bias)))))
+             (if (= 0 sign)
                x
-               (- x))))))
+               (- x)))))
+        (else
+          (let* ((bits (+ #x800000   ; hidden bit
+                          bits))
+                 (x (inexact bits))
+                 (two^23 8388608.0)
+                 (x (/ x two^23))
+                 (x (* x (expt 2.0
+                               (- biased-exponent bytevector:single-bias)))))
+            (if (= 0 sign)
+              x
+              (- x))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -437,18 +437,18 @@
 
 (define-syntax endianness
   (syntax-rules ()
-   ((_ big)
-    (quote big))
-   ((_ little)
-    (quote little))))
+    ((_ big)
+     (quote big))
+    ((_ little)
+     (quote little))))
 
 (cond-expand
- (little-endian
-  (define (native-endianness)
-    'little))
- (else
-  (define (native-endianness)
-    'big)))
+  (little-endian
+    (define (native-endianness)
+      'little))
+  (else
+    (define (native-endianness)
+      'big)))
 
 ;;; Already defined by (scheme base):
 ;;;
@@ -457,29 +457,29 @@
 (define (bytevector=? bv1 bv2)
   (if (and (bytevector? bv1)
            (bytevector? bv2))
-      (equal? bv1 bv2)
-      (complain 'bytevector=? bv1 bv2)))
+    (equal? bv1 bv2)
+    (complain 'bytevector=? bv1 bv2)))
 
 (define (bytevector-fill! b fill)
   (if (<= -128 fill -1)
-      (bytevector-fill! b (+ fill 256))
-      (let ((n (bytevector-length b)))
-        (do ((i 0 (+ i 1)))
-            ((= i n))
-          (bytevector-u8-set! b i fill)))))
+    (bytevector-fill! b (+ fill 256))
+    (let ((n (bytevector-length b)))
+      (do ((i 0 (+ i 1)))
+        ((= i n))
+        (bytevector-u8-set! b i fill)))))
 
 (define (r6rs:bytevector-copy! source source-start target target-start count)
   (if (>= source-start target-start)
-      (do ((i 0 (+ i 1)))
-          ((>= i count))
-        (bytevector-u8-set! target
-                       (+ target-start i)
-                       (bytevector-u8-ref source (+ source-start i))))
-      (do ((i (- count 1) (- i 1)))
-          ((< i 0))
-        (bytevector-u8-set! target
-                       (+ target-start i)
-                       (bytevector-u8-ref source (+ source-start i))))))
+    (do ((i 0 (+ i 1)))
+      ((>= i count))
+      (bytevector-u8-set! target
+                          (+ target-start i)
+                          (bytevector-u8-ref source (+ source-start i))))
+    (do ((i (- count 1) (- i 1)))
+      ((< i 0))
+      (bytevector-u8-set! target
+                          (+ target-start i)
+                          (bytevector-u8-ref source (+ source-start i))))))
 
 ;;; Already defined by (scheme base), perhaps in greater generality:
 ;;;
@@ -497,70 +497,70 @@
   (let ((n (bytevector-length b)))
     (do ((i (- n 1) (- i 1))
          (result '() (cons (bytevector-u8-ref b i) result)))
-        ((< i 0)
-         result))))
+      ((< i 0)
+       result))))
 
 (define (u8-list->bytevector vals)
   (let* ((n (length vals))
          (b (make-bytevector n)))
     (do ((vals vals (cdr vals))
          (i 0 (+ i 1)))
-        ((null? vals))
+      ((null? vals))
       (bytevector-u8-set! b i (car vals)))
     b))
 
 (define (bytevector-uint-ref bytevector index endness size)
   (case endness
-   ((big)
-    (do ((i 0 (+ i 1))
-         (result 0 (+ (* 256 result)
-                      (bytevector-u8-ref bytevector (+ index i)))))
-        ((>= i size)
-         result)))
-   ((little)
-    (do ((i (- size 1) (- i 1))
-         (result 0 (+ (* 256 result)
-                      (bytevector-u8-ref bytevector (+ index i)))))
-        ((< i 0)
-         result)))
-   (else
-    (bytevector-uint-ref bytevector index (native-endianness) size))))
+    ((big)
+     (do ((i 0 (+ i 1))
+          (result 0 (+ (* 256 result)
+                       (bytevector-u8-ref bytevector (+ index i)))))
+       ((>= i size)
+        result)))
+    ((little)
+     (do ((i (- size 1) (- i 1))
+          (result 0 (+ (* 256 result)
+                       (bytevector-u8-ref bytevector (+ index i)))))
+       ((< i 0)
+        result)))
+    (else
+      (bytevector-uint-ref bytevector index (native-endianness) size))))
 
 (define (bytevector-sint-ref bytevector index endness size)
   (let* ((high-byte (bytevector-u8-ref bytevector
-                               (if (eq? endness 'big)
-                                   index
-                                   (+ index size -1))))
+                                       (if (eq? endness 'big)
+                                         index
+                                         (+ index size -1))))
          (uresult (bytevector-uint-ref bytevector index endness size)))
     (if (> high-byte 127)
-        (- uresult (expt 256 size))
-	uresult)))
+      (- uresult (expt 256 size))
+      uresult)))
 
 ; FIXME: Some of these procedures may not do enough range checking.
 
 (define (bytevector-uint-set! bytevector index val endness size)
   (case endness
-   ((little)
-    (do ((i 0 (+ i 1))
-         (val val (bytevector:div val 256)))
-        ((>= i size)
-         (unspecified))
-      (bytevector-u8-set! bytevector (+ index i) (bytevector:mod val 256))))
-   ((big)
-    (do ((i (- size 1) (- i 1))
-         (val val (bytevector:div val 256)))
-        ((< i 0)
-         (unspecified))
-      (bytevector-u8-set! bytevector (+ index i) (bytevector:mod val 256))))
-   (else
-    (bytevector-uint-set! bytevector index val (native-endianness) size))))
+    ((little)
+     (do ((i 0 (+ i 1))
+          (val val (bytevector:div val 256)))
+       ((>= i size)
+        (unspecified))
+       (bytevector-u8-set! bytevector (+ index i) (bytevector:mod val 256))))
+    ((big)
+     (do ((i (- size 1) (- i 1))
+          (val val (bytevector:div val 256)))
+       ((< i 0)
+        (unspecified))
+       (bytevector-u8-set! bytevector (+ index i) (bytevector:mod val 256))))
+    (else
+      (bytevector-uint-set! bytevector index val (native-endianness) size))))
 
 (define (bytevector-sint-set! bytevector index val endness size)
   (let ((uval (if (< val 0)
-                  (+ val (expt 256 size))
-                  val)))
+                (+ val (expt 256 size))
+                val)))
     (bytevector-uint-set! bytevector index uval endness size)))
-  
+
 (define bytevector->uint-list (make-bytevector->int-list bytevector-uint-ref))
 (define bytevector->sint-list (make-bytevector->int-list bytevector-sint-ref))
 
@@ -595,153 +595,153 @@
 (define bytevector-s64-native-set! (make-set!/native 8 bytevector-s64-set!))
 
 (cond-expand
- (little-endian
-  (define (bytevector-ieee-single-native-ref bytevector k)
-    (if (not (= 0 (remainder k 4)))
+  (little-endian
+    (define (bytevector-ieee-single-native-ref bytevector k)
+      (if (not (= 0 (remainder k 4)))
         (complain 'bytevector-ieee-single-native-ref bytevector k))
-    (bytevector-ieee-single-little-endian-ref bytevector k))
-  (define (bytevector-ieee-double-native-ref bytevector k)
-    (if (not (= 0 (remainder k 8)))
+      (bytevector-ieee-single-little-endian-ref bytevector k))
+    (define (bytevector-ieee-double-native-ref bytevector k)
+      (if (not (= 0 (remainder k 8)))
         (complain 'bytevector-ieee-double-native-ref bytevector k))
-    (bytevector-ieee-double-little-endian-ref bytevector k))
-  (define (bytevector-ieee-single-native-set! bytevector k x)
-    (if (not (= 0 (remainder k 4)))
+      (bytevector-ieee-double-little-endian-ref bytevector k))
+    (define (bytevector-ieee-single-native-set! bytevector k x)
+      (if (not (= 0 (remainder k 4)))
         (complain 'bytevector-ieee-single-native-set! bytevector k x))
-    (bytevector-ieee-single-set! bytevector k x 'little))
-  (define (bytevector-ieee-double-native-set! bytevector k x)
-    (if (not (= 0 (remainder k 8)))
+      (bytevector-ieee-single-set! bytevector k x 'little))
+    (define (bytevector-ieee-double-native-set! bytevector k x)
+      (if (not (= 0 (remainder k 8)))
         (complain 'bytevector-ieee-double-native-set! bytevector k x))
-    (bytevector-ieee-double-set! bytevector k x 'little)))
- (else
-  (define (bytevector-ieee-single-native-ref bytevector k)
-    (if (not (= 0 (remainder k 4)))
+      (bytevector-ieee-double-set! bytevector k x 'little)))
+  (else
+    (define (bytevector-ieee-single-native-ref bytevector k)
+      (if (not (= 0 (remainder k 4)))
         (complain 'bytevector-ieee-single-native-ref bytevector k))
-    (bytevector-ieee-single-big-endian-ref bytevector k))
-  (define (bytevector-ieee-double-native-ref bytevector k)
-    (if (not (= 0 (remainder k 8)))
+      (bytevector-ieee-single-big-endian-ref bytevector k))
+    (define (bytevector-ieee-double-native-ref bytevector k)
+      (if (not (= 0 (remainder k 8)))
         (complain 'bytevector-ieee-double-native-ref bytevector k))
-    (bytevector-ieee-double-big-endian-ref bytevector k))
-  (define (bytevector-ieee-single-native-set! bytevector k x)
-    (if (not (= 0 (remainder k 4)))
+      (bytevector-ieee-double-big-endian-ref bytevector k))
+    (define (bytevector-ieee-single-native-set! bytevector k x)
+      (if (not (= 0 (remainder k 4)))
         (complain 'bytevector-ieee-single-native-set! bytevector k x))
-    (bytevector-ieee-single-set! bytevector k x 'big))
-  (define (bytevector-ieee-double-native-set! bytevector k x)
-    (if (not (= 0 (remainder k 8)))
+      (bytevector-ieee-single-set! bytevector k x 'big))
+    (define (bytevector-ieee-double-native-set! bytevector k x)
+      (if (not (= 0 (remainder k 8)))
         (complain 'bytevector-ieee-double-native-set! bytevector k x))
-    (bytevector-ieee-double-set! bytevector k x 'big))))
+      (bytevector-ieee-double-set! bytevector k x 'big))))
 
 (define (bytevector-ieee-single-ref bytevector k endianness)
   (case endianness
-   ((big)
-    (bytevector-ieee-single-big-endian-ref bytevector k))
-   ((little)
-    (bytevector-ieee-single-little-endian-ref bytevector k))
-   (else
-    (complain 'bytevector-ieee-single-ref bytevector k endianness))))
+    ((big)
+     (bytevector-ieee-single-big-endian-ref bytevector k))
+    ((little)
+     (bytevector-ieee-single-little-endian-ref bytevector k))
+    (else
+      (complain 'bytevector-ieee-single-ref bytevector k endianness))))
 
 (define (bytevector-ieee-double-ref bytevector k endianness)
   (case endianness
-   ((big)
-    (bytevector-ieee-double-big-endian-ref bytevector k))
-   ((little)
-    (bytevector-ieee-double-little-endian-ref bytevector k))
-   (else
-    (complain 'bytevector-ieee-double-ref bytevector k endianness))))
+    ((big)
+     (bytevector-ieee-double-big-endian-ref bytevector k))
+    ((little)
+     (bytevector-ieee-double-little-endian-ref bytevector k))
+    (else
+      (complain 'bytevector-ieee-double-ref bytevector k endianness))))
 
 (define (bytevector-ieee-single-set! bytevector k x endianness)
   (call-with-values
-   (lambda ()
-     (bytevector:ieee-parts x
-                            bytevector:single-bias
-                            bytevector:single-hidden-bit))
-   (lambda (sign biased-exponent frac)
-     (define (store! sign biased-exponent frac)
-       (if (eq? 'big endianness)
-           (begin
+    (lambda ()
+      (bytevector:ieee-parts x
+                             bytevector:single-bias
+                             bytevector:single-hidden-bit))
+    (lambda (sign biased-exponent frac)
+      (define (store! sign biased-exponent frac)
+        (if (eq? 'big endianness)
+          (begin
             (bytevector-u8-set! bytevector k
                                 (+ (* 128 sign)
-                                (bytevector:div biased-exponent 2)))
+                                   (bytevector:div biased-exponent 2)))
             (bytevector-u8-set! bytevector (+ k 1)
-                                 (+ (* 128 (bytevector:mod biased-exponent 2))
-                                    (bytevector:div frac (* 256 256))))
+                                (+ (* 128 (bytevector:mod biased-exponent 2))
+                                   (bytevector:div frac (* 256 256))))
             (bytevector-u8-set! bytevector (+ k 2)
                                 (bytevector:div
-                                 (bytevector:mod frac (* 256 256)) 256))
+                                  (bytevector:mod frac (* 256 256)) 256))
             (bytevector-u8-set! bytevector (+ k 3)
                                 (bytevector:mod frac 256)))
-           (begin
+          (begin
             (bytevector-u8-set! bytevector (+ k 3)
                                 (+ (* 128 sign)
-                                (bytevector:div biased-exponent 2)))
+                                   (bytevector:div biased-exponent 2)))
             (bytevector-u8-set! bytevector (+ k 2)
-                                 (+ (* 128 (bytevector:mod biased-exponent 2))
-                                    (bytevector:div frac (* 256 256))))
+                                (+ (* 128 (bytevector:mod biased-exponent 2))
+                                   (bytevector:div frac (* 256 256))))
             (bytevector-u8-set! bytevector (+ k 1)
                                 (bytevector:div
-                                 (bytevector:mod frac (* 256 256)) 256))
+                                  (bytevector:mod frac (* 256 256)) 256))
             (bytevector-u8-set! bytevector k
                                 (bytevector:mod frac 256))))
-       (unspecified))
-     (cond ((= biased-exponent bytevector:single-maxexponent)
-            (store! sign biased-exponent frac))
-           ((< frac bytevector:single-hidden-bit)
-            (store! sign 0 frac))
-           (else
-            (store! sign biased-exponent
-                    (- frac bytevector:single-hidden-bit)))))))
+        (unspecified))
+      (cond ((= biased-exponent bytevector:single-maxexponent)
+             (store! sign biased-exponent frac))
+            ((< frac bytevector:single-hidden-bit)
+             (store! sign 0 frac))
+            (else
+              (store! sign biased-exponent
+                      (- frac bytevector:single-hidden-bit)))))))
 
 (define (bytevector-ieee-double-set! bytevector k x endianness)
   (call-with-values
-   (lambda ()
-     (bytevector:ieee-parts x
-                            bytevector:double-bias
-                            bytevector:double-hidden-bit))
-   (lambda (sign biased-exponent frac)
+    (lambda ()
+      (bytevector:ieee-parts x
+                             bytevector:double-bias
+                             bytevector:double-hidden-bit))
+    (lambda (sign biased-exponent frac)
 
-     (define (store! sign biased-exponent frac)
-       (bytevector-u8-set! bytevector (+ k 7)
-                           (+ (* 128 sign)
-                              (bytevector:div biased-exponent 16)))
-       (bytevector-u8-set! bytevector (+ k 6)
-                           (+ (* 16 (bytevector:mod biased-exponent 16))
-                              (bytevector:div frac two^48)))
-       (bytevector-u8-set! bytevector (+ k 5)
-                           (bytevector:div (bytevector:mod frac two^48)
-                                           two^40))
-       (bytevector-u8-set! bytevector (+ k 4)
-                           (bytevector:div (bytevector:mod frac two^40)
-                                           two^32))
-       (bytevector-u8-set! bytevector (+ k 3)
-                           (bytevector:div (bytevector:mod frac two^32)
-                                           two^24))
-       (bytevector-u8-set! bytevector (+ k 2)
-                           (bytevector:div (bytevector:mod frac two^24)
-                                           two^16))
-       (bytevector-u8-set! bytevector (+ k 1)
-                           (bytevector:div (bytevector:mod frac two^16)
-                                           256))
-       (bytevector-u8-set! bytevector k
-                           (bytevector:mod frac 256))
-       (if (not (eq? endianness 'little))
-           (begin (swap! (+ k 0) (+ k 7))
-                  (swap! (+ k 1) (+ k 6))
-                  (swap! (+ k 2) (+ k 5))
-                  (swap! (+ k 3) (+ k 4))))
-       (unspecified))
+      (define (store! sign biased-exponent frac)
+        (bytevector-u8-set! bytevector (+ k 7)
+                            (+ (* 128 sign)
+                               (bytevector:div biased-exponent 16)))
+        (bytevector-u8-set! bytevector (+ k 6)
+                            (+ (* 16 (bytevector:mod biased-exponent 16))
+                               (bytevector:div frac two^48)))
+        (bytevector-u8-set! bytevector (+ k 5)
+                            (bytevector:div (bytevector:mod frac two^48)
+                                            two^40))
+        (bytevector-u8-set! bytevector (+ k 4)
+                            (bytevector:div (bytevector:mod frac two^40)
+                                            two^32))
+        (bytevector-u8-set! bytevector (+ k 3)
+                            (bytevector:div (bytevector:mod frac two^32)
+                                            two^24))
+        (bytevector-u8-set! bytevector (+ k 2)
+                            (bytevector:div (bytevector:mod frac two^24)
+                                            two^16))
+        (bytevector-u8-set! bytevector (+ k 1)
+                            (bytevector:div (bytevector:mod frac two^16)
+                                            256))
+        (bytevector-u8-set! bytevector k
+                            (bytevector:mod frac 256))
+        (if (not (eq? endianness 'little))
+          (begin (swap! (+ k 0) (+ k 7))
+                 (swap! (+ k 1) (+ k 6))
+                 (swap! (+ k 2) (+ k 5))
+                 (swap! (+ k 3) (+ k 4))))
+        (unspecified))
 
-     (define (swap! i j)
-       (let ((bi (bytevector-u8-ref bytevector i))
-             (bj (bytevector-u8-ref bytevector j)))
-         (bytevector-u8-set! bytevector i bj)
-         (bytevector-u8-set! bytevector j bi)))
+      (define (swap! i j)
+        (let ((bi (bytevector-u8-ref bytevector i))
+              (bj (bytevector-u8-ref bytevector j)))
+          (bytevector-u8-set! bytevector i bj)
+          (bytevector-u8-set! bytevector j bi)))
 
-     (cond ((= biased-exponent bytevector:double-maxexponent)
-            (store! sign biased-exponent frac))
-           ((< frac bytevector:double-hidden-bit)
-            (store! sign 0 frac))
-           (else
-            (store! sign biased-exponent
-                    (- frac bytevector:double-hidden-bit)))))))
+      (cond ((= biased-exponent bytevector:double-maxexponent)
+             (store! sign biased-exponent frac))
+            ((< frac bytevector:double-hidden-bit)
+             (store! sign 0 frac))
+            (else
+              (store! sign biased-exponent
+                      (- frac bytevector:double-hidden-bit)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -767,7 +767,7 @@
                            ((eq? (car rest) 'little)
                             'little)
                            (else
-                            (apply complain 'string->utf16 string rest))))
+                             (apply complain 'string->utf16 string rest))))
 
          ; endianness-dependent adjustments to indexing
 
@@ -780,33 +780,33 @@
       (do ((i 0 (+ i 1))
            (k 0 (let ((sv (char->integer (string-ref string i))))
                   (if (< sv #x10000) (+ k 2) (+ k 4)))))
-          ((= i n) k)))
+        ((= i n) k)))
 
     (let ((bv (make-bytevector (result-length))))
 
       (define (loop i k)
         (if (< i n)
-            (let ((sv (char->integer (string-ref string i))))
-              (if (< sv #x10000)
-                  (let ((hibits (quotient sv 256))
-                        (lobits (remainder sv 256)))
-                    (bytevector-u8-set! bv (+ k hi) hibits)
-                    (bytevector-u8-set! bv (+ k lo) lobits)
-                    (loop (+ i 1) (+ k 2)))
-                  (let* ((x (- sv #x10000))
-                         (hibits (quotient x 1024))
-                         (lobits (remainder x 1024))
-                         (hi16 (+ #xd800 hibits))
-                         (lo16 (+ #xdc00 lobits))
-                         (hi1 (quotient hi16 256))
-                         (lo1 (remainder hi16 256))
-                         (hi2 (quotient lo16 256))
-                         (lo2 (remainder lo16 256)))
-                    (bytevector-u8-set! bv (+ k hi) hi1)
-                    (bytevector-u8-set! bv (+ k lo) lo1)
-                    (bytevector-u8-set! bv (+ k hi 2) hi2)
-                    (bytevector-u8-set! bv (+ k lo 2) lo2)
-                    (loop (+ i 1) (+ k 4)))))))
+          (let ((sv (char->integer (string-ref string i))))
+            (if (< sv #x10000)
+              (let ((hibits (quotient sv 256))
+                    (lobits (remainder sv 256)))
+                (bytevector-u8-set! bv (+ k hi) hibits)
+                (bytevector-u8-set! bv (+ k lo) lobits)
+                (loop (+ i 1) (+ k 2)))
+              (let* ((x (- sv #x10000))
+                     (hibits (quotient x 1024))
+                     (lobits (remainder x 1024))
+                     (hi16 (+ #xd800 hibits))
+                     (lo16 (+ #xdc00 lobits))
+                     (hi1 (quotient hi16 256))
+                     (lo1 (remainder hi16 256))
+                     (hi2 (quotient lo16 256))
+                     (lo2 (remainder lo16 256)))
+                (bytevector-u8-set! bv (+ k hi) hi1)
+                (bytevector-u8-set! bv (+ k lo) lo1)
+                (bytevector-u8-set! bv (+ k hi 2) hi2)
+                (bytevector-u8-set! bv (+ k lo 2) lo2)
+                (loop (+ i 1) (+ k 4)))))))
 
       (loop 0 0)
       bv)))
@@ -851,11 +851,11 @@
   (let* ((n (bytevector-length bytevector))
 
          (begins-with-bom?
-          (and (<= 2 n)
-               (let ((b0 (bytevector-u8-ref bytevector 0))
-                     (b1 (bytevector-u8-ref bytevector 1)))
-                 (or (and (= b0 #xfe) (= b1 #xff) 'big)
-                     (and (= b0 #xff) (= b1 #xfe) 'little)))))
+           (and (<= 2 n)
+                (let ((b0 (bytevector-u8-ref bytevector 0))
+                      (b1 (bytevector-u8-ref bytevector 1)))
+                  (or (and (= b0 #xfe) (= b1 #xff) 'big)
+                      (and (= b0 #xff) (= b1 #xfe) 'little)))))
 
          (mandatory? (cond ((or (null? rest) (null? (cdr rest)))
                             #f)
@@ -863,18 +863,18 @@
                                  (boolean? (cadr rest)))
                             (cadr rest))
                            (else
-                            (apply complain 'utf16->string bytevector rest))))
+                             (apply complain 'utf16->string bytevector rest))))
 
          (endianness (cond ((null? rest)
                             (or begins-with-bom? 'big))
                            ((eq? (car rest) 'big)
                             (if mandatory?
-                                'big
-                                (or begins-with-bom? 'big)))
+                              'big
+                              (or begins-with-bom? 'big)))
                            ((eq? (car rest) 'little)
                             (if mandatory?
-                                'little
-                                (or begins-with-bom? 'little)))
+                              'little
+                              (or begins-with-bom? 'little)))
                            (else (apply complain
                                         'utf16->string
                                         bytevector rest))))
@@ -895,79 +895,79 @@
     (define (result-length)
       (define (loop i k)
         (if (>= i n)
-            k
-            (let ((octet (bytevector-u8-ref bytevector i)))
-              (cond ((< octet #xd8)
-                     (loop (+ i 2) (+ k 1)))
-                    ((< octet #xdc)
-                     (let* ((i2 (+ i 2))
-                            (octet2 (if (< i2 n)
-                                        (bytevector-u8-ref bytevector i2)
-                                        0)))
-                       (if (<= #xdc octet2 #xdf)
-                           (loop (+ i 4) (+ k 1))
-                           ; bad surrogate pair, becomes replacement character
-                           (loop i2 (+ k 1)))))
-                    (else (loop (+ i 2) (+ k 1)))))))
+          k
+          (let ((octet (bytevector-u8-ref bytevector i)))
+            (cond ((< octet #xd8)
+                   (loop (+ i 2) (+ k 1)))
+                  ((< octet #xdc)
+                   (let* ((i2 (+ i 2))
+                          (octet2 (if (< i2 n)
+                                    (bytevector-u8-ref bytevector i2)
+                                    0)))
+                     (if (<= #xdc octet2 #xdf)
+                       (loop (+ i 4) (+ k 1))
+                       ; bad surrogate pair, becomes replacement character
+                       (loop i2 (+ k 1)))))
+                  (else (loop (+ i 2) (+ k 1)))))))
       (if begins-with-bom?
-          (loop (+ hi 2) 0)
-          (loop hi 0)))
+        (loop (+ hi 2) 0)
+        (loop hi 0)))
 
     (if (odd? n)
-        (error "bytevector passed to utf16->string has odd length" bytevector))
+      (error "bytevector passed to utf16->string has odd length" bytevector))
 
     (let ((s (make-string (result-length))))
       (define (loop i k)
         (if (< i n)
-            (let ((hibits (bytevector-u8-ref bytevector (+ i hi)))
-                  (lobits (bytevector-u8-ref bytevector (+ i lo))))
-              (cond ((< hibits #xd8)
-                     (let ((c (integer->char
+          (let ((hibits (bytevector-u8-ref bytevector (+ i hi)))
+                (lobits (bytevector-u8-ref bytevector (+ i lo))))
+            (cond ((< hibits #xd8)
+                   (let ((c (integer->char
+                              (+ (* hibits 256)
+                                 lobits))))
+                     (string-set! s k c))
+                   (loop (+ i 2) (+ k 1)))
+                  ((< hibits #xdc)
+                   (let* ((i2 (+ i hi 2))
+                          (i3 (+ i lo 2))
+                          (octet2 (if (< i2 n)
+                                    (bytevector-u8-ref bytevector i2)
+                                    0))
+                          (octet3 (if (< i2 n)
+                                    (bytevector-u8-ref bytevector i3)
+                                    0)))
+                     (if (<= #xdc octet2 #xdf)
+                       (let* ((sv (+ #x10000
+                                     (* #x0400
+                                        (remainder
+                                          (+ (* hibits 256)
+                                             lobits)
+                                          #x0400))
+                                     (remainder
+                                       (+ (* octet2 256)
+                                          octet3)
+                                       #x0400)))
+                              (c (if (<= #x10000 sv #x10ffff)
+                                   (integer->char sv)
+                                   replacement-character)))
+                         (string-set! s k c)
+                         (loop (+ i 4) (+ k 1)))
+                       ; bad surrogate pair
+                       (begin (string-set! s k replacement-character)
+                              (loop (+ i 2) (+ k 1))))))
+                  ((< hibits #xe0)
+                   ; second surrogate not preceded by a first surrogate
+                   (string-set! s k replacement-character)
+                   (loop (+ i 2) (+ k 1)))
+                  (else
+                    (let ((c (integer->char
                                (+ (* hibits 256)
                                   lobits))))
-                       (string-set! s k c))
-                     (loop (+ i 2) (+ k 1)))
-                    ((< hibits #xdc)
-                     (let* ((i2 (+ i hi 2))
-                            (i3 (+ i lo 2))
-                            (octet2 (if (< i2 n)
-                                        (bytevector-u8-ref bytevector i2)
-                                        0))
-                            (octet3 (if (< i2 n)
-                                        (bytevector-u8-ref bytevector i3)
-                                        0)))
-                       (if (<= #xdc octet2 #xdf)
-                           (let* ((sv (+ #x10000
-                                         (* #x0400
-                                            (remainder
-                                             (+ (* hibits 256)
-                                                lobits)
-                                             #x0400))
-                                         (remainder
-                                          (+ (* octet2 256)
-                                             octet3)
-                                          #x0400)))
-                                  (c (if (<= #x10000 sv #x10ffff)
-                                         (integer->char sv)
-                                         replacement-character)))
-                             (string-set! s k c)
-                             (loop (+ i 4) (+ k 1)))
-                           ; bad surrogate pair
-                           (begin (string-set! s k replacement-character)
-                                  (loop (+ i 2) (+ k 1))))))
-                    ((< hibits #xe0)
-                     ; second surrogate not preceded by a first surrogate
-                     (string-set! s k replacement-character)
-                     (loop (+ i 2) (+ k 1)))
-                    (else
-                     (let ((c (integer->char
-                               (+ (* hibits 256)
-                                  lobits))))
-                       (string-set! s k c))
-                     (loop (+ i 2) (+ k 1)))))))
+                      (string-set! s k c))
+                    (loop (+ i 2) (+ k 1)))))))
       (if begins-with-bom?
-          (loop 2 0)
-          (loop 0 0))
+        (loop 2 0)
+        (loop 0 0))
       s)))
 
 ;;; There is no utf-32-codec, so we can't use textual i/o for this.
@@ -983,7 +983,7 @@
          (n (string-length string))
          (result (make-bytevector (* 4 n))))
     (do ((i 0 (+ i 1)))
-        ((= i n) result)
+      ((= i n) result)
       (bytevector-u32-set! result
                            (* 4 i)
                            (char->integer (string-ref string i))
@@ -995,15 +995,15 @@
   (let* ((n (bytevector-length bytevector))
 
          (begins-with-bom?
-          (and (<= 4 n)
-               (let ((b0 (bytevector-u8-ref bytevector 0))
-                     (b1 (bytevector-u8-ref bytevector 1))
-                     (b2 (bytevector-u8-ref bytevector 2))
-                     (b3 (bytevector-u8-ref bytevector 3)))
-                 (or (and (= b0 0) (= b1 0) (= b2 #xfe) (= b3 #xff)
-                          'big)
-                     (and (= b0 #xff) (= b1 #xfe) (= b2 0) (= b3 0)
-                          'little)))))
+           (and (<= 4 n)
+                (let ((b0 (bytevector-u8-ref bytevector 0))
+                      (b1 (bytevector-u8-ref bytevector 1))
+                      (b2 (bytevector-u8-ref bytevector 2))
+                      (b3 (bytevector-u8-ref bytevector 3)))
+                  (or (and (= b0 0) (= b1 0) (= b2 #xfe) (= b3 #xff)
+                           'big)
+                      (and (= b0 #xff) (= b1 #xfe) (= b2 0) (= b3 0)
+                           'little)))))
 
          (mandatory? (cond ((or (null? rest) (null? (cdr rest)))
                             #f)
@@ -1011,18 +1011,18 @@
                                  (boolean? (cadr rest)))
                             (cadr rest))
                            (else
-                            (apply complain 'utf32->string bytevector rest))))
+                             (apply complain 'utf32->string bytevector rest))))
 
          (endianness (cond ((null? rest)
                             (or begins-with-bom? 'big))
                            ((eq? (car rest) 'big)
                             (if mandatory?
-                                'big
-                                (or begins-with-bom? 'big)))
+                              'big
+                              (or begins-with-bom? 'big)))
                            ((eq? (car rest) 'little)
                             (if mandatory?
-                                'little
-                                (or begins-with-bom? 'little)))
+                              'little
+                              (or begins-with-bom? 'little)))
                            (else (apply complain
                                         'utf32->string
                                         bytevector
@@ -1035,14 +1035,14 @@
          (i0 (if begins-with-bom? 4 0))
 
          (result (if (zero? (remainder n 4))
-                     (make-string (quotient (- n i0) 4))
-                     (complain
-                      "bytevector passed to utf32->string has bad length"
-                      bytevector))))
+                   (make-string (quotient (- n i0) 4))
+                   (complain
+                     "bytevector passed to utf32->string has bad length"
+                     bytevector))))
 
     (do ((i i0 (+ i 4))
          (j 0 (+ j 1)))
-        ((= i n) result)
+      ((= i n) result)
       (let* ((sv (bytevector-u32-ref bytevector i endianness))
              (sv (cond ((< sv #xd800) sv)
                        ((< sv #xe000) #xfffd) ; replacement character
