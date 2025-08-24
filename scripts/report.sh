@@ -12,7 +12,7 @@ do
     echo "<th>| skipped tests</th>"
     echo "<th>| time</th>"
     echo "</tr>"
-    for name in $(docker run retropikzel1/compile-r7rs sh -c "compile-r7rs --list-r7rs-schemes" | xargs)
+    for name in $(docker run retropikzel1/compile-r7rs sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' " | xargs)
     do
         echo "<tr>"
 
