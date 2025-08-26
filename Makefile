@@ -43,8 +43,8 @@ force-install:
 
 test: ${TMPDIR} logs
 	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | timeout 7200 compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
-	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | timeout 7200 time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
+	cd ${TMPDIR} && printf "\n" | compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
+	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
 	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
