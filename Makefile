@@ -27,7 +27,7 @@ all: package
 package: README.html
 	snow-chibi package \
 		--version=${VERSION} \
-		--authors="Schemeists" \
+		--maintainers="Retropikzel" \
 		--doc=README.html \
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
