@@ -2,7 +2,7 @@
 SRFI=64
 SCHEME=chibi
 TMPDIR=tmp/${SCHEME}
-VERSION=2025.08.22
+VERSION=2025.08.27
 DOCKERIMG="${SCHEME}:head"
 ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
