@@ -12,12 +12,13 @@ do
     echo "<th>| skipped tests</th>"
     echo "<th>| time</th>"
     echo "</tr>"
-    for name in $(docker run retropikzel1/compile-r7rs sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' " | xargs)
+    for name in $(docker run retropikzel1/compile-r7rs sh -c "compile-r7rs --list-r7rs-schemes | sed 's/gambit//' " | xargs)
     do
         echo "<tr>"
 
         logfile="logs/$name-srfi-$srfi.log"
         outputfile="logs/$name-srfi-$srfi-test-output.log"
+
         if [ -f "$outputfile" ]
         then
             time="$(grep -I "elapsed" "$outputfile" | awk '{ split($0,a,"user"); print(a[1]," * 1000") }' | bc | xargs ) ms"
