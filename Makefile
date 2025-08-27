@@ -81,7 +81,6 @@ ${TMPDIR}: srfi-test
 	find ${TMPDIR} -name "*.swp" -delete
 	cp -r srfi-test ${TMPDIR}/
 	mkdir -p ${TMPDIR}/deps
-	snow-chibi install --impls=${SCHEME} --always-yes --install-source-dir=${TMPDIR}/deps --install-library-dir=${TPMDIR}/deps "(r6rs bytevectors)"
 
 logs:
 	mkdir -p logs
