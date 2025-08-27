@@ -1,10 +1,9 @@
 ; From https://github.com/scheme-requests-for-implementation/srfi-4/tree/master
-
 (define-library (srfi 4)
   (import (except (scheme base)
                   bytevector-copy
                   bytevector-copy!)
-          (r6rs bytevectors))
+          (scheme inexact))
   (export make-u8vector
           make-s8vector
           make-u16vector
@@ -100,6 +99,7 @@
           list->s64vector
           list->f32vector
           list->f64vector)
+  (include "4/bytevectors.scm")
   (include "4/macros.scm")
   (include "4/r7rec.scm")
   (include "4/impl.scm"))

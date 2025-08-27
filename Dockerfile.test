@@ -11,9 +11,10 @@ RUN apt-get update && apt-get install \
     ca-certificates \
     make \
     libffi-dev \
-    pandoc
+    pandoc \
+    time \
+    bc
 RUN mkdir -p ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
-COPY --from=retropikzel1/compile-r7rs /opt/compile-r7rs /opt/compile-r7rs
 RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
 RUN cd chibi-scheme && make -j 32 && make -j 32 install
 ENV PATH=/opt/compile-r7rs/bin:${PATH}
@@ -21,5 +22,5 @@ ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
 ENV GUILE_AUTO_COMPILE=0
 ENV STKLOS_FRAMES=1000
-RUN snow-chibi --impls=${SCHEME} --always-yes install "(r6rs bytevectors)"
+COPY --from=retropikzel1/compile-r7rs /opt/compile-r7rs /opt/compile-r7rs
 
