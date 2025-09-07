@@ -37,7 +37,6 @@ pipeline {
                                             } else {
                                                 DOCKERIMG="${SCHEME}:head"
                                             }
-                                            if("${SCHEME}" == "loko" || "${SCHEME}" == "chicken" || "${SCHEME}" == "tr7") {
                                             MEMORY="512MB"
                                             if("${SRFI}" != "13") {
                                                 sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
