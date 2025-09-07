@@ -45,6 +45,14 @@ test: ${TMPDIR} logs
 	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
 	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
 
+test-chicken6: ${TMPDIR} logs
+	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
+	cd ${TMPDIR} && printf "\n" | time csc -o test-${SRFI} test-${SRFI}.scm
+	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
+	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
+	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
+	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
+
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
 	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean test"
