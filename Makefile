@@ -71,7 +71,7 @@ srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git \
 		--depth=1 \
 		--branch=retropikzel-fixes
-	cd srfi-test && gauche -r7 convert.scm
+	cd srfi-test && gosh -r7 convert.scm
 
 ${TMPDIR}: srfi-test
 	mkdir -p ${TMPDIR}
