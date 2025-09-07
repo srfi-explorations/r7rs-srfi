@@ -54,7 +54,7 @@ pipeline {
             steps {
                 script {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
-                    def srfis = "13"
+                    def srfis = "13".split()
 
                     implementations.collectEntries { SCHEME ->
                         [(SCHEME): {
@@ -83,7 +83,7 @@ pipeline {
         stage('Test Chicken 6') {
             steps {
                 script {
-                    def implementations = "chicken"
+                    def implementations = "chicken".split()
                     def srfis = sh(script: 'cat /tmp/srfis.txt', returnStdout: true).split()
 
                     implementations.collectEntries { SCHEME ->
