@@ -14,7 +14,8 @@
                 char-upcase
                 char-alphabetic?
                 ;string-downcase
-                string-upcase)
+                ;string-upcase
+                )
           (srfi 8)
           (srfi 14)
           (srfi 60))
@@ -101,4 +102,6 @@
           string-join
           string-tokenize
           string-replace)
-  (include "13.scm"))
+  (cond-expand
+    (mosh (import (srfi :13 strings)))
+    (else (include "13.scm"))))

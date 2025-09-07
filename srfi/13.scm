@@ -996,7 +996,7 @@
 ;;;   Capitalize every contiguous alpha sequence: capitalise
 ;;;   first char, lowercase rest.
 
-#;(define (string-upcase  s . maybe-start+end)
+(define (string-upcase  s . maybe-start+end)
   (let-string-start+end (start end) string-upcase s maybe-start+end
                         (%string-map char-upcase s start end)))
 

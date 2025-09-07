@@ -119,7 +119,7 @@
 ;; r7rs-srfi util end
 
 
-(define-record-type :char-set
+(define-record-type <char-set>
   (make-char-set s)
   char-set?
   (s char-set:s))
