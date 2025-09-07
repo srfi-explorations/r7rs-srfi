@@ -63,8 +63,8 @@
           string-trim-both
           string-filter
           string-delete
-          ;string-parse-start+end
-          ;string-parse-final-start+end
+          string-parse-start+end
+          string-parse-final-start+end
           ;let-string-start+end
           ;check-substring-spec
           ;substring-spec-ok?

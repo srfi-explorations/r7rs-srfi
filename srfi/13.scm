@@ -3,7 +3,7 @@
 ;;;
 ;;; Copyright (c) 1988-1994 Massachusetts Institute of Technology.
 ;;; Copyright (c) 1998, 1999, 2000 Olin Shivers. All rights reserved.
-;;; Copyright (c) 2024 Retropikzel All rights reserved.
+;;; Copyright (c) 2024, 2025 Retropikzel. All rights reserved.
 ;;;   The details of the copyrights appear at the end of the file. Short
 ;;;   summary: BSD-style open source.
 
