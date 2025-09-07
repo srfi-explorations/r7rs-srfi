@@ -8,18 +8,14 @@ ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
 endif
 
-INCDIRS=-I . -I /usr/local/share/kawa/lib -I ./deps
+INCDIRS=-I .
 
 ifeq "${SCHEME}" "chibi"
 INCDIRS=-A .
 endif
 
-ifeq "${SCHEME}" "ypsilon"
-INCDIRS=-I .
-endif
-
-ifeq "${SCHEME}" "cyclone"
-INCDIRS=-I .
+ifeq "${SCHEME}" "kawa"
+INCDIRS=-I . -I /usr/local/share/kawa/lib
 endif
 
 all: package
@@ -43,7 +39,7 @@ force-install:
 
 test: ${TMPDIR} logs
 	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
+	cd ${TMPDIR} && printf "\n" | time compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
 	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
@@ -80,7 +76,6 @@ ${TMPDIR}: srfi-test
 	cp -r srfi ${TMPDIR}/
 	find ${TMPDIR} -name "*.swp" -delete
 	cp -r srfi-test ${TMPDIR}/
-	mkdir -p ${TMPDIR}/deps
 
 logs:
 	mkdir -p logs
