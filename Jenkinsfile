@@ -37,7 +37,7 @@ pipeline {
                                                 DOCKERIMG="chicken:5"
                                             }
                                             def MEMORY="256MB"
-                                            if("${SCHEME}" == "loko" || "${SCHEME}" == "tr7") {
+                                            if("${SCHEME}" == "loko") {
                                                 MEMORY="5000MB"
                                             }
                                             sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
