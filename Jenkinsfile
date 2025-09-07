@@ -18,6 +18,7 @@ pipeline {
    }
 
     stages {
+        /*
         stage('Prepare') {
             steps {
                 sh "cat srfis.scm | tr -d '()' > /tmp/srfis.txt"
@@ -25,6 +26,7 @@ pipeline {
                 sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-prepare sh -c \"rm -rf srfi-test && make srfi-test\""
             }
         }
+        */
         stage('Tests') {
             steps {
                 script {
