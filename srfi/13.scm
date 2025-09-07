@@ -1498,7 +1498,7 @@
 ;;; defaulting of arguments. This is a low-level, inner-loop procedure
 ;;; that we want integrated/inlined into the point of call.
 
-(define (kmp-step pat rv c i c= p-start)
+#;(define (kmp-step pat rv c i c= p-start)
   (let lp ((i i))
     (if (c= c (string-ref pat (+ i p-start))) ; Match =>
       (+ i 1)     ;   Done.

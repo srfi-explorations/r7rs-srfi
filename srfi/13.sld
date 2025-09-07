@@ -69,7 +69,7 @@
           check-substring-spec
           substring-spec-ok?
           make-kmp-restart-vector
-          kmp-step
+          ;kmp-step
           string-index
           string-index-right
           string-skip
