@@ -32,13 +32,12 @@ pipeline {
                                 srfis.each { srfi ->
                                     stage("${SCHEME} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            def DOCKERIMG="${SCHEME}:head"
                                             if("${SCHEME}" == "chicken") {
                                                 DOCKERIMG="chicken:5"
-                                            } else {
-                                                DOCKERIMG="${SCHEME}:head"
                                             }
-                                            MEMORY="512MB"
-                                            if("${SRFI}" != "13") {
+                                            def MEMORY="512MB"
+                                            if("${srfi}" != "13") {
                                                 sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
                                                 sh "docker run --cpu=2 --memory=${MEMORY} --memory-swap=${MEMORY} --oom-kill-disable -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
                                                 sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
@@ -64,13 +63,12 @@ pipeline {
                                 srfis.each { srfi ->
                                     stage("${SCHEME} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            def DOCKERIMG="${SCHEME}:head"
                                             if("${SCHEME}" == "chicken") {
                                                 DOCKERIMG="chicken:5"
-                                            } else {
-                                                DOCKERIMG="${SCHEME}:head"
                                             }
-                                            MEMORY="2000MB"
-                                            if("${SRFI}" == "13") {
+                                            def MEMORY="2000MB"
+                                            if("${srfi}" == "13") {
                                                 sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
                                                 sh "docker run --cpu=2 --memory=${MEMORY} --memory-swap=${MEMORY} --oom-kill-disable -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
                                                 sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
