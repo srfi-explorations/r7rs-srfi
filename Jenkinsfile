@@ -59,7 +59,7 @@ pipeline {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
                     def srfis = sh(script: 'cat /tmp/srfis.txt', returnStdout: true).split()
 
-                    parallel implementations.collectEntries { SCHEME ->
+                    implementations.collectEntries { SCHEME ->
                         [(SCHEME): {
                                 srfis.each { srfi ->
                                     stage("${SCHEME} ${srfi}") {
