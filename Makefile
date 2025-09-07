@@ -8,18 +8,14 @@ ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
 endif
 
-INCDIRS=-I . -I /usr/local/share/kawa/lib -I ./deps
+INCDIRS=-I .
 
 ifeq "${SCHEME}" "chibi"
 INCDIRS=-A .
 endif
 
-ifeq "${SCHEME}" "ypsilon"
-INCDIRS=-I .
-endif
-
-ifeq "${SCHEME}" "cyclone"
-INCDIRS=-I .
+ifeq "${SCHEME}" "kawa"
+INCDIRS=-I . -I /usr/local/share/kawa/lib
 endif
 
 all: package
@@ -43,19 +39,15 @@ force-install:
 
 test: ${TMPDIR} logs
 	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
+	cd ${TMPDIR} && printf "\n" | time compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
 	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
 	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
-	chmod -R 755 logs
 
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	if [ ! "${SCHEME}" = "cyclone" ]; then \
-		docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean"; \
-	fi
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test"
+	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean test"
 
 test-docker-all:
 	docker build -f Dockerfile.test . --tag=impls
@@ -80,10 +72,10 @@ ${TMPDIR}: srfi-test
 	cp -r srfi ${TMPDIR}/
 	find ${TMPDIR} -name "*.swp" -delete
 	cp -r srfi-test ${TMPDIR}/
-	mkdir -p ${TMPDIR}/deps
 
 logs:
 	mkdir -p logs
+	chmod -R 755 logs
 
 clean:
 	rm -rf ${TMPDIR}

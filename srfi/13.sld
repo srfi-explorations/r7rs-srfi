@@ -14,7 +14,8 @@
                 char-upcase
                 char-alphabetic?
                 ;string-downcase
-                string-upcase)
+                ;string-upcase
+                )
           (srfi 8)
           (srfi 14)
           (srfi 60))
@@ -62,13 +63,13 @@
           string-trim-both
           string-filter
           string-delete
-          string-parse-start+end
-          string-parse-final-start+end
-          let-string-start+end
-          check-substring-spec
-          substring-spec-ok?
-          make-kmp-restart-vector
-          kmp-step
+          ;string-parse-start+end
+          ;string-parse-final-start+end
+          ;let-string-start+end
+          ;check-substring-spec
+          ;substring-spec-ok?
+          ;make-kmp-restart-vector
+          ;kmp-step
           string-index
           string-index-right
           string-skip
@@ -101,4 +102,6 @@
           string-join
           string-tokenize
           string-replace)
-  (include "13.scm"))
+  (cond-expand
+    (mosh (import (srfi :13 strings)))
+    (else (include "13.scm"))))
