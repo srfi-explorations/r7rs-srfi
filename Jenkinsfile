@@ -38,7 +38,7 @@ pipeline {
                                                 DOCKERIMG="${SCHEME}:head"
                                             }
                                             if("${SCHEME}" == "loko" || "${SCHEME}" == "chicken") {
-                                                MEMORY="1000MB"
+                                                MEMORY="3000MB"
                                             } else {
                                                 MEMORY="256MB"
                                             }
