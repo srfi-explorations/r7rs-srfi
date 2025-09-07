@@ -31,8 +31,8 @@ pipeline {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
                     def srfis = sh(script: "cat /tmp/srfis.txt | sed 's/13//'", returnStdout: true).split()
 
-                    if("${ONLY_SRFI}" != "any") {
-                        srfis ="${ONLY_SRFI}".split()
+                    if("${params.ONLY_SRFI}" != "any") {
+                        srfis ="${params.ONLY_SRFI}".split()
                     }
 
                     parallel implementations.collectEntries { SCHEME ->
@@ -68,8 +68,8 @@ pipeline {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
                     def srfis = "13".split()
 
-                    if("${ONLY_SRFI}" != "any" && "${ONLY_SRFI}" == "13") {
-                        srfis ="${ONLY_SRFI}".split()
+                    if("${params.ONLY_SRFI}" != "any" && "${params.ONLY_SRFI}" == "13") {
+                        srfis ="${params.ONLY_SRFI}".split()
                     } else {
                         srfis = "".split()
                     }
@@ -102,8 +102,8 @@ pipeline {
                     def implementations = "chicken".split()
                     def srfis = sh(script: 'cat /tmp/srfis.txt', returnStdout: true).split()
 
-                    if("${ONLY_SRFI}" != "any") {
-                        srfis ="${ONLY_SRFI}".split()
+                    if("${params.ONLY_SRFI}" != "any") {
+                        srfis ="${params.ONLY_SRFI}".split()
                     }
 
                     implementations.collectEntries { SCHEME ->
