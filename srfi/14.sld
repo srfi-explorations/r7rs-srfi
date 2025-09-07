@@ -69,4 +69,6 @@
           char-set:ascii
           char-set:empty
           char-set:full)
-  (include "14.scm"))
+  (cond-expand
+    (mosh (import (srfi :14 char-sets)))
+    (else (include "14.scm"))))

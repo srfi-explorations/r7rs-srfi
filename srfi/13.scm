@@ -3,7 +3,7 @@
 ;;;
 ;;; Copyright (c) 1988-1994 Massachusetts Institute of Technology.
 ;;; Copyright (c) 1998, 1999, 2000 Olin Shivers. All rights reserved.
-;;; Copyright (c) 2024 Retropikzel All rights reserved.
+;;; Copyright (c) 2024, 2025 Retropikzel. All rights reserved.
 ;;;   The details of the copyrights appear at the end of the file. Short
 ;;;   summary: BSD-style open source.
 
@@ -300,11 +300,11 @@
 ;;; overhead for END parameter.
 (define (%substring/shared s start end)
   (if (and (zero? start) (= end (string-length s))) s
-    (substring s start end)))
+    (string-copy s start end)))
 
 (define (string-copy s . maybe-start+end)
   (let-string-start+end (start end) string-copy s maybe-start+end
-                        (substring s start end)))
+                        (string-copy s start end)))
 
 ;This library uses the R5RS SUBSTRING, but doesn't export it.
 ;Here is a definition, just for completeness.
@@ -996,7 +996,7 @@
 ;;;   Capitalize every contiguous alpha sequence: capitalise
 ;;;   first char, lowercase rest.
 
-#;(define (string-upcase  s . maybe-start+end)
+(define (string-upcase  s . maybe-start+end)
   (let-string-start+end (start end) string-upcase s maybe-start+end
                         (%string-map char-upcase s start end)))
 
@@ -1030,7 +1030,7 @@
 
 (define (string-titlecase s . maybe-start+end)
   (let-string-start+end (start end) string-titlecase! s maybe-start+end
-                        (let ((ans (substring s start end)))
+                        (let ((ans (string-copy s start end)))
                           (%string-titlecase! ans 0 (- end start))
                           ans)))
 
@@ -1153,7 +1153,7 @@
                                                            (begin (string-set! temp i c)
                                                                   (+ i 1))))
                                                        0 s start end)))
-                            (if (= ans-len slen) temp (substring temp 0 ans-len)))
+                            (if (= ans-len slen) temp (string-copy temp 0 ans-len)))
 
                           (let* ((cset (cond ((char-set? criterion) criterion)
                                              ((char? criterion) (char-set criterion))
@@ -1181,7 +1181,7 @@
                                                                   (+ i 1))
                                                            i))
                                                        0 s start end)))
-                            (if (= ans-len slen) temp (substring temp 0 ans-len)))
+                            (if (= ans-len slen) temp (string-copy temp 0 ans-len)))
 
                           (let* ((cset (cond ((char-set? criterion) criterion)
                                              ((char? criterion) (char-set criterion))
@@ -1665,9 +1665,9 @@
 ;;; string-concatenate-reverse/shared string-list [final-string end] -> string
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Return
-;;;   (string-concatenate 
+;;;   (string-concatenate
 ;;;     (reverse
-;;;       (cons (substring final-string 0 end) string-list)))
+;;;       (cons (string-copy final-string 0 end) string-list)))
 
 (define (string-concatenate-reverse string-list . maybe-final+end)
   (let-optionals* maybe-final+end ((final "" (string? final))
@@ -1757,9 +1757,9 @@
                                                                                                                   (cond ((string-skip-right s token-chars start tend-1) =>
                                                                                                                                                                         (lambda (tstart-1)
                                                                                                                                                                           (lp tstart-1
-                                                                                                                                                                              (cons (substring s (+ 1 tstart-1) tend)
+                                                                                                                                                                              (cons (string-copy s (+ 1 tstart-1) tend)
                                                                                                                                                                                     ans))))
-                                                                                                                        (else (cons (substring s start tend) ans))))))
+                                                                                                                        (else (cons (string-copy s start tend) ans))))))
                                                 (else ans))))))
 
 ;;; xsubstring s from [to start end] -> string
@@ -1814,7 +1814,7 @@
 
                    ;; Selected text falls entirely within one span.
                    ((= (floor (/ from slen)) (floor (/ to slen)))
-                    (substring s (+ start (modulo from slen))
+                    (string-copy s (+ start (modulo from slen))
                                (+ start (modulo to   slen))))
 
                    ;; Selected text requires multiple spans.
