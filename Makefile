@@ -44,7 +44,6 @@ test: ${TMPDIR} logs
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
 	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
-	chmod -R 755 logs
 
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
@@ -79,6 +78,7 @@ ${TMPDIR}: srfi-test
 
 logs:
 	mkdir -p logs
+	chmod -R 755 logs
 
 clean:
 	rm -rf ${TMPDIR}
