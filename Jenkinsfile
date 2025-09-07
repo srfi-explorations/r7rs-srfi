@@ -13,6 +13,10 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
+    parameters {
+        string(name: 'ONLY_SRFI', defaultValue: 'any', description: 'Build only SRFI number')
+   }
+
     stages {
         stage('Prepare') {
             steps {
@@ -26,6 +30,10 @@ pipeline {
                 script {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
                     def srfis = sh(script: "cat /tmp/srfis.txt | sed 's/13//'", returnStdout: true).split()
+
+                    if("${ONLY_SRFI}" != "any") {
+                        srfis ="${ONLY_SRFI}".split()
+                    }
 
                     parallel implementations.collectEntries { SCHEME ->
                         [(SCHEME): {
@@ -57,6 +65,12 @@ pipeline {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
                     def srfis = "13".split()
 
+                    if("${ONLY_SRFI}" != "any" && "${ONLY_SRFI}" == "13") {
+                        srfis ="${ONLY_SRFI}".split()
+                    } else {
+                        srfis = "".split()
+                    }
+
                     implementations.collectEntries { SCHEME ->
                         [(SCHEME): {
                                 srfis.each { srfi ->
@@ -66,11 +80,9 @@ pipeline {
                                             if("${SCHEME}" == "chicken") {
                                                 DOCKERIMG="chicken:5"
                                             }
-                                            if("${srfi}" == "13") {
-                                                sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                                sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
-                                                sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
-                                            }
+                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
                                         }
                                     }
                                 }
@@ -86,6 +98,10 @@ pipeline {
                 script {
                     def implementations = "chicken".split()
                     def srfis = sh(script: 'cat /tmp/srfis.txt', returnStdout: true).split()
+
+                    if("${ONLY_SRFI}" != "any") {
+                        srfis ="${ONLY_SRFI}".split()
+                    }
 
                     implementations.collectEntries { SCHEME ->
                         [(SCHEME): {
