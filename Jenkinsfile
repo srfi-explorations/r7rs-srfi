@@ -41,13 +41,16 @@ pipeline {
                                     stage("${SCHEME} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             def DOCKERIMG="${SCHEME}:head"
-                                            if("${SCHEME}" == "chicken") {
-                                                DOCKERIMG="chicken:5"
-                                            }
                                             def MEMORY="256MB"
                                             def SWAP="5000MB"
+                                            def CPUS=2
+
+                                            if("${SCHEME}" == "chicken") { DOCKERIMG="chicken:5" }
+                                            if("${SCHEME}" == "chicken") { CPUS=4 }
+                                            if("${SCHEME}" == "cyclone") { CPUS=4 }
+
                                             sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                            sh "docker run --cpus=2 --memory=${MEMORY} --memory-swap=${SWAP} -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
+                                            sh "docker run --cpus=${CPUS} --memory=${MEMORY} --memory-swap=${SWAP} -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
                                             sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
                                         }
                                     }
