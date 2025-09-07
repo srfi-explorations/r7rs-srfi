@@ -125,7 +125,7 @@
   (s char-set:s))
 
 
-(define (%string-copy s) (substring s 0 (string-length s)))
+(define (%string-copy s) (string-copy s 0 (string-length s)))
 
 ;;; Parse, type-check & default a final optional BASE-CS parameter from
 ;;; a rest argument. Return a *fresh copy* of the underlying string.
