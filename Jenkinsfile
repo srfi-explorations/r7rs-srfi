@@ -38,11 +38,7 @@ pipeline {
                                                 DOCKERIMG="${SCHEME}:head"
                                             }
                                             if("${SCHEME}" == "loko" || "${SCHEME}" == "chicken" || "${SCHEME}" == "tr7") {
-                                                MEMORY="3000MB"
-                                            } else {
-                                                MEMORY="256MB"
-                                            }
-
+                                            MEMORY="512MB"
                                             if("${SRFI}" != "13") {
                                                 sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
                                                 sh "docker run --cpu=2 --memory=${MEMORY} --memory-swap=${MEMORY} --oom-kill-disable -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
@@ -74,12 +70,7 @@ pipeline {
                                             } else {
                                                 DOCKERIMG="${SCHEME}:head"
                                             }
-                                            if("${SCHEME}" == "loko" || "${SCHEME}" == "chicken" || "${SCHEME}" == "tr7") {
-                                                MEMORY="3000MB"
-                                            } else {
-                                                MEMORY="256MB"
-                                            }
-
+                                            MEMORY="2000MB"
                                             if("${SRFI}" == "13") {
                                                 sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
                                                 sh "docker run --cpu=2 --memory=${MEMORY} --memory-swap=${MEMORY} --oom-kill-disable -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
