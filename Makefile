@@ -47,7 +47,7 @@ test: ${TMPDIR} logs
 
 test-chicken-6: ${TMPDIR} logs
 	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | COMPILE_R7RS=chicken6 time compile-r7rs -o test-${SRFI} test-${SRFI}.scm
+	cd ${TMPDIR} && printf "\n" | COMPILE_R7RS=chicken-6 time compile-r7rs -o test-${SRFI} test-${SRFI}.scm
 	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
 	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
 	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
