@@ -91,34 +91,22 @@ pipeline {
             steps {
                 script {
                     def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
-                    def srfis = ["13"]
 
-                    if("${params.ONLY_SRFI}" == "any" || "${params.ONLY_SRFI}" == "13") {
-                        srfis = ["13"]
-                    } else {
-                        srfis = []
-                    }
+                        implementations.each { SCHEME ->
+                            stage("${SCHEME} 13") {
+                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                    def DOCKERIMG="${SCHEME}:head"
 
-                    parallel srfis.collectEntries { srfi ->
-                        [(srfi): {
-                                implementations.each { SCHEME ->
-                                    stage("${SCHEME} ${srfi}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            def DOCKERIMG="${SCHEME}:head"
-
-                                            if("${SCHEME}" == "chicken") {
-                                                DOCKERIMG="chicken:5"
-                                            }
-
-                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
+                                        if("${SCHEME}" == "chicken") {
+                                            DOCKERIMG="chicken:5"
                                         }
-                                    }
+
+                                    sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
+                                        sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=13 clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
+                                        sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
                                 }
                             }
-                        ]
-                    }
+                        }
                 }
             }
         }
