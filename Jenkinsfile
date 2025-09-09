@@ -64,28 +64,23 @@ pipeline {
         stage('Test Chicken 6') {
             steps {
                 script {
-                    def implementations = ["chicken"]
+                    def SCHEME = "chicken"
                     def srfis = sh(script: "cat /tmp/srfis.txt | sed 's/13//'", returnStdout: true).split()
 
                     if("${params.ONLY_SRFI}" != "any") {
                         srfis = ["${params.ONLY_SRFI}"]
                     }
 
-                    parallel implementations.collectEntries { SCHEME ->
-                        [(SCHEME): {
-                                srfis.each { srfi ->
-                                    stage("${SCHEME} ${srfi}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            def DOCKERIMG="${SCHEME}:head"
+                    srfis.each { srfi ->
+                        stage("Chicken 6 ${srfi}") {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                def DOCKERIMG="${SCHEME}:head"
 
-                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
-                                        }
-                                    }
-                                }
+                                    sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
+                                    sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
+                                    sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
                             }
-                        ]
+                        }
                     }
                 }
             }
