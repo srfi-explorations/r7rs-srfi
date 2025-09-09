@@ -96,7 +96,7 @@ pipeline {
         stage('Test Chicken 6') {
             steps {
                 script {
-                    def implementations = "chicken".split()
+                    def implementations = ["chicken"]
                     def srfis = sh(script: 'cat /tmp/srfis.txt', returnStdout: true).split()
 
                     if("${params.ONLY_SRFI}" != "any") {
