@@ -96,10 +96,10 @@ pipeline {
                     if("${params.ONLY_SRFI}" == "any" || "${params.ONLY_SRFI}" == "13") {
                         srfis = ["13"]
                     } else {
-                        srifs = []
+                        srfis = []
                     }
 
-                    parallel srifs.collectEntries { srfi ->
+                    parallel srfis.collectEntries { srfi ->
                         [(srfi): {
                                 implementations.each { SCHEME ->
                                     stage("${SCHEME} ${srfi}") {
