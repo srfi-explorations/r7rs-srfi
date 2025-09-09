@@ -89,7 +89,7 @@ pipeline {
         stage('Test SRFI-13') {
             steps {
                 script {
-                    if("${params.ONLY_SRFI}" != "any" || "${params.ONLY_SRFI}" == "13") {
+                    if("${params.ONLY_SRFI}" == "any" || "${params.ONLY_SRFI}" == "13") {
                         def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
 
                         implementations.each { SCHEME ->
