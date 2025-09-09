@@ -18,6 +18,7 @@ pipeline {
    }
 
     stages {
+
         stage('Prepare') {
             steps {
                 sh "cat srfis.scm | tr -d '()' > /tmp/srfis.txt"
@@ -25,6 +26,7 @@ pipeline {
                 sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-prepare sh -c \"rm -rf srfi-test && make srfi-test\""
             }
         }
+
         stage('Tests') {
             steps {
                 script {
@@ -59,7 +61,7 @@ pipeline {
             }
         }
 
-        stage('Test Chicken 6') {
+        stage('Test Chciken 6') {
             steps {
                 script {
                     def implementations = ["chicken"]
@@ -69,14 +71,16 @@ pipeline {
                         srfis = ["${params.ONLY_SRFI}"]
                     }
 
-                    implementations.each { SCHEME ->
+                    parallel implementations.collectEntries { SCHEME ->
                         [(SCHEME): {
                                 srfis.each { srfi ->
                                     stage("${SCHEME} ${srfi}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             def DOCKERIMG="${SCHEME}:head"
-                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-chicken6 -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-chicken6 sh -c \"timeout 3600 make SCHEME=chicken6 SRFI=${srfi} clean test-chicken6 && chmod -R 755 logs && chmod -R 755 tmp/chicken6\""
+
+                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
+                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
                                         }
                                     }
                                 }
