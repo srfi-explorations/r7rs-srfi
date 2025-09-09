@@ -45,7 +45,7 @@ test: ${TMPDIR} logs
 	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
 	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
 
-test-chicken6: ${TMPDIR} logs
+test-chicken-6: ${TMPDIR} logs
 	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
 	cd ${TMPDIR} && printf "\n" | time csc -o test-${SRFI} test-${SRFI}.scm
 	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
