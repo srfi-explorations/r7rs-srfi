@@ -101,7 +101,7 @@ pipeline {
                         srfis = ["${params.ONLY_SRFI}"]
                     }
 
-                    implementations.collectEntries { SCHEME ->
+                    parallel implementations.collectEntries { SCHEME ->
                         [(SCHEME): {
                                 srfis.each { srfi ->
                                     stage("${SCHEME} ${srfi}") {
