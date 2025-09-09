@@ -36,6 +36,9 @@ pipeline {
                     if("${params.ONLY_SRFI}" != "any") {
                         srfis = ["${params.ONLY_SRFI}"]
                     }
+                    if("${params.ONLY_SRFI}" == "13") {
+                        srfis = []
+                    }
 
                     parallel implementations.collectEntries { SCHEME ->
                         [(SCHEME): {

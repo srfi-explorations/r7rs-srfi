@@ -53,6 +53,10 @@ test-chicken-6: ${TMPDIR} logs
 	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
 	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
 
+test-chicken-6-docker:
+	docker build --build-arg IMAGE=chicken:head --build-arg SCHEME=chicken --tag=r7rs-srfi-test-chicken-6 -f Dockerfile.test .
+	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-chicken-6 sh -c "make SCHEME=chicken SRFI=${SRFI} clean test-chicken-6"
+
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
 	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean test"
