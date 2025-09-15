@@ -1,26 +1,32 @@
 ARG SCHEME=chibi
 ARG IMAGE=chibi:head
-FROM schemers/${IMAGE}
+FROM debian:trixie-slim AS build
 RUN apt-get update && apt-get install \
+    --download-only \
     --no-install-recommends \
     --no-install-suggests \
     -y \
-    gcc \
-    libc6-dev \
-    git \
     ca-certificates \
+    git \
+    gcc \
+    libc-dev \
     make \
     libffi-dev \
-    pandoc \
+    cmark \
     time \
-    bc
-RUN mkdir -p ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
-RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
-RUN cd chibi-scheme && make -j 32 && make -j 32 install
+    bc \
+    gauche
+
+ARG SCHEME=chibi
+ARG IMAGE=chibi:head
+FROM schemers/${IMAGE}
+COPY --from=build /var/cache/apt/archives/*.deb /debs/
+RUN dpkg -i /debs/*.deb
+COPY --from=retropikzel1/compile-r7rs /opt/compile-r7rs /opt/compile-r7rs
 ENV PATH=/opt/compile-r7rs/bin:${PATH}
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
 ENV GUILE_AUTO_COMPILE=0
 ENV STKLOS_FRAMES=1000
-COPY --from=retropikzel1/compile-r7rs /opt/compile-r7rs /opt/compile-r7rs
+RUN mkdir -p ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
 

@@ -29,13 +29,10 @@ package: README.html
 	srfi/${SRFI}.sld
 
 README.html: README.md
-	pandoc --metadata title="SRFI-${SRFI}" --standalone README.md > README.html
+	cmark README.md > README.html
 
-install:
-	snow-chibi install --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
-
-force-install:
-	printf "\n" | snow-chibi install --always-yes --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
+install: package
+	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
 test: ${TMPDIR} logs
 	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
@@ -55,7 +52,7 @@ test-chicken-6: ${TMPDIR} logs
 
 test-chicken-6-docker:
 	docker build --build-arg IMAGE=chicken:head --build-arg SCHEME=chicken --tag=r7rs-srfi-test-chicken-6 -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-chicken-6 sh -c "make SCHEME=chicken SRFI=${SRFI} clean test-chicken-6"
+	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-chicken-6 sh -c "make SCHEME=chicken SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-yes clean install test-chicken-6"
 
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
@@ -100,3 +97,4 @@ clean-tgz:
 
 clean-all:
 	rm -rf tmp
+	rm -rf srfi-test
