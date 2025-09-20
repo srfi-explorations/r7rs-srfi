@@ -24,6 +24,7 @@ pipeline {
         stage ('debug') {
             steps {
                 sh "compile-r7rs --list-r7rs-schemes"
+                sh "cat srfis.scm | sed 's/(//' | sed 's/)//' | sed 's/13//'"
             }
         }
 
