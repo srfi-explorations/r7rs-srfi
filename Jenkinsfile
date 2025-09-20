@@ -20,6 +20,13 @@ pipeline {
     }
 
     stages {
+
+        stage ('debug') {
+            steps {
+                sh "compile-r7rs --list-r7rs-schemes"
+            }
+        }
+
         stage('Tests') {
             steps {
                 script {
