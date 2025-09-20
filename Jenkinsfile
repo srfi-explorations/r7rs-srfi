@@ -1,8 +1,8 @@
 pipeline {
 
     agent {
-        dockerfile {
-            filename 'Dockerfile.jenkins'
+        docker {
+            image 'retropikzel1/compile-r7rs'
         }
     }
 
