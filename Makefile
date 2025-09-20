@@ -24,11 +24,11 @@ install: package
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
 test: srfi-test
-	rm -rf ${TMPDIR}
-	mkdir -p ${TMPDIR}
-	cp -r srfi ${TMPDIR}/
-	cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} TEST_R7RS_TIMEOUT=${TEST_R7RS_TIMEOUT} test-r7rs --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
+	@rm -rf ${TMPDIR}
+	@mkdir -p ${TMPDIR}
+	@cp -r srfi ${TMPDIR}/
+	@cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
+	@cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} TEST_R7RS_TIMEOUT=${TEST_R7RS_TIMEOUT} test-r7rs --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
 
 test-all: srfi-test
 	rm -rf ${TMPDIR}
