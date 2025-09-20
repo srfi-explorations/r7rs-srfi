@@ -1,7 +1,11 @@
 pipeline {
 
     agent {
-        label 'agent1'
+        docker {
+            image 'retropikzel1/compile-r7rs'
+            args '--privileged=true -v /var/run/docker.sock:/var/run/docker.sock'
+            reuseNode true
+        }
     }
 
     triggers{
@@ -15,45 +19,25 @@ pipeline {
 
     parameters {
         string(name: 'ONLY_SRFI', defaultValue: 'any', description: 'Build only SRFI number')
-   }
+    }
 
     stages {
-
-        stage('Prepare') {
-            steps {
-                sh "cat srfis.scm | tr -d '()' > /tmp/srfis.txt"
-                sh "docker build --build-arg IMAGE=gauche:head --build-arg SCHEME=gauche --tag=r7rs-srfi-prepare -f Dockerfile.test ."
-                sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-prepare sh -c \"rm -rf srfi-test && make srfi-test\""
-            }
-        }
-
         stage('Tests') {
             steps {
                 script {
-                    def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
-                    def srfis = sh(script: "cat /tmp/srfis.txt | sed 's/13//'", returnStdout: true).split()
+                    def implementations = sh(script: 'docker run retropikzel1/compile-r7rs sh -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
+                    def srfis = sh(script: "cat /tmp/srfis.txt | sed 's/(//' | sed 's/)//' | sed 's/13//'", returnStdout: true).split()
 
-                    if("${params.ONLY_SRFI}" != "any") {
-                        srfis = ["${params.ONLY_SRFI}"]
-                    }
-                    if("${params.ONLY_SRFI}" == "13") {
-                        srfis = []
-                    }
+                    if("${params.ONLY_SRFI}" != "any") { srfis = ["${params.ONLY_SRFI}"] }
+                    if("${params.ONLY_SRFI}" == "13") { srfis = [] }
 
                     parallel implementations.collectEntries { SCHEME ->
                         [(SCHEME): {
-                                srfis.each { srfi ->
-                                    stage("${SCHEME} ${srfi}") {
+                                srfis.each { SRFI ->
+                                    stage("${SCHEME} ${SRFI}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            def DOCKERIMG="${SCHEME}:head"
-
-                                            if("${SCHEME}" == "chicken") {
-                                                DOCKERIMG="chicken:5"
-                                            }
-
-                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
+                                            sh "make clean"
+                                            sh "COMPILE_R7RS=${SCHEME} test-r7rs --use-docker-heads -A . -o .make/test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm >> report.md"
                                         }
                                     }
                                 }
@@ -64,49 +48,19 @@ pipeline {
             }
         }
 
-        stage('Test Chicken 6') {
-            steps {
-                script {
-                    def SCHEME = "chicken"
-                    def srfis = sh(script: "cat /tmp/srfis.txt | sed 's/13//'", returnStdout: true).split()
-
-                    if("${params.ONLY_SRFI}" != "any") {
-                        srfis = ["${params.ONLY_SRFI}"]
-                    }
-
-                    srfis.each { srfi ->
-                        stage("Chicken 6 ${srfi}") {
-                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                def DOCKERIMG="${SCHEME}:head"
-
-                                    sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                    sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test-chicken-6 && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
-                                    sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         stage('Test SRFI-13') {
             steps {
                 script {
                     if("${params.ONLY_SRFI}" == "any" || "${params.ONLY_SRFI}" == "13") {
-                        def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
+                        def implementations = sh(script: 'docker run retropikzel1/compile-r7rs sh -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
+                        def srfis = sh(script: "cat /tmp/srfis.txt | sed 's/(//' | sed 's/)//' | sed 's/13//'", returnStdout: true).split()
+                        def SRFI="13"
 
                         implementations.each { SCHEME ->
                             stage("${SCHEME} 13") {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                    def DOCKERIMG="${SCHEME}:head"
-
-                                    if("${SCHEME}" == "chicken") {
-                                        DOCKERIMG="chicken:5"
-                                    }
-
-                                    sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                    sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 7200 make SCHEME=${SCHEME} SRFI=13 clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
-                                    sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
+                                    sh "make clean"
+                                    sh "COMPILE_R7RS=${SCHEME} test-r7rs --use-docker-heads -A . -o .make/test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm >> report.md"
                                 }
                             }
                         }
@@ -114,18 +68,10 @@ pipeline {
                 }
             }
         }
-
-        stage("Report") {
-            steps {
-                sh "sh scripts/report.sh > report.html"
-            }
-        }
     }
 
     post {
         success {
-            sh 'tar -czvf logs.tar.gz logs/*.log'
-            archiveArtifacts('logs.tar.gz')
             archiveArtifacts('report.html')
         }
     }

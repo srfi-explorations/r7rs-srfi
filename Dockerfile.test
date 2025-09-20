@@ -16,17 +16,18 @@ RUN apt-get update && apt-get install \
     time \
     bc \
     gauche
+WORKDIR /cache/debs
+RUN cp -r /var/cache/apt/archives/*.deb .
 
 ARG SCHEME=chibi
 ARG IMAGE=chibi:head
 FROM schemers/${IMAGE}
-COPY --from=build /var/cache/apt/archives/*.deb /debs/
-RUN dpkg -i /debs/*.deb
+COPY --from=build /cache /cache
+WORKDIR /cache/debs
+RUN dpkg -i *.deb
+WORKDIR /
 COPY --from=retropikzel1/compile-r7rs /opt/compile-r7rs /opt/compile-r7rs
-ENV PATH=/opt/compile-r7rs/bin:${PATH}
+RUN /opt/compile-r7rs/bin/install-docker
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
-ENV GUILE_AUTO_COMPILE=0
-ENV STKLOS_FRAMES=1000
-RUN mkdir -p ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
 

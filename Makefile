@@ -1,22 +1,9 @@
 .PHONY: README.html
-SRFI=64
 SCHEME=chibi
-TMPDIR=tmp/${SCHEME}
+SRFI=64
 VERSION=2025.08.27
-DOCKERIMG="${SCHEME}:head"
-ifeq "${SCHEME}" "chicken"
-DOCKERIMG="chicken:5"
-endif
-
-INCDIRS=-I .
-
-ifeq "${SCHEME}" "chibi"
-INCDIRS=-A .
-endif
-
-ifeq "${SCHEME}" "kawa"
-INCDIRS=-I . -I /usr/local/share/kawa/lib
-endif
+TMPDIR=.tmp
+TEST_R7RS_TIMEOUT=6000
 
 all: package
 
@@ -29,72 +16,41 @@ package: README.html
 	srfi/${SRFI}.sld
 
 README.html: README.md
-	cmark README.md > README.html
+	echo "<pre>" > README.html
+	cat README.md >> README.html
+	echo "</pre>" >> README.html
 
 install: package
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-test: ${TMPDIR} logs
-	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | time compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
-	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
-	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
-	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
-	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
+test: srfi-test
+	rm -rf ${TMPDIR}
+	mkdir -p ${TMPDIR}
+	cp -r srfi ${TMPDIR}/
+	cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} TEST_R7RS_TIMEOUT=${TEST_R7RS_TIMEOUT} test-r7rs --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
 
-test-chicken-6: ${TMPDIR} logs
-	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | COMPILE_R7RS=chicken-6 time compile-r7rs -o test-${SRFI} test-${SRFI}.scm
-	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
-	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
-	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
-	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
-
-test-chicken-6-docker:
-	docker build --build-arg IMAGE=chicken:head --build-arg SCHEME=chicken --tag=r7rs-srfi-test-chicken-6 -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-chicken-6 sh -c "make SCHEME=chicken SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-yes clean install test-chicken-6"
-
-test-docker:
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean test"
-
-test-docker-all:
-	docker build -f Dockerfile.test . --tag=impls
-	for i in $(shell docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed 's/gambit//'" | xargs); \
-		do \
-			make SCHEME="$$i" SRFI=${SRFI} test-docker; \
-		done
-
-report:
-	sh scripts/report.sh > report.html
+test-all: srfi-test
+	rm -rf ${TMPDIR}
+	mkdir -p ${TMPDIR}
+	cp -r srfi ${TMPDIR}/
+	cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
+	cd ${TMPDIR} && COMPILE_R7RS=all-r7rs TEST_R7RS_TIMEOUT=${TEST_R7RS_TIMEOUT} test-r7rs --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git \
 		--depth=1 \
 		--branch=retropikzel-fixes
-	cd srfi-test && gosh -r7 convert.scm
-
-${TMPDIR}: srfi-test
-	mkdir -p ${TMPDIR}
-	mkdir -p ${TMPDIR}/srfi-test
-	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > ${TMPDIR}/srfis.txt
-	cp -r srfi ${TMPDIR}/
-	find ${TMPDIR} -name "*.swp" -delete
-	cp -r srfi-test ${TMPDIR}/
-
-logs:
-	mkdir -p logs
-	chmod -R 755 logs
+	cd srfi-test && chibi-scheme convert.scm
 
 clean:
+	find . -name "*.tgz" -delete
+	find . -name "*.o" -delete
+	find . -name "*.so" -delete
+	find . -name "*.a" -delete
+	find . -name "*.link" -delete
 	rm -rf ${TMPDIR}
 
-clean-logs:
-	rm -rf logs
-
-clean-tgz:
-	find . -name "*.tgz" -delete
-
-clean-all:
-	rm -rf tmp
+clean-all: clean
 	rm -rf srfi-test
+
