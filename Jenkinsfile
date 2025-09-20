@@ -44,7 +44,7 @@ pipeline {
                                 srfis.each { SRFI ->
                                     stage("${SCHEME} ${SRFI}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "make SCHEME=${SCHEME} SRFI=${SRFI} test > report-${SRFI}.md"
+                                            sh "make SCHEME=${SCHEME} SRFI=${SRFI} test" // > report-${SRFI}.md"
                                         }
                                     }
                                 }
