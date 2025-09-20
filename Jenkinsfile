@@ -26,7 +26,7 @@ pipeline {
             steps {
                 sh "compile-r7rs --list-r7rs-schemes"
                 sh "cat srfis.scm | sed 's/(//' | sed 's/)//' | sed 's/13//'"
-                sh "docker run -it retropikzel1/compile-r7rs sh -c \"compile-r7rs --list-r7rs-schemes\""
+                sh "docker run -i retropikzel1/compile-r7rs sh -c \"compile-r7rs --list-r7rs-schemes\""
                 sh "exit 1"
             }
         }
