@@ -1,8 +1,8 @@
 pipeline {
 
     agent {
-        docker {
-            image 'docker:dind-rootless'
+        dockerfile {
+            path 'Dockerfile.jenkins'
         }
     }
 
