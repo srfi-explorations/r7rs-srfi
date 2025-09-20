@@ -4,5 +4,6 @@ RUN apt-get update && apt-get install -y \
 RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
 WORKDIR /chibi-scheme
 RUN make && make install
+RUN mkdir ${HOME}/.docker && chmod 755 ${HOME}/.docker
 WORKDIR /workdir
 
