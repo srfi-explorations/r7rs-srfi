@@ -2,7 +2,7 @@ pipeline {
 
     agent {
         docker {
-            image 'retropikzel1/compile-r7rs'
+            image 'docker.io/retropikzel1/compile-r7rs'
             args '--privileged=true -v /var/run/docker.sock:/var/run/docker.sock'
             reuseNode true
         }
