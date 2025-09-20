@@ -3,6 +3,7 @@ pipeline {
     agent {
         docker {
             image 'retropikzel1/compile-r7rs'
+            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
