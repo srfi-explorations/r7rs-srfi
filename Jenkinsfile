@@ -45,7 +45,7 @@ pipeline {
                                 srfis.each { SRFI ->
                                     stage("${SCHEME} ${SRFI}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "COMPILE_R7RS=${SCHEME} test-r7rs --use-docker-heads -A . -o .make/test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm >> report.md"
+                                            sh "COMPILE_R7RS=${SCHEME} test-r7rs --use-docker-heads -A . -o .make/test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm > report-${SRFI}.md"
                                         }
                                     }
                                 }
@@ -67,7 +67,7 @@ pipeline {
                         implementations.each { SCHEME ->
                             stage("${SCHEME} 13") {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                    sh "COMPILE_R7RS=${SCHEME} test-r7rs --use-docker-heads -A . -o .make/test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm >> report.md"
+                                    sh "COMPILE_R7RS=${SCHEME} test-r7rs --use-docker-heads -A . -o .make/test-${SRFI} srfi-test/r7rs-programs/${SRFI}.scm > report-${SRFI}.md"
                                 }
                             }
                         }
@@ -79,7 +79,7 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts('report.md')
+            archiveArtifacts('report*.md')
         }
     }
 }
