@@ -1,5 +1,6 @@
 FROM docker:dind
 RUN apk add make chicken git
+RUN chicken-install r7rs
 RUN git clone https://gitea.scheme.org/Retropikzel/compile-r7rs.git --depth=1
 WORKDIR /compile-r7rs
 RUN make && make install
