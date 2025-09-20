@@ -25,6 +25,7 @@ pipeline {
 
         stage ('Init') {
             steps {
+                sh "rm -rf srfi-test"
                 sh "make srfi-test"
             }
         }
