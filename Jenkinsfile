@@ -72,7 +72,7 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts('report.html')
+            archiveArtifacts('report.md')
         }
     }
 }
