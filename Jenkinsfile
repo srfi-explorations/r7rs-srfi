@@ -23,7 +23,7 @@ pipeline {
         stage('Tests') {
             steps {
                 script {
-                    def implementations = sh(script: 'docker run retropikzel1/compile-r7rs sh -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
+                    def implementations = sh(script: "compile-r7rs --list-r7rs-schemes", returnStdout: true).split()
                     def srfis = sh(script: "cat /tmp/srfis.txt | sed 's/(//' | sed 's/)//' | sed 's/13//'", returnStdout: true).split()
 
                     if("${params.ONLY_SRFI}" != "any") { srfis = ["${params.ONLY_SRFI}"] }
