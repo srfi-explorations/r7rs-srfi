@@ -20,6 +20,12 @@ pipeline {
     }
 
     stages {
+        stage('Start docker daemon') {
+            steps {
+                sh "dockerd & sleep 30"
+            }
+        }
+
         stage('Tests') {
             steps {
                 script {
