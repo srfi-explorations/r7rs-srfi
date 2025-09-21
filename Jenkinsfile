@@ -27,7 +27,7 @@ pipeline {
             steps {
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
-                sh "make SRFI=64 test-all"
+                sh "make SRFI=64 R7RS_TIMEOUT=30 test-all"
             }
         }
 
