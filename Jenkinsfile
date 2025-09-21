@@ -43,7 +43,7 @@ pipeline {
                         [(SRFI): {
                                 stage("${SRFI}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make SRFI=${SRFI} test-all" // > report-${SRFI}.md"
+                                        sh "make SRFI=${SRFI} test-all > report-${SRFI}.md"
                                     }
                                 }
                             }
@@ -59,7 +59,7 @@ pipeline {
                     if("${params.ONLY_SRFI}" == "any" || "${params.ONLY_SRFI}" == "13") {
                             stage("13") {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                    sh "make SRFI=13 test-all" // > report-${SRFI}.md"
+                                    sh "make SRFI=13 test-all > report-${SRFI}.md"
                                 }
                             }
                     }
