@@ -27,7 +27,7 @@ pipeline {
             steps {
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
-                sh "make SRFI=64 R7RS_TIMEOUT=30 test-all"
+                sh "make SRFI=64 TIMEOUT=30 test-all"
             }
         }
 
@@ -43,7 +43,7 @@ pipeline {
                         [(SRFI): {
                                 stage("${SRFI}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make SRFI=${SRFI} test-all" // > report-${SRFI}.md"
+                                        sh "make SRFI=${SRFI}" // > report-${SRFI}.md"
                                     }
                                 }
                             }

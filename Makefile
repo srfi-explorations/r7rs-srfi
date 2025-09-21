@@ -4,6 +4,7 @@ SRFI=64
 VERSION=2025.08.27
 TMPDIR=.tmp/${SCHEME}
 TEST_R7RS_TIMEOUT=6000
+TIMEOUT=6000
 
 all: package
 
@@ -25,7 +26,7 @@ install: package
 
 test: srfi-test ${TMPDIR}
 	@cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
-	@cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} TEST_R7RS_TIMEOUT=${TEST_R7RS_TIMEOUT} test-r7rs ${TEST_R7RS_ARGS} --no-header --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
+	@cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} test-r7rs --timeout ${TIMEOUT} --no-header --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
 
 test-all:
 	@test-r7rs --only-header -o ${SRFI}
