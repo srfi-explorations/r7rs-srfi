@@ -23,10 +23,11 @@ pipeline {
 
     stages {
 
-        stage ('Init') {
+        stage ('Init && warm cache') {
             steps {
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
+                sh "make SRFI=64 test-all"
             }
         }
 
