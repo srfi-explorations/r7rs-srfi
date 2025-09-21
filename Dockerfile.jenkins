@@ -4,3 +4,4 @@ RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
 WORKDIR /chibi-scheme
 RUN make && make install
 WORKDIR /workdir
+RUN mkdir -p ${HOME}/.snow && echo "()" > "${HOME}"/.snow/congig.scm
