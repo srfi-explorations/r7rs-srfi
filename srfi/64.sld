@@ -1,9 +1,10 @@
 (define-library
   (srfi 64)
   (cond-expand
-    (tr7
+    ((library (scheme complex))
       (import (except (scheme base) make-parameter parameterize)
               (scheme case-lambda)
+              (scheme complex)
               (scheme eval)
               (scheme file)
               (scheme process-context)
@@ -13,7 +14,6 @@
     (else
       (import (except (scheme base) make-parameter parameterize)
               (scheme case-lambda)
-              (scheme complex)
               (scheme eval)
               (scheme file)
               (scheme process-context)

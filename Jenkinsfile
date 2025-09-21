@@ -34,19 +34,16 @@ pipeline {
         stage('Tests') {
             steps {
                 script {
-                    def implementations = sh(script: "compile-r7rs --list-r7rs-schemes", returnStdout: true).split()
                     def srfis = sh(script: "cat srfis.scm | sed 's/(//' | sed 's/)//' | sed 's/13//'", returnStdout: true).split()
 
                     if("${params.ONLY_SRFI}" != "any") { srfis = ["${params.ONLY_SRFI}"] }
                     if("${params.ONLY_SRFI}" == "13") { srfis = [] }
 
-                    parallel implementations.collectEntries { SCHEME ->
-                        [(SCHEME): {
-                                srfis.each { SRFI ->
-                                    stage("${SCHEME} ${SRFI}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "make SCHEME=${SCHEME} SRFI=${SRFI} test" // > report-${SRFI}.md"
-                                        }
+                    parallel srfis.collectEntries { SRFI ->
+                        [(SRFI): {
+                                stage("${SRFI}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "make SRFI=${SRFI} test-all" // > report-${SRFI}.md"
                                     }
                                 }
                             }
@@ -60,17 +57,11 @@ pipeline {
             steps {
                 script {
                     if("${params.ONLY_SRFI}" == "any" || "${params.ONLY_SRFI}" == "13") {
-                        def implementations = sh(script: 'docker run retropikzel1/compile-r7rs sh -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
-                        def srfis = sh(script: "cat /tmp/srfis.txt | sed 's/(//' | sed 's/)//' | sed 's/13//'", returnStdout: true).split()
-                        def SRFI="13"
-
-                        implementations.each { SCHEME ->
                             stage("${SCHEME} 13") {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                    sh "make SCHEME=${SCHEME} SRFI=${SRFI} test > report-${SRFI}.md"
+                                    sh "make SRFI=13 test-all" // > report-${SRFI}.md"
                                 }
                             }
-                        }
                     }
                 }
             }

@@ -23,25 +23,26 @@ README.html: README.md
 install: package
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-test: srfi-test
-	@rm -rf ${TMPDIR}
-	@mkdir -p ${TMPDIR}
-	@cp -r srfi ${TMPDIR}/
+test: srfi-test ${TMPDIR}
 	@cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
-	@cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} TEST_R7RS_TIMEOUT=${TEST_R7RS_TIMEOUT} test-r7rs --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
+	@cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} TEST_R7RS_TIMEOUT=${TEST_R7RS_TIMEOUT} test-r7rs ${TEST_R7RS_ARGS} --no-header --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
 
-test-all: srfi-test
-	rm -rf ${TMPDIR}
-	mkdir -p ${TMPDIR}
-	cp -r srfi ${TMPDIR}/
-	cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
-	cd ${TMPDIR} && COMPILE_R7RS=all-r7rs TEST_R7RS_TIMEOUT=${TEST_R7RS_TIMEOUT} test-r7rs --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
+test-all:
+	@test-r7rs --only-header -o ${SRFI}
+	@for scheme in $(shell compile-r7rs --list-r7rs-schemes); do make --silent SCHEME=$${scheme} TEST_TR7RS_ARGS=--no-header test; done
+
+${TMPDIR}:
+	@mkdir -p ${TMPDIR}
+	@cp -r srfi/ ${TMPDIR}/
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git \
+	@git clone https://github.com/srfi-explorations/srfi-test.git \
 		--depth=1 \
 		--branch=retropikzel-fixes
-	cd srfi-test && chibi-scheme convert.scm
+	@cd srfi-test && chibi-scheme convert.scm
 
 clean:
 	find . -name "*.tgz" -delete
