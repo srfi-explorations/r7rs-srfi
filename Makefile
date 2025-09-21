@@ -30,7 +30,9 @@ test: srfi-test ${TMPDIR}
 
 test-all:
 	@test-r7rs --only-header -o ${SRFI}
-	@for scheme in $(shell compile-r7rs --list-r7rs-schemes); do make --silent SCHEME=$${scheme} TEST_TR7RS_ARGS=--no-header test; done
+	@for scheme in $(shell compile-r7rs --list-r7rs-schemes); do \
+		make --silent TIMEOUT=${TIMEOUT} SRFI=${SRFI} SCHEME=$${scheme} TEST_TR7RS_ARGS=--no-header test; \
+	done
 
 ${TMPDIR}:
 	@mkdir -p ${TMPDIR}
