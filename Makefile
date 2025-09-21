@@ -29,9 +29,9 @@ test: srfi-test ${TMPDIR}
 	@cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} test-r7rs --timeout ${TIMEOUT} --no-header --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
 
 test-all:
-	@test-r7rs --only-header -o ${SRFI}
+	@test-r7rs --timeout ${TIMEOUT} --only-header -o ${SRFI}
 	@for scheme in $(shell compile-r7rs --list-r7rs-schemes); do \
-		make --silent TIMEOUT=${TIMEOUT} SRFI=${SRFI} SCHEME=$${scheme} TEST_TR7RS_ARGS=--no-header test; \
+		make --silent SRFI=${SRFI} TIMEOUT=${TIMEOUT} SCHEME=$${scheme} TEST_TR7RS_ARGS=--no-header test; \
 	done
 
 ${TMPDIR}:
