@@ -43,7 +43,7 @@ pipeline {
                         [(SRFI): {
                                 stage("${SRFI}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make SRFI=${SRFI} test" // > report-${SRFI}.md"
+                                        sh "make SRFI=${SRFI} test-all" // > report-${SRFI}.md"
                                     }
                                 }
                             }
