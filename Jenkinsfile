@@ -4,7 +4,7 @@ pipeline {
         dockerfile {
             label 'docker'
             filename 'Dockerfile.jenkins'
-            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
+            args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
