@@ -39,7 +39,7 @@ pipeline {
                     if("${params.ONLY_SRFI}" != "any") { srfis = ["${params.ONLY_SRFI}"] }
                     if("${params.ONLY_SRFI}" == "13") { srfis = [] }
 
-                    parallel srfis.collectEntries { SRFI ->
+                    srfis.collectEntries { SRFI ->
                         [(SRFI): {
                                 stage("${SRFI}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
