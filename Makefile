@@ -26,10 +26,10 @@ install: package
 
 test: srfi-test ${TMPDIR}
 	@cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
-	@cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} test-r7rs --timeout ${TIMEOUT} --no-header --use-docker-heads -I . -o ${SRFI} ${SRFI}.scm
+	@cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o ${SRFI} ${SRFI}.scm
+	@cd ${TMPDIR} && ./${SRFI}
 
 test-all:
-	@test-r7rs --timeout ${TIMEOUT} --only-header -o ${SRFI}
 	@for scheme in $(shell compile-r7rs --list-r7rs-schemes); do \
 		make --silent SRFI=${SRFI} TIMEOUT=${TIMEOUT} SCHEME=$${scheme} TEST_TR7RS_ARGS=--no-header test; \
 	done

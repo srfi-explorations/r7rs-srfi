@@ -1,11 +1,7 @@
 pipeline {
 
     agent {
-        dockerfile {
-            label 'agent1'
-            filename 'Dockerfile.jenkins'
-            args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        }
+        label 'docker-x86_64'
     }
 
     triggers{
@@ -14,63 +10,29 @@ pipeline {
 
     options {
         disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+            buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
     parameters {
-        string(name: 'ONLY_SRFI', defaultValue: 'any', description: 'Build only SRFI number')
+        string(name: 'SRFIS', defaultValue: '2 4 5 8 11 14 39 60 64 69', description: 'Build SRFIs')
     }
 
     stages {
-
-        stage ('Init and warmup cache') {
-            steps {
-                sh "rm -rf srfi-test"
-                sh "make srfi-test"
-                sh "make SRFI=64 TIMEOUT=3 test-all"
-            }
-        }
-
         stage('Tests') {
             steps {
+                def schemes = sh(script: 'docker run retropikzel1/compile-r7rs bash -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
                 script {
-                    def srfis = sh(script: "cat srfis.scm | sed 's/(//' | sed 's/)//' | sed 's/13//'", returnStdout: true).split()
-
-                    if("${params.ONLY_SRFI}" != "any") { srfis = ["${params.ONLY_SRFI}"] }
-                    if("${params.ONLY_SRFI}" == "13") { srfis = [] }
-
-                    srfis.collectEntries { SRFI ->
-                        [(SRFI): {
-                                stage("${SRFI}") {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make SRFI=${SRFI} test-all > report-${SRFI}.md"
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        }
-
-        stage('Test SRFI-13') {
-            steps {
-                script {
-                    if("${params.ONLY_SRFI}" == "any" || "${params.ONLY_SRFI}" == "13") {
-                            stage("13") {
+                    params.SRFIS.split().each { SRFI ->
+                        schemes.each { SCHEME ->
+                            stage("${SCHEME} ${SRFI}") {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                    sh "make SRFI=13 test-all > report-${SRFI}.md"
+                                    sh "make SCHEME=${SCHEME} SRFI=${SRFI} test"
                                 }
                             }
+                        }
                     }
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            archiveArtifacts('report*.md')
         }
     }
 }
