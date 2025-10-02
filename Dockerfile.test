@@ -1,6 +1,7 @@
 ARG SCHEME=chibi
 ARG IMAGE=chibi:head
 FROM debian:trixie-slim AS build
+RUN apt-get install -y git make gcc
 RUN apt-get update && apt-get install \
     --download-only \
     --no-install-recommends \
@@ -18,14 +19,21 @@ RUN apt-get update && apt-get install \
     gauche
 WORKDIR /cache/debs
 RUN cp -r /var/cache/apt/archives/*.deb .
+WORKDIR /cache
+RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
+WORKDIR /cache/chibi-scheme
+RUN make
 
 ARG SCHEME=chibi
 ARG IMAGE=chibi:head
 FROM schemers/${IMAGE}
+RUN apt-get update && apt-get install -y make
 COPY --from=build /cache /cache
 WORKDIR /cache/debs
 RUN dpkg -i *.deb
-WORKDIR /
+WORKDIR /cache/chibi
+RUN make install
+WORKDIR /workdir
 COPY --from=retropikzel1/compile-r7rs /opt/compile-r7rs /opt/compile-r7rs
 RUN /opt/compile-r7rs/bin/install-docker
 ARG SCHEME=chibi
