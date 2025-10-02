@@ -1,7 +1,7 @@
 ARG SCHEME=chibi
 ARG IMAGE=chibi:head
 FROM debian:trixie-slim AS build
-RUN apt-get install -y git make gcc
+RUN apt-get update && apt-get install -y git make gcc
 RUN apt-get update && apt-get install \
     --download-only \
     --no-install-recommends \
@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install \
     gcc \
     libc-dev \
     make \
+    libffi8 \
     libffi-dev \
     cmark \
     time \

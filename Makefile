@@ -1,10 +1,15 @@
 .PHONY: README.html
 SCHEME=chibi
+DOCKERIMG=${SCHEME}:head
 SRFI=64
 VERSION=2025.08.27
 TMPDIR=.tmp/${SCHEME}
 TEST_R7RS_TIMEOUT=6000
 TIMEOUT=6000
+
+ifeq "${SCHEME}" "chicken"
+DOCKERIMG="chicken:5"
+endif
 
 all: package
 
@@ -25,9 +30,14 @@ install: package
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
 test: srfi-test ${TMPDIR}
-	@cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
-	@cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o ${SRFI} ${SRFI}.scm
-	@cd ${TMPDIR} && ./${SRFI}
+	cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o ${SRFI} ${SRFI}.scm
+	cd ${TMPDIR} && ./${SRFI}
+
+test-docker:
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
+	docker run -it -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
+		"make SCHEME=${SCHEME} SNOW_CHIBI_ARGS=--always-yes install test"
 
 test-all:
 	@for scheme in $(shell compile-r7rs --list-r7rs-schemes); do \
