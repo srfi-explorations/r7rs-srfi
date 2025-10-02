@@ -20,8 +20,8 @@ pipeline {
     stages {
         stage('Tests') {
             steps {
-                def schemes = sh(script: 'docker run retropikzel1/compile-r7rs bash -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
                 script {
+                    def schemes = sh(script: 'docker run retropikzel1/compile-r7rs bash -c "compile-r7rs --list-r7rs-schemes"', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         schemes.each { SCHEME ->
                             stage("${SCHEME} ${SRFI}") {
