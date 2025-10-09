@@ -22,9 +22,7 @@ package: README.html
 	srfi/${SRFI}.sld
 
 README.html: README.md
-	echo "<pre>" > README.html
-	cat README.md >> README.html
-	echo "</pre>" >> README.html
+	echo "<pre>$$(cat README.md)</pre>" > README.html
 
 install: package
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
@@ -38,11 +36,6 @@ test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
 	docker run -it -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
 		"make SCHEME=${SCHEME} SNOW_CHIBI_ARGS=--always-yes install test"
-
-test-all:
-	@for scheme in $(shell compile-r7rs --list-r7rs-schemes); do \
-		make --silent SRFI=${SRFI} TIMEOUT=${TIMEOUT} SCHEME=$${scheme} TEST_TR7RS_ARGS=--no-header test; \
-	done
 
 ${TMPDIR}:
 	@mkdir -p ${TMPDIR}
