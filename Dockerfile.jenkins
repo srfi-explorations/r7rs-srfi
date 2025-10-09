@@ -16,3 +16,4 @@ WORKDIR /cache/compile-r7rs
 RUN snow-chibi install "(foreign c)"
 RUN snow-chibi install "(srfi 170)"
 RUN make build-chibi
+RUN make install
