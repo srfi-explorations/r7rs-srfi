@@ -39,7 +39,7 @@ pipeline {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                     sh "make clean"
                                     sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-yes package install"
-                                    sh "make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
+                                    sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
                                     archiveArtifacts artifacts: "logs/${SCHEME}/*.log", allowEmptyArchive: true, fingerprint: true
                                 }
                             }
