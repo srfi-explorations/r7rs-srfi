@@ -46,6 +46,12 @@ pipeline {
                 }
             }
         }
+
+        post {
+            always {
+                archiveArtifacts artifacts: 'logs/*.log', allowEmptyArchive: true, fingerprint: true
+            }
+        }
     }
 }
 
