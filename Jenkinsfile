@@ -39,17 +39,12 @@ pipeline {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                     sh "make SCHEME=${SCHEME} SRFI=${SRFI} package install"
                                     sh "make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
+                                    archiveArtifacts artifacts: 'logs/*.log', allowEmptyArchive: true, fingerprint: true
                                 }
                             }
                         }
                     }
                 }
-            }
-        }
-
-        post {
-            always {
-                archiveArtifacts artifacts: 'logs/*.log', allowEmptyArchive: true, fingerprint: true
             }
         }
     }
