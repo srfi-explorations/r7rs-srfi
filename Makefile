@@ -1,13 +1,13 @@
 .PHONY: README.html
 .SILENT: build install test test-docker
 SCHEME=chibi
-DOCKERIMG=${SCHEME}
+DOCKERIMG=${SCHEME}:head
 SRFI=64
 VERSION=2025.08.27
 CLEAN="*.o *.so *.a *.link"
 
-ifeq "${SCHEME}" "stklos"
-DOCKERIMG="stklos:head"
+ifeq "${SCHEME}" "chicken"
+DOCKERIMG="chicken:5"
 endif
 
 all: package
