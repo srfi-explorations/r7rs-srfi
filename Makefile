@@ -5,6 +5,7 @@ DOCKERIMG=${SCHEME}:head
 SRFI=64
 VERSION=2025.08.27
 CLEAN="*.o *.so *.a *.link"
+TMPDIR=tmp/${SCHEME}
 
 ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
@@ -25,15 +26,15 @@ install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
 test: srfi-test logs/${SCHEME}
-	rm -rf tmp
-	cp -r srfi-test/r7rs-programs tmp
-	cp -r srfi tmp/
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf tmp/srfi/11.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf tmp/srfi/39.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf tmp/srfi/69.*; fi
-	cd tmp && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o ${SRFI} ${SRFI}.scm
-	cd tmp && ./${SRFI}
-	cp tmp/srfi-*.log logs/${SCHEME}/srfi-${SRFI}.log
+	rm -rf ${TMPDIR}
+	cp -r srfi-test/r7rs-programs ${TMPDIR}
+	cp -r srfi ${TMPDIR}/
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o ${SRFI} ${SRFI}.scm
+	cd ${TMPDIR} && ./${SRFI}
+	cp ${TMPDIR}/srfi-*.log logs/${SCHEME}/srfi-${SRFI}.log
 	chmod -R 755 logs
 
 logs/${SCHEME}:
@@ -42,12 +43,7 @@ logs/${SCHEME}:
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
 	docker run -t -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
-		"make SCHEME=${SCHEME} SRFI=${SRFI} test ; chmod -R 755 tmp"
-
-test-install-docker:
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -t -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
-		"make SCHEME=${SCHEME} SRFI=${SRFI} build install test ; chmod -R 755 tmp"
+		"make SCHEME=${SCHEME} SRFI=${SRFI} test ; chmod -R 755 ${TMPDIR}"
 
 srfi-test:
 	@git clone https://github.com/srfi-explorations/srfi-test.git \
