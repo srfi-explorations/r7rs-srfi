@@ -34,8 +34,8 @@ pipeline {
             steps {
                 script {
                     def schemes = sh(script: 'compile-r7rs --list-r7rs-schemes', returnStdout: true).split()
+                    def parallelStages = []
                     params.SRFIS.split().each { SRFI ->
-                        def parallelStages = []
                         schemes.each { SCHEME ->
                             parallelStages["${SCHEME} ${SRFI} test docker"] = {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -48,10 +48,10 @@ pipeline {
                                     }
                                 }
                             }
-
-                            parallel parallelStages
                         }
                     }
+
+                    parallel parallelStages
                 }
             }
         }
