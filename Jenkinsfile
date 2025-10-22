@@ -36,20 +36,22 @@ pipeline {
                     def schemes = sh(script: 'compile-r7rs --list-r7rs-schemes', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI}") {
-                            parallel schemes.each { SCHEME ->
-                                stage("${SCHEME}") {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 300 make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
-                                            sh "make clean"
-                                            archiveArtifacts artifacts: "logs/${SCHEME}/*.log", allowEmptyArchive: true, fingerprint: true
+                            parallel schemes.collectEntries { SCHEME ->
+                                [(SCHEME): {
+                                    stage("${SCHEME}") {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "timeout 300 make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
+                                                sh "make clean"
+                                                archiveArtifacts artifacts: "logs/${SCHEME}/*.log", allowEmptyArchive: true, fingerprint: true
+                                        }
                                     }
-                                }
 
-                                stage("${SCHEME} install") {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} test-install-docker"
+                                    stage("${SCHEME} install") {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} test-install-docker"
+                                        }
                                     }
-                                }
+                                }]
                             }
                         }
                     }
