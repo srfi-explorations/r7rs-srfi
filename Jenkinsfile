@@ -37,7 +37,7 @@ pipeline {
                         schemes.each { SCHEME ->
                             stage("${SCHEME} ${SRFI} test docker") {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                    sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
+                                    sh "timeout 300 make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
                                     sh "make clean"
                                     archiveArtifacts artifacts: "logs/${SCHEME}/*.log", allowEmptyArchive: true, fingerprint: true
                                 }

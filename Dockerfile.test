@@ -7,7 +7,7 @@ WORKDIR /cache
 RUN git clone https://gitea.scheme.org/Retropikzel/compile-r7rs.git --depth=1
 RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
 WORKDIR /cache/chibi-scheme
-RUN make
+RUN make DESTDIR=cache
 RUN make install
 RUN snow-chibi install "(foreign c)"
 RUN snow-chibi install "(srfi 170)"
