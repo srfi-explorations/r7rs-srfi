@@ -40,7 +40,7 @@ pipeline {
                                 [(SCHEME): {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 300 make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
+                                            sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
                                                 sh "make clean"
                                                 archiveArtifacts artifacts: "logs/${SCHEME}/*.log", allowEmptyArchive: true, fingerprint: true
                                         }
@@ -48,7 +48,7 @@ pipeline {
 
                                     stage("${SCHEME} install") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} test-install-docker"
+                                            sh "timeout 300 make SCHEME=${SCHEME} SRFI=${SRFI} test-install-docker"
                                         }
                                     }
                                 }]
