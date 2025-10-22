@@ -9,6 +9,7 @@ RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
 WORKDIR /cache/chibi-scheme
 RUN make DESTDIR=cache
 RUN make install
+RUN mkdir -p ${HOME}/.snow && echo "()" > "${HOME}"/.snow/congig.scm
 RUN snow-chibi install "(foreign c)"
 RUN snow-chibi install "(srfi 170)"
 
