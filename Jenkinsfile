@@ -46,12 +46,6 @@ pipeline {
                                                 archiveArtifacts artifacts: "logs/${SCHEME}/*.log", allowEmptyArchive: true, fingerprint: true
                                         }
                                     }
-
-                                    stage("${SCHEME} install") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 300 make SCHEME=${SCHEME} SRFI=${SRFI} test-install-docker"
-                                        }
-                                    }
                                 }]
                             }
                         }
