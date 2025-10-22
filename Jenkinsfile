@@ -45,7 +45,7 @@ pipeline {
 
                             stage("${SCHEME} ${SRFI} test install") {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                    sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-yes package install"
+                                    sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-yes build install"
                                 }
                             }
                         }
