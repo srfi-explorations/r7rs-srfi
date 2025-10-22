@@ -25,7 +25,7 @@ build:
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-test: srfi-test logs/${SCHEME}
+test: srfi-test logs/${SCHEME} ${TMPDIR}
 	rm -rf ${TMPDIR}
 	cp -r srfi-test/r7rs-programs ${TMPDIR}
 	cp -r srfi ${TMPDIR}/
@@ -36,6 +36,9 @@ test: srfi-test logs/${SCHEME}
 	cd ${TMPDIR} && ./${SRFI}
 	cp ${TMPDIR}/srfi-*.log logs/${SCHEME}/srfi-${SRFI}.log
 	chmod -R 755 logs
+
+${TMPDIR}:
+	mkdir -p ${TMPDIR}
 
 logs/${SCHEME}:
 	mkdir -p logs/${SCHEME}
