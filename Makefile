@@ -1,20 +1,19 @@
 .PHONY: README.html
+.SILENT: build install test test-docker
 SCHEME=chibi
-DOCKERIMG=${SCHEME}:head
+DOCKERIMG=${SCHEME}
 SRFI=64
 VERSION=2025.08.27
-TMPDIR=.tmp/${SCHEME}
-TEST_R7RS_TIMEOUT=6000
-TIMEOUT=6000
 CLEAN="*.o *.so *.a *.link"
 
-ifeq "${SCHEME}" "chicken"
-DOCKERIMG="chicken:5"
+ifeq "${SCHEME}" "stklos"
+DOCKERIMG="stklos:head"
 endif
 
 all: package
 
-package: README.html
+build:
+	echo "<pre>$$(cat README.md)</pre>" > README.html
 	snow-chibi package \
 		--version=${VERSION} \
 		--maintainers="Retropikzel" \
@@ -22,17 +21,19 @@ package: README.html
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
-README.html: README.md
-	echo "<pre>$$(cat README.md)</pre>" > README.html
-
-install: package
+install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-test: srfi-test ${TMPDIR} logs/${SCHEME}
-	cp srfi-test/r7rs-programs/${SRFI}.scm ${TMPDIR}/
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o ${SRFI} ${SRFI}.scm
-	cd ${TMPDIR} && ./${SRFI}
-	cp ${TMPDIR}/srfi-*.log logs/${SCHEME}/srfi-${SRFI}.log
+test: srfi-test logs/${SCHEME}
+	rm -rf tmp
+	cp -r srfi-test/r7rs-programs tmp
+	cp -r srfi tmp/
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf tmp/srfi/11.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf tmp/srfi/39.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf tmp/srfi/69.*; fi
+	cd tmp && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o ${SRFI} ${SRFI}.scm
+	cd tmp && ./${SRFI}
+	cp tmp/srfi-*.log logs/${SCHEME}/srfi-${SRFI}.log
 	chmod -R 755 logs
 
 logs/${SCHEME}:
@@ -40,15 +41,13 @@ logs/${SCHEME}:
 
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
-		"make SCHEME=${SCHEME} SRFI=${SRFI} test"
+	docker run -i -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
+		"make SCHEME=${SCHEME} SRFI=${SRFI} test ; chmod -R 755 tmp"
 
-${TMPDIR}:
-	@mkdir -p ${TMPDIR}
-	@cp -r srfi/ ${TMPDIR}/
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
+test-install-docker:
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
+	docker run -i -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
+		"make SCHEME=${SCHEME} SRFI=${SRFI} build install test ; chmod -R 755 tmp"
 
 srfi-test:
 	@git clone https://github.com/srfi-explorations/srfi-test.git \
@@ -58,7 +57,7 @@ srfi-test:
 
 clean:
 	for name in "${CLEAN}"; do find . -name "$${name}" -delete; done
-	rm -rf ${TMPDIR}
+	rm -rf tmp
 
 distclean: clean
 	rm -rf logs

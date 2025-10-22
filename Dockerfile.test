@@ -1,15 +1,30 @@
 ARG SCHEME=chibi
 ARG IMAGE=chibi:head
+FROM debian:trixie AS cache
+RUN apt-get update && apt-get install -y \
+    git make build-essential ca-certificates libffi-dev
+WORKDIR /cache
+RUN git clone https://gitea.scheme.org/Retropikzel/compile-r7rs.git --depth=1
+RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
+WORKDIR /cache/chibi-scheme
+RUN make
+RUN make install
+RUN snow-chibi install "(foreign c)"
+RUN snow-chibi install "(srfi 170)"
+
+ARG SCHEME=chibi
+ARG IMAGE=chibi:head
 FROM schemers/${IMAGE}
 RUN apt-get update && apt-get install -y make libffi-dev
 RUN mkdir ${HOME}/.snow && echo "()" > ${HOME}/.snow/config.scm
-COPY --from=retropikzel1/compile-r7rs /cache /cache
-WORKDIR /cache
+COPY --from=cache /cache /cache
+COPY --from=cache /usr/local/share/snow /usr/local/share/snow
+COPY --from=cache /usr/local/lib/snow /usr/local/lib/snow
+WORKDIR /cache/compile-r7rs
+RUN make build-chibi
 RUN make install
 WORKDIR /cache/chibi-scheme
 RUN make install
-COPY --from=retropikzel1/compile-r7rs /usr/local/share/snow /usr/local/share/snow
-COPY --from=retropikzel1/compile-r7rs /usr/local/lib/snow /usr/local/lib/snow
 WORKDIR /workdir
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}

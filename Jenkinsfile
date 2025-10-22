@@ -1,9 +1,9 @@
 pipeline {
 
     agent {
-        docker {
+        dockerfile {
             label 'docker-x86_64'
-            image 'retropikzel1/compile-r7rs'
+            filename 'Dockerfile.jenkins'
             args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
@@ -18,7 +18,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SRFIS', defaultValue: '2 4 5 8 11 14 39 60 64 69', description: 'Build SRFIs')
+        string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 14 39 60 64 69', description: 'Build SRFIs')
     }
 
     stages {
