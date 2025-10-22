@@ -35,22 +35,21 @@ pipeline {
                 script {
                     def schemes = sh(script: 'compile-r7rs --list-r7rs-schemes', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
-                        def parallelStages = schemes.collectEntries { SCHEME ->
-                            ["${SCHEME} ${SRFI} test docker" : {
+                        def parallelStages = []
+                        schemes.each { SCHEME ->
+                            parallelStages["${SCHEME} ${SRFI} test docker"] = {
                                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                     sh "timeout 300 make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
                                     sh "make clean"
                                     archiveArtifacts artifacts: "logs/${SCHEME}/*.log", allowEmptyArchive: true, fingerprint: true
                                 }
-                            }]
-
-                            /*
-                            stage("${SCHEME} ${SRFI} test install") {
-                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                    sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-yes build install"
+                                stage("${SCHEME} ${SRFI} test install") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-yes build install"
+                                    }
                                 }
                             }
-                            */
+
                             parallel parallelStages
                         }
                     }
