@@ -36,7 +36,7 @@ pipeline {
                     def schemes = sh(script: 'compile-r7rs --list-r7rs-schemes', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI}") {
-                            schemes.each { SCHEME ->
+                            parallel schemes.each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "timeout 300 make SCHEME=${SCHEME} SRFI=${SRFI} test-docker"
