@@ -40,4 +40,16 @@
           stream-unfold
           stream-unfolds
           stream-zip)
+  (cond-expand
+    ((or cyclone mit-scheme)
+     (export make-stream-pare
+             make-stream
+             stream-eager))
+    (stklos
+     (export make-stream-pare
+             make-stream
+             stream-eager
+             stream-delay
+             stream-lazy))
+    (else))
   (include "41.scm"))

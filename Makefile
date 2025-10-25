@@ -33,7 +33,7 @@ test: srfi-test logs/${SCHEME} ${TMPDIR}
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o ${SRFI} ${SRFI}.scm
-	cd ${TMPDIR} && ./${SRFI}
+	cd ${TMPDIR} && printf "\n" | ./${SRFI}
 	cp ${TMPDIR}/srfi-*.log logs/${SCHEME}/srfi-${SRFI}.log
 	chmod -R 755 logs
 
@@ -45,7 +45,7 @@ logs/${SCHEME}:
 
 test-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -t -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
+	docker run -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
 		"make SCHEME=${SCHEME} SRFI=${SRFI} test ; chmod -R 755 ${TMPDIR}"
 
 srfi-test:

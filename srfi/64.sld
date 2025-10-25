@@ -1,6 +1,16 @@
 (define-library
   (srfi 64)
   (cond-expand
+    (chicken
+      (import (except (scheme base) make-parameter parameterize)
+              (scheme case-lambda)
+              (scheme complex)
+              (scheme eval)
+              (scheme file)
+              (scheme process-context)
+              (scheme read)
+              (scheme write)
+              (srfi 39)))
     ((library (scheme complex))
      (import (except (scheme base) make-parameter parameterize)
              (scheme case-lambda)
@@ -21,7 +31,6 @@
               (scheme write)
               (srfi 39))))
   (cond-expand
-    (chicken (export imag-part real-part))
     ((or stklos mit cyclone meevax)
      ; Need to export extra for these to work
      (export %test-assert
