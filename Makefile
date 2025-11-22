@@ -56,7 +56,7 @@ srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git \
 		--depth=1 \
 		--branch=retropikzel-fixes
-	cd srfi-test && chibi-scheme convert.scm
+	cd srfi-test && gosh -r7 convert.scm
 
 clean:
 	git clean -X -f
