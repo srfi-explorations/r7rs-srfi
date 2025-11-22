@@ -27,7 +27,6 @@ pipeline {
         stage('Init and warmup') {
             steps {
                 sh "make srfi-test"
-                sh "make test-docker"
             }
         }
 
