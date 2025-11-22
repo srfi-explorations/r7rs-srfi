@@ -31,10 +31,31 @@ pipeline {
             }
         }
 
-        stage('Tests') {
+        stage('R6RS Tests') {
             steps {
                 script {
-                    def schemes = sh(script: 'compile-r7rs --list-r7rs-schemes', returnStdout: true).split()
+                    def schemes = sh(script: 'compile-scheme --list-r6rs-schemes', returnStdout: true).split()
+                    params.SRFIS.split().each { SRFI ->
+                        stage("SRFI-${SRFI}") {
+                            parallel schemes.collectEntries { SCHEME ->
+                                [(SCHEME): {
+                                    stage("${SCHEME}") {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
+                                        }
+                                    }
+                                }]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('R7RS Tests') {
+            steps {
+                script {
+                    def schemes = sh(script: 'compile-scheme --list-r7rs-schemes', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI}") {
                             parallel schemes.collectEntries { SCHEME ->
@@ -42,7 +63,6 @@ pipeline {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
-                                            archiveArtifacts artifacts: "logs/${SCHEME}/*.log", allowEmptyArchive: true, fingerprint: true
                                         }
                                     }
                                 }]
