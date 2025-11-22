@@ -29,3 +29,6 @@ README.html
 *.a
 *.link
 tmp
+Akku.manifest
+Akku.lock
+.akku

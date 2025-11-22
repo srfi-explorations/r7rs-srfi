@@ -1,5 +1,5 @@
 .PHONY: README.html
-.SILENT: srfi-test build install test test-docker
+.SILENT: srfi-test build install test test-docker clean
 SCHEME=chibi
 DOCKERIMG=${SCHEME}:head
 SRFI=64
@@ -25,25 +25,32 @@ build:
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-test-r7rs: srfi-test logs/${SCHEME} ${TMPDIR}
-	rm -rf ${TMPDIR}
-	cp -r srfi-test/r7rs-programs ${TMPDIR}
+test-r6rs: srfi-test ${TMPDIR}
+	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
+	cp -r srfi ${TMPDIR}/
+	cd ${TMPDIR} && akku install akku-r7rs
+	cd ${TMPDIR} && akku install # Install our SRFI on top of chez-srfi
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -I . -o ${SRFI} ${SRFI}.sps
+	cd ${TMPDIR} && printf "\n" | ./${SRFI}
+
+test-r6rs-docker: srfi-test
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test .
+	docker run -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs"
+
+test-r7rs: srfi-test ${TMPDIR}
+	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
 	cp -r srfi ${TMPDIR}/
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} ${SRFI}.scm
 	cd ${TMPDIR} && printf "\n" | ./${SRFI}
 
-${TMPDIR}:
-	mkdir -p ${TMPDIR}
-
-logs/${SCHEME}:
-	mkdir -p logs/${SCHEME}
-
-test-r7rs-docker:
+test-r7rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
 	docker run -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs"
+
+${TMPDIR}:
+	mkdir -p ${TMPDIR}
+	mkdir -p ${TMPDIR}/srfi
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git \
@@ -52,10 +59,5 @@ srfi-test:
 	cd srfi-test && chibi-scheme convert.scm
 
 clean:
-	for name in "${CLEAN}"; do find . -name "$${name}" -delete; done
-	rm -rf tmp
-
-distclean: clean
-	rm -rf logs
-	rm -rf srfi-test
+	git clean -X -f
 

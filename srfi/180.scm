@@ -1,7 +1,11 @@
 ;; (srfi 180-helpers) begin
 
 (define (%read-error? x)
-  (and (error-object? x) (memq (exception-kind x) '(user read read-incomplete)) #t))
+  ;; FIXME
+  #t
+  #;(and (error-object? x)
+       (memq (exception-kind x)
+             '(user read read-incomplete)) #t))
 
 (define (valid-number? string)
   ;; Original begin

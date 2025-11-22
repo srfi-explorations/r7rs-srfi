@@ -38,7 +38,6 @@
           (scheme inexact)
           (scheme case-lambda)
           (scheme char)
-          (scheme text)
           (scheme write)
           (srfi 145))
   (cond-expand ((library (srfi 60))

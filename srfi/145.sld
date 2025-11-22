@@ -36,4 +36,6 @@
       (else
         (begin
           (define (fatal-error message . objs)
-            (car 0)))))))
+            (if (null? objs)
+              (error message)
+              (apply error (cons message objs)))))))))
