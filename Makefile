@@ -1,5 +1,5 @@
 .PHONY: README.html
-.SILENT: build install test test-docker
+.SILENT: srfi-test build install test test-docker
 SCHEME=chibi
 DOCKERIMG=${SCHEME}:head
 SRFI=64
@@ -25,17 +25,15 @@ build:
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-test: srfi-test logs/${SCHEME} ${TMPDIR}
+test-r7rs: srfi-test logs/${SCHEME} ${TMPDIR}
 	rm -rf ${TMPDIR}
 	cp -r srfi-test/r7rs-programs ${TMPDIR}
 	cp -r srfi ${TMPDIR}/
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-r7rs -I . -o ${SRFI} ${SRFI}.scm
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} ${SRFI}.scm
 	cd ${TMPDIR} && printf "\n" | ./${SRFI}
-	cp ${TMPDIR}/srfi-*.log logs/${SCHEME}/srfi-${SRFI}.log
-	chmod -R 755 logs
 
 ${TMPDIR}:
 	mkdir -p ${TMPDIR}
@@ -43,16 +41,15 @@ ${TMPDIR}:
 logs/${SCHEME}:
 	mkdir -p logs/${SCHEME}
 
-test-docker:
+test-r7rs-docker:
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v "${PWD}:/workdir" -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \
-		"make SCHEME=${SCHEME} SRFI=${SRFI} test ; chmod -R 755 ${TMPDIR}"
+	docker run -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs"
 
 srfi-test:
-	@git clone https://github.com/srfi-explorations/srfi-test.git \
+	git clone https://github.com/srfi-explorations/srfi-test.git \
 		--depth=1 \
 		--branch=retropikzel-fixes
-	@cd srfi-test && chibi-scheme convert.scm
+	cd srfi-test && chibi-scheme convert.scm
 
 clean:
 	for name in "${CLEAN}"; do find . -name "$${name}" -delete; done

@@ -1,21 +1,13 @@
 ARG SCHEME=chibi
 ARG IMAGE=chibi:head
-FROM schemers/chicken:5 AS cache
-RUN apt-get update && apt-get install -y \
-    git make build-essential ca-certificates libffi-dev
+FROM debian:trixie AS cache
+RUN apt-get update && apt-get install -y git make ca-certificates
 WORKDIR /cache
-RUN git clone https://codeberg.org/retropikzel/compile-r7rs.git --depth=1
-RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
-WORKDIR /cache/chibi-scheme
-RUN make
-RUN make install
-RUN mkdir -p ${HOME}/.snow && echo "()" > "${HOME}"/.snow/congig.scm
-RUN snow-chibi install --impls=chicken --always-yes "(foreign c)"
-RUN snow-chibi install --impls=chicken --always-yes "(srfi 170)"
-WORKDIR /cache/compile-r7rs
-RUN make build-chicken
+RUN git clone https://codeberg.org/retropikzel/compile-scheme.git --depth=1
+WORKDIR /cache/compile-scheme
+RUN make build-gauche
 WORKDIR /cache
-RUN apt download make
+RUN apt download make gauche libgauche-0.98-0 libmbedtls21 libmbedcrypto16 libmbedx509-7
 
 ARG SCHEME=chibi
 ARG IMAGE=chibi:head
@@ -24,8 +16,12 @@ RUN mkdir -p ${HOME}/.snow && echo "()" > "${HOME}"/.snow/congig.scm
 COPY --from=cache /cache /cache
 WORKDIR /cache
 RUN dpkg -i *.deb
-COPY --from=cache /cache/compile-r7rs/compile-r7rs /usr/local/bin/compile-r7rs
+WORKDIR /cache/compile-scheme
+RUN make install
 WORKDIR /workdir
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
+COPY srfi-test srfi-test
+COPY Makefile .
+COPY srfi srfi
 
