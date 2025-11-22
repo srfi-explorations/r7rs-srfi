@@ -1,10 +1,8 @@
 FROM debian:trixie-slim
 RUN apt-get update && apt-get install -y \
     make ca-certificates git docker.io gauche
-
 WORKDIR /cache
 RUN git clone https://codeberg.org/retropikzel/compile-scheme.git --depth=1
-
-WORKDIR /cache/compile-r7rs
+WORKDIR /cache/compile-scheme
 RUN make build-gauche
 RUN make install
