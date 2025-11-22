@@ -103,8 +103,10 @@
           test-runner-on-bad-count!
           test-runner-on-bad-end-name
           test-runner-on-bad-end-name!
-          test-runner-factory test-runner-create
-          test-runner-current test-runner-get
+          test-runner-factory
+          test-runner-create
+          test-runner-current
+          test-runner-get
           test-runner-simple
           test-on-group-begin-simple
           test-on-group-end-simple
