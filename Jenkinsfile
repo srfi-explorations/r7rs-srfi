@@ -38,7 +38,7 @@ pipeline {
                     def schemes = sh(script: 'compile-scheme --list-r6rs-schemes', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI}") {
-                            parallel schemes.collectEntries { SCHEME ->
+                            schemes.collectEntries { SCHEME ->
                                 [(SCHEME): {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -61,7 +61,7 @@ pipeline {
                     def schemes = sh(script: 'compile-scheme --list-r7rs-schemes', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI}") {
-                            parallel schemes.collectEntries { SCHEME ->
+                            schemes.collectEntries { SCHEME ->
                                 [(SCHEME): {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
