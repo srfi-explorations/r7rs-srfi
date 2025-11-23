@@ -34,7 +34,7 @@ test-r6rs: ${TMPDIR} .akku #srfi-test
 	cd ${TMPDIR} && akku install
 	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -I . -o ${SRFI} ${SRFI}.sps
-	cd ${TMPDIR} && printf "\n" | ./${SRFI} 2>&1 | tee test-output.txt
+	cd ${TMPDIR} && printf "\n" | ./${SRFI}
 
 test-r6rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test .
@@ -45,7 +45,7 @@ test-r7rs: ${TMPDIR} srfi-test
 	cp -r srfi ${TMPDIR}/
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} ${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | ./${SRFI} 2>&1 | tee test-output.txt
+	cd ${TMPDIR} && printf "\n" | ./${SRFI}
 
 test-r7rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
