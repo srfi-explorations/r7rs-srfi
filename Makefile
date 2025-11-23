@@ -29,7 +29,7 @@ test-r6rs: srfi-test ${TMPDIR}
 	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
 	cp -r srfi ${TMPDIR}/
 	cd ${TMPDIR} && akku install akku-r7rs
-	cd ${TMPDIR} && akku install # Install our SRFI on top of chez-srfi
+	#cd ${TMPDIR} && akku install # Install our SRFI on top of chez-srfi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -I . -o ${SRFI} ${SRFI}.sps
 	cd ${TMPDIR} && printf "\n" | ./${SRFI}
 
