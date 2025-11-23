@@ -1,4 +1,4 @@
-.PHONY: README.html srfi-test
+.PHONY: README.html
 .SILENT: srfi-test build install test test-docker clean
 SCHEME=chibi
 DOCKERIMG=${SCHEME}:head
@@ -58,11 +58,9 @@ ${TMPDIR}:
 	mkdir -p ${TMPDIR}/srfi
 
 srfi-test:
-	mkdir -p srfi-test
-	cp ../srfi-test/*.scm srfi-test/
-	#git clone https://github.com/srfi-explorations/srfi-test.git \
-		#--depth=1 \
-		#--branch=retropikzel-fixes
+	git clone https://github.com/srfi-explorations/srfi-test.git \
+		--depth=1 \
+		--branch=retropikzel-fixes
 	cd srfi-test && gosh -r7 convert.scm
 
 clean:
