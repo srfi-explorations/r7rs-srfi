@@ -29,6 +29,7 @@ pipeline {
             steps {
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
+                sh "make test-r7rs-docker"
             }
         }
 
