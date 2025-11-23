@@ -41,7 +41,11 @@ pipeline {
                                 [(SCHEME): {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
+                                            sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker 2>&1 | tee output.txt"
+                                            def failures = sh(script: 'grep --ignore-case "# of failures" output.txt || echo no', returnStdout: true)
+                                            if (failures != "no") {
+                                                currentStage.result = 'UNSTABLE'
+                                            }
                                         }
                                     }
                                 }]
@@ -63,6 +67,10 @@ pipeline {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "timeout 60 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
+                                            def failures = sh(script: 'grep --ignore-case "# of failures" output.txt || echo no', returnStdout: true)
+                                            if (failures != "no") {
+                                                currentStage.result = 'UNSTABLE'
+                                            }
                                         }
                                     }
                                 }]
