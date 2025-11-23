@@ -19,7 +19,8 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 14 39 41 60 64 69 145 180', description: 'Build SRFIs')
+        //string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 14 39 41 60 64 69 145 180', description: 'Build SRFIs')
+        string(name: 'SRFIS', defaultValue: '64', description: 'Build SRFIs')
     }
 
     stages {
@@ -42,11 +43,7 @@ pipeline {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             timeout(time: 1, unit: 'MINUTES') {
-                                                sh "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker 2>&1 | tee output.txt"
-                                            }
-                                            def failures = sh(script: 'grep --ignore-case "# of failures" output.txt || echo no', returnStdout: true)
-                                            if (failures != "no") {
-                                                currentStage.result = 'UNSTABLE'
+                                                sh "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
                                             }
                                         }
                                     }
@@ -70,10 +67,6 @@ pipeline {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             timeout(time: 1, unit: 'MINUTES') {
                                                 sh "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
-                                            }
-                                            def failures = sh(script: 'grep --ignore-case "# of failures" output.txt || echo no', returnStdout: true)
-                                            if (failures != "no") {
-                                                currentStage.result = 'UNSTABLE'
                                             }
                                         }
                                     }

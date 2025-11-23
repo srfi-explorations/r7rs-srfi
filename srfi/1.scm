@@ -301,14 +301,14 @@
 ;;; Make a list of length LEN.
 
 #;(define (make-list len . maybe-elt)
-(check-arg (lambda (n) (and (integer? n) (>= n 0))) len make-list)
-(let ((elt (cond ((null? maybe-elt) #f) ; Default value
-                 ((null? (cdr maybe-elt)) (car maybe-elt))
-                 (else (error "Too many arguments to MAKE-LIST"
-                              (cons len maybe-elt))))))
-  (do ((i len (- i 1))
-       (ans '() (cons elt ans)))
-    ((<= i 0) ans))))
+  (check-arg (lambda (n) (and (integer? n) (>= n 0))) len make-list)
+  (let ((elt (cond ((null? maybe-elt) #f) ; Default value
+                   ((null? (cdr maybe-elt)) (car maybe-elt))
+                   (else (error "Too many arguments to MAKE-LIST"
+                                (cons len maybe-elt))))))
+    (do ((i len (- i 1))
+         (ans '() (cons elt ans)))
+      ((<= i 0) ans))))
 
 
 ;(define (list . ans) ans)  ; R4RS
@@ -1285,8 +1285,8 @@
 
 ;;; Extended from R4RS to take an optional comparison argument.
 #;(define (member x lis . maybe-=)
-(let ((= (optional maybe-= equal?)))
-  (find-tail (lambda (y) (= x y)) lis)))
+  (let ((= (optional maybe-= equal?)))
+    (find-tail (lambda (y) (= x y)) lis)))
 
 ;;; R4RS, hence we don't bother to define.
 ;;; The MEMBER and then FIND-TAIL call should definitely
