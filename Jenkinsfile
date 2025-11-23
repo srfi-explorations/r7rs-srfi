@@ -38,16 +38,14 @@ pipeline {
                     def schemes = sh(script: 'compile-scheme --list-r6rs-schemes', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI}") {
-                            schemes.collectEntries { SCHEME ->
-                                [(SCHEME): {
-                                    stage("${SCHEME}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            timeout(time: 1, unit: 'MINUTES') {
-                                                sh "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
-                                            }
+                            schemes.each { SCHEME ->
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        timeout(time: 1, unit: 'MINUTES') {
+                                            sh "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
                                         }
                                     }
-                                }]
+                                }
                             }
                         }
                     }
@@ -61,16 +59,14 @@ pipeline {
                     def schemes = sh(script: 'compile-scheme --list-r7rs-schemes', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI}") {
-                            schemes.collectEntries { SCHEME ->
-                                [(SCHEME): {
-                                    stage("${SCHEME}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            timeout(time: 1, unit: 'MINUTES') {
-                                                sh "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
-                                            }
+                            schemes.each { SCHEME ->
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        timeout(time: 1, unit: 'MINUTES') {
+                                            sh "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
                                         }
                                     }
-                                }]
+                                }
                             }
                         }
                     }
