@@ -1,4 +1,4 @@
-.PHONY: README.html srfi-test
+.PHONY: README.html
 .SILENT: srfi-test build install test test-docker clean
 SCHEME=chibi
 DOCKERIMG=${SCHEME}:head
@@ -25,10 +25,7 @@ build:
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-.akku:
-	akku install chez-srfi akku-r7rs
-
-test-r6rs: ${TMPDIR} .akku srfi-test
+test-r6rs: ${TMPDIR} akku srfi-test
 	cp -r .akku/lib ${TMPDIR}/
 	cp -r srfi ${TMPDIR}/
 	cd ${TMPDIR} && akku install akku-r7rs
