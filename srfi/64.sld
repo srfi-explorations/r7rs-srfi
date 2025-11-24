@@ -1,15 +1,6 @@
 (define-library
   (srfi 64)
   (cond-expand
-    (guile
-      (import (except (scheme base) make-parameter parameterize)
-              (scheme case-lambda)
-              (scheme eval)
-              (scheme file)
-              (scheme process-context)
-              (scheme read)
-              (scheme write)
-              (srfi 39)))
     (chicken
       (import (except (scheme base) make-parameter parameterize)
               (scheme case-lambda)

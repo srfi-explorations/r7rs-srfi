@@ -1,4 +1,4 @@
-.PHONY: README.html
+.PHONY: README.html srfi-test
 .SILENT: srfi-test build install test test-docker clean
 SCHEME=chibi
 DOCKERIMG=${SCHEME}:head
@@ -28,7 +28,7 @@ install:
 .akku:
 	akku install chez-srfi akku-r7rs
 
-test-r6rs: ${TMPDIR} .akku srfi-test
+test-r6rs: ${TMPDIR} .akku #srfi-test
 	cp -r .akku/lib ${TMPDIR}/
 	cp -r srfi ${TMPDIR}/
 	cd ${TMPDIR} && akku install akku-r7rs
@@ -40,7 +40,7 @@ test-r6rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test .
 	docker run -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs"
 
-test-r7rs: ${TMPDIR} srfi-test
+test-r7rs: ${TMPDIR} #srfi-test
 	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
 	cp -r srfi ${TMPDIR}/
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
@@ -56,9 +56,10 @@ ${TMPDIR}:
 	mkdir -p ${TMPDIR}/srfi
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git \
-		--depth=1 \
-		--branch=retropikzel-fixes
+	cp ../srfi-test/*.scm srfi-test/
+	#git clone https://github.com/srfi-explorations/srfi-test.git \
+		#--depth=1 \
+		#--branch=retropikzel-fixes
 	cd srfi-test && gosh -r7 convert.scm
 
 clean:
