@@ -27,7 +27,6 @@ WORKDIR /cache/akku
 RUN bash install.sh
 ENV PATH=/root/.local/bin:${PATH}
 WORKDIR /workdir
-RUN akku install chez-srfi akku-r7rs
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
 COPY srfi-test srfi-test

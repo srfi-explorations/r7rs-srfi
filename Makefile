@@ -26,11 +26,13 @@ install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
 test-r6rs: ${TMPDIR} srfi-test
-	cp -r .akku/lib ${TMPDIR}/
-	cp -r srfi ${TMPDIR}/
-	cd ${TMPDIR} && akku install akku-r7rs
+	cp -r srfi/145.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-145.* ${TMPDIR}/srfi/
+	cp -r srfi/180.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-180.* ${TMPDIR}/srfi/
 	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -I . -o ${SRFI} ${SRFI}.sps
+	cd ${TMPDIR} && akku install chez-srfi akku-r7rs
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} ${SRFI}.sps
 	cd ${TMPDIR} && printf "\n" | ./${SRFI}
 
 test-r6rs-docker: srfi-test
@@ -51,6 +53,10 @@ test-r7rs-docker: srfi-test
 ${TMPDIR}:
 	mkdir -p ${TMPDIR}
 	mkdir -p ${TMPDIR}/srfi
+
+local-srfi-test:
+	cp ../srfi-test/*.scm srfi-test/
+	cd srfi-test && gosh -r7 convert.scm
 
 srfi-test:
 	#cp ../srfi-test/*.scm srfi-test/
