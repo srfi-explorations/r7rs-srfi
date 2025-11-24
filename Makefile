@@ -11,7 +11,7 @@ ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
 endif
 
-all: package
+all: build
 
 build:
 	echo "<pre>$$(cat README.md)</pre>" > README.html
@@ -28,10 +28,10 @@ install:
 .akku:
 	akku install chez-srfi akku-r7rs
 
-test-r6rs: ${TMPDIR} .akku #srfi-test
+test-r6rs: ${TMPDIR} .akku srfi-test
 	cp -r .akku/lib ${TMPDIR}/
 	cp -r srfi ${TMPDIR}/
-	cd ${TMPDIR} && akku install
+	cd ${TMPDIR} && akku install akku-r7rs
 	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -I . -o ${SRFI} ${SRFI}.sps
 	cd ${TMPDIR} && printf "\n" | ./${SRFI}

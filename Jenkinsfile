@@ -19,8 +19,7 @@ pipeline {
     }
 
     parameters {
-        //string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 14 39 41 60 64 69 145 180', description: 'Build SRFIs')
-        string(name: 'SRFIS', defaultValue: '64', description: 'Build SRFIs')
+        string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 14 39 41 60 64 69 145 180', description: 'Build SRFIs')
     }
 
     stages {
