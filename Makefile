@@ -25,7 +25,7 @@ build:
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-test-r6rs: ${TMPDIR} akku srfi-test
+test-r6rs: ${TMPDIR} srfi-test
 	cp -r .akku/lib ${TMPDIR}/
 	cp -r srfi ${TMPDIR}/
 	cd ${TMPDIR} && akku install akku-r7rs
