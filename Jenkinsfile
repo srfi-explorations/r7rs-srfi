@@ -19,7 +19,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 14 39 41 60 64 69 145 180', description: 'Build SRFIs')
+        string(name: 'R7RS_SRFIS', defaultValue: '1 2 4 5 8 11 14 39 41 60 64 69 145 180', description: 'Test R7RS SRFIs')
     }
 
     stages {
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     def schemes = sh(script: 'compile-scheme --list-r6rs-schemes', returnStdout: true).split()
-                    params.SRFIS.split().each { SRFI ->
+                    params.R7RS_SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI}") {
                             schemes.each { SCHEME ->
                                 stage("${SCHEME}") {

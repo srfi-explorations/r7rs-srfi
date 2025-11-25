@@ -88,8 +88,8 @@
     unzip4
     unzip5
     count
-    ;map
-    ;for-each
+    map
+    for-each
     fold
     unfold
     pair-fold
