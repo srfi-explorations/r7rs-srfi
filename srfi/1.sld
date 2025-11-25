@@ -1,8 +1,11 @@
 (define-library
   (srfi 1)
   (import
-    (scheme base)
-    (scheme cxr)
+    (except (scheme base)
+            caar
+            cdar
+            cddr
+            map)
     (srfi 8))
   (export
     cons
