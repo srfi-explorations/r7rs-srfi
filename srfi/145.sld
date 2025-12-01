@@ -20,7 +20,9 @@
 
 (define-library (srfi 145)
   (export assume)
-  (import (scheme base))
+  (cond-expand
+    (racket)
+    (else (import (scheme base))))
   (begin
     (define-syntax assume
       (syntax-rules ()
@@ -28,14 +30,14 @@
          (or expression
              (fatal-error "invalid assumption" (quote expression) (list message ...))))
         ((assume . _)
-         (syntax-error "invalid assume syntax"))))
-    (cond-expand
-      (debug
-        (begin
-          (define fatal-error error)))
-      (else
-        (begin
-          (define (fatal-error message . objs)
-            (if (null? objs)
-              (error message)
-              (apply error (cons message objs)))))))))
+         (syntax-error "invalid assume syntax")))))
+  (cond-expand
+    (debug
+      (begin
+        (define fatal-error error)))
+    (else
+      (begin
+        (define (fatal-error message . objs)
+          (if (null? objs)
+            (error message)
+            (apply error (cons message objs))))))))
