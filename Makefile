@@ -42,7 +42,10 @@ test-r6rs-docker: srfi-test
 test-r7rs: tmpdir srfi-test
 	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
 	cp -r srfi/* ${TMPDIR}/srfi/
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -A . -o ${SRFI} ${SRFI}.scm
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} ${SRFI}.scm
 	cd ${TMPDIR} && printf "\n" | ./${SRFI}
 
 test-r7rs-docker: srfi-test
