@@ -1,15 +1,6 @@
 (define-library
   (srfi 64)
   (cond-expand
-    (racket
-      (import (scheme base)
-              (scheme case-lambda)
-              (scheme complex)
-              (scheme eval)
-              (scheme file)
-              (scheme process-context)
-              (scheme read)
-              (scheme write)))
     (tr7
       (import (except (scheme base) make-parameter parameterize)
               (scheme case-lambda)
