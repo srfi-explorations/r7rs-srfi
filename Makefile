@@ -12,6 +12,10 @@ ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
 endif
 
+ifeq "${SCHEME}" "racket"
+DOCKERIMG="racket:latest"
+endif
+
 all: build
 
 build:
