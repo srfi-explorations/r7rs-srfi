@@ -29,7 +29,7 @@ install:
 test-r6rs: tmpdir srfi-test
 	cp -r srfi/* ${TMPDIR}/srfi/
 	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
-	cd ${TMPDIR} && akku install akku-r7rs
+	cd ${TMPDIR} && akku install chez-srfi akku-r7rs
 	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku; cd ${TMPDIR} akku install; fi
 	@if [ "${SCHEME}" = "ypsilon" ]; then rm -rf ${TMPDIR}/.akku; cd ${TMPDIR} && akku install; fi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -A .akku/lib -o ${SRFI} --debug ${SRFI}.sps

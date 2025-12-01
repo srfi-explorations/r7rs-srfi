@@ -35,7 +35,7 @@ Add files:
         - Library body/content
     - srfi/srfi-N.scm
         - Guile compability file
-        - Should be identical to srfi/N.sld
+        - Should be (almost, change the name) identical to srfi/N.sld
 
 
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).

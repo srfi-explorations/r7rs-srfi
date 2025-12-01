@@ -1,5 +1,5 @@
 (define-library
-  (srfi 64)
+  (srfi srfi-64)
   (cond-expand
     (tr7
       (import (scheme base)
