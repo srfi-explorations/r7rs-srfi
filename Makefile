@@ -27,8 +27,7 @@ install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
 test-r6rs: tmpdir srfi-test
-	cp -r srfi/${SRFI}.* ${TMPDIR}/srfi/
-	cp -r srfi/srfi-${SRFI}.* ${TMPDIR}/srfi/
+	cp -r srfi/* ${TMPDIR}/srfi/
 	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
 	cd ${TMPDIR} && akku install akku-r7rs
 	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku; cd ${TMPDIR} akku install; fi

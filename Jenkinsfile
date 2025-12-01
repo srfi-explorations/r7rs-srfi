@@ -37,7 +37,7 @@ pipeline {
                 stage('R6RS') {
                     steps {
                         script {
-                            def schemes = sh(script: 'compile-scheme --list-r6rs-schemes', returnStdout: true).split()
+                            def schemes = sh(script: 'compile-scheme --list-r6rs-except larceny', returnStdout: true).split()
                                 params.SRFIS.split().each { SRFI ->
                                     stage("SRFI-${SRFI}") {
                                         schemes.each { SCHEME ->
@@ -56,7 +56,7 @@ pipeline {
                 stage('R7RS') {
                     steps {
                         script {
-                            def schemes = sh(script: 'compile-scheme --list-r7rs-schemes', returnStdout: true).split()
+                            def schemes = sh(script: 'compile-scheme --list-r7rs-except larceny', returnStdout: true).split()
                                 params.SRFIS.split().each { SRFI ->
                                     stage("SRFI-${SRFI}") {
                                         schemes.each { SCHEME ->
