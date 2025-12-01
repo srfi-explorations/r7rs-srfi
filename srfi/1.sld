@@ -3,10 +3,10 @@
   (import
     (except (scheme base)
             caar
+            cadr
             cdar
             cddr
-            map)
-    (srfi 8))
+            map))
   (export
     cons
     list
@@ -28,6 +28,7 @@
     car
     cdr
     cdar
+    cadr
     cddr
     caar
     caadr

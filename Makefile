@@ -1,5 +1,6 @@
-.PHONY: README.html
-.SILENT: srfi-test build install test test-docker clean
+.PHONY: README.html tmpdir
+.SILENT: srfi-test build install test test-docker clean test-r6rs \
+	test-r6rs-docker test-r7rs test-r7rs-docker tmpdir
 SCHEME=chibi
 DOCKERIMG=${SCHEME}:head
 SRFI=64
@@ -25,37 +26,36 @@ build:
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-test-r6rs: ${TMPDIR} srfi-test
-	#cp -r srfi/145.* ${TMPDIR}/srfi/
-	#cp -r srfi/srfi-145.* ${TMPDIR}/srfi/
-	#cp -r srfi/180.* ${TMPDIR}/srfi/
-	#cp -r srfi/srfi-180.* ${TMPDIR}/srfi/
-	cp -r srfi/* ${TMPDIR}/srfi/
+test-r6rs: tmpdir srfi-test
+	cp -r srfi/${SRFI}.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-${SRFI}.* ${TMPDIR}/srfi/
 	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
-	cd ${TMPDIR} && akku install chez-srfi akku-r7rs
+	cd ${TMPDIR} && akku install akku-r7rs
 	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku; cd ${TMPDIR} akku install; fi
 	@if [ "${SCHEME}" = "ypsilon" ]; then rm -rf ${TMPDIR}/.akku; cd ${TMPDIR} && akku install; fi
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} ${SRFI}.sps
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -A .akku/lib -o ${SRFI} --debug ${SRFI}.sps
 	cd ${TMPDIR} && printf "\n" | ./${SRFI}
 
 test-r6rs-docker: srfi-test
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test .
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet .
 	docker run -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs"
 
-test-r7rs: ${TMPDIR} srfi-test
+test-r7rs: tmpdir srfi-test
 	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
-	cp -r srfi ${TMPDIR}/
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} ${SRFI}.scm
+	cp -r srfi/* ${TMPDIR}/srfi/
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -A . -o ${SRFI} ${SRFI}.scm
 	cd ${TMPDIR} && printf "\n" | ./${SRFI}
 
 test-r7rs-docker: srfi-test
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet .
 	docker run -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs"
 
-${TMPDIR}:
+tmpdir:
+	rm -rf ${TMPDIR}
 	mkdir -p ${TMPDIR}
 	mkdir -p ${TMPDIR}/srfi
+	mkdir -p ${TMPDIR}/libs
+	mkdir -p ${TMPDIR}/libs/srfi
 
 local-srfi-test:
 	cp ../srfi-test/*.scm srfi-test/
