@@ -32,6 +32,7 @@ install:
 
 test-r6rs: tmpdir srfi-test
 	cp -r srfi/180.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-180.* ${TMPDIR}/srfi/
 	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
 	cd ${TMPDIR} && akku install chez-srfi akku-r7rs
 	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
