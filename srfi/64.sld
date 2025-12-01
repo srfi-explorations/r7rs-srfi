@@ -2,15 +2,16 @@
   (srfi 64)
   (cond-expand
     (tr7
-      (import (scheme base)
+      (import (except (scheme base) make-parameter parameterize)
               (scheme case-lambda)
               (scheme eval)
               (scheme file)
               (scheme process-context)
               (scheme read)
-              (scheme write)))
+              (scheme write)
+              (srfi 39)))
     (else
-      (import (scheme base)
+      (import (except (scheme base) make-parameter parameterize)
               (scheme case-lambda)
               (scheme complex)
               (scheme eval)
