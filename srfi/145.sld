@@ -18,19 +18,12 @@
 ;; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 ;; IN THE SOFTWARE.
 
-(define-library (srfi 145)
-  (export assume)
+(define-library
+  (srfi 145)
+  (import (scheme base))
   (cond-expand
-    (racket)
-    (else (import (scheme base))))
-  (begin
-    (define-syntax assume
-      (syntax-rules ()
-        ((assume expression message ...)
-         (or expression
-             (fatal-error "invalid assumption" (quote expression) (list message ...))))
-        ((assume . _)
-         (syntax-error "invalid assume syntax")))))
+    (cyclone (export assume fatal-error))
+    (else (export assume)))
   (cond-expand
     (debug
       (begin
@@ -40,4 +33,12 @@
         (define (fatal-error message . objs)
           (if (null? objs)
             (error message)
-            (apply error (cons message objs))))))))
+            (apply error (cons message objs)))))))
+  (begin
+    (define-syntax assume
+      (syntax-rules ()
+        ((assume expression message ...)
+         (or expression
+             (fatal-error "invalid assumption" (quote expression) (list message ...))))
+        ((assume . _)
+         (syntax-error "invalid assume syntax"))))))
