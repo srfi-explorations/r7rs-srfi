@@ -4,7 +4,7 @@
 SCHEME=chibi
 DOCKERIMG=${SCHEME}:head
 SRFI=64
-VERSION=2025.08.27
+VERSION=2025.12.02
 CLEAN="*.o *.so *.a *.link"
 TMPDIR=.tmp/${SCHEME}
 
@@ -31,7 +31,6 @@ install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
 test-r6rs: tmpdir srfi-test
-	cp -r srfi/180.* ${TMPDIR}/srfi/
 	cp -r srfi/145.* ${TMPDIR}/srfi/
 	cp -r srfi/srfi-145.* ${TMPDIR}/srfi/
 	cp -r srfi/180.* ${TMPDIR}/srfi/

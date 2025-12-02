@@ -22,6 +22,13 @@
 ;; IN THE SOFTWARE.
 
 (define-library (srfi srfi-180)
+  (import (scheme base)
+          (scheme inexact)
+          (scheme case-lambda)
+          (scheme char)
+          (scheme write)
+          (srfi 60)
+          (srfi 145))
   (export json-number-of-character-limit
           json-nesting-depth-limit
           json-null?
@@ -34,13 +41,6 @@
           json-sequence-read
           json-accumulator
           json-write)
-  (import (scheme base)
-          (scheme inexact)
-          (scheme case-lambda)
-          (scheme char)
-          (scheme write)
-          (srfi 60)
-          (srfi 145))
   #;(cond-expand ((library (srfi 60))
                 (import (only (srfi 60) arithmetic-shift bitwise-ior)))
                ((library (srfi 151))
