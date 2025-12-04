@@ -56,7 +56,7 @@ test-r6rs: tmpdir srfi-test
 	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
 
 test-r6rs-docker: srfi-test
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet .
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
 	docker run -v /tmp/akku-cache:/root/.cache/akku -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r6rs"
 
 test-r7rs: tmpdir srfi-test
@@ -69,7 +69,8 @@ test-r7rs: tmpdir srfi-test
 	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
 
 test-r7rs-docker: srfi-test
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet .
+	echo "Building docker image..."
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
 	docker run -v /tmp/akku-cache:/root/.cache/akku -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r7rs"
 
 tmpdir:
