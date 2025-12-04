@@ -53,11 +53,11 @@ test-r6rs: tmpdir srfi-test
 	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
 	@if [ "${SCHEME}" = "ypsilon" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} --debug ${SRFI}.sps
-	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI} || echo "Exit code: $$?"
+	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
 
 test-r6rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet .
-	docker run -v /tmp/akku-cache:/root/.cache/akku -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs"
+	docker run -v /tmp/akku-cache:/root/.cache/akku -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r6rs"
 
 test-r7rs: tmpdir srfi-test
 	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
@@ -66,11 +66,11 @@ test-r7rs: tmpdir srfi-test
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} --debug ${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI} || echo "Exit code: $$?"
+	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
 
 test-r7rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet .
-	docker run -v /tmp/akku-cache:/root/.cache/akku -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs"
+	docker run -v /tmp/akku-cache:/root/.cache/akku -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r7rs"
 
 tmpdir:
 	rm -rf ${TMPDIR}

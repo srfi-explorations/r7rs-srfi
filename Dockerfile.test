@@ -24,7 +24,7 @@ RUN mkdir -p ${HOME}/.snow && echo "()" > "${HOME}"/.snow/congig.scm
 COPY --from=cache /cache /cache
 WORKDIR /cache
 RUN dpkg -i *.deb
-RUN apt-get update && apt-get install -y libcurl4t64
+RUN apt-get update && apt-get install -y libcurl4t64 time
 WORKDIR /cache/chibi-scheme
 RUN make install
 WORKDIR /cache/compile-scheme
