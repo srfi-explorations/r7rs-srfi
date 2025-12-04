@@ -84,7 +84,7 @@ local-srfi-test:
 	cd srfi-test && gosh -r7 convert.scm
 
 cat-log:
-	cat ${TMPDIR}/*.log
+	cat $$(find . -name "*.log")
 
 srfi-test:
 	#cp ../srfi-test/*.scm srfi-test/
