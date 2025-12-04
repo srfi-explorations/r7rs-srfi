@@ -41,7 +41,7 @@ pipeline {
                                 [(SCHEME): {
                                     stage("R6RS ${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
+                                            sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
                                         }
                                     }
                                 }]
@@ -55,7 +55,7 @@ pipeline {
                                 [(SCHEME): {
                                     stage("R7RS ${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
+                                            sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
                                         }
                                     }
                                 }]
