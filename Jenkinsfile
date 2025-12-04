@@ -44,7 +44,6 @@ pipeline {
                                         sh "timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
                                     }
                                 }
-                            }
                             }]
                         }
                     }
