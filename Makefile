@@ -83,9 +83,6 @@ local-srfi-test:
 	cp ../srfi-test/*.scm srfi-test/
 	cd srfi-test && gosh -r7 convert.scm
 
-cat-log:
-	cat $$(find ${TMPDIR} -name "*.log")
-
 srfi-test:
 	#cp ../srfi-test/*.scm srfi-test/
 	git clone https://github.com/srfi-explorations/srfi-test.git \
