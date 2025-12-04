@@ -4,7 +4,7 @@
 SCHEME=chibi
 DOCKERIMG=${SCHEME}:head
 SRFI=64
-VERSION=2025.12.02
+VERSION=2025.12.04
 CLEAN="*.o *.so *.a *.link"
 TMPDIR=.tmp/${SCHEME}
 TIMECMD=time
