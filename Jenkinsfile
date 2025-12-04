@@ -40,8 +40,8 @@ pipeline {
                             def schemes = sh(script: 'compile-scheme --list-r6rs-except larceny', returnStdout: true).split()
                                 params.SRFIS.split().each { SRFI ->
                                     stage("SRFI-${SRFI}") {
-                                        schemes.each { SCHEME ->
-                                            parallel {
+                                        parallel {
+                                            schemes.each { SCHEME ->
                                                 stage("${SCHEME}") {
                                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                         sh "TIMECMD=\"/usr/bin/time -v\" timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker cat-log"
@@ -61,8 +61,8 @@ pipeline {
                             def schemes = sh(script: 'compile-scheme --list-r7rs-except larceny meevax tr7', returnStdout: true).split()
                                 params.SRFIS.split().each { SRFI ->
                                     stage("SRFI-${SRFI}") {
-                                        schemes.each { SCHEME ->
-                                            parallel {
+                                        parallel {
+                                            schemes.each { SCHEME ->
                                                 stage("${SCHEME}") {
                                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                                         sh "TIMECMD=\"/usr/bin/time -v\" timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker cat-log"
