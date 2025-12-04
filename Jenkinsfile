@@ -38,7 +38,7 @@ pipeline {
                     params.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI}") {
                             parallel r6rs_schemes.collectEntries { SCHEME ->
-                            [(SCHEME}: {
+                            [(SCHEME): {
                                 stage("R6RS ${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
