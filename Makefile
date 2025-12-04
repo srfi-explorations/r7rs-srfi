@@ -53,7 +53,7 @@ test-r6rs: tmpdir srfi-test
 	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
 	@if [ "${SCHEME}" = "ypsilon" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} --debug ${SRFI}.sps
-	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
+	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI} || echo "Exit code: $$?"
 
 test-r6rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet .
@@ -66,7 +66,7 @@ test-r7rs: tmpdir srfi-test
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} --debug ${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
+	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI} || echo "Exit code: $$?"
 
 test-r7rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet .

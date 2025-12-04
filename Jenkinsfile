@@ -41,9 +41,11 @@ pipeline {
                                 params.SRFIS.split().each { SRFI ->
                                     stage("SRFI-${SRFI}") {
                                         schemes.each { SCHEME ->
-                                            stage("${SCHEME}") {
-                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                                    sh "TIMECMD=\"/usr/bin/time -v\" timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker cat-log"
+                                            parallel {
+                                                stage("${SCHEME}") {
+                                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                        sh "TIMECMD=\"/usr/bin/time -v\" timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker cat-log"
+                                                    }
                                                 }
                                             }
                                         }
@@ -60,9 +62,11 @@ pipeline {
                                 params.SRFIS.split().each { SRFI ->
                                     stage("SRFI-${SRFI}") {
                                         schemes.each { SCHEME ->
-                                            stage("${SCHEME}") {
-                                                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                                    sh "TIMECMD=\"/usr/bin/time -v\" timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker cat-log"
+                                            parallel {
+                                                stage("${SCHEME}") {
+                                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                                        sh "TIMECMD=\"/usr/bin/time -v\" timeout 120 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker cat-log"
+                                                    }
                                                 }
                                             }
                                         }
