@@ -19,7 +19,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 13 14 39 41 60 63 64 69 95 111 113 115 116 180', description: 'Test SRFIs')
+        string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 13 14 27 39 41 60 63 64 69 95 111 113 115 116 180', description: 'Test SRFIs')
     }
 
     stages {
