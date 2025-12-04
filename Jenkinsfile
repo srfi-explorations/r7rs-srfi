@@ -36,31 +36,29 @@ pipeline {
             steps {
                 script {
                     def r6rs_schemes = sh(script: 'compile-scheme --list-r6rs-except larceny mosh ypsilon', returnStdout: true).split()
-                        params.SRFIS.split().each { SRFI ->
-                            stage("SRFI-${SRFI} R6RS") {
-                                parallel r6rs_schemes.collectEntries { SCHEME ->
-                                [(SCHEME): {
-                                    stage("${SCHEME}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
-                                        }
+                    params.SRFIS.split().each { SRFI ->
+                        stage("SRFI-${SRFI} R6RS") {
+                            parallel r6rs_schemes.collectEntries { SCHEME ->
+                            [(SCHEME): {
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
                                     }
-                                }]
-                            }
+                                }
+                            }]
                         }
                     }
-                        def r7rs_schemes = sh(script: 'compile-scheme --list-r7rs-except larceny meevax tr7', returnStdout: true).split()
-                        params.SRFIS.split().each { SRFI ->
-                            stage("SRFI-${SRFI} R7RS") {
-                                parallel r7rs_schemes.collectEntries { SCHEME ->
-                                [(SCHEME): {
-                                    stage("${SCHEME}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
-                                        }
+                    def r7rs_schemes = sh(script: 'compile-scheme --list-r7rs-except larceny meevax tr7', returnStdout: true).split()
+                    params.SRFIS.split().each { SRFI ->
+                        stage("SRFI-${SRFI} R7RS") {
+                            parallel r7rs_schemes.collectEntries { SCHEME ->
+                            [(SCHEME): {
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
                                     }
-                                }]
-                            }
+                                }
+                            }]
                         }
                     }
                 }
