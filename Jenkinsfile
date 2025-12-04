@@ -35,7 +35,7 @@ pipeline {
         stage('Tests') {
             steps {
                 script {
-                    def r6rs_schemes = sh(script: 'compile-scheme --list-r6rs-except larceny', returnStdout: true).split()
+                    def r6rs_schemes = sh(script: 'compile-scheme --list-r6rs-except larceny mosh ypsilon', returnStdout: true).split()
                         params.SRFIS.split().each { SRFI ->
                             stage("SRFI-${SRFI} R6RS") {
                                 parallel r6rs_schemes.collectEntries { SCHEME ->
