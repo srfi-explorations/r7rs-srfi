@@ -1,5 +1,6 @@
 ;;;;"array.scm" Arrays for Scheme
 ; Copyright (C) 2001, 2003 Aubrey Jaffer
+; Copyright (C) 2025 Retropikzel
 ;
 ;Permission to copy this software, to modify it, to redistribute it,
 ;to distribute modified versions, and to use it for any purpose is
@@ -31,12 +32,12 @@
                       )))
 
 (define-record-type <array>
-  (array:construct dimensions scales offset store)
+  (array-construct dimensions scales offset store)
   array?
-  (dimensions array:dimensions)
-  (scales array:scales)
-  (offset array:store)
-  (store array:offset))
+  (dimensions internal-array-dimensions)
+  (scales internal-array-scales)
+  (offset internal-array-store)
+  (store internal-array-offset))
 
 #;(define array:dimensions
   (let ((dimensions (array-dimendions-get array:rtd)))
@@ -131,15 +132,15 @@
                    (negative? idx)))))
         ((or (array? obj1) (array? obj2))
          (and (array? obj1) (array? obj2)
-              (equal? (array:dimensions obj1) (array:dimensions obj2))
-              (equal? (array:store obj1) (array:store obj2))))
+              (equal? (internal-array-dimensions obj1) (internal-array-dimensions obj2))
+              (equal? (array-store obj1) (array:store obj2))))
         (else #f)))
 
 ;;@body
 ;;Returns the number of dimensions of @1.  If @1 is not an array, 0 is
 ;;returned.
 (define (array-rank obj)
-  (if (array? obj) (length (array:dimensions obj)) 0))
+  (if (array? obj) (length (internal-array-dimensions obj)) 0))
 
 ;;@args array
 ;;Returns a list of dimensions.
@@ -148,7 +149,7 @@
 ;;(array-dimensions (make-array '#() 3 5))
 ;;   @result{} (3 5)
 ;;@end example
-(define array-dimensions array:dimensions)
+(define array-dimensions internal-array-dimensions)
 
 ;;@args prototype k1 @dots{}
 ;;
@@ -170,7 +171,7 @@
                ((0) (make-string tcnt))
                (else (make-string tcnt
                                   (string-ref prototype 0))))
-             (let ((pdims (array:dimensions prototype)))
+             (let ((pdims (internal-array-dimensions prototype)))
                (case (apply * pdims)
                  ((0) (make-vector tcnt))
                  (else (make-vector tcnt
@@ -178,7 +179,7 @@
                                            (map (lambda (x) 0) pdims)))))))))
     (define (loop dims scales)
       (if (null? dims)
-          (array:construct dimensions (cdr scales) 0 store)
+          (array-construct dimensions (cdr scales) 0 store)
           (loop (cdr dims) (cons (* (car dims) (car scales)) scales))))
     (loop (reverse dimensions) '(1))))
 ;;@args prototype k1 @dots{}
@@ -206,7 +207,7 @@
 ;;   @result{} FOO
 ;;@end example
 (define (make-shared-array array mapper . dimensions)
-  (define odl (array:scales array))
+  (define odl (internal-array-scales array))
   (define rank (length dimensions))
   (define shape
     (map (lambda (dim) (if (list? dim) dim (list 0 (+ -1 dim)))) dimensions))
@@ -216,14 +217,14 @@
        (uvts '() (cons uvt uvts)))
       ((negative? idx)
        (let ((ker0 (apply + (map * odl (apply mapper uvt)))))
-         (array:construct
+         (array-construct
           (map (lambda (dim) (+ 1 (- (cadr dim) (car dim)))) shape)
           (map (lambda (uvt) (- (apply + (map * odl (apply mapper uvt))) ker0))
                uvts)
           (apply +
-                 (array:offset array)
+                 (internal-array-offset array)
                  (map * odl (apply mapper (map car shape))))
-          (array:store array))))))
+          (internal-array-store array))))))
 
 ;;@args rank proto list
 ;;@3 must be a rank-nested list consisting of all the elements, in
@@ -277,7 +278,7 @@
         (do ((lst '() (cons (ra2l (cdr dims) (cons idx idxs)) lst))
              (idx (+ -1 (car dims)) (+ -1 idx)))
             ((negative? idx) lst))))
-  (ra2l (array-dimensions ra) '()))
+  (ra2l (internal-array-dimensions ra) '()))
 
 ;;@args vect proto dim1 @dots{}
 ;;@1 must be a vector of length equal to the product of exact
@@ -320,7 +321,7 @@
 ;;                @result{} #(ho)
 ;;@end example
 (define (array->vector ra)
-  (define dims (array-dimensions ra))
+  (define dims (internal-array-dimensions ra))
   (let* ((vdx (apply * dims))
          (vect (make-vector vdx)))
     (define (ra2v dims idxs)
@@ -334,8 +335,8 @@
             (ra2v (cdr dims) (cons idx idxs)))))
     (ra2v dims '())))
 
-(define (array:in-bounds? array indices)
-  (do ((bnds (array:dimensions array) (cdr bnds))
+(define (internal-array-in-bounds? array indices)
+  (do ((bnds (internal-array-dimensions array) (cdr bnds))
        (idxs indices (cdr idxs)))
       ((or (null? bnds)
            (null? idxs)
@@ -347,26 +348,26 @@
 ;;Returns @code{#t} if its arguments would be acceptable to
 ;;@code{array-ref}.
 (define (array-in-bounds? array . indices)
-  (array:in-bounds? array indices))
+  (internal-array-in-bounds? array indices))
 
 ;;@args array k1 @dots{}
 ;;Returns the (@2, @dots{}) element of @1.
 (define (array-ref array . indices)
-  (define store (array:store array))
-  (or (array:in-bounds? array indices)
+  (define store (internal-array-store array))
+  (or (internal-array-in-bounds? array indices)
       (error "array-ref" (list 'bad-indices indices)))
   ((if (string? store) string-ref vector-ref)
-   store (apply + (array:offset array) (map * (array:scales array) indices))))
+   store (apply + (internal-array-offset array) (map * (internal-array-scales array) indices))))
 
 ;;@args array obj k1 @dots{}
 ;;Stores @2 in the (@3, @dots{}) element of @1.  The value returned
 ;;by @0 is unspecified.
 (define (array-set! array obj . indices)
-  (define store (array:store array))
-  (or (array:in-bounds? array indices)
+  (define store (internal-array-store array))
+  (or (internal-array-in-bounds? array indices)
       (error "array-set!" (list 'bad-indices indices)))
   ((if (string? store) string-set! vector-set!)
-   store (apply + (array:offset array) (map * (array:scales array) indices))
+   store (apply + (internal-array-offset array) (map * (internal-array-scales array) indices))
    obj))
 
 ;;@noindent

@@ -1,17 +1,15 @@
 (define-library
   (srfi 1)
-  (import
-    (scheme base)
-    (scheme cxr)
-    (srfi 8))
+  (import (scheme base)
+          (scheme cxr))
   (export
     ;cons
     ;list
     xcons
     cons*
-    make-list
+    ;make-list
     list-tabulate
-    list-copy
+    ;list-copy
     circular-list
     iota
     ;pair?
@@ -25,6 +23,7 @@
     ;car
     ;cdr
     cdar
+    cadr
     cddr
     caar
     caadr
@@ -49,7 +48,7 @@
     cddadr
     cdddar
     cddddr
-    list-ref
+    ;list-ref
     first
     second
     third
@@ -110,9 +109,9 @@
     filter!
     partition!
     remove!
-    member
-    memq
-    memv
+    ;member
+    ;memq
+    ;memv
     find
     find-tail
     any
@@ -129,9 +128,9 @@
     delete-duplicates
     delete!
     delete-duplicates!
-    assoc
-    assq
-    assv
+    ;assoc
+    ;assq
+    ;assv
     alist-cons
     alist-copy
     alist-delete
@@ -149,7 +148,8 @@
     lset-xor!
     lset-diff+intersection
     lset-diff+intersection!
-    set-car!
-    set-cdr!)
+    ;set-car!
+    ;set-cdr!
+    )
     (include "1.scm"))
 

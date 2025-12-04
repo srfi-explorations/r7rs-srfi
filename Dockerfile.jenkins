@@ -1,6 +1,6 @@
 FROM debian:trixie-slim
 RUN apt-get update && apt-get install -y \
-    make ca-certificates git docker.io gauche
+    make ca-certificates git docker.io gauche time
 WORKDIR /cache
 RUN git clone https://codeberg.org/retropikzel/compile-scheme.git --depth=2
 WORKDIR /cache/compile-scheme

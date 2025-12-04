@@ -15,6 +15,22 @@
 ;   SE, 22-Mar-2002: comments adjusted, range added
 ;   SE, 25-Mar-2002: pack/unpack just return their argument
 
+(define-record-type <random-source>
+  (internal-make-random-source
+    state-ref
+    state-set!
+    randomize!
+    pseudo-randomize!
+    make-integers
+    make-reals)
+  internal-random-source?
+  (state-ref internal-random-source-state-ref)
+  (state-set! internal-random-source-state-set!)
+  (randomize! internal-random-source-randomize!)
+  (pseudo-randomize! internal-random-source-pseudo-randomize!)
+  (make-integers internal-random-source-make-integers)
+  (make-reals internal-random-source-make-reals))
+
 ; the actual generator
 
 (define (mrg32k3a-random-m1 state)
@@ -53,6 +69,7 @@
 
 (define (mrg32k3a-random-real state) ; normalization is 1/(m1+1)
   (* 0.0000000002328306549295728 (+ 1.0 (mrg32k3a-random-m1 state))))
+
 
 ; GENERIC PART OF MRG32k3a-GENERATOR FOR SRFI-27
 ; ==============================================
@@ -161,30 +178,20 @@
 ; At this point in the code, the following procedures are assumed
 ; to be defined to create and access a new record data type:
 ;
-;   (:random-source-make a0 a1 a2 a3 a4 a5) -> s
+;   (internal-make-random-source a0 a1 a2 a3 a4 a5) -> s
 ;     constructs a new random source object s consisting of the 
 ;     objects a0 .. a5 in this order.
 ;
-;   (:random-source? obj) -> bool
+;   (internal-random-source? obj) -> bool
 ;     tests if a Scheme object is a :random-source.
 ;
-;   (:random-source-state-ref         s) -> a0
-;   (:random-source-state-set!        s) -> a1
-;   (:random-source-randomize!        s) -> a2
-;   (:random-source-pseudo-randomize! s) -> a3
-;   (:random-source-make-integers     s) -> a4
-;   (:random-source-make-reals        s) -> a5
+;   (internal-random-source-state-ref         s) -> a0
+;   (internal-random-source-state-set!        s) -> a1
+;   (internal-random-source-randomize!        s) -> a2
+;   (internal-random-source-pseudo-randomize! s) -> a3
+;   (internal-random-source-make-integers     s) -> a4
+;   (internal-random-source-make-reals        s) -> a5
 ;     retrieve the values in the fields of the object s.
-
-(define-record-type <random-source>
-  (:random-source-make a0 a1 a2 a3 a4 a5)
-  :random-source?
-  (a0 :random-source-state-ref random-source-state-a0-set!)
-  (a1 :random-source-state-set! random-source-state-a1-set!)
-  (a2 :random-source-randomize! random-source-state-a2-set!)
-  (a3 :random-source-pseudo-randomize! random-source-state-a3-set!)
-  (a4 :random-source-make-integers random-source-state-a4-set!)
-  (a5 :random-source-make-reals random-source-state-a5-set!))
 
 ; Required: Current Time as an Integer
 ; ====================================
@@ -193,18 +200,16 @@
 ; to be defined to obtain a value that is likely to be different
 ; for each invokation of the Scheme system:
 ;
-;   (:random-source-current-time) -> x
+;   (internal-random-source-current-time) -> x
 ;     an integer that depends on the system clock. It is desired
 ;     that the integer changes as fast as possible.
 
-(define (:random-source-current-time)
-  (* (current-jiffy) (jiffies-per-second)))
 
 ; Accessing the State
 ; ===================
 
 (define (mrg32k3a-state-ref packed-state)
-  (cons 'lecuyer-mrg32k3a 
+  (cons 'lecuyer-mrg32k3a
         (vector->list (mrg32k3a-unpack-state packed-state))))
 
 (define (mrg32k3a-state-set external-state)
@@ -273,10 +278,10 @@
 
 (define mrg32k3a-initial-state ; 0 3 6 9 12 15 of A^16, see below
   '#( 1062452522
-      2961816100 
-      342112271 
-      2854655037 
-      3321940838 
+      2961816100
+      342112271
+      2854655037
+      3321940838
       3542344109))
 
 (define mrg32k3a-generators #f) ; computed when needed
@@ -364,7 +369,7 @@
             0       1          0))
 
   ; check arguments
-  (if (not (and (integer? i) 
+  (if (not (and (integer? i)
                 (exact? i)
                 (integer? j)
                 (exact? j)))
@@ -406,12 +411,12 @@
 (define (mrg32k3a-randomize-state state)
   ;; G. Marsaglia's simple 16-bit generator with carry
   (let* ((m 65536)
-         (x (modulo (:random-source-current-time) m)))
+         (x (modulo (internal-random-source-current-time) m)))
     (define (random-m)
       (let ((y (modulo x m)))
         (set! x (+ (* 30903 y) (quotient x m)))
         y))
-    (define (random n)   ; m < n < m^2
+    (define (random n) ; m < n < m^2
       (modulo (+ (* (random-m) m) (random-m)) n))
 
     ; modify the state
@@ -483,7 +488,7 @@
 (define (make-random-source)
   (let ((state (mrg32k3a-pack-state ; make a new copy
                  (list->vector (vector->list mrg32k3a-initial-state)))))
-    (:random-source-make
+    (internal-make-random-source
       (lambda ()
         (mrg32k3a-state-ref state))
       (lambda (new-state)
@@ -496,7 +501,7 @@
         (lambda (n)
           (cond
             ((not (and (integer? n) (exact? n) (positive? n)))
-             (error "range must be exact positive integer" n))           
+             (error "range must be exact positive integer" n))
             ((<= n mrg32k3a-m-max)
              (mrg32k3a-random-integer state n))
             (else
@@ -512,36 +517,35 @@
                ((not (and (real? unit) (< 0 unit 1)))
                 (error "unit must be real in (0,1)" unit))
                ((<= (- (/ 1 unit) 1) mrg32k3a-m1)
-                (lambda () 
+                (lambda ()
                   (mrg32k3a-random-real state)))
                (else
-                 (lambda () 
+                 (lambda ()
                    (mrg32k3a-random-real-mp state unit))))))
           (else
             (error "illegal arguments" args)))))))
 
-(define random-source? 
-  :random-source?)
+(define random-source? internal-random-source?)
 
 (define (random-source-state-ref s)
-  ((:random-source-state-ref s)))
+  ((internal-random-source-state-ref s)))
 
 (define (random-source-state-set! s state)
-  ((:random-source-state-set! s) state))
+  ((internal-random-source-state-set! s) state))
 
 (define (random-source-randomize! s)
-  ((:random-source-randomize! s)))
+  ((internal-random-source-randomize! s)))
 
 (define (random-source-pseudo-randomize! s i j)
-  ((:random-source-pseudo-randomize! s) i j))
+  ((internal-random-source-pseudo-randomize! s) i j))
 
 ; ---
 
 (define (random-source-make-integers s)
-  ((:random-source-make-integers s)))
+  ((internal-random-source-make-integers s)))
 
 (define (random-source-make-reals s . unit)
-  (apply (:random-source-make-reals s) unit))
+  (apply (internal-random-source-make-reals s) unit))
 
 ; ---
 
@@ -553,5 +557,3 @@
 
 (define random-real
   (random-source-make-reals default-random-source))
-
-

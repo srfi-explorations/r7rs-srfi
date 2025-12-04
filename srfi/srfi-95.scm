@@ -1,5 +1,5 @@
 (define-library
-  (srfi 95)
+  (srfi srfi-95)
   (import (scheme base)
           (srfi 63))
   (export sorted?
