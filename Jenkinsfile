@@ -1,7 +1,12 @@
 pipeline {
 
     agent {
-        label 'agent1'
+        dockerfile {
+            label 'agent1'
+            filename 'Dockerfile.jenkins'
+            args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
+            reuseNode true
+        }
     }
 
     triggers{
@@ -10,63 +15,54 @@ pipeline {
 
     options {
         disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+            buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    }
+
+    parameters {
+        string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 13 14 27 39 41 60 63 64 69 95 111 113 115 116 180', description: 'Test SRFIs')
     }
 
     stages {
-        stage('Prepare') {
+
+        stage('Init and warmup') {
             steps {
-                sh "cat srfis.scm | tr -d '()' > /tmp/srfis.txt"
-                sh "docker build --build-arg IMAGE=chibi:head --build-arg SCHEME=chibi --tag=r7rs-srfi-prepare -f Dockerfile.test ."
-                sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-prepare sh -c \"rm -rf srfi-test && make srfi-test\""
+                sh "rm -rf srfi-test"
+                sh "make srfi-test"
+                sh "make SCHEME=chibi test-r7rs-docker"
             }
         }
+
         stage('Tests') {
             steps {
                 script {
-                    def implementations = sh(script: 'docker build -f Dockerfile.test . --tag=impls && docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed \'s/gambit//\' | xargs"', returnStdout: true).split()
-                    def srfis = sh(script: 'cat /tmp/srfis.txt', returnStdout: true).split()
-
-                    parallel implementations.collectEntries { SCHEME ->
-                        [(SCHEME): {
-                                srfis.each { srfi ->
-                                    stage("${SCHEME} ${srfi}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            if("${SCHEME}" == "chicken") {
-                                                DOCKERIMG="chicken:5"
-                                            } else {
-                                                DOCKERIMG="${SCHEME}:head"
-                                            }
-                                            if("${SCHEME}" == "loko" || "${SCHEME}" == "chicken") {
-                                                MEMORY="3000MB"
-                                            } else {
-                                                MEMORY="256MB"
-                                            }
-                                            sh "docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test ."
-                                            sh "docker run --cpus=2 --memory=${MEMORY} --memory-swap=${MEMORY} --oom-kill-disable -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"timeout 3600 make SCHEME=${SCHEME} SRFI=${srfi} clean test && chmod -R 755 logs && chmod -R 755 tmp/${SCHEME}\""
-                                            sh "docker run -v ${WORKSPACE}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c \"chmod -R 755 logs\""
-                                        }
+                    def r6rs_schemes = sh(script: 'compile-scheme --list-r6rs-except larceny mosh ypsilon', returnStdout: true).split()
+                    params.SRFIS.split().each { SRFI ->
+                        stage("SRFI-${SRFI} R6RS") {
+                            parallel r6rs_schemes.collectEntries { SCHEME ->
+                            [(SCHEME): {
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
                                     }
                                 }
-                            }
-                        ]
+                            }]
+                        }
+                    }
+                    def r7rs_schemes = sh(script: 'compile-scheme --list-r7rs-except larceny meevax tr7', returnStdout: true).split()
+                        stage("SRFI-${SRFI} R7RS") {
+                            parallel r7rs_schemes.collectEntries { SCHEME ->
+                            [(SCHEME): {
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
+                                    }
+                                }
+                            }]
+                        }
+                        }
                     }
                 }
             }
-        }
-
-        stage("Report") {
-            steps {
-                sh "sh scripts/report.sh > report.html"
-            }
-        }
-    }
-
-    post {
-        success {
-            sh 'tar -czvf logs.tar.gz logs/*.log'
-            archiveArtifacts('logs.tar.gz')
-            archiveArtifacts('report.html')
         }
     }
 }

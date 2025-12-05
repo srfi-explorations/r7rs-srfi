@@ -218,6 +218,34 @@
 
 (define optional (lambda (a b) (if (null? a) b (car a))))
 
+;; SRFI-8 begin
+; Copyright (C) John David Stone (1999). All Rights Reserved.
+
+; Permission is hereby granted, free of charge, to any person obtaining a copy
+; of this software and associated documentation files (the "Software"), to deal
+; in the Software without restriction, including without limitation the rights
+; to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+; copies of the Software, and to permit persons to whom the Software is
+; furnished to do so, subject to the following conditions:
+
+; The above copyright notice and this permission notice shall be included in
+; all copies or substantial portions of the Software.
+
+; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+; SOFTWARE.
+
+(define-syntax receive
+  (syntax-rules ()
+    ((receive formals expression body ...)
+     (call-with-values (lambda () expression)
+                       (lambda formals body ...)))))
+;; SRFI-8 end
+
 (cond-expand
   (tr7
     ;; Begin from https://cookbook.scheme.org/bind-optional-arguments/
@@ -301,14 +329,14 @@
 ;;; Make a list of length LEN.
 
 #;(define (make-list len . maybe-elt)
-(check-arg (lambda (n) (and (integer? n) (>= n 0))) len make-list)
-(let ((elt (cond ((null? maybe-elt) #f) ; Default value
-                 ((null? (cdr maybe-elt)) (car maybe-elt))
-                 (else (error "Too many arguments to MAKE-LIST"
-                              (cons len maybe-elt))))))
-  (do ((i len (- i 1))
-       (ans '() (cons elt ans)))
-    ((<= i 0) ans))))
+  (check-arg (lambda (n) (and (integer? n) (>= n 0))) len make-list)
+  (let ((elt (cond ((null? maybe-elt) #f) ; Default value
+                   ((null? (cdr maybe-elt)) (car maybe-elt))
+                   (else (error "Too many arguments to MAKE-LIST"
+                                (cons len maybe-elt))))))
+    (do ((i len (- i 1))
+         (ans '() (cons elt ans)))
+      ((<= i 0) ans))))
 
 
 ;(define (list . ans) ans)  ; R4RS
@@ -512,7 +540,7 @@
 ;(define (cadr   x) (car (cdr x)))
 ;(define (cdar   x) (cdr (car x)))
 ;(define (cddr   x) (cdr (cdr x)))
-;
+
 ;(define (caaar  x) (caar (car x)))
 ;(define (caadr  x) (caar (cdr x)))
 ;(define (cadar  x) (cadr (car x)))
@@ -521,7 +549,7 @@
 ;(define (cdadr  x) (cdar (cdr x)))
 ;(define (cddar  x) (cddr (car x)))
 ;(define (cdddr  x) (cddr (cdr x)))
-;
+
 ;(define (caaaar x) (caaar (car x)))
 ;(define (caaadr x) (caaar (cdr x)))
 ;(define (caadar x) (caadr (car x)))
@@ -1285,8 +1313,8 @@
 
 ;;; Extended from R4RS to take an optional comparison argument.
 #;(define (member x lis . maybe-=)
-(let ((= (optional maybe-= equal?)))
-  (find-tail (lambda (y) (= x y)) lis)))
+  (let ((= (optional maybe-= equal?)))
+    (find-tail (lambda (y) (= x y)) lis)))
 
 ;;; R4RS, hence we don't bother to define.
 ;;; The MEMBER and then FIND-TAIL call should definitely

@@ -1,8 +1,8 @@
 (define-library
-  (srfi 63)
+  (srfi srfi-63)
   (import (scheme base))
   (export array?
-          equal?
+          ;equal?
           array-rank
           array-dimensions
           make-array

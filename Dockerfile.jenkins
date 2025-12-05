@@ -1,13 +1,8 @@
-FROM schemers/gauche
-RUN apt update && apt install -y \
-    docker.io \
-    make \
-    bash \
-    curl \
-    wget \
-    tree \
-    file \
-    build-essential \
-    git \
-    tee \
-    bc
+FROM debian:trixie-slim
+RUN apt-get update && apt-get install -y \
+    make ca-certificates git docker.io gauche time
+WORKDIR /cache
+RUN git clone https://codeberg.org/retropikzel/compile-scheme.git --depth=1
+WORKDIR /cache/compile-scheme
+RUN make build-gauche
+RUN make install

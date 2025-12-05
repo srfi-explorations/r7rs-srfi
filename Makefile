@@ -1,26 +1,26 @@
-.PHONY: README.html
-SRFI=64
+.PHONY: README.html tmpdir
+.SILENT: srfi-test build install test test-docker clean test-r6rs \
+	test-r6rs-docker test-r7rs test-r7rs-docker tmpdir
 SCHEME=chibi
-TMPDIR=tmp/${SCHEME}
-VERSION=2025.08.27
-DOCKERIMG="${SCHEME}:head"
+DOCKERIMG=${SCHEME}:head
+SRFI=64
+VERSION=2025.12.04
+CLEAN="*.o *.so *.a *.link"
+TMPDIR=.tmp/${SCHEME}
+TIMECMD=time
+
 ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
 endif
 
-INCDIRS=-I .
-
-ifeq "${SCHEME}" "chibi"
-INCDIRS=-A .
+ifeq "${SCHEME}" "racket"
+DOCKERIMG="racket:latest"
 endif
 
-ifeq "${SCHEME}" "kawa"
-INCDIRS=-I . -I /usr/local/share/kawa/lib
-endif
+all: build
 
-all: package
-
-package: README.html
+build:
+	echo "<pre>$$(cat README.md)</pre>" > README.html
 	snow-chibi package \
 		--version=${VERSION} \
 		--maintainers="Retropikzel" \
@@ -28,63 +28,69 @@ package: README.html
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
-README.html: README.md
-	pandoc --metadata title="SRFI-${SRFI}" --standalone README.md > README.html
-
 install:
-	snow-chibi install --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
+	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-force-install:
-	printf "\n" | snow-chibi install --always-yes --impls=${SCHEME} srfi-${SRFI}-${VERSION}.tgz
+test-r6rs: tmpdir srfi-test
+	cp -r srfi/63.* ${TMPDIR}/srfi/
+	cp -r srfi/69.* ${TMPDIR}/srfi/
+	cp -r srfi/95.* ${TMPDIR}/srfi/
+	cp -r srfi/111.* ${TMPDIR}/srfi/
+	cp -r srfi/113.* ${TMPDIR}/srfi/
+	cp -r srfi/116.* ${TMPDIR}/srfi/
+	cp -r srfi/145.* ${TMPDIR}/srfi/
+	cp -r srfi/180.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-63.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-69.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-95.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-111.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-113.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-116.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-145.* ${TMPDIR}/srfi/
+	cp -r srfi/srfi-180.* ${TMPDIR}/srfi/
+	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
+	cd ${TMPDIR} && akku install akku-r7rs
+	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
+	@if [ "${SCHEME}" = "ypsilon" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} --debug ${SRFI}.sps
+	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
 
-test: ${TMPDIR} logs
-	cd ${TMPDIR} && cp srfi-test/r7rs-programs/${SRFI}.scm test-${SRFI}.scm
-	cd ${TMPDIR} && printf "\n" | time compile-r7rs ${INCDIRS} -o test-${SRFI} test-${SRFI}.scm
-	cd ${TMPDIR} && LD_LIBRARY_PATH=. printf "\n" | time ./test-${SRFI} 2>&1 | tee ${SCHEME}-srfi-${SRFI}-test-output.log
-	cp ${TMPDIR}/srfi-${SRFI}.log logs/${SCHEME}-srfi-${SRFI}.log
-	cp ${TMPDIR}/${SCHEME}-srfi-${SRFI}-test-output.log logs/${SCHEME}-srfi-${SRFI}-test-output.log
-	chmod 755 ${TMPDIR}/srfi-${SRFI}.log
+test-r6rs-docker: srfi-test
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
+	docker run -v /tmp/akku-cache:/root/.cache/akku -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r6rs"
 
-test-docker:
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v ${PWD}:/workdir -w /workdir -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} clean test"
+test-r7rs: tmpdir srfi-test
+	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
+	cp -r srfi/* ${TMPDIR}/srfi/
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
+	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} --debug ${SRFI}.scm
+	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
 
-test-docker-all:
-	docker build -f Dockerfile.test . --tag=impls
-	for i in $(shell docker run impls sh -c "compile-r7rs --list-r7rs-schemes | sed 's/gambit//'" | xargs); \
-		do \
-			make SCHEME="$$i" SRFI=${SRFI} test-docker; \
-		done
+test-r7rs-docker: srfi-test
+	echo "Building docker image..."
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
+	docker run -v /tmp/akku-cache:/root/.cache/akku -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r7rs"
 
-report:
-	sh scripts/report.sh > report.html
+tmpdir:
+	rm -rf ${TMPDIR}
+	mkdir -p ${TMPDIR}
+	mkdir -p ${TMPDIR}/srfi
+	mkdir -p ${TMPDIR}/libs
+	mkdir -p ${TMPDIR}/libs/srfi
+
+local-srfi-test:
+	cp ../srfi-test/*.scm srfi-test/
+	cd srfi-test && gosh -r7 convert.scm
 
 srfi-test:
+	#cp ../srfi-test/*.scm srfi-test/
 	git clone https://github.com/srfi-explorations/srfi-test.git \
 		--depth=1 \
 		--branch=retropikzel-fixes
-	cd srfi-test && chibi-scheme convert.scm
-
-${TMPDIR}: srfi-test
-	mkdir -p ${TMPDIR}
-	mkdir -p ${TMPDIR}/srfi-test
-	cat srfis.scm | sed 's/(//' | sed 's/)//' | awk 'BEGIN { RS = "\^\$$" } {print $0}' > ${TMPDIR}/srfis.txt
-	cp -r srfi ${TMPDIR}/
-	find ${TMPDIR} -name "*.swp" -delete
-	cp -r srfi-test ${TMPDIR}/
-
-logs:
-	mkdir -p logs
-	chmod -R 755 logs
+	cd srfi-test && gosh -r7 convert.scm
 
 clean:
-	rm -rf ${TMPDIR}
+	git clean -X -f
 
-clean-logs:
-	rm -rf logs
-
-clean-tgz:
-	find . -name "*.tgz" -delete
-
-clean-all:
-	rm -rf tmp

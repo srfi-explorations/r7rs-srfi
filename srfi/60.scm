@@ -164,12 +164,18 @@
 ;@
 (define integer-length
   (letrec ((intlen (lambda (n tot)
-                     (case n
-                       ((0 -1) (+ 0 tot))
-                       ((1 -2) (+ 1 tot))
-                       ((2 3 -3 -4) (+ 2 tot))
-                       ((4 5 6 7 -5 -6 -7 -8) (+ 3 tot))
-                       (else (intlen (logical:ash-4 n) (+ 4 tot)))))))
+                     (cond
+                       ((or (= n 0) (= n -1)) (+ 0 tot))
+                       ((or (= n 1) (= n -2)) (+ 1 tot))
+                       ((or (= n 2) (= n 3) (= n -3) (= n -4)) (+ 2 tot))
+                       ((or (= n 4) (= n 5) (= n 6) (= n 7) (= n -5) (= n -6) (= n -7) (= n -8)) (+ 3 tot))
+                       (else (intlen (logical:ash-4 n) (+ 4 tot))))
+                     #;(case n
+                     ((0 -1) (+ 0 tot))
+                     ((1 -2) (+ 1 tot))
+                     ((2 3 -3 -4) (+ 2 tot))
+                     ((4 5 6 7 -5 -6 -7 -8) (+ 3 tot))
+                     (else (intlen (logical:ash-4 n) (+ 4 tot)))))))
     (lambda (n) (intlen n 0))))
 ;@
 (define logcount

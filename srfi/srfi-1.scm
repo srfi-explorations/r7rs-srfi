@@ -1,8 +1,7 @@
 (define-library
   (srfi 1)
   (import (scheme base)
-          (scheme cxr)
-          (srfi 8))
+          (scheme cxr))
   (export
     ;cons
     ;list
@@ -23,32 +22,32 @@
     list=
     ;car
     ;cdr
-    ;cdar
-    ;cddr
-    ;caar
-    ;caadr
-    ;cadar
-    ;caddr
-    ;cdaar
-    ;cdadr
-    ;cddar
-    ;cddr
-    ;caaaar
-    ;caaadr
-    ;caadar
-    ;caaddr
-    ;cadaar
-    ;cadadr
-    ;caddar
-    ;cadddr
-    ;cdaaar
-    ;cdaadr
-    ;cdadar
-    ;cdaddr
-    ;cddaar
-    ;cddadr
-    ;cdddar
-    ;cddddr
+    cdar
+    cadr
+    cddr
+    caar
+    caadr
+    cadar
+    caddr
+    cdaar
+    cdadr
+    cddar
+    caaaar
+    caaadr
+    caadar
+    caaddr
+    cadaar
+    cadadr
+    caddar
+    cadddr
+    cdaaar
+    cdaadr
+    cdadar
+    cdaddr
+    cddaar
+    cddadr
+    cdddar
+    cddddr
     ;list-ref
     first
     second

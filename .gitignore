@@ -21,8 +21,13 @@ Makefile.tests
 *@gambit*
 test
 *.rkt
-tmp
 logs
 report.html
 *.tgz
 README.html
+.*
+*.a
+*.link
+tmp
+Akku.manifest
+Akku.lock
