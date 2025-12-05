@@ -48,7 +48,7 @@ pipeline {
                             }]
                         }
                     }
-                    def r7rs_schemes = sh(script: 'compile-scheme --list-r7rs-except larceny meevax tr7', returnStdout: true).split()
+                    def r7rs_schemes = sh(script: 'compile-scheme --list-r7rs-except larceny meevax', returnStdout: true).split()
                         stage("SRFI-${SRFI} R7RS") {
                             parallel r7rs_schemes.collectEntries { SCHEME ->
                             [(SCHEME): {

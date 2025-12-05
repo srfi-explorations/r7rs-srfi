@@ -66,6 +66,7 @@ test-r7rs: tmpdir srfi-test
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} --debug ${SRFI}.scm
+	cd ${TMPDIR} && rm ${SRFI}.scm # tr7 includes the executable if this is not here
 	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
 
 test-r7rs-docker: srfi-test
