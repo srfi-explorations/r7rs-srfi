@@ -691,7 +691,7 @@
     ((_ . <rest>)
      (test-compare/source-info eq? . <rest>))))
 
-(define (approx= margin)
+#;(define (approx= margin)
   (lambda (value expected)
     (let ((rval (real-part value))
           (ival (imag-part value))
@@ -765,9 +765,7 @@
      (let* ((port (open-input-string string))
             (form (read port)))
        (if (eof-object? (read-char port))
-         (eval form (cond-expand
-                      (cyclone (create-environment))
-                      (else (environment '(scheme base)))))
+         (eval form test-env)
          (error "(not at eof)"))))
     ((string env)
      (let* ((port (open-input-string string))
@@ -811,7 +809,7 @@
       (exit 1))))
 
 ;;; execution.scm ends here
-(cond-expand
+#;(cond-expand
   (mit-scheme #t)
   (else (when (not (test-runner-factory))
           (test-runner-factory test-runner-simple))))
