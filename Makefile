@@ -85,10 +85,7 @@ local-srfi-test:
 	cd srfi-test && gosh -r7 convert.scm
 
 srfi-test:
-	#cp ../srfi-test/*.scm srfi-test/
-	git clone https://github.com/srfi-explorations/srfi-test.git \
-		--depth=1 \
-		--branch=retropikzel-fixes
+	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
 	cd srfi-test && gosh -r7 convert.scm
 
 clean:
