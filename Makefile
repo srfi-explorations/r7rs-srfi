@@ -7,7 +7,6 @@ SRFI=64
 VERSION=2025.12.04
 CLEAN="*.o *.so *.a *.link"
 TMPDIR=.tmp/${SCHEME}
-TIMECMD=time
 
 ifeq "${SCHEME}" "chicken"
 DOCKERIMG="chicken:5"
@@ -52,12 +51,12 @@ test-r6rs: tmpdir srfi-test
 	cd ${TMPDIR} && akku install akku-r7rs
 	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
 	@if [ "${SCHEME}" = "ypsilon" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} --debug ${SRFI}.sps
-	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
+	cd ${TMPDIR} && timeout 60 COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} --debug ${SRFI}.sps
+	cd ${TMPDIR} && printf "\n" | timeout 60 ./${SRFI}
 
 test-r6rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
-	docker run -v /tmp/akku-cache:/root/.cache/akku -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r6rs"
+	docker run -v /tmp/akku-cache:/root/.cache/akku -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs"
 
 test-r7rs: tmpdir srfi-test
 	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
@@ -65,14 +64,14 @@ test-r7rs: tmpdir srfi-test
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
 	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} --debug ${SRFI}.scm
-	cd ${TMPDIR} && rm ${SRFI}.scm # tr7 includes the executable if this is not here
-	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} timeout 60 compile-scheme -I . -o ${SRFI} --debug ${SRFI}.scm
+	cd ${TMPDIR} && rm *.scm # tr7 includes the executable if this is not here
+	cd ${TMPDIR} && printf "\n" | timeout 60 ./${SRFI}
 
 test-r7rs-docker: srfi-test
 	echo "Building docker image..."
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
-	docker run -v /tmp/akku-cache:/root/.cache/akku -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r7rs"
+	docker run -v /tmp/akku-cache:/root/.cache/akku -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs"
 
 tmpdir:
 	rm -rf ${TMPDIR}

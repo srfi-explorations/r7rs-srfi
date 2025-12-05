@@ -765,7 +765,9 @@
      (let* ((port (open-input-string string))
             (form (read port)))
        (if (eof-object? (read-char port))
-         (eval form test-env)
+         (eval form (cond-expand
+                      (cyclone (create-environment))
+                      (else (environment '(scheme base)))))
          (error "(not at eof)"))))
     ((string env)
      (let* ((port (open-input-string string))

@@ -46,9 +46,6 @@
              test-compare/source-info
              test-error/source-info))
     (else))
-  (cond-expand
-    (cyclone (begin (define test-env (create-environment))))
-    (else (begin (define test-env (environment '(scheme base))))))
   (export test-begin
           test-end
           test-group

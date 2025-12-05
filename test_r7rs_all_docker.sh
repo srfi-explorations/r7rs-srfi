@@ -7,7 +7,7 @@ else
     SRFI="${1}"
 fi
 
-for scm in $(compile-scheme --list-r7rs-except larceny)
+for scm in $(compile-scheme --list-r7rs-except larceny meevax)
 do
     printf "Test ${scm} SRFI-${SRFI}: "
     make SCHEME=${scm} SRFI=${SRFI} test-r7rs-docker 2>&1 > /dev/null
