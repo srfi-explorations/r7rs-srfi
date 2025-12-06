@@ -38,7 +38,7 @@ pipeline {
                     def r6rs_schemes = sh(script: 'compile-scheme --list-r6rs-except larceny mosh ypsilon', returnStdout: true).split()
                     def r7rs_schemes = sh(script: 'compile-scheme --list-r7rs-except larceny meevax', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
-                        stage("SRFI-${SRFI} R6RS") {
+                        stage("${SRFI} R6RS") {
                             stages {
                                 r6rs_schemes.each { SCHEME ->
                                     stage("${SCHEME}") {
@@ -49,7 +49,7 @@ pipeline {
                                 }
                             }
                         }
-                        stage("SRFI-${SRFI} R7RS") {
+                        stage("${SRFI} R7RS") {
                             stages {
                                 r7rs_schemes.each { SCHEME ->
                                     stage("${SCHEME}") {
