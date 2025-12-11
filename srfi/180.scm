@@ -48,15 +48,12 @@
   (reason json-error-reason))
 
 (define (json-whitespace? char)
-  (case char
-    ((#\x20 ; Space
-      #\x09 ; Horizontal tab
-      #\x0A ; Line feed or New line
-      #\x0D
-      #\x1E  ;; Record Separator
-      )
-     #t)
-    (else #f)))
+  (or (char=? char #\x20) ; Space
+      (char=? char #\x09) ; Horizontal tab
+      (char=? char #\x0A) ; Line feed or New line
+      (char=? char #\x0D)
+      (char=? char #\x1E)  ;; Record Separator
+      ))
 
 (define (expect value other)
   (when (eof-object? value)
@@ -147,55 +144,64 @@
           (begin
             (let loop-unescape ((char (generator))
                                 (chars-unescaped '()))
-              (case char
-                ((#\" #\\ #\/) (loop (generator)
-                                     (cons char (append chars-unescaped
-                                                        out))))
-                ((#\b) (loop (generator) (cons #\backspace
-                                                    (append chars-unescaped
-                                                            out))))
-                ((#\f) (loop (generator) (cons #\x0C
-                                                    (append chars-unescaped
-                                                            out))))
-                ((#\n) (loop (generator) (cons #\newline
-                                                    (append chars-unescaped
-                                                            out))))
-                ((#\r) (loop (generator) (cons #\x0D
-                                                    (append chars-unescaped
-                                                            out))))
-                ((#\t) (loop (generator) (cons #\tab
-                                                    (append chars-unescaped
-                                                            out))))
-                ((#\u) (let loop-unicode ((code1 (read-unicode-escape generator))
-                                          (chars chars-unescaped))
-                         (let ((next-char (generator)))
-                           (if (and (<= #xd800 code1 #xdbff)
-                                    (char=? next-char #\\))
-                               (if (char=? (generator) #\u)
-                                   (let ((code2 (read-unicode-escape generator)))
-                                     (if (<= #xdc00 code2 #xdfff)
-                                         (let ((integer
-                                                (+ #x10000 (bitwise-ior
-                                                            (ash (- code1 #xd800) 10)
-                                                            (- code2 #xdc00)))))
-                                           ;; full escape of unicode is parsed...
-                                           (loop (generator)
-                                                 (cons (integer->char integer)
-                                                       (append chars
-                                                               out))))
-                                         ;; This is another unicode char
-                                         (loop-unicode (read-unicode-escape generator)
-                                                       (cons (integer->char code1) chars))))
-                                   ;; The escaped unicode char is
-                                   ;; parsed, need to parse another
-                                   ;; escape that is not a unicode
-                                   ;; escape sequence
-                                   (loop-unescape char (cons (integer->char code1)
-                                                             chars)))
-                             ;; This is not a big-ish unicode char and
-                             ;; the next thing is some other char.
-                             (loop next-char
-                                   (cons (integer->char code1) (append chars out)))))))
+              (cond
+                ((or (char=? char #\")
+                     (char=? #\\)
+                     (char=? #\/))
+                 (loop (generator)
+                       (cons char (append chars-unescaped
+                                          out))))
+                ((char=? char #\b)
+                 (loop (generator) (cons #\backspace
+                                         (append chars-unescaped
+                                                 out))))
+                ((char=? char #\f)
+                 (loop (generator) (cons #\x0C
+                                         (append chars-unescaped
+                                                 out))))
+                ((char=? char #\n)
+                 (loop (generator) (cons #\newline
+                                         (append chars-unescaped
+                                                 out))))
+                ((char=? char #\r)
+                 (loop (generator) (cons #\x0D
+                                         (append chars-unescaped
+                                                 out))))
+                ((char=? char #\t)
+                 (loop (generator) (cons #\tab
+                                         (append chars-unescaped
+                                                 out))))
+                ((char=? char #\u)
+                 (let loop-unicode ((code1 (read-unicode-escape generator))
+                                    (chars chars-unescaped))
+                   (let ((next-char (generator)))
+                     (if (and (<= #xd800 code1 #xdbff)
+                              (char=? next-char #\\))
+                       (if (char=? (generator) #\u)
+                         (let ((code2 (read-unicode-escape generator)))
+                           (if (<= #xdc00 code2 #xdfff)
+                             (let ((integer
+                                     (+ #x10000 (bitwise-ior
+                                                  (ash (- code1 #xd800) 10)
+                                                  (- code2 #xdc00)))))
+                               ;; full escape of unicode is parsed...
+                               (loop (generator)
+                                     (cons (integer->char integer)
+                                           (append chars
+                                                   out))))
+                             ;; This is another unicode char
+                             (loop-unicode (read-unicode-escape generator)
+                                           (cons (integer->char code1) chars))))
+                         ;; The escaped unicode char is
+                         ;; parsed, need to parse another
+                         ;; escape that is not a unicode
+                         ;; escape sequence
+                         (loop-unescape char (cons (integer->char code1)
+                                                   chars)))
+                       ;; This is not a big-ish unicode char and
+                       ;; the next thing is some other char.
+                       (loop next-char
+                             (cons (integer->char code1) (append chars out)))))))
                 (else (raise (make-json-error "Unexpected escaped sequence."))))))
           (cond
            ((char=? char #\")
@@ -242,17 +248,17 @@
 
             (if (eof-object? char)
                 char ;; return that eof-object
-                (case char
-                  ((#\n) (expect-null generator) 'null)
-                  ((#\t) (expect-true generator) #t)
-                  ((#\f) (expect-false generator) #f)
-                  ((#\:) 'colon)
-                  ((#\,) 'comma)
-                  ((#\[) 'array-start)
-                  ((#\]) 'array-end)
-                  ((#\{) 'object-start)
-                  ((#\}) 'object-end)
-                  ((#\") (read-json-string generator))
+                (cond
+                  ((char=? char #\n) (expect-null generator) 'null)
+                  ((char=? char #\t) (expect-true generator) #t)
+                  ((char=? char #\f) (expect-false generator) #f)
+                  ((char=? char #\:) 'colon)
+                  ((char=? char #\,) 'comma)
+                  ((char=? char #\[) 'array-start)
+                  ((char=? char #\]) 'array-end)
+                  ((char=? char #\{) 'object-start)
+                  ((char=? char #\}) 'object-end)
+                  ((char=? char #\") (read-json-string generator))
                   (else
                    (call-with-values (lambda () (maybe-read-number (gcons char generator)))
                      (lambda (number next)
@@ -283,9 +289,9 @@
   (define (array-maybe-continue tokens k)
     (lambda ()
       (let ((token (tokens)))
-        (case token
-          ((comma) (start tokens (array-maybe-continue tokens k)))
-          ((array-end) (values 'array-end k))
+        (cond
+          ((equal? token 'comma) (start tokens (array-maybe-continue tokens k)))
+          ((equal? token 'array-end) (values 'array-end k))
           (else (raise (make-json-error "Invalid array, expected comma or array close.")))))))
 
   (define (array-start tokens k)
@@ -299,9 +305,9 @@
   (define (object-maybe-continue tokens k)
     (lambda ()
       (let ((token (tokens)))
-        (case token
-          ((object-end) (values 'object-end k))
-          ((comma) (let ((token (tokens)))
+        (cond
+          ((equal? token 'object-end) (values 'object-end k))
+          ((equal? token 'comma) (let ((token (tokens)))
                      (unless (string? token)
                        (raise (make-json-error "Invalid object, expected an object key")))
                      (values token
@@ -437,14 +443,14 @@
         (let ((event (events)))
           (if (eof-object? event)
               (begin (k seed) #f)
-              (case event
+              (cond
                 ;; termination cases
-                ((array-end) (k seed))
-                ((object-end) (k seed))
+                ((equal? event array-end) (k seed))
+                ((equal? event object-end) (k seed))
                 ;; recursion
-                ((array-start) (ruse (array-start seed)
+                ((equal? event array-start) (ruse (array-start seed)
                                      (lambda (out) (loop (proc (array-end out) seed)))))
-                ((object-start) (ruse (object-start seed)
+                ((equal? event object-start) (ruse (object-start seed)
                                       (lambda (out) (loop (proc (object-end out) seed)))))
                 (else (loop (proc event seed)))))))))
 
@@ -560,16 +566,16 @@
 (define (json-accumulator accumulator)
 
   (define (write-json-char char accumulator)
-    (case char
-      ((#\x00) (accumulator "\\u0000"))
-      ((#\") (accumulator "\\\""))
-      ((#\\) (accumulator "\\\\"))
-      ((#\/) (accumulator "\\/"))
-      ((#\return) (accumulator "\\r"))
-      ((#\newline) (accumulator "\\n"))
-      ((#\tab) (accumulator "\\t"))
-      ((#\backspace) (accumulator "\\b"))
-      ((#\x0c) (accumulator "\\f"))
+    (cond
+      ((char=? char #\x00) (accumulator "\\u0000"))
+      ((char=? char #\") (accumulator "\\\""))
+      ((char=? char #\\) (accumulator "\\\\"))
+      ((char=? char #\/) (accumulator "\\/"))
+      ((char=? char #\return) (accumulator "\\r"))
+      ((char=? char #\newline) (accumulator "\\n"))
+      ((char=? char #\tab) (accumulator "\\t"))
+      ((char=? char #\backspace) (accumulator "\\b"))
+      ((char=? char #\x0c) (accumulator "\\f"))
       (else (accumulator char))))
 
   (define (write-json-string str accumulator)
@@ -596,15 +602,15 @@
   (define (object-start k)
     (lambda (accumulator event)
       (accumulator #\{)
-      (case (car event)
-        ((json-value)
+      (cond
+        ((equal? (car event) 'json-value)
          (let ((key (cdr event)))
            (unless (symbol? key) (raise-invalid-event event))
            (write-json-string (symbol->string key) accumulator)
            (object-value k)))
-        ((json-structure)
-         (case (cdr event)
-           ((object-end)
+        ((equal? (car event) 'json-structure)
+         (cond
+           ((equal? (cdr event) 'object-end)
             (accumulator #\})
             k)
            (else (raise-invalid-event event))))
@@ -613,31 +619,31 @@
   (define (object-value k)
     (lambda (accumulator event)
       (accumulator #\:)
-      (case (car event)
-        ((json-value)
+      (cond
+        ((equal? (car event) 'json-value)
          (write-json-value (cdr event) accumulator)
          (object-maybe-continue k))
-        ((json-structure)
-         (case (cdr event)
-           ((array-start)
+        ((equal? (car event) 'json-structure)
+         (cond
+           ((equal? (cdr event) 'array-start)
             (array-start (object-maybe-continue k)))
-           ((object-start)
+           ((equal? (cdr event) 'object-start)
             (object-start (object-maybe-continue k)))
            (else (raise-invalid-event event))))
         (else (raise-invalid-event event)))))
 
   (define (object-maybe-continue k)
     (lambda (accumulator event)
-      (case (car event)
-        ((json-value)
+      (cond
+        ((equal? (car event) 'json-value)
          (accumulator #\,)
          (let ((key (cdr event)))
            (unless (symbol? key) (raise-invalid-event event))
            (write-json-value (symbol->string key) accumulator)
            (object-value k)))
-        ((json-structure)
-         (case (cdr event)
-           ((object-end)
+        ((equal? (car event) 'json-structure)
+         (cond
+           ((equal? (cdr event) 'object-end)
             (accumulator #\})
             k)
            (else (raise-invalid-event event))))
@@ -646,51 +652,53 @@
   (define (array-start k)
     (lambda (accumulator event)
       (accumulator #\[)
-      (case (car event)
-        ((json-value)
+      (cond
+        ((equal? (car event) 'json-value)
          (write-json-value (cdr event) accumulator)
          (array-maybe-continue k))
-        ((json-structure)
-         (case (cdr event)
-           ((array-end)
+        ((equal? (car event) 'json-structure)
+         (cond
+           ((equal? (cdr event) 'array-end)
             (accumulator #\])
             k)
-           ((array-start) (array-start (array-maybe-continue k)))
-           ((object-start) (object-start (array-maybe-continue k)))
+           ((equal? (cdr event) 'array-start)
+            (array-start (array-maybe-continue k)))
+           ((equal? (cdr event) 'object-start)
+            (object-start (array-maybe-continue k)))
            (else (raise-invalid-event event))))
         (else (raise-invalid-event event)))))
 
   (define (array-maybe-continue k)
     (lambda (accumulator event)
-      (case (car event)
-        ((json-value)
+      (cond
+        ((equal? (car event) 'json-value)
          (accumulator #\,)
-         (write-json-value (cdr event) accumulator)
+         (write-json-value (cdr event) 'accumulator)
          (array-maybe-continue k))
-        ((json-structure)
-         (case (cdr event)
-           ((array-end)
+        ((equal? (car event) 'json-structure)
+         (cond
+           ((equal? (cdr event) 'array-end)
             (accumulator #\])
             k)
-           ((array-start)
+           ((equal? (cdr event) 'array-start)
             (accumulator #\,)
             (array-start (array-maybe-continue k)))
-           ((object-start)
+           ((equal? (cdr event) 'object-start)
             (accumulator #\,)
             (object-start (array-maybe-continue k)))
            (else (raise-invalid-event event))))
         (else (raise-invalid-event event)))))
 
   (define (start accumulator event)
-    (case (car event)
-      ((json-value)
+    (cond
+      ((equal? (car event) 'json-value)
        (write-json-value (cdr event) accumulator)
        raise-invalid-event)
-      ((json-structure)
-       (case (cdr event)
-         ((array-start)
+      ((equal? (car event) 'json-structure)
+       (cond
+         ((equal? (cdr event) 'array-start)
           (array-start raise-invalid-event))
-         ((object-start)
+         ((equal? (cdr event) 'object-start)
           (object-start raise-invalid-event))
          (else (raise-invalid-event event))))
       (else (raise-invalid-event event))))
