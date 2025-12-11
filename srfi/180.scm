@@ -773,10 +773,13 @@
   (case-lambda
     ((obj) (json-write obj (current-output-port)))
     ((obj port-or-accumulator)
-     #;(assume (or (procedure? port-or-accumulator)
-                  (and (textual-port? port-or-accumulator)
-                       (output-port? port-or-accumulator)))
-          "ACCUMULATOR does look like a valid accumulator.")
+     (cond-expand
+       (racket #t)
+       (else
+         (assume (or (procedure? port-or-accumulator)
+                     (and (textual-port? port-or-accumulator)
+                          (output-port? port-or-accumulator)))
+                 "ACCUMULATOR does look like a valid accumulator.")))
      (if (procedure? port-or-accumulator)
          (%json-write obj port-or-accumulator)
          (%json-write obj (port->accumulator port-or-accumulator))))))
