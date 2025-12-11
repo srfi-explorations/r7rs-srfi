@@ -29,6 +29,9 @@
           (scheme write)
           (srfi 60)
           (srfi 145))
+  (cond-expand
+    (racket (import (compatibility mlist)))
+    (else))
   (export json-number-of-character-limit
           json-nesting-depth-limit
           json-null?
