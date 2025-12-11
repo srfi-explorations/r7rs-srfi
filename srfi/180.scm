@@ -146,8 +146,8 @@
                                 (chars-unescaped '()))
               (cond
                 ((or (char=? char #\")
-                     (char=? #\\)
-                     (char=? #\/))
+                     (char=? char #\\)
+                     (char=? char #\/))
                  (loop (generator)
                        (cons char (append chars-unescaped
                                           out))))
