@@ -773,7 +773,7 @@
   (case-lambda
     ((obj) (json-write obj (current-output-port)))
     ((obj port-or-accumulator)
-     (assume (or (procedure? port-or-accumulator)
+     #;(assume (or (procedure? port-or-accumulator)
                   (and (textual-port? port-or-accumulator)
                        (output-port? port-or-accumulator)))
           "ACCUMULATOR does look like a valid accumulator.")
