@@ -7,7 +7,7 @@
        (memq (exception-kind x)
              '(user read read-incomplete)) #t))
 
-(define (valid-number? string)
+(define (valid-number? str)
   ;; Original begin
   ;; based on https://stackoverflow.com/a/13340826/140837
   ;(regexp-matches '(seq
@@ -25,7 +25,7 @@
       (with-exception-handler
         (lambda (x) (k #f))
         (lambda ()
-          (string->number string)
+          (string->number str)
           #t)))))
 
 ;; (srfi 180-helpers) end
@@ -214,9 +214,9 @@
               (char=? char #\,)
               (char=? char #\])
               (char=? char #\}))
-          (let ((string (list->string (reverse out))))
-            (if (valid-number? string)
-                (let ((number (string->number string)))
+          (let ((str (list->string (reverse out))))
+            (if (valid-number? str)
+                (let ((number (string->number str)))
                   (if number
                       (values number char)
                       (raise (make-json-error "Invalid number."))))
@@ -572,11 +572,11 @@
       ((#\x0c) (accumulator "\\f"))
       (else (accumulator char))))
 
-  (define (write-json-string string accumulator)
+  (define (write-json-string str accumulator)
     (accumulator #\")
     (string-for-each
      (lambda (char) (write-json-char char accumulator))
-     string)
+     str)
     (accumulator #\"))
 
   (define (write-json-value obj accumulator)
