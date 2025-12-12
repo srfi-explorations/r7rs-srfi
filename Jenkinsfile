@@ -38,23 +38,19 @@ pipeline {
                     def r7rs_schemes = sh(script: 'compile-scheme --list-r7rs-except larceny meevax', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         stage("${SRFI} R6RS") {
-                            stages {
-                                r6rs_schemes.each { SCHEME ->
-                                    stage("${SCHEME}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
-                                        }
+                            r6rs_schemes.each { SCHEME ->
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
                                     }
                                 }
                             }
                         }
                         stage("${SRFI} R7RS") {
-                            stages {
-                                r7rs_schemes.each { SCHEME ->
-                                    stage("${SCHEME}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
-                                        }
+                            r7rs_schemes.each { SCHEME ->
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
                                     }
                                 }
                             }
