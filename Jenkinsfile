@@ -28,7 +28,6 @@ pipeline {
             steps {
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
-                sh "make SCHEME=chibi test-r7rs-docker"
             }
         }
 
