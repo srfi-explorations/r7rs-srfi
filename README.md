@@ -10,18 +10,15 @@ This is a project for collection of R7RS SRFI implementations.
 ## Running tests
 
 You will need to install
-[https://gitea.scheme.org/Retropikzel/compile-r7rs](https://gitea.scheme.org/Retropikzel/compile-r7rs).
+[https://codeberg.org/retropikzel/compile-scheme](https://codeberg.org/retropikzel/compile-scheme).
 And implementations you want to test with.
 
-To run test:
+Test only with docker.
 
-    make test SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER>
+To run R7RS tests use either:
 
-## Running tests in docker
-
-Only make and docker are needed.
-
-    make test-docker SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER>
+    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test-r6rs-docker
+    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test-r7rs-docker
 
 If you are on windows look up the docker commands from the Makefile.
 
@@ -33,21 +30,18 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
-    - srfi/srfi-N.scm
-        - Guile compability file
-        - Should be (almost, change the name) identical to srfi/N.sld
-
 
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
 The test file needs to be named N.scm. If you dont use SRFI-64 for testing then
-port your preferred test library first to be portable on all all implementations.
+port your preferred test library first to be portable on all all implementations
+and put it into snow-fort, then install it with snow-chibi inside the Dockerfile.
 
 Add the SRFI number into srfis.scm.
 
 ## Adding new implementation
 
 Add support for implementation
-into [https://gitea.scheme.org/Retropikzel/compile-r7rs](https://gitea.scheme.org/Retropikzel/compile-r7rs).
+into [https://codeberg.org/retropikzel/compile-scheme](https://codeberg.org/retropikzel/compile-scheme).
 
 Add support for implementation
 into [snow-chibi](https://github.com/ashinn/chibi-scheme).

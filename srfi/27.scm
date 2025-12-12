@@ -15,6 +15,9 @@
 ;   SE, 22-Mar-2002: comments adjusted, range added
 ;   SE, 25-Mar-2002: pack/unpack just return their argument
 
+(begin (define (internal-random-source-current-time)
+                (exact (floor (current-second)))))
+
 (define-record-type <random-source>
   (internal-make-random-source
     state-ref

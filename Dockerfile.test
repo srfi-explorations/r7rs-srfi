@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -y \
     git make ca-certificates wget xz-utils gcc
 WORKDIR /cache
 RUN git clone https://codeberg.org/retropikzel/compile-scheme.git --depth=2
-RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
+#RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
+RUN git clone https://github.com/Retropikzel/chibi-scheme.git --branch=snow-chibi-kawa-fixes --depth=1
 RUN wget https://gitlab.com/-/project/6808260/uploads/094ce726ce3c6cf8c14560f1e31aaea0/akku-1.1.0.amd64-linux.tar.xz \
     && tar -xf akku-1.1.0.amd64-linux.tar.xz \
     && mv akku-1.1.0.amd64-linux akku
@@ -20,7 +21,7 @@ RUN apt download \
 ARG SCHEME=chibi
 ARG IMAGE=chibi:head
 FROM schemers/${IMAGE}
-RUN mkdir -p ${HOME}/.snow && echo "()" > "${HOME}"/.snow/congig.scm
+RUN mkdir -p ${HOME}/.snow && echo "()" > "${HOME}"/.snow/config.scm
 COPY --from=cache /cache /cache
 WORKDIR /cache
 RUN dpkg -i *.deb
@@ -35,7 +36,10 @@ ENV PATH=/root/.local/bin:${PATH}
 WORKDIR /workdir
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
-COPY srfi-test srfi-test
+COPY srfis.scm .
+COPY README.md .
 COPY Makefile .
+COPY srfi-test srfi-test
 COPY srfi srfi
+RUN set -eu && for SRFI in $(make srfi-install-list); do make SCHEME=${SCHEME} SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-yes build install; done
 

@@ -1,6 +1,6 @@
 .PHONY: README.html tmpdir
 .SILENT: srfi-test build install test test-docker clean test-r6rs \
-	test-r6rs-docker test-r7rs test-r7rs-docker tmpdir
+	test-r6rs-docker test-r7rs test-r7rs-docker tmpdir srfi-install-list
 SCHEME=chibi
 DOCKERIMG=${SCHEME}:head
 SRFI=64
@@ -27,6 +27,11 @@ build:
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
+# If implementation complains about missing SRFI dependency
+# put it on this list
+srfi-install-list:
+	echo "27 60 63 39 64 128 $$(cat srfis.scm | tr -d '()')"
+
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
@@ -48,29 +53,23 @@ test-r6rs: tmpdir srfi-test
 	cp -r srfi/srfi-145.* ${TMPDIR}/srfi/
 	cp -r srfi/srfi-180.* ${TMPDIR}/srfi/
 	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
-	cd ${TMPDIR} && akku install akku-r7rs
+	cd ${TMPDIR} && akku install chez-srfi akku-r7rs
 	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
 	@if [ "${SCHEME}" = "ypsilon" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
 	cd ${TMPDIR} && timeout 60 COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} --debug ${SRFI}.sps
 	cd ${TMPDIR} && printf "\n" | timeout 60 ./${SRFI}
 
 test-r6rs-docker: srfi-test
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test .
 	docker run -v /tmp/akku-cache:/root/.cache/akku -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs"
 
 test-r7rs: tmpdir srfi-test
 	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
-	cp -r srfi/* ${TMPDIR}/srfi/
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} timeout 60 compile-scheme -I . -o ${SRFI} --debug ${SRFI}.scm
-	cd ${TMPDIR} && rm *.scm # tr7 includes the executable if this is not here
-	cd ${TMPDIR} && printf "\n" | timeout 60 ./${SRFI}
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} timeout 60 compile-scheme -o ${SRFI} --debug ${SRFI}.scm
+	cd ${TMPDIR} && timeout 60 ./${SRFI}
 
 test-r7rs-docker: srfi-test
-	echo "Building docker image..."
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
+	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
 	docker run -v /tmp/akku-cache:/root/.cache/akku -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs"
 
 tmpdir:

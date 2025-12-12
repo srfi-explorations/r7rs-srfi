@@ -38,11 +38,4 @@
           random-source-pseudo-randomize!
           random-source-make-integers
           random-source-make-reals)
-   (cond-expand
-     (guile
-       (begin (define (internal-random-source-current-time)
-                (exact (floor (current-time))))))
-     (else
-       (begin (define (internal-random-source-current-time)
-                (exact (floor (current-second)))))))
   (include "27.scm"))
