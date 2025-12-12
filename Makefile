@@ -16,6 +16,12 @@ ifeq "${SCHEME}" "racket"
 DOCKERIMG="racket:latest"
 endif
 
+R7RS_INC=
+ifeq "${SCHEME}" "kawa"
+R7RS_INC="-A /usr/local/share/kawa/lib"
+endif
+
+
 all: build
 
 build:
@@ -65,7 +71,7 @@ test-r6rs-docker: srfi-test
 
 test-r7rs: tmpdir srfi-test
 	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} timeout 60 compile-scheme -o ${SRFI} --debug ${SRFI}.scm
+	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} timeout 60 compile-scheme ${R7RS_INC} -o ${SRFI} --debug ${SRFI}.scm
 	cd ${TMPDIR} && timeout 120 ./${SRFI}
 
 test-r7rs-docker: srfi-test
