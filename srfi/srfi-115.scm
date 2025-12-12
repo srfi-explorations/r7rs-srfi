@@ -5,10 +5,10 @@
 ;; BSD-style license: http://synthcode.com/license.txt
 
 (define-library
-  (srfi 115)
+  (srfi srfi-115)
   (import (scheme base)
           (scheme char)
-          (srfi 1)
+          (only (srfi 1) every)
           (srfi 14)
           (srfi 60)
           (srfi 69))

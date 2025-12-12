@@ -30,7 +30,7 @@ build:
 # If implementation complains about missing SRFI dependency
 # put it on this list
 srfi-install-list:
-	echo "60 13 27 63 39 64 128 $$(cat srfis.scm | tr -d '()')"
+	echo "8 60 39 27 63 64 128 $$(cat srfis.scm | tr -d '()')"
 
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
@@ -56,21 +56,21 @@ test-r6rs: tmpdir srfi-test
 	cd ${TMPDIR} && akku install chez-srfi akku-r7rs
 	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
 	@if [ "${SCHEME}" = "ypsilon" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
-	cd ${TMPDIR} && timeout 60 COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} --debug ${SRFI}.sps
-	cd ${TMPDIR} && printf "\n" | timeout 60 ./${SRFI}
+	cd ${TMPDIR} && timeout 120 COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} --debug ${SRFI}.sps
+	cd ${TMPDIR} && timeout 60 ./${SRFI}
 
 test-r6rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v /tmp/akku-cache:/root/.cache/akku -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs"
+	docker run -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs"
 
 test-r7rs: tmpdir srfi-test
 	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
 	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} timeout 60 compile-scheme -o ${SRFI} --debug ${SRFI}.scm
-	cd ${TMPDIR} && timeout 60 ./${SRFI}
+	cd ${TMPDIR} && timeout 120 ./${SRFI}
 
 test-r7rs-docker: srfi-test
 	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test .
-	docker run -v /tmp/akku-cache:/root/.cache/akku -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs"
+	docker run -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs"
 
 tmpdir:
 	rm -rf ${TMPDIR}

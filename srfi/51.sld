@@ -1,7 +1,7 @@
 (define-library
   (srfi 51)
   (import (scheme base)
-          (srfi 1))
+          (only (srfi 1) every append-reverse))
   (export rest-values
           arg-and
           arg-ands
