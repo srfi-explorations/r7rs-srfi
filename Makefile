@@ -30,7 +30,7 @@ build:
 # If implementation complains about missing SRFI dependency
 # put it on this list
 srfi-install-list:
-	echo "27 60 63 39 64 128 $$(cat srfis.scm | tr -d '()')"
+	echo "60 13 27 63 39 64 128 $$(cat srfis.scm | tr -d '()')"
 
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
