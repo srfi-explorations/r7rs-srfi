@@ -40,5 +40,6 @@ COPY README.md .
 COPY Makefile .
 COPY srfi-test srfi-test
 COPY srfi srfi
-RUN set -eu && for SRFI in $(make srfi-install-list); do echo "Installing SRFI-${SRFI}" ; make SCHEME=${SCHEME} SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-no build install; done
+ARG R6RS=
+RUN if [ "${R6RS}" = "" ]; then set -eu && for SRFI in $(make srfi-install-list); do echo "Installing SRFI-${SRFI}" ; make SCHEME=${SCHEME} SRFI=${SRFI} SNOW_CHIBI_ARGS=--always-no build install; done; fi
 
