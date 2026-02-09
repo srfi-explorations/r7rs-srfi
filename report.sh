@@ -1,7 +1,7 @@
 #!/bin/sh
 
 {
-    echo "<table>"
+    echo "<table border=1>"
     echo "<thead>"
     echo "<tr><td>RNRS</td><td>SRFI</td><td>Scheme</td></tr>"
     echo "</thead>"
