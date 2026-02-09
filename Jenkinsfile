@@ -2,7 +2,7 @@ pipeline {
 
     agent {
         dockerfile {
-            label 'agent1'
+            label 'docker-x86_64'
             filename 'Dockerfile.jenkins'
             args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
             reuseNode true
@@ -10,7 +10,7 @@ pipeline {
     }
 
     triggers{
-        cron('0 1 * * *')
+        cron('@monthly')
     }
 
     options {
@@ -19,50 +19,60 @@ pipeline {
     }
 
     parameters {
-        string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 13 14 27 39 41 60 63 64 69 95 111 113 115 116 180', description: 'Test SRFIs')
+        string(name: 'R6RS_SCHEMES', defaultValue: 'capyscheme chezscheme guile ikarus ironscheme loko mosh racket sagittarius ypsilon', description: 'Test SRFIs')
+        string(name: 'R7RS_SCHEMES', defaultValue: 'capyscheme chibi chicken cyclone foment gambit gauche kawa loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
+        string(name: 'SRFIS', defaultValue: '64', description: 'Test SRFIs')
     }
 
     stages {
-
-        stage('Init and warmup') {
+        stage('Clean and build testfiles') {
             steps {
+                sh "make clean"
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
-                sh "make SCHEME=chibi test-r7rs-docker"
             }
         }
 
         stage('Tests') {
             steps {
                 script {
-                    def r6rs_schemes = sh(script: 'compile-scheme --list-r6rs-except larceny mosh ypsilon', returnStdout: true).split()
                     params.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI} R6RS") {
-                            parallel r6rs_schemes.collectEntries { SCHEME ->
-                            [(SCHEME): {
+                            params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r6rs-docker"
+                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} run-test-docker"
                                     }
                                 }
-                            }]
+                            }
                         }
-                    }
-                    def r7rs_schemes = sh(script: 'compile-scheme --list-r7rs-except larceny meevax', returnStdout: true).split()
                         stage("SRFI-${SRFI} R7RS") {
-                            parallel r7rs_schemes.collectEntries { SCHEME ->
-                            [(SCHEME): {
+                            params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 600 make SCHEME=${SCHEME} SRFI=${SRFI} test-r7rs-docker"
+                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} run-test-docker"
                                     }
                                 }
-                            }]
-                        }
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            sh "make report"
+            sh "chmod -R 755 ." // HTML publish will fail without this
+            publishHTML (target : [allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: '',
+                    reportFiles: 'report.html',
+                    reportName: 'r7rs-srfi-test-results',
+                    reportTitles: 'r7rs-srfi-test-results'])
+            archiveArtifacts(artifacts: '*.log', allowEmptyArchive: true, fingerprint: true)
         }
     }
 }
