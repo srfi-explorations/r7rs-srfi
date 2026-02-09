@@ -84,7 +84,7 @@ run-test: build-srfi-39 build-srfi-64 build srfi-test
 report:
 	sh report.sh
 
-run-test-docker:
+run-test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME}-${RNRS} -f Dockerfile.test .
 	docker run --memory=2G --cpus=2 -v "${PWD}:/workdir" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test"
 
