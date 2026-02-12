@@ -2,18 +2,26 @@ ARG SCHEME=chibi
 ARG IMAGE=chibi:head
 
 FROM docker.io/debian:trixie AS build
-RUN apt-get update && apt-get install -y build-essential git ca-certificates curl xz-utils
+RUN apt-get update && apt-get install -y \
+    build-essential git ca-certificates curl xz-utils chicken-bin
+RUN chicken-install r7rs
 
 WORKDIR /build
 RUN git clone https://github.com/ashinn/chibi-scheme.git --depth=1
-#RUN git clone https://gitlab.com/akkuscm/akku.git --depth=1
 RUN curl -O https://gitlab.com/-/project/6808260/uploads/094ce726ce3c6cf8c14560f1e31aaea0/akku-1.1.0.amd64-linux.tar.xz
 RUN tar -xf akku*.tar.xz && mv akku-1.1.0.amd64-linux akku
 RUN git clone https://codeberg.org/retropikzel/scheme-venv.git --depth=1
+RUN git clone https://codeberg.org/retropikzel/compile-scheme.git --depth=1
 
 WORKDIR /build/chibi-scheme
 RUN make
 RUN make install
+
+WORKDIR /build/compile-scheme
+RUN mkdir -p /root/.snow && echo "()" > /root/.snow/config.scm
+RUN snow-chibi install --impls=chicken --always-yes retropikzel.system
+RUN snow-chibi install --impls=chicken --always-yes srfi.170
+RUN make build-chicken
 
 
 ARG SCHEME=chibi
@@ -27,6 +35,8 @@ WORKDIR /build/akku
 RUN bash install.sh
 RUN ln -s /root/.local/bin/akku /usr/local/bin/akku
 WORKDIR /build/scheme-venv
+RUN make install
+WORKDIR /build/compile-scheme
 RUN make install
 
 RUN mkdir -p /root/.snow && echo "()" > /root/.snow/config.scm
