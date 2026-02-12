@@ -9,10 +9,6 @@ pipeline {
         }
     }
 
-    triggers{
-        cron('0 1 * * *')
-    }
-
     options {
         disableConcurrentBuilds()
             buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
