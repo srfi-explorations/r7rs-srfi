@@ -103,4 +103,5 @@ srfi-test:
 clean:
 	rm -rf *.log
 	rm -rf *.html
+	rm -rf *.tgz
 

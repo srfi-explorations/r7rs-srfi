@@ -114,7 +114,21 @@
           test-on-test-end-simple
           test-on-bad-count-simple
           test-on-bad-end-name-simple)
-
+  (cond-expand
+    ;; To disable warnings
+    (chicken-5 (export test-error/source-info
+                      test-approximate/source-info
+                      test-compare/source-info
+                      test-compare
+                      test-assert/source-info
+                      false-if-error
+                      test-error/source-info
+                      test-approximate/source-info
+                      test-compare/source-info
+                      test-compare
+                      test-assert/source-info
+                      false-if-error))
+    (else))
   (cond-expand
     ;; racket-r7rs has bug with records https://github.com/lexi-lambda/racket-r7rs/pull/26
     (racket
