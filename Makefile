@@ -1,7 +1,7 @@
 SCHEME=chibi
 RNRS=r7rs
 SRFI=64
-VERSION=2025.12.04
+VERSION=2026.02.12
 PKG=srfi-${SRFI}-${VERSION}.tgz
 SRFI_39_PKG=srfi-39-${VERSION}.tgz
 SRFI_64_PKG=srfi-64-${VERSION}.tgz
@@ -48,8 +48,8 @@ build-srfi-39:
 		--version=${VERSION} \
 		--maintainers="Retropikzel" \
 		--doc=README.html \
-		--description="SRFI-${SRFI}" \
-	srfi/64.sld
+		--description="SRFI-39" \
+	srfi/39.sld
 
 build-srfi-64:
 	echo "<pre>$$(cat README.md)</pre>" > README.html
@@ -57,8 +57,8 @@ build-srfi-64:
 		--version=${VERSION} \
 		--maintainers="Retropikzel" \
 		--doc=README.html \
-		--description="SRFI-${SRFI}" \
-	srfi/39.sld
+		--description="SRFI-64" \
+	srfi/64.sld
 
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
@@ -94,7 +94,7 @@ run-test-system: build srfi-test
 
 run-test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME}-${RNRS} -f Dockerfile.test .
-	docker run --memory=2G --cpus=2 -v "${PWD}:/workdir" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system"
+	docker run --memory=2G --cpus=2 -v "${PWD}:/workdir" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system ; chmod -r 755 *.tgz"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
@@ -104,4 +104,5 @@ clean:
 	rm -rf *.log
 	rm -rf *.html
 	rm -rf *.tgz
+	find . -name "*.so" -delete
 

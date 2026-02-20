@@ -37,6 +37,7 @@ pipeline {
                             params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh 'find . -name "*.so" -delete'
                                         sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} run-test-docker"
                                     }
                                 }
@@ -46,6 +47,7 @@ pipeline {
                             params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh 'find . -name "*.so" -delete'
                                         sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} run-test-docker"
                                     }
                                 }
