@@ -231,7 +231,8 @@
         eof-object  ;; return an empty generator
         (begin
 
-          (unless (char=? char #\xFEFF)
+          ;Previously (char=? char #\xFEFF) but Skint does not support it
+          (unless (= (char->integer char) 65279)
             ;; if it is not a UTF-8 BOM, put back the char in front of
             ;; the generator
             (set! generator (gcons char generator)))

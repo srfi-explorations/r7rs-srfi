@@ -31,3 +31,6 @@ README.html
 tmp
 Akku.manifest
 Akku.lock
+venv
+*.html
+run-test*

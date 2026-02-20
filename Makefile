@@ -1,20 +1,30 @@
-.PHONY: README.html tmpdir
-.SILENT: srfi-test build install test test-docker clean test-r6rs \
-	test-r6rs-docker test-r7rs test-r7rs-docker tmpdir
 SCHEME=chibi
-DOCKERIMG=${SCHEME}:head
+RNRS=r7rs
 SRFI=64
-VERSION=2025.12.04
-CLEAN="*.o *.so *.a *.link"
+VERSION=2026.02.12
+PKG=srfi-${SRFI}-${VERSION}.tgz
+SRFI_39_PKG=srfi-39-${VERSION}.tgz
+SRFI_64_PKG=srfi-64-${VERSION}.tgz
+DOCKERIMG=${SCHEME}:latest
 TMPDIR=.tmp/${SCHEME}
-TIMECMD=time
+SCHEMES=capyscheme chibi chicken cyclone foment gauche gambit guile kawa larceny loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon
 
-ifeq "${SCHEME}" "chicken"
-DOCKERIMG="chicken:5"
+LOGFILE=${SCHEME}-${RNRS}-srfi-${SRFI}.log
+
+ifeq "${SCHEME}" "capyscheme"
+DOCKERIMG="capyscheme:head"
 endif
 
-ifeq "${SCHEME}" "racket"
-DOCKERIMG="racket:latest"
+ifeq "${SCHEME}" "chibi"
+DOCKERIMG="chibi:head"
+endif
+
+ifeq "${SCHEME}" "meevax"
+DOCKERIMG="meevax:head"
+endif
+
+ifeq "${SCHEME}" "stklos"
+DOCKERIMG="stklos:head"
 endif
 
 all: build
@@ -28,67 +38,66 @@ build:
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
+build-srfi-39:
+	echo "<pre>$$(cat README.md)</pre>" > README.html
+	snow-chibi package \
+		--version=${VERSION} \
+		--maintainers="Retropikzel" \
+		--doc=README.html \
+		--description="SRFI-39" \
+	srfi/39.sld
+
+build-srfi-64:
+	echo "<pre>$$(cat README.md)</pre>" > README.html
+	snow-chibi package \
+		--version=${VERSION} \
+		--maintainers="Retropikzel" \
+		--doc=README.html \
+		--description="SRFI-64" \
+	srfi/64.sld
+
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-test-r6rs: tmpdir srfi-test
-	cp -r srfi/63.* ${TMPDIR}/srfi/
-	cp -r srfi/69.* ${TMPDIR}/srfi/
-	cp -r srfi/95.* ${TMPDIR}/srfi/
-	cp -r srfi/111.* ${TMPDIR}/srfi/
-	cp -r srfi/113.* ${TMPDIR}/srfi/
-	cp -r srfi/116.* ${TMPDIR}/srfi/
-	cp -r srfi/145.* ${TMPDIR}/srfi/
-	cp -r srfi/180.* ${TMPDIR}/srfi/
-	cp -r srfi/srfi-63.* ${TMPDIR}/srfi/
-	cp -r srfi/srfi-69.* ${TMPDIR}/srfi/
-	cp -r srfi/srfi-95.* ${TMPDIR}/srfi/
-	cp -r srfi/srfi-111.* ${TMPDIR}/srfi/
-	cp -r srfi/srfi-113.* ${TMPDIR}/srfi/
-	cp -r srfi/srfi-116.* ${TMPDIR}/srfi/
-	cp -r srfi/srfi-145.* ${TMPDIR}/srfi/
-	cp -r srfi/srfi-180.* ${TMPDIR}/srfi/
-	cp -r srfi-test/r6rs-programs/* ${TMPDIR}/
-	cd ${TMPDIR} && akku install akku-r7rs
-	@if [ "${SCHEME}" = "mosh" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
-	@if [ "${SCHEME}" = "ypsilon" ]; then rm -rf ${TMPDIR}/.akku && cd ${TMPDIR} && akku install; fi
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib -o ${SRFI} --debug ${SRFI}.sps
-	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
+run-test-venv: build-srfi-39 build-srfi-64 build srfi-test
+	rm -rf venv
+	scheme-venv ${SCHEME} ${RNRS} venv
+	mkdir -p venv/srfi
+	cp srfi-test/r6rs-programs/${SRFI}.sps venv/test.sps
+	cp srfi-test/r7rs-programs/${SRFI}.scm venv/test.scm
+	if [ "${RNRS}" = "r6rs" ]; then cp -r srfi ./venv/; fi
+	if [ "${RNRS}" = "r6rs" ]; then cp -r srfi/64.* ./venv/srfi/; fi
+	if [ ! "${SCHEME}" = "chibi" ]; then ./venv/bin/snow-chibi install --always-yes ${SRFI_39_PKG}; fi
+	if [ "${RNRS}" = "r7rs" ]; then ./venv/bin/snow-chibi install --always-yes ${SRFI_64_PKG}; fi
+	if [ "${RNRS}" = "r7rs" ]; then ./venv/bin/snow-chibi install --always-yes ${PKG}; fi
+	if [ "${RNRS}" = "r6rs" ]; then ./venv/bin/akku install akku-r7rs; fi
+	if [ "${RNRS}" = "r6rs" ]; then ./venv/bin/akku install ; fi
+	if [ "${RNRS}" = "r6rs" ]; then VENV_LOKO_ARGS="-feval" ./venv/bin/scheme-compile venv/test.sps; fi
+	if [ "${RNRS}" = "r7rs" ]; then VENV_LOKO_ARGS="-feval" ./venv/bin/scheme-compile venv/test.scm; fi
+	./venv/test 
 
-test-r6rs-docker: srfi-test
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r6rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
-	docker run -v /tmp/akku-cache:/root/.cache/akku -t r6rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r6rs"
+run-test-system: build srfi-test
+	cp srfi-test/r6rs-programs/${SRFI}.sps run-test.sps
+	cp srfi-test/r7rs-programs/${SRFI}.scm run-test.scm
+	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --always-yes srfi.64; fi
+	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --always-yes ${PKG}; fi
+	if [ "${RNRS}" = "r6rs" ]; then akku install akku-r7rs; fi
+	if [ "${RNRS}" = "r6rs" ]; then akku install ; fi
+	if [ "${RNRS}" = "r6rs" ]; then COMPILE_SCHEME=${SCHEME} compile-scheme run-test.sps; fi
+	if [ "${RNRS}" = "r7rs" ]; then COMPILE_SCHEME=${SCHEME} compile-scheme run-test.scm; fi
+	./run-test
 
-test-r7rs: tmpdir srfi-test
-	cp -r srfi-test/r7rs-programs/* ${TMPDIR}/
-	cp -r srfi/* ${TMPDIR}/srfi/
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/11.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/39.*; fi
-	@if [ "${SCHEME}" = "chibi" ]; then rm -rf ${TMPDIR}/srfi/69.*; fi
-	cd ${TMPDIR} && COMPILE_R7RS=${SCHEME} compile-scheme -I . -o ${SRFI} --debug ${SRFI}.scm
-	cd ${TMPDIR} && rm ${SRFI}.scm # tr7 includes the executable if this is not here
-	cd ${TMPDIR} && printf "\n" | ${TIMECMD} ./${SRFI}
-
-test-r7rs-docker: srfi-test
-	echo "Building docker image..."
-	docker build --build-arg IMAGE=${DOCKERIMG} --build-arg SCHEME=${SCHEME} --tag=r7rs-srfi-test-${SCHEME} -f Dockerfile.test --quiet . && echo "Built"
-	docker run -v /tmp/akku-cache:/root/.cache/akku -t r7rs-srfi-test-${SCHEME} sh -c "make SCHEME=${SCHEME} SRFI=${SRFI} TIMECMD=\"/usr/bin/time -v\" test-r7rs"
-
-tmpdir:
-	rm -rf ${TMPDIR}
-	mkdir -p ${TMPDIR}
-	mkdir -p ${TMPDIR}/srfi
-	mkdir -p ${TMPDIR}/libs
-	mkdir -p ${TMPDIR}/libs/srfi
-
-local-srfi-test:
-	cp ../srfi-test/*.scm srfi-test/
-	cd srfi-test && gosh -r7 convert.scm
+run-test-docker: srfi-test
+	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME}-${RNRS} -f Dockerfile.test .
+	docker run --memory=2G --cpus=2 -v "${PWD}:/workdir" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system ; chmod 755 -R *.tgz"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
 	cd srfi-test && gosh -r7 convert.scm
 
 clean:
-	git clean -X -f
+	rm -rf *.log
+	rm -rf *.html
+	rm -rf *.tgz
+	find . -name "*.so" -delete
 
