@@ -94,7 +94,7 @@ run-test-system: build srfi-test
 
 run-test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME}-${RNRS} -f Dockerfile.test .
-	docker run --memory=2G --cpus=2 -v "${PWD}:/workdir" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system ; chmod -r 755 *.tgz"
+	docker run --memory=2G --cpus=2 -v "${PWD}:/workdir" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system ; chmod 755 -R *.tgz"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
