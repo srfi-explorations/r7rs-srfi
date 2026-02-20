@@ -58,20 +58,5 @@ pipeline {
             }
         }
     }
-
-    post {
-        success {
-            sh "make report"
-            sh "chmod -R 755 ." // HTML publish will fail without this
-            publishHTML (target : [allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: '',
-                    reportFiles: 'report.html',
-                    reportName: 'r7rs-srfi-test-results',
-                    reportTitles: 'r7rs-srfi-test-results'])
-            archiveArtifacts(artifacts: '*.log', allowEmptyArchive: true, fingerprint: true)
-        }
-    }
 }
 

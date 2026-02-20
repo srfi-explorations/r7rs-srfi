@@ -74,8 +74,7 @@ run-test-venv: build-srfi-39 build-srfi-64 build srfi-test
 	if [ "${RNRS}" = "r6rs" ]; then ./venv/bin/akku install ; fi
 	if [ "${RNRS}" = "r6rs" ]; then VENV_LOKO_ARGS="-feval" ./venv/bin/scheme-compile venv/test.sps; fi
 	if [ "${RNRS}" = "r7rs" ]; then VENV_LOKO_ARGS="-feval" ./venv/bin/scheme-compile venv/test.scm; fi
-	./venv/test | tail -n +2 | xargs | sed 's/\# of/<\/td><td>/g' | awk '{print("<tr><td>${RNRS}</td><td>${SRFI}</td><td>${SCHEME}</td><td>" $$0 "</td></tr>")}' | tee ${SCHEME}-${SRFI}-line.html
-	if [ -f srfi-${SRFI}.log ]; then mv srfi-${SRFI}.log ${LOGFILE}; fi
+	./venv/test 
 
 run-test-system: build srfi-test
 	cp srfi-test/r6rs-programs/${SRFI}.sps run-test.sps
