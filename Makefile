@@ -12,19 +12,23 @@ SCHEMES=capyscheme chibi chicken cyclone foment gauche gambit guile kawa larceny
 LOGFILE=${SCHEME}-${RNRS}-srfi-${SRFI}.log
 
 ifeq "${SCHEME}" "capyscheme"
-DOCKERIMG="capyscheme:head"
+DOCKERIMG="${SCHEME}:head"
 endif
 
 ifeq "${SCHEME}" "chibi"
-DOCKERIMG="chibi:head"
+DOCKERIMG="${SCHEME}:head"
+endif
+
+ifeq "${SCHEME}" "foment"
+DOCKERIMG="${SCHEME}:head"
 endif
 
 ifeq "${SCHEME}" "meevax"
-DOCKERIMG="meevax:head"
+DOCKERIMG="${SCHEME}:head"
 endif
 
 ifeq "${SCHEME}" "stklos"
-DOCKERIMG="stklos:head"
+DOCKERIMG="${SCHEME}:head"
 endif
 
 all: build
