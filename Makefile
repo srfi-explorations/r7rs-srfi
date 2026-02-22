@@ -19,6 +19,10 @@ ifeq "${SCHEME}" "chibi"
 DOCKERIMG="${SCHEME}:head"
 endif
 
+ifeq "${SCHEME}" "cyclone"
+DOCKERIMG="${SCHEME}:head"
+endif
+
 ifeq "${SCHEME}" "foment"
 DOCKERIMG="${SCHEME}:head"
 endif
@@ -81,17 +85,23 @@ run-test-venv: build-srfi-39 build-srfi-64 build srfi-test
 	./venv/test
 	mv *.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
-run-test-system: build srfi-test
-	cp srfi-test/r6rs-programs/${SRFI}.sps run-test.sps
-	cp srfi-test/r7rs-programs/${SRFI}.scm run-test.scm
-	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --always-yes srfi.64; fi
+run-test-system: build-srfi-39 build-srfi-64 build srfi-test
+	rm -rf tmp
+	mkdir -p tmp
+	mkdir -p tmp/srfi
+	cp -r srfi/39.* tmp/srfi/
+	cp -r srfi/64.* tmp/srfi/
+	cp srfi-test/r6rs-programs/${SRFI}.sps tmp/run-test.sps
+	cp srfi-test/r7rs-programs/${SRFI}.scm tmp/run-test.scm
+	if [ ! "${SCHEME}" = "chibi" ]; then snow-chibi install --always-yes ${SRFI_39_PKG}; fi
+	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --always-yes ${SRFI_64_PKG}; fi
 	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --always-yes ${PKG}; fi
-	if [ "${RNRS}" = "r6rs" ]; then akku install akku-r7rs; fi
-	if [ "${RNRS}" = "r6rs" ]; then akku install ; fi
-	if [ "${RNRS}" = "r6rs" ]; then COMPILE_SCHEME=${SCHEME} compile-scheme run-test.sps; fi
-	if [ "${RNRS}" = "r7rs" ]; then COMPILE_SCHEME=${SCHEME} compile-scheme run-test.scm; fi
-	./run-test
-	mv *.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
+	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install akku-r7rs; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install ; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd tmp && COMPILE_SCHEME=${SCHEME} compile-scheme -I .akku/lib run-test.sps; fi
+	if [ "${RNRS}" = "r7rs" ]; then cd tmp && COMPILE_SCHEME=${SCHEME} compile-scheme run-test.scm; fi
+	cd tmp && ./run-test
+	mv tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
 run-test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME}-${RNRS} -f Dockerfile.test .
