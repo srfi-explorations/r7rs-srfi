@@ -74,7 +74,8 @@ run-test-venv: build-srfi-39 build-srfi-64 build srfi-test
 	if [ "${RNRS}" = "r6rs" ]; then ./venv/bin/akku install ; fi
 	if [ "${RNRS}" = "r6rs" ]; then VENV_LOKO_ARGS="-feval" ./venv/bin/scheme-compile venv/test.sps; fi
 	if [ "${RNRS}" = "r7rs" ]; then VENV_LOKO_ARGS="-feval" ./venv/bin/scheme-compile venv/test.scm; fi
-	./venv/test 
+	./venv/test
+	mv *.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
 run-test-system: build srfi-test
 	cp srfi-test/r6rs-programs/${SRFI}.sps run-test.sps
@@ -86,10 +87,11 @@ run-test-system: build srfi-test
 	if [ "${RNRS}" = "r6rs" ]; then COMPILE_SCHEME=${SCHEME} compile-scheme run-test.sps; fi
 	if [ "${RNRS}" = "r7rs" ]; then COMPILE_SCHEME=${SCHEME} compile-scheme run-test.scm; fi
 	./run-test
+	mv *.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
 run-test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME}-${RNRS} -f Dockerfile.test .
-	docker run --memory=2G --cpus=2 -v "${PWD}:/workdir" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system ; chmod 755 -R *.tgz"
+	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1

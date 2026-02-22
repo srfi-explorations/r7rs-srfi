@@ -43,4 +43,7 @@ RUN mkdir -p /root/.snow && echo "()" > /root/.snow/config.scm
 WORKDIR /workdir
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
+COPY srfi-test srfi-test/
+COPY Makefile .
+COPY srfi srfi/
 

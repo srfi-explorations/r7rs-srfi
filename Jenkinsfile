@@ -17,6 +17,7 @@ pipeline {
     parameters {
         string(name: 'R6RS_SCHEMES', defaultValue: 'capyscheme chezscheme guile ikarus ironscheme loko mosh racket sagittarius ypsilon', description: 'Test SRFIs')
         string(name: 'R7RS_SCHEMES', defaultValue: 'capyscheme chibi chicken cyclone foment gauche kawa loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
+        // Test 64 and 39 first as they are used in testing the rest
         string(name: 'SRFIS', defaultValue: '64 39 60', description: 'Test SRFIs')
     }
 
@@ -59,7 +60,11 @@ pipeline {
         }
     }
     post {
-        always {
+        success {
+            archiveArtifacts(artifacts: 'logs/*.log', allowEmptyArchive: true, fingerprint: true)
+            cleanWs()
+        }
+        failure {
             cleanWs()
         }
     }
