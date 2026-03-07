@@ -69,7 +69,7 @@ install:
 
 run-test-venv: build-srfi-39 build-srfi-64 build srfi-test
 	rm -rf venv
-	scheme-venv ${SCHEME} ${RNRS} venv
+	scheme-venv ${SCHEME} venv
 	mkdir -p venv/srfi
 	cp srfi-test/r6rs-programs/${SRFI}.sps venv/test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm venv/test.scm
@@ -109,6 +109,10 @@ run-test-docker: srfi-test
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
+	cd srfi-test && gosh -r7 convert.scm
+
+local-srfi-test:
+	cp -r ../srfi-test/*.scm srfi-test/
 	cd srfi-test && gosh -r7 convert.scm
 
 clean:
