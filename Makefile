@@ -108,7 +108,7 @@ run-test-docker: srfi-test
 	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system"
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
+	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=srfi-180
 	cd srfi-test && gosh -r7 convert.scm
 
 local-srfi-test:
