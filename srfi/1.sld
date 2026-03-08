@@ -1,7 +1,6 @@
 (define-library
   (srfi 1)
-  (import (scheme base)
-          (scheme cxr))
+  (import (scheme base))
   (export
     ;cons
     ;list

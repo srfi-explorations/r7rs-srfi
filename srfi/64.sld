@@ -9,7 +9,6 @@
               (scheme process-context)
               (scheme read)
               (scheme write)
-              (srfi 1)
               (srfi 39))
       (begin
         (define (approx= margin)
@@ -24,13 +23,6 @@
               (scheme process-context)
               (scheme read)
               (scheme write)
-              (only (srfi 1)
-                    filter
-                    remove
-                    last-pair
-                    last
-                    drop
-                    drop-right)
               (srfi 39))
       (begin
         (define (approx= margin)

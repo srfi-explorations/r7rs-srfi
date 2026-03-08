@@ -146,6 +146,40 @@
 
 ;;; Helpers
 
+;; From SRFI-1
+(define (filter pred lis)
+    (let recur ((lis lis))
+          (if (null? lis) lis
+                  (let ((head (car lis))
+                                    (tail (cdr lis)))
+                            (if (pred head)
+                                        (let ((new-tail (recur tail)))
+                                                      (if (eq? tail new-tail) lis
+                                                                      (cons head new-tail)))
+                                                  (recur tail))))))
+
+(define (remove  pred l) (filter (lambda (x) (not (pred x))) l))
+
+(define (last-pair lis)
+    (let lp ((lis lis))
+          (let ((tail (cdr lis)))
+                  (if (pair? tail) (lp tail) lis))))
+
+(define (last lis) (car (last-pair lis)))
+
+(define (drop lis k)
+    (let iter ((lis lis) (k k))
+          (if (zero? k) lis (iter (cdr lis) (- k 1)))))
+
+(define (drop-right lis k)
+    (let recur ((lag lis) (lead (drop lis k)))
+          (if (pair? lead)
+                  (cons (car lag) (recur (cdr lag) (cdr lead)))
+                        '())))
+
+;; From SRFI-1 ends
+
+
 (define (string-join strings delimiter)
   (if (null? strings)
     ""

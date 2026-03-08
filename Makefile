@@ -46,6 +46,15 @@ build:
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
+build-srfi-1:
+	echo "<pre>$$(cat README.md)</pre>" > README.html
+	snow-chibi package \
+		--version=${VERSION} \
+		--maintainers="Retropikzel" \
+		--doc=README.html \
+		--description="SRFI-1" \
+	srfi/1.sld
+
 build-srfi-39:
 	echo "<pre>$$(cat README.md)</pre>" > README.html
 	snow-chibi package \
@@ -67,7 +76,7 @@ build-srfi-64:
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-run-test-venv: build-srfi-39 build-srfi-64 build srfi-test
+run-test-venv: build-srfi-1 build-srfi-39 build-srfi-64 build srfi-test
 	rm -rf venv
 	scheme-venv ${SCHEME} venv
 	mkdir -p venv/srfi
@@ -85,7 +94,7 @@ run-test-venv: build-srfi-39 build-srfi-64 build srfi-test
 	./venv/test
 	mv *.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
-run-test-system: build-srfi-39 build-srfi-64 build srfi-test
+run-test-system: build-srfi-1 build-srfi-39 build-srfi-64 build srfi-test
 	rm -rf tmp
 	mkdir -p tmp
 	mkdir -p tmp/srfi
@@ -93,9 +102,9 @@ run-test-system: build-srfi-39 build-srfi-64 build srfi-test
 	cp -r srfi/64.* tmp/srfi/
 	cp srfi-test/r6rs-programs/${SRFI}.sps tmp/run-test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm tmp/run-test.scm
-	if [ ! "${SCHEME}" = "chibi" ]; then snow-chibi install --always-yes ${SRFI_39_PKG}; fi
-	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --always-yes ${SRFI_64_PKG}; fi
-	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --always-yes ${PKG}; fi
+	if [ ! "${SCHEME}" = "chibi" ]; then snow-chibi install --impls=${SCHEME} --always-yes ${SRFI_39_PKG}; fi
+	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --impls=${SCHEME} --always-yes ${SRFI_64_PKG}; fi
+	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --impls=${SCHEME} --always-yes ${PKG}; fi
 	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install akku-r7rs; fi
 	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install ; fi
 	if [ "${RNRS}" = "r6rs" ]; then cd tmp && COMPILE_SCHEME=${SCHEME} compile-scheme -I .akku/lib run-test.sps; fi
