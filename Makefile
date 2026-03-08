@@ -99,12 +99,14 @@ run-test-system: build-srfi-64 build srfi-test
 	mv tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
 run-test-docker: srfi-test
-	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME}-${RNRS} -f Dockerfile.test .
+	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME} -f Dockerfile.test .
 	docker run \
-		--memory=2G --cpus=2 \
+		--memory=2G \
+		--cpus=2 \
 		-v "/tmp/akkucache:/root/.cache/akku" \
 		-v "${PWD}/logs:/workdir/logs" \
-		-w /workdir r7rs-srfi-${SCHEME}-${RNRS} \
+		-w /workdir \
+		r7rs-srfi-${SCHEME} \
 		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system && chmod 755 logs/*.log"
 
 srfi-test:
