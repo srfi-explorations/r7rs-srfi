@@ -27,6 +27,7 @@ racket-compability:
 
 guile-compability:
 	cp srfi/${SRFI}.sld srfi/srfi-${SRFI}.scm
+	sed -i 's/(srfi ${SRFI})/(srfi srfi-${SRFI})/' srfi/srfi-${SRFI}.scm
 
 
 build:

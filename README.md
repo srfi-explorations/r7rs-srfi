@@ -42,7 +42,7 @@ Add files:
         - Use make job: racket-compability to build it
     - srfi/srfi-N.scm
         - Guile compability file
-        - Content should be identical to srfi/N.sld content
+        - Content should be identical to srfi/N.sld content except the name of the library
         - Use make job: guile-compability to build it
 
 

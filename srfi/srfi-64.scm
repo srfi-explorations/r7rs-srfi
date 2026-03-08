@@ -1,5 +1,5 @@
 (define-library
-  (srfi 64)
+  (srfi srfi-64)
   (cond-expand
     ((library (scheme complex))
      (import (scheme base)

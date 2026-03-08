@@ -21,7 +21,7 @@
 ;; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 ;; IN THE SOFTWARE.
 
-(define-library (srfi 180)
+(define-library (srfi srfi-180)
   (import (scheme base)
           (scheme inexact)
           (scheme case-lambda)
