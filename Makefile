@@ -49,7 +49,7 @@ run-test: racket-compability guile-compability srfi-test
 	cp srfi-test/r7rs-programs/${SRFI}.scm tmp/run-test.scm
 	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install akku-r7rs chez-srfi; fi
 	if [ "${RNRS}" = "r6rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme -A .akku/lib run-test.sps; fi
-	if [ "${RNRS}" = "r7rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme -A run-test.scm; fi
+	if [ "${RNRS}" = "r7rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme -A . run-test.scm; fi
 	cd tmp && ./run-test
 	mv tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
