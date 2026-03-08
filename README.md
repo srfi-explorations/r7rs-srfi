@@ -33,9 +33,17 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
+    - srfi/N.rkt
+        - Racket compability file
+        - Content:
+#lang r7rs
+(import (scheme base))
+(include "N.sld")
+        - Use make job: racket-compability to build it
     - srfi/srfi-N.scm
         - Guile compability file
-        - Should be (almost, change the name) identical to srfi/N.sld
+        - Content should be identical to srfi/N.sld content
+        - Use make job: guile-compability to build it
 
 
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).

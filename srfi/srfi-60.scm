@@ -1,5 +1,5 @@
 (define-library
-  (srfi srfi-60)
+  (srfi 60)
   (import (scheme base))
   (export logand
           bitwise-and

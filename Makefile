@@ -16,39 +16,18 @@ ifeq "${RNRS}" "r6rs"
 TESTFILESUFFIX=sps
 endif
 
-ifeq "${SCHEME}" "capyscheme"
-DOCKERIMG="${SCHEME}:head"
-endif
-
-ifeq "${SCHEME}" "chibi"
-DOCKERIMG="${SCHEME}:head"
-endif
-
-ifeq "${SCHEME}" "cyclone"
-DOCKERIMG="${SCHEME}:head"
-endif
-
-ifeq "${SCHEME}" "foment"
-DOCKERIMG="${SCHEME}:head"
-endif
-
-ifeq "${SCHEME}" "loko"
-DOCKERIMG="${SCHEME}:head"
-endif
-
-ifeq "${SCHEME}" "meevax"
-DOCKERIMG="${SCHEME}:head"
-endif
-
 ifeq "${SCHEME}" "stklos"
 DOCKERIMG="${SCHEME}:head"
 endif
 
-ifeq "${SCHEME}" "tr7"
-DOCKERIMG="${SCHEME}:head"
-endif
-
 all: build
+
+racket-compability:
+	printf "#lang r7rs\n(import (only (scheme base) include))\n(include \"${SRFI}.sld\")" > srfi/${SRFI}.rkt
+
+guile-compability:
+	cp srfi/${SRFI}.sld srfi/srfi-${SRFI}.scm
+
 
 build:
 	echo "<pre>$$(cat README.md)</pre>" > README.html
@@ -59,31 +38,10 @@ build:
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
-build-srfi-64:
-	echo "<pre>$$(cat README.md)</pre>" > README.html
-	snow-chibi package \
-		--version=${VERSION} \
-		--maintainers="Retropikzel" \
-		--doc=README.html \
-		--description="SRFI-64" \
-	srfi/64.sld
-
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-run-test-venv: build-srfi-64 build srfi-test
-	rm -rf venv
-	scheme-venv ${SCHEME} venv
-	cp srfi-test/r6rs-programs/${SRFI}.sps venv/run-test.sps
-	cp srfi-test/r7rs-programs/${SRFI}.scm venv/run-test.scm
-	./venv/bin/snow-chibi install --impls=${SCHEME} --always-yes ${SRFI_64_PKG}
-	./venv/bin/snow-chibi install --impls=${SCHEME} --always-yes ${PKG}
-	./venv/bin/akku install akku-r7rs
-	COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} ./venv/bin/scheme-compile ./venv/run-test.${TESTFILESUFFIX}
-	cd venv && ./run-test
-	mv venv/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
-
-run-test-system: build-srfi-64 build srfi-test
+run-test: racket-compability guile-compability srfi-test
 	rm -rf tmp
 	mkdir -p tmp
 	cp -r srfi tmp/
@@ -104,7 +62,7 @@ run-test-docker: srfi-test
 		-v "${PWD}/logs:/workdir/logs" \
 		-w /workdir \
 		r7rs-srfi-${SCHEME} \
-		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system && chmod 755 logs/*.log"
+		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test && chmod 755 logs/*.log"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=srfi-180

@@ -21,7 +21,7 @@
 ;; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 ;; IN THE SOFTWARE.
 
-(define-library (srfi srfi-180)
+(define-library (srfi 180)
   (import (scheme base)
           (scheme inexact)
           (scheme case-lambda)
@@ -41,8 +41,4 @@
           json-sequence-read
           json-accumulator
           json-write)
-  #;(cond-expand ((library (srfi 60))
-                (import (only (srfi 60) arithmetic-shift bitwise-ior)))
-               ((library (srfi 151))
-                (import (only (srfi 151) arithmetic-shift bitwise-ior))))
   (include "180.scm"))
