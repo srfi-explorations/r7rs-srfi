@@ -23,7 +23,7 @@ endif
 all: build
 
 racket-compability:
-	printf "#lang r7rs\n(import (only (scheme base) include))\n(include \"${SRFI}.sld\")" > srfi/${SRFI}.rkt
+	printf "#lang r7rs\n(import (scheme base))\n(include \"${SRFI}.sld\")" > srfi/${SRFI}.rkt
 
 guile-compability:
 	cp srfi/${SRFI}.sld srfi/srfi-${SRFI}.scm
