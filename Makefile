@@ -46,24 +46,6 @@ build:
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
-build-srfi-1:
-	echo "<pre>$$(cat README.md)</pre>" > README.html
-	snow-chibi package \
-		--version=${VERSION} \
-		--maintainers="Retropikzel" \
-		--doc=README.html \
-		--description="SRFI-1" \
-	srfi/1.sld
-
-build-srfi-39:
-	echo "<pre>$$(cat README.md)</pre>" > README.html
-	snow-chibi package \
-		--version=${VERSION} \
-		--maintainers="Retropikzel" \
-		--doc=README.html \
-		--description="SRFI-39" \
-	srfi/39.sld
-
 build-srfi-64:
 	echo "<pre>$$(cat README.md)</pre>" > README.html
 	snow-chibi package \
@@ -76,15 +58,12 @@ build-srfi-64:
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-run-test-venv: build-srfi-1 build-srfi-39 build-srfi-64 build srfi-test
+run-test-venv: build-srfi-64 build srfi-test
 	rm -rf venv
 	scheme-venv ${SCHEME} venv
-	mkdir -p venv/srfi
+	cp -r snow venv/
 	cp srfi-test/r6rs-programs/${SRFI}.sps venv/test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm venv/test.scm
-	if [ "${RNRS}" = "r6rs" ]; then cp -r srfi ./venv/; fi
-	if [ "${RNRS}" = "r6rs" ]; then cp -r srfi/64.* ./venv/srfi/; fi
-	if [ ! "${SCHEME}" = "chibi" ]; then ./venv/bin/snow-chibi install --always-yes ${SRFI_39_PKG}; fi
 	if [ "${RNRS}" = "r7rs" ]; then ./venv/bin/snow-chibi install --always-yes ${SRFI_64_PKG}; fi
 	if [ "${RNRS}" = "r7rs" ]; then ./venv/bin/snow-chibi install --always-yes ${PKG}; fi
 	if [ "${RNRS}" = "r6rs" ]; then ./venv/bin/akku install akku-r7rs; fi
@@ -94,23 +73,19 @@ run-test-venv: build-srfi-1 build-srfi-39 build-srfi-64 build srfi-test
 	./venv/test
 	mv *.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
-run-test-system: build-srfi-1 build-srfi-39 build-srfi-64 build srfi-test
+run-test-system: build-srfi-64 build srfi-test
 	rm -rf tmp
 	mkdir -p tmp
-	mkdir -p tmp/srfi
-	cp -r srfi/39.* tmp/srfi/
-	cp -r srfi/64.* tmp/srfi/
+	snow-chibi install --impls=generic --always-yes --install-source-dir=snow --install-library-dir=tmp/snow ${SRFI_64_PKG}
 	cp srfi-test/r6rs-programs/${SRFI}.sps tmp/run-test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm tmp/run-test.scm
-	if [ ! "${SCHEME}" = "chibi" ]; then snow-chibi install --impls=${SCHEME} --always-yes ${SRFI_39_PKG}; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install akku-r7rs; fi
 	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --impls=${SCHEME} --always-yes ${SRFI_64_PKG}; fi
 	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --impls=${SCHEME} --always-yes ${PKG}; fi
-	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install akku-r7rs; fi
-	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install ; fi
-	if [ "${RNRS}" = "r6rs" ]; then cd tmp && COMPILE_SCHEME=${SCHEME} compile-scheme -I .akku/lib run-test.sps; fi
-	if [ "${RNRS}" = "r7rs" ]; then cd tmp && COMPILE_SCHEME=${SCHEME} compile-scheme run-test.scm; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib run-test.sps; fi
+	if [ "${RNRS}" = "r7rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme run-test.scm; fi
 	cd tmp && ./run-test
-	mv tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
+	mv tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log
 
 run-test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME}-${RNRS} -f Dockerfile.test .
