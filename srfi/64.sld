@@ -34,7 +34,7 @@
           (lambda (value expected)
             (error "approx= not supported, missing (scheme complex)"))))))
   (cond-expand
-    ((or stklos mit)
+    (stklos
      ; Need to export extra for these to work
      (export %test-assert
              %test-compare
