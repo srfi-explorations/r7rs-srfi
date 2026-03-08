@@ -21,7 +21,6 @@
                   (>= ival (- iexp margin))
                   (<= rval (+ rexp margin))
                   (<= ival (+ iexp margin))))))))
-
     (else
       (import (scheme base)
               (scheme case-lambda)
@@ -35,7 +34,7 @@
           (lambda (value expected)
             (error "approx= not supported, missing (scheme complex)"))))))
   (cond-expand
-    ((or stklos mit cyclone)
+    ((or stklos mit)
      ; Need to export extra for these to work
      (export %test-assert
              %test-compare
@@ -45,9 +44,6 @@
              test-compare/source-info
              test-error/source-info))
     (else))
-  (cond-expand
-    (cyclone (begin (define test-env (create-environment))))
-    (else (begin (define test-env (environment '(scheme base))))))
   (export test-begin
           test-end
           test-group

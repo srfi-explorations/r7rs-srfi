@@ -206,6 +206,8 @@
 
 ;;; Main
 
+(define test-env (environment '(scheme base)))
+
 (define (test-runner-simple)
   (let ((runner (test-runner-null)))
     (test-runner-reset runner)
@@ -329,13 +331,7 @@
                              ": ")))
     (when #t ;(memq result-kind '(fail xpass))
       (let ((nil (cons #f #f)))
-        (define (found? value)
-          (not (equal? nil value)))
-        (define (maybe-print value message)
-          (when (found? value)
-            (display-log runner message value)))
-        (let (
-              ;(file (test-result-ref runner 'source-file "(unknown file)"))
+        (let (;(file (test-result-ref runner 'source-file "(unknown file)"))
               ;(line (test-result-ref runner 'source-line "(unknown line)"))
               ;(expression (test-result-ref runner 'source-form))
               (expected-value (test-result-ref runner 'expected-value nil))
@@ -798,8 +794,6 @@
       (exit 1))))
 
 ;;; execution.scm ends here
-(cond-expand
-  (mit-scheme #t)
-  (else (when (not (test-runner-factory))
-          (test-runner-factory test-runner-simple))))
+(when (not (test-runner-factory))
+  (test-runner-factory test-runner-simple))
 
