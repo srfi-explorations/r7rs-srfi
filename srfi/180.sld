@@ -41,8 +41,4 @@
           json-sequence-read
           json-accumulator
           json-write)
-  #;(cond-expand ((library (srfi 60))
-                (import (only (srfi 60) arithmetic-shift bitwise-ior)))
-               ((library (srfi 151))
-                (import (only (srfi 151) arithmetic-shift bitwise-ior))))
   (include "180.scm"))

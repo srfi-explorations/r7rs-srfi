@@ -76,10 +76,9 @@ run-test-venv: build-srfi-64 build srfi-test
 	scheme-venv ${SCHEME} venv
 	cp srfi-test/r6rs-programs/${SRFI}.sps venv/run-test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm venv/run-test.scm
-	snow-chibi install --impls=generic --always-yes --install-source-dir=snow --install-library-dir=venv/snow ${SRFI_64_PKG}
-	./venv/bin/akku install akku-r7rs
 	./venv/bin/snow-chibi install --impls=${SCHEME} --always-yes ${SRFI_64_PKG}
 	./venv/bin/snow-chibi install --impls=${SCHEME} --always-yes ${PKG}
+	./venv/bin/akku install akku-r7rs
 	COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} ./venv/bin/scheme-compile ./venv/run-test.${TESTFILESUFFIX}
 	cd venv && ./run-test
 	mv venv/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
@@ -87,14 +86,12 @@ run-test-venv: build-srfi-64 build srfi-test
 run-test-system: build-srfi-64 build srfi-test
 	rm -rf tmp
 	mkdir -p tmp
+	cp -r srfi tmp/
 	cp srfi-test/r6rs-programs/${SRFI}.sps tmp/run-test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm tmp/run-test.scm
-	snow-chibi install --impls=generic --always-yes --install-source-dir=snow --install-library-dir=tmp/snow ${SRFI_64_PKG}
-	cd tmp && akku install akku-r7rs
-	snow-chibi install --impls=${SCHEME} --always-yes ${SRFI_64_PKG}
-	snow-chibi install --impls=${SCHEME} --always-yes ${PKG}
-	if [ "${RNRS}" = "r6rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme -I .akku/lib run-test.sps; fi
-	if [ "${RNRS}" = "r7rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme run-test.scm; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install akku-r7rs chez-srfi; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme -A .akku/lib run-test.sps; fi
+	if [ "${RNRS}" = "r7rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme -A run-test.scm; fi
 	cd tmp && ./run-test
 	mv tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
