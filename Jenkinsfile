@@ -15,7 +15,7 @@ pipeline {
     }
 
     parameters {
-        string(name: 'R6RS_SCHEMES', defaultValue: 'chezscheme guile ironscheme larceny sagittarius', description: 'Test SRFIs')
+        string(name: 'R6RS_SCHEMES', defaultValue: 'chezscheme ironscheme larceny sagittarius', description: 'Test SRFIs')
         string(name: 'R7RS_SCHEMES', defaultValue: 'chibi chicken foment gauche guile kawa larceny mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
         string(name: 'SRFIS', defaultValue: '64 60 145 180', description: 'Test SRFIs')
     }
