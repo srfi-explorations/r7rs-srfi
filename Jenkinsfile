@@ -57,11 +57,7 @@ pipeline {
         }
     }
     post {
-        success {
-            archiveArtifacts(artifacts: 'logs/*.log', allowEmptyArchive: true, fingerprint: true)
-            cleanWs()
-        }
-        failure {
+        always {
             cleanWs()
         }
     }
