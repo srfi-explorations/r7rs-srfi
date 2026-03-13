@@ -25,11 +25,12 @@ test: srfi-test build
 	mkdir -p .tmp
 	@echo "Natively supported SRFI:"
 	snow-chibi --impls=${SCHEME} srfi-list
-	snow-chibi install --impls=${SCHEME} ${PKG}
 	cp srfi-test/r6rs-programs/${SRFI}.sps .tmp/test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm .tmp/test.scm
+	if [ "${RNRS}" = "r6rs" ]; then snow-chibi install --impls=${SCHEME} --install-source-dir=.tmp --install-library-dir=.tmp ${PKG}; fi
 	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && akku install akku-r7rs; fi
 	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -I .akku/lib test.sps; fi
+	if [ "${RNRS}" = "r6rs" ]; then snow-chibi install --impls=${SCHEME} ${PKG}; fi
 	if [ "${RNRS}" = "r7rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs test.scm; fi
 	cd .tmp && ./test
 	if [ -f .tmp/*.log ]; then cp .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log; fi
