@@ -34,7 +34,7 @@ test: srfi-test build
 test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
 	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
-		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test && chmod 755 logs/*.log"
+		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=srfi-180
