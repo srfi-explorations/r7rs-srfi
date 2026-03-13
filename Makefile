@@ -37,7 +37,7 @@ test-docker: srfi-test
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=srfi-180
-	cd srfi-test && gosh -r7 convert.scm
+	cd srfi-test && chibi-scheme convert.scm
 
 local-srfi-test:
 	cp -r ../srfi-test/*.scm srfi-test/
