@@ -39,7 +39,7 @@ pipeline {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh 'find . -name "*.so" -delete'
                                         sh 'rm -rf logs/*.json'
-                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} run-test-docker"
+                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts(artifacts: "logs/*.json", allowEmptyArchive: true, fingerprint: true)
                                     }
                                 }
@@ -51,7 +51,7 @@ pipeline {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh 'find . -name "*.so" -delete'
                                         sh 'rm -rf logs/*.json'
-                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} run-test-docker"
+                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts(artifacts: "logs/*.json", allowEmptyArchive: true, fingerprint: true)
                                     }
                                 }
