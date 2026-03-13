@@ -21,7 +21,7 @@ install:
 test: srfi-test build
 	rm -rf .tmp
 	mkdir -p .tmp
-	snow-chibi install --impls=${SCHEME} --always-yes --install-source-dir=.tmp/snow --install-library-dir=.tmp/snow ${PKG}
+	snow-chibi install --impls=${SCHEME} --always-yes ${PKG}
 	cp srfi-test/r6rs-programs/${SRFI}.sps .tmp/test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm .tmp/test.scm
 	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && akku install akku-r7rs; fi
