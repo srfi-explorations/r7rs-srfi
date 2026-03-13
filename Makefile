@@ -3,6 +3,7 @@ RNRS=r7rs
 SRFI=64
 VERSION=2026.03.13
 PKG=srfi-${SRFI}-${VERSION}.tgz
+IMAGE=${SCHEME}:latest
 
 all: build
 
@@ -34,7 +35,7 @@ test: srfi-test build
 	if [ -f .tmp/*.log ]; then cp .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log; fi
 
 test-docker: srfi-test
-	docker build --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
+	docker build --build-arg IMAGE=${IMAGE} --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
 	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
 		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test"
 

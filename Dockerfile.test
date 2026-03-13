@@ -1,5 +1,5 @@
-ARG SCHEME=chibi
-FROM docker.io/schemers/${SCHEME}:latest
+ARG IMAGE=chibi:latest
+FROM docker.io/schemers/${IMAGE}
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
 
