@@ -37,10 +37,8 @@ pipeline {
                             params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh 'find . -name "*.so" -delete'
-                                        sh 'rm -rf logs/*.json'
                                         sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
-                                        archiveArtifacts(artifacts: "logs/*.json", allowEmptyArchive: true, fingerprint: true)
+                                        archiveArtifacts(artifacts: ".tmp/logs/*.json", allowEmptyArchive: true, fingerprint: true)
                                     }
                                 }
                             }
@@ -49,10 +47,8 @@ pipeline {
                             params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh 'find . -name "*.so" -delete'
-                                        sh 'rm -rf logs/*.json'
                                         sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
-                                        archiveArtifacts(artifacts: "logs/*.json", allowEmptyArchive: true, fingerprint: true)
+                                        archiveArtifacts(artifacts: ".tmp/logs/*.json", allowEmptyArchive: true, fingerprint: true)
                                     }
                                 }
                             }
