@@ -28,7 +28,7 @@ test: srfi-test build
 	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -I .akku/lib test.sps; fi
 	if [ "${RNRS}" = "r7rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -I snow test.scm; fi
 	cd .tmp && ./test
-	find . -type f -name "*.log" -not -path "./logs/*" -exec cp "{}" logs/ \;
+	cp -rf .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log
 
 test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
