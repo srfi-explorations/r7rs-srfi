@@ -25,10 +25,10 @@ test: srfi-test build
 	cp srfi-test/r6rs-programs/${SRFI}.sps .tmp/test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm .tmp/test.scm
 	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && akku install akku-r7rs; fi
-	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -A .akku/lib test.sps; fi
-	if [ "${RNRS}" = "r7rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -A snow test.scm; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -I .akku/lib test.sps; fi
+	if [ "${RNRS}" = "r7rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -I snow test.scm; fi
 	cd .tmp && ./test
-	mv .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || exit 0
+	find . -type f -name "*.log" -not -path "./logs/*" -exec cp "{}" logs/ \;
 
 test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
