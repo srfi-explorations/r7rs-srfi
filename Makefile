@@ -1,7 +1,7 @@
 SCHEME=chibi
 RNRS=r7rs
 SRFI=64
-VERSION=2026.02.12
+VERSION=2026.03.13
 PKG=srfi-${SRFI}-${VERSION}.tgz
 
 all: build
@@ -22,7 +22,9 @@ test: srfi-test build
 	mkdir -p logs
 	rm -rf .tmp
 	mkdir -p .tmp
-	snow-chibi install --impls=${SCHEME} --always-yes ${PKG}
+	@echo "Natively supported SRFI:"
+	snow-chibi --impls=${SCHEME} srfi-list
+	snow-chibi install --impls=${SCHEME} ${PKG}
 	cp srfi-test/r6rs-programs/${SRFI}.sps .tmp/test.sps
 	cp srfi-test/r7rs-programs/${SRFI}.scm .tmp/test.scm
 	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && akku install akku-r7rs; fi
