@@ -19,6 +19,7 @@ install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
 test: srfi-test build
+	mkdir -p logs
 	rm -rf .tmp
 	mkdir -p .tmp
 	snow-chibi install --impls=${SCHEME} --always-yes ${PKG}
