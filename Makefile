@@ -28,7 +28,7 @@ test: srfi-test build
 	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -A .akku/lib test.sps; fi
 	if [ "${RNRS}" = "r7rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -A snow test.scm; fi
 	cd .tmp && ./test
-	mv .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
+	mv .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || exit 0
 
 test-docker: srfi-test
 	docker build --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
