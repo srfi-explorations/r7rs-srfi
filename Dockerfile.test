@@ -21,6 +21,7 @@ RUN mkdir -p /root/.snow && echo "()" > /root/.snow/config.scm
 WORKDIR /workdir
 ENV COMPILE_R7RS=${SCHEME}
 COPY srfi-test srfi-test/
+COPY README.md
 COPY Makefile .
 COPY srfi srfi/
 
