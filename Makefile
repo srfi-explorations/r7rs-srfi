@@ -3,32 +3,8 @@ RNRS=r7rs
 SRFI=64
 VERSION=2026.02.12
 PKG=srfi-${SRFI}-${VERSION}.tgz
-SRFI_39_PKG=srfi-39-${VERSION}.tgz
-SRFI_64_PKG=srfi-64-${VERSION}.tgz
-DOCKERIMG=${SCHEME}:latest
-TMPDIR=.tmp/${SCHEME}
-SCHEMES=capyscheme chibi chicken cyclone foment gauche gambit guile kawa larceny loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon
-
-LOGFILE=${SCHEME}-${RNRS}-srfi-${SRFI}.log
-
-TESTFILESUFFIX=scm
-ifeq "${RNRS}" "r6rs"
-TESTFILESUFFIX=sps
-endif
-
-ifeq "${SCHEME}" "stklos"
-DOCKERIMG="${SCHEME}:head"
-endif
 
 all: build
-
-racket-compability:
-	printf "#lang r7rs\n(import (scheme base))\n(include \"${SRFI}.sld\")" > srfi/${SRFI}.rkt
-
-guile-compability:
-	cp srfi/${SRFI}.sld srfi/srfi-${SRFI}.scm
-	sed -i 's/(srfi ${SRFI})/(srfi srfi-${SRFI})/' srfi/srfi-${SRFI}.scm
-
 
 build:
 	echo "<pre>$$(cat README.md)</pre>" > README.html
@@ -42,28 +18,22 @@ build:
 install:
 	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
 
-run-test: racket-compability guile-compability srfi-test
-	rm -rf tmp
-	mkdir -p tmp
-	cp -r srfi tmp/
-	cp srfi-test/r6rs-programs/${SRFI}.sps tmp/run-test.sps
-	cp srfi-test/r7rs-programs/${SRFI}.scm tmp/run-test.scm
-	if [ "${RNRS}" = "r6rs" ]; then cd tmp && akku install akku-r7rs; fi
-	if [ "${RNRS}" = "r6rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme -A .akku/lib run-test.sps; fi
-	if [ "${RNRS}" = "r7rs" ]; then cd tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-scheme -A . run-test.scm; fi
-	cd tmp && ./run-test
-	mv tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
+test: srfi-test build
+	rm -rf .tmp
+	mkdir -p .tmp
+	snow-chibi install --impls=${SCHEME} --always-yes --install-source-dir=.tmp/snow --install-library-dir=.tmp/snow ${PKG}
+	cp srfi-test/r6rs-programs/${SRFI}.sps .tmp/test.sps
+	cp srfi-test/r7rs-programs/${SRFI}.scm .tmp/test.scm
+	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && akku install akku-r7rs; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -A .akku/lib test.sps; fi
+	if [ "${RNRS}" = "r7rs" ]; then cd .tmp && COMPILE_R7RS_LOKO="-feval" COMPILE_R7RS=${SCHEME} compile-r7rs -A snow test.scm; fi
+	cd .tmp && ./test
+	mv .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log || true
 
-run-test-docker: srfi-test
-	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME} -f Dockerfile.test .
-	docker run \
-		--memory=2G \
-		--cpus=2 \
-		-v "/tmp/akkucache:/root/.cache/akku" \
-		-v "${PWD}/logs:/workdir/logs" \
-		-w /workdir \
-		r7rs-srfi-${SCHEME} \
-		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test && chmod 755 logs/*.log"
+test-docker: srfi-test
+	docker build --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
+	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
+		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test && chmod 755 logs/*.log"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=srfi-180
