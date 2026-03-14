@@ -650,8 +650,8 @@
 
 (define-syntax test-compare
   (syntax-rules ()
-    ((_ . <rest>)
-     (test-compare/source-info . <rest>))))
+    ((_ item ...)
+     (test-compare/source-info item ...))))
 
 (define-syntax test-compare/source-info
   (syntax-rules ()
@@ -675,23 +675,23 @@
 
 (define-syntax test-equal
   (syntax-rules ()
-    ((_ . <rest>)
-     (test-compare/source-info equal? . <rest>))))
+    ((_ item ...)
+     (test-compare/source-info equal? item ...))))
 
 (define-syntax test-eqv
   (syntax-rules ()
-    ((_ . <rest>)
-     (test-compare/source-info eqv? . <rest>))))
+    ((_ item ...)
+     (test-compare/source-info eqv? item ...))))
 
 (define-syntax test-eq
   (syntax-rules ()
-    ((_ . <rest>)
-     (test-compare/source-info eq? . <rest>))))
+    ((_ item ...)
+     (test-compare/source-info eq? item ...))))
 
 (define-syntax test-approximate
   (syntax-rules ()
-    ((_ . <rest>)
-     (test-approximate/source-info . <rest>))))
+    ((_ item ...)
+     (test-approximate/source-info item ...))))
 
 (define-syntax test-approximate/source-info
   (syntax-rules ()
@@ -714,8 +714,8 @@
 
 (define-syntax test-error
   (syntax-rules ()
-    ((_ . <rest>)
-     (test-error/source-info . <rest>))))
+    ((_ item ...)
+     (test-error/source-info item ...))))
 
 (define-syntax test-error/source-info
   (syntax-rules ()
