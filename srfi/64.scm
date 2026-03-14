@@ -83,7 +83,7 @@
 
 (define (test-result-remove runner key)
   (test-result-alist! runner (remove (lambda (entry)
-                                       (eq? key (car entry)))
+                                       (equal? key (car entry)))
                                      (test-result-alist runner))))
 
 (define (test-result-clear runner)
@@ -146,6 +146,40 @@
 
 ;;; Helpers
 
+;; From SRFI-1
+(define (filter pred lis)
+    (let recur ((lis lis))
+          (if (null? lis) lis
+                  (let ((head (car lis))
+                                    (tail (cdr lis)))
+                            (if (pred head)
+                                        (let ((new-tail (recur tail)))
+                                                      (if (eq? tail new-tail) lis
+                                                                      (cons head new-tail)))
+                                                  (recur tail))))))
+
+(define (remove  pred l) (filter (lambda (x) (not (pred x))) l))
+
+(define (last-pair lis)
+    (let lp ((lis lis))
+          (let ((tail (cdr lis)))
+                  (if (pair? tail) (lp tail) lis))))
+
+(define (last lis) (car (last-pair lis)))
+
+(define (drop lis k)
+    (let iter ((lis lis) (k k))
+          (if (zero? k) lis (iter (cdr lis) (- k 1)))))
+
+(define (drop-right lis k)
+    (let recur ((lag lis) (lead (drop lis k)))
+          (if (pair? lead)
+                  (cons (car lag) (recur (cdr lag) (cdr lead)))
+                        '())))
+
+;; From SRFI-1 ends
+
+
 (define (string-join strings delimiter)
   (if (null? strings)
     ""
@@ -155,39 +189,6 @@
         result
         (loop (string-append result delimiter (car rest))
               (cdr rest))))))
-
-;; From SRFI-1
-(define (filter pred lis)
-  (let recur ((lis lis))
-    (if (null? lis) lis
-      (let ((head (car lis))
-            (tail (cdr lis)))
-        (if (pred head)
-          (let ((new-tail (recur tail)))
-            (if (eq? tail new-tail) lis
-              (cons head new-tail)))
-          (recur tail))))))
-
-(define (remove  pred l) (filter (lambda (x) (not (pred x))) l))
-
-(define (last-pair lis)
-  (let lp ((lis lis))
-    (let ((tail (cdr lis)))
-      (if (pair? tail) (lp tail) lis))))
-
-(define (last lis) (car (last-pair lis)))
-
-(define (drop lis k)
-  (let iter ((lis lis) (k k))
-    (if (zero? k) lis (iter (cdr lis) (- k 1)))))
-
-(define (drop-right lis k)
-  (let recur ((lag lis) (lead (drop lis k)))
-    (if (pair? lead)
-      (cons (car lag) (recur (cdr lag) (cdr lead)))
-      '())))
-
-;; From SRFI-1 ends
 
 (define display-log
   (lambda (runner . args)
@@ -204,6 +205,8 @@
       (when port (map (lambda (item) (write item port)) args)))))
 
 ;;; Main
+
+(define test-env (environment '(scheme base)))
 
 (define (test-runner-simple)
   (let ((runner (test-runner-null)))
@@ -328,13 +331,7 @@
                              ": ")))
     (when #t ;(memq result-kind '(fail xpass))
       (let ((nil (cons #f #f)))
-        (define (found? value)
-          (not (eq? nil value)))
-        (define (maybe-print value message)
-          (when (found? value)
-            (display-log runner message value)))
-        (let (
-              ;(file (test-result-ref runner 'source-file "(unknown file)"))
+        (let (;(file (test-result-ref runner 'source-file "(unknown file)"))
               ;(line (test-result-ref runner 'source-line "(unknown line)"))
               ;(expression (test-result-ref runner 'source-form))
               (expected-value (test-result-ref runner 'expected-value nil))
@@ -623,7 +620,7 @@
 
 (define (set-result-kind! runner pass?)
   (test-result-set! runner 'result-kind
-                    (if (eq? (test-result-kind runner) 'xfail)
+                    (if (equal? (test-result-kind runner) 'xfail)
                       (if pass? 'xpass 'xfail)
                       (if pass? 'pass 'fail))))
 
@@ -691,17 +688,6 @@
     ((_ . <rest>)
      (test-compare/source-info eq? . <rest>))))
 
-#;(define (approx= margin)
-  (lambda (value expected)
-    (let ((rval (real-part value))
-          (ival (imag-part value))
-          (rexp (real-part expected))
-          (iexp (imag-part expected)))
-      (and (>= rval (- rexp margin))
-           (>= ival (- iexp margin))
-           (<= rval (+ rexp margin))
-           (<= ival (+ iexp margin))))))
-
 (define-syntax test-approximate
   (syntax-rules ()
     ((_ . <rest>)
@@ -716,8 +702,7 @@
 
 (define (error-matches? error type)
   (cond
-    ((eq? type #t)
-     #t)
+    ((equal? type #t) #t)
     #;((condition-type? type)
     (and (condition? error) (condition-has-type? error type)))
   ((procedure? type)
@@ -809,8 +794,6 @@
       (exit 1))))
 
 ;;; execution.scm ends here
-#;(cond-expand
-  (mit-scheme #t)
-  (else (when (not (test-runner-factory))
-          (test-runner-factory test-runner-simple))))
+(when (not (test-runner-factory))
+  (test-runner-factory test-runner-simple))
 

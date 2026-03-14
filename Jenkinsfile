@@ -2,7 +2,7 @@ pipeline {
 
     agent {
         dockerfile {
-            label 'docker-x86_64'
+            label 'agent1'
             filename 'Dockerfile.jenkins'
             args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
             reuseNode true
@@ -15,9 +15,9 @@ pipeline {
     }
 
     parameters {
-        string(name: 'R6RS_SCHEMES', defaultValue: 'capyscheme chezscheme guile ikarus ironscheme loko mosh racket sagittarius ypsilon', description: 'Test SRFIs')
-        string(name: 'R7RS_SCHEMES', defaultValue: 'capyscheme chibi chicken cyclone foment gauche kawa loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
-        string(name: 'SRFIS', defaultValue: '64', description: 'Test SRFIs')
+        string(name: 'R6RS_SCHEMES', defaultValue: 'capyscheme chezscheme ironscheme sagittarius', description: 'Test SRFIs')
+        string(name: 'R7RS_SCHEMES', defaultValue: 'capyscheme chibi chicken foment gauche guile kawa mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
+        string(name: 'SRFIS', defaultValue: '64 60 145 180', description: 'Test SRFIs')
     }
 
     stages {
@@ -37,8 +37,7 @@ pipeline {
                             params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh 'find . -name "*.so" -delete'
-                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} run-test-docker"
+                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
                                     }
                                 }
                             }
@@ -47,8 +46,7 @@ pipeline {
                             params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh 'find . -name "*.so" -delete'
-                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} run-test-docker"
+                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
                                     }
                                 }
                             }

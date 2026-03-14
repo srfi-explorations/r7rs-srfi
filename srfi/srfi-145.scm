@@ -18,22 +18,8 @@
 ;; FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 ;; IN THE SOFTWARE.
 
-(define-library (srfi 145)
-  (export assume)
+(define-library
+  (srfi srfi-145)
   (import (scheme base))
-  (begin
-    (define-syntax assume
-      (syntax-rules ()
-        ((assume expression message ...)
-         (or expression
-             (fatal-error "invalid assumption" (quote expression) (list message ...))))
-        ((assume . _)
-         (syntax-error "invalid assume syntax"))))
-    (cond-expand
-      (debug
-        (begin
-          (define fatal-error error)))
-      (else
-        (begin
-          (define (fatal-error message . objs)
-            (car 0)))))))
+  (export assume)
+  (include "145.scm"))

@@ -1,2 +1,2 @@
-FROM docker.io/debian:trixie-slim
-RUN apt-get update && apt-get install -y make docker.io gauche git ca-certificates
+FROM alpine
+RUN apk add make docker git chibi-scheme

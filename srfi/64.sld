@@ -1,42 +1,40 @@
 (define-library
   (srfi 64)
   (cond-expand
-    (tr7
-      (import (except (scheme base) make-parameter parameterize)
-              (scheme case-lambda)
-              (scheme eval)
-              (scheme file)
-              (scheme process-context)
-              (scheme read)
-              (scheme write)
-              (srfi 39))
-      (begin
-        (define (approx= margin)
-          (lambda (value expected)
-            (error "approx= not supported, missing (scheme complex)")))))
+    ((library (scheme complex))
+     (import (scheme base)
+             (scheme case-lambda)
+             (scheme complex)
+             (scheme eval)
+             (scheme file)
+             (scheme process-context)
+             (scheme read)
+             (scheme write))
+     (begin
+       (define (approx= margin)
+         (lambda (value expected)
+           (let ((rval (real-part value))
+                 (ival (imag-part value))
+                 (rexp (real-part expected))
+                 (iexp (imag-part expected)))
+             (and (>= rval (- rexp margin))
+                  (>= ival (- iexp margin))
+                  (<= rval (+ rexp margin))
+                  (<= ival (+ iexp margin))))))))
     (else
-      (import (except (scheme base) make-parameter parameterize)
+      (import (scheme base)
               (scheme case-lambda)
-              (scheme complex)
               (scheme eval)
               (scheme file)
               (scheme process-context)
               (scheme read)
-              (scheme write)
-              (srfi 39))
+              (scheme write))
       (begin
         (define (approx= margin)
           (lambda (value expected)
-            (let ((rval (real-part value))
-                  (ival (imag-part value))
-                  (rexp (real-part expected))
-                  (iexp (imag-part expected)))
-              (and (>= rval (- rexp margin))
-                   (>= ival (- iexp margin))
-                   (<= rval (+ rexp margin))
-                   (<= ival (+ iexp margin)))))))))
+            (error "approx= not supported, missing (scheme complex)"))))))
   (cond-expand
-    ((or stklos mit cyclone)
+    (stklos
      ; Need to export extra for these to work
      (export %test-assert
              %test-compare
@@ -46,9 +44,6 @@
              test-compare/source-info
              test-error/source-info))
     (else))
-  (cond-expand
-    (cyclone (begin (define test-env (create-environment))))
-    (else (begin (define test-env (environment '(scheme base))))))
   (export test-begin
           test-end
           test-group

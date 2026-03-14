@@ -1,31 +1,10 @@
 SCHEME=chibi
 RNRS=r7rs
 SRFI=64
-VERSION=2026.02.12
+VERSION=2026.03.13
 PKG=srfi-${SRFI}-${VERSION}.tgz
-SRFI_39_PKG=srfi-39-${VERSION}.tgz
 SRFI_64_PKG=srfi-64-${VERSION}.tgz
-DOCKERIMG=${SCHEME}:latest
-TMPDIR=.tmp/${SCHEME}
-SCHEMES=capyscheme chibi chicken cyclone foment gauche gambit guile kawa larceny loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon
-
-LOGFILE=${SCHEME}-${RNRS}-srfi-${SRFI}.log
-
-ifeq "${SCHEME}" "capyscheme"
-DOCKERIMG="capyscheme:head"
-endif
-
-ifeq "${SCHEME}" "chibi"
-DOCKERIMG="chibi:head"
-endif
-
-ifeq "${SCHEME}" "meevax"
-DOCKERIMG="meevax:head"
-endif
-
-ifeq "${SCHEME}" "stklos"
-DOCKERIMG="stklos:head"
-endif
+IMAGE=${SCHEME}:latest
 
 all: build
 
@@ -38,61 +17,38 @@ build:
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
-build-srfi-39:
-	echo "<pre>$$(cat README.md)</pre>" > README.html
-	snow-chibi package \
-		--version=${VERSION} \
-		--maintainers="Retropikzel" \
-		--doc=README.html \
-		--description="SRFI-39" \
-	srfi/39.sld
+index:
+	snow-chibi index ${PKG}
 
-build-srfi-64:
-	echo "<pre>$$(cat README.md)</pre>" > README.html
-	snow-chibi package \
-		--version=${VERSION} \
-		--maintainers="Retropikzel" \
-		--doc=README.html \
-		--description="SRFI-64" \
-	srfi/64.sld
+install: index
+	snow-chibi install --impls=${SCHEME} srfi.${SRFI}
 
-install:
-	snow-chibi install --impls=${SCHEME} ${SNOW_CHIBI_ARGS} srfi-${SRFI}-${VERSION}.tgz
+SNOW=snow-chibi --impls=${SCHEME} --always-yes
+test: srfi-test build index
+	mkdir -p logs
+	rm -rf .tmp
+	mkdir -p .tmp
+	cp srfi-test/r6rs-programs/${SRFI}.sps .tmp/test.sps
+	cp srfi-test/r7rs-programs/${SRFI}.scm .tmp/test.scm
+	if [ "${RNRS}" = "r6rs" ]; then ${SNOW} --install-source-dir=.tmp --install-library-dir=.tmp install srfi.64 srfi.${SRFI}; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && akku install akku-r7rs; fi
+	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs -I .akku/lib test.sps; fi
+	if [ "${RNRS}" = "r7rs" ]; then ${SNOW} install srfi.64 srfi.${SRFI}; fi
+	if [ "${RNRS}" = "r7rs" ]; then cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs test.scm; fi
+	cd .tmp && ./test
+	if [ -f .tmp/*.log ]; then cp .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log; fi
 
-run-test-venv: build-srfi-39 build-srfi-64 build srfi-test
-	rm -rf venv
-	scheme-venv ${SCHEME} ${RNRS} venv
-	mkdir -p venv/srfi
-	cp srfi-test/r6rs-programs/${SRFI}.sps venv/test.sps
-	cp srfi-test/r7rs-programs/${SRFI}.scm venv/test.scm
-	if [ "${RNRS}" = "r6rs" ]; then cp -r srfi ./venv/; fi
-	if [ "${RNRS}" = "r6rs" ]; then cp -r srfi/64.* ./venv/srfi/; fi
-	if [ ! "${SCHEME}" = "chibi" ]; then ./venv/bin/snow-chibi install --always-yes ${SRFI_39_PKG}; fi
-	if [ "${RNRS}" = "r7rs" ]; then ./venv/bin/snow-chibi install --always-yes ${SRFI_64_PKG}; fi
-	if [ "${RNRS}" = "r7rs" ]; then ./venv/bin/snow-chibi install --always-yes ${PKG}; fi
-	if [ "${RNRS}" = "r6rs" ]; then ./venv/bin/akku install akku-r7rs; fi
-	if [ "${RNRS}" = "r6rs" ]; then ./venv/bin/akku install ; fi
-	if [ "${RNRS}" = "r6rs" ]; then VENV_LOKO_ARGS="-feval" ./venv/bin/scheme-compile venv/test.sps; fi
-	if [ "${RNRS}" = "r7rs" ]; then VENV_LOKO_ARGS="-feval" ./venv/bin/scheme-compile venv/test.scm; fi
-	./venv/test 
-
-run-test-system: build srfi-test
-	cp srfi-test/r6rs-programs/${SRFI}.sps run-test.sps
-	cp srfi-test/r7rs-programs/${SRFI}.scm run-test.scm
-	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --always-yes srfi.64; fi
-	if [ "${RNRS}" = "r7rs" ]; then snow-chibi install --always-yes ${PKG}; fi
-	if [ "${RNRS}" = "r6rs" ]; then akku install akku-r7rs; fi
-	if [ "${RNRS}" = "r6rs" ]; then akku install ; fi
-	if [ "${RNRS}" = "r6rs" ]; then COMPILE_SCHEME=${SCHEME} compile-scheme run-test.sps; fi
-	if [ "${RNRS}" = "r7rs" ]; then COMPILE_SCHEME=${SCHEME} compile-scheme run-test.scm; fi
-	./run-test
-
-run-test-docker: srfi-test
-	docker build --build-arg SCHEME=${SCHEME} --build-arg IMAGE=${DOCKERIMG} --tag=r7rs-srfi-${SCHEME}-${RNRS} -f Dockerfile.test .
-	docker run --memory=2G --cpus=2 -v "${PWD}:/workdir" -w /workdir r7rs-srfi-${SCHEME}-${RNRS} sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} run-test-system ; chmod 755 -R *.tgz"
+test-docker: srfi-test
+	docker build --build-arg IMAGE=${IMAGE} --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
+	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
+		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test"
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
+	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=srfi-180
+	cd srfi-test && chibi-scheme convert.scm
+
+local-srfi-test:
+	cp -r ../srfi-test/*.scm srfi-test/
 	cd srfi-test && gosh -r7 convert.scm
 
 clean:
