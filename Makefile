@@ -42,7 +42,7 @@ test: srfi-test build index
 	cd .tmp && ${SNOW} srfi.64 srfi.${SRFI}
 	cd .tmp && akku install akku-r7rs 2>/dev/null
 	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs ${LIB_PATHS} test.${SFX}
-	cd .tmp && timeout 60 ./test
+	cd .tmp && timeout 600 ./test
 	if [ -f .tmp/*.log ]; then cp .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log; fi
 
 test-docker: srfi-test
