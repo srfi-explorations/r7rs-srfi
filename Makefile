@@ -6,11 +6,21 @@ PKG=srfi-${SRFI}-${VERSION}.tgz
 SRFI_64_PKG=srfi-64-${VERSION}.tgz
 IMAGE=${SCHEME}:latest
 
+SNOW=snow-chibi --impls=${SCHEME} install --skip-tests?=1 --always-yes
+SFX=scm
+LIB_PATHS=
+ifeq "${RNRS}" "r6rs"
+SNOW=snow-chibi --impls=${SCHEME} install --skip-tests?=1 --always-yes --install-source-dir=. --install-library-dir=.
+SFX=sps
+LIB_PATHS=-I .akku/lib
+endif
+
 all: build
 
 build:
 	echo "<pre>$$(cat README.md)</pre>" > README.html
 	snow-chibi package \
+		--always-yes \
 		--version=${VERSION} \
 		--maintainers="Retropikzel" \
 		--doc=README.html \
@@ -23,19 +33,16 @@ index:
 install: index
 	snow-chibi install --impls=${SCHEME} srfi.${SRFI}
 
-SNOW=snow-chibi --impls=${SCHEME} --always-yes
 test: srfi-test build index
 	mkdir -p logs
 	rm -rf .tmp
 	mkdir -p .tmp
-	cp srfi-test/r6rs-programs/${SRFI}.sps .tmp/test.sps
-	cp srfi-test/r7rs-programs/${SRFI}.scm .tmp/test.scm
-	if [ "${RNRS}" = "r6rs" ]; then ${SNOW} --install-source-dir=.tmp --install-library-dir=.tmp install srfi.64 srfi.${SRFI}; fi
-	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && akku install akku-r7rs; fi
-	if [ "${RNRS}" = "r6rs" ]; then cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs -I .akku/lib test.sps; fi
-	if [ "${RNRS}" = "r7rs" ]; then ${SNOW} install srfi.64 srfi.${SRFI}; fi
-	if [ "${RNRS}" = "r7rs" ]; then cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs test.scm; fi
-	cd .tmp && ./test
+	cp -r srfi-test/180 .tmp/
+	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} .tmp/test.${SFX}
+	cd .tmp && ${SNOW} srfi.64 srfi.${SRFI}
+	cd .tmp && akku install akku-r7rs 2>/dev/null
+	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs ${LIB_PATHS} test.${SFX}
+	cd .tmp && timeout 600 ./test
 	if [ -f .tmp/*.log ]; then cp .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log; fi
 
 test-docker: srfi-test
@@ -44,16 +51,18 @@ test-docker: srfi-test
 		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test"
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
+	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-14
 	cd srfi-test && chibi-scheme convert.scm
 
 local-srfi-test:
 	cp -r ../srfi-test/*.scm srfi-test/
-	cd srfi-test && gosh -r7 convert.scm
+	cp -r ../srfi-test/180 srfi-test/
+	cd srfi-test && chibi-scheme -r7 convert.scm
 
 clean:
 	rm -rf *.log
 	rm -rf *.html
 	rm -rf *.tgz
 	find . -name "*.so" -delete
+	rm -rf .tmp
 
