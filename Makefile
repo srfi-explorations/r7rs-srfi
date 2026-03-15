@@ -37,6 +37,7 @@ test: srfi-test build index
 	mkdir -p logs
 	rm -rf .tmp
 	mkdir -p .tmp
+	cp -r srfi-test/180 .tmp/
 	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} .tmp/test.${SFX}
 	cd .tmp && ${SNOW} srfi.64 srfi.${SRFI}
 	cd .tmp && akku install akku-r7rs 2>/dev/null
