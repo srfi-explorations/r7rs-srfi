@@ -51,13 +51,13 @@ test-docker: srfi-test
 		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test"
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
+	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-180
 	cd srfi-test && chibi-scheme convert.scm
 
 local-srfi-test:
 	cp -r ../srfi-test/*.scm srfi-test/
 	cp -r ../srfi-test/180 srfi-test/
-	cd srfi-test && chibi-scheme -r7 convert.scm
+	cd srfi-test && chibi-scheme convert.scm
 
 clean:
 	rm -rf *.log
