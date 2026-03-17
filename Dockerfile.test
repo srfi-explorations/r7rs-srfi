@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install -y \
 COPY --from=schemers/loko:head /usr/local /usr/loko
 RUN cp -r /usr/loko/* /usr/local/
 COPY --from=schemers/chibi:head /usr/local /usr/chibi
-RUN cp -r /usr/chibi/* /usr/local/
+RUN cp -r /usr/chibi/lib/* /usr/local/lib/
+RUN cp -r /usr/chibi/share/* /usr/local/share/
+RUN cp -r /usr/chibi/bin/*chibi* /usr/local/bin/
 RUN ldconfig
 
 ADD https://codeberg.org/retropikzel/compile-r7rs/raw/branch/main/compile-r7rs .
