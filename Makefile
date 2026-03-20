@@ -10,16 +10,12 @@ SNOW=snow-chibi --impls=${SCHEME} install --always-yes
 SFX=scm
 LIB_PATHS=
 ifeq "${RNRS}" "r6rs"
-SNOW=snow-chibi --impls=${SCHEME} install --always-yes --install-source-dir=. --install-library-dir=.
+SNOW=${SNOW} --install-source-dir=. --install-library-dir=.
 SFX=sps
 LIB_PATHS=-I .akku/lib
 endif
 
 ifeq "${SCHEME}" "capyscheme"
-IMAGE=${SCHEME}:head
-endif
-
-ifeq "${SCHEME}" "kawa"
 IMAGE=${SCHEME}:head
 endif
 
@@ -56,7 +52,7 @@ test: srfi-test build index
 
 test-docker: srfi-test
 	docker build --build-arg IMAGE=${IMAGE} --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
-	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
+	docker run --memory=2G --cpus=2 -v "${PWD}/dockertmp:/tmp" -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
 		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test"
 
 srfi-test:
@@ -67,6 +63,10 @@ local-srfi-test:
 	cp -r ../srfi-test/*.scm srfi-test/
 	cp -r ../srfi-test/180 srfi-test/
 	cd srfi-test && chibi-scheme convert.scm
+
+local-chibi-scheme:
+	rm -rf chibi-scheme
+	cp -r ../chibi-scheme .
 
 clean:
 	rm -rf *.log

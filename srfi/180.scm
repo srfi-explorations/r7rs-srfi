@@ -30,7 +30,7 @@
 
 ;; (srfi 180-helpers) end
 
-(define (pk . args)
+#;(define (pk . args)
   (write args)
   (newline)
   (car (reverse args)))
@@ -380,7 +380,7 @@
 
 ;; XXX: procedure foldts is not used as-is. It was copied here for
 ;; documentation purpose (public domain, by Oleg Kiselyov).
-(define (foldts fdown fup fhere seed tree)
+#;(define (foldts fdown fup fhere seed tree)
   ;; - fhere is applied to the leafs of the tree
   ;;
   ;; - fdown is invoked when a non-leaf node is entered before any of
