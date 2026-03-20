@@ -6,13 +6,21 @@ PKG=srfi-${SRFI}-${VERSION}.tgz
 SRFI_64_PKG=srfi-64-${VERSION}.tgz
 IMAGE=${SCHEME}:latest
 
-SNOW=snow-chibi --impls=${SCHEME} install --skip-tests?=1 --always-yes
+SNOW=snow-chibi --impls=${SCHEME} install --always-yes
 SFX=scm
 LIB_PATHS=
 ifeq "${RNRS}" "r6rs"
-SNOW=snow-chibi --impls=${SCHEME} install --skip-tests?=1 --always-yes --install-source-dir=. --install-library-dir=.
+SNOW=snow-chibi --impls=${SCHEME} install --always-yes --install-source-dir=. --install-library-dir=.
 SFX=sps
 LIB_PATHS=-I .akku/lib
+endif
+
+ifeq "${SCHEME}" "capyscheme"
+IMAGE=${SCHEME}:head
+endif
+
+ifeq "${SCHEME}" "kawa"
+IMAGE=${SCHEME}:head
 endif
 
 all: build
@@ -39,8 +47,9 @@ test: srfi-test build index
 	mkdir -p .tmp
 	cp -r srfi-test/180 .tmp/
 	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} .tmp/test.${SFX}
-	cd .tmp && ${SNOW} srfi.64 srfi.${SRFI}
-	cd .tmp && akku install akku-r7rs 2>/dev/null
+	cd .tmp && ${SNOW} "(srfi 64)"
+	cd .tmp && ${SNOW} "(srfi ${SRFI})"
+	cd .tmp && akku install akku-r7rs 2> /dev/null
 	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs ${LIB_PATHS} test.${SFX}
 	cd .tmp && timeout 600 ./test
 	if [ -f .tmp/*.log ]; then cp .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log; fi
