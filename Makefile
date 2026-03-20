@@ -10,7 +10,7 @@ SNOW=snow-chibi --impls=${SCHEME} install --always-yes
 SFX=scm
 LIB_PATHS=
 ifeq "${RNRS}" "r6rs"
-SNOW=${SNOW} --install-source-dir=. --install-library-dir=.
+SNOW=snow-chibi --impls=${SCHEME} install --always-yes --install-source-dir=. --install-library-dir=.
 SFX=sps
 LIB_PATHS=-I .akku/lib
 endif
@@ -52,7 +52,7 @@ test: srfi-test build index
 
 test-docker: srfi-test
 	docker build --build-arg IMAGE=${IMAGE} --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
-	docker run --memory=2G --cpus=2 -v "${PWD}/dockertmp:/tmp" -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
+	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
 		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test"
 
 srfi-test:
