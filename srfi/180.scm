@@ -30,7 +30,7 @@
 
 ;; (srfi 180-helpers) end
 
-(define (pk . args)
+#;(define (pk . args)
   (write args)
   (newline)
   (car (reverse args)))
@@ -231,7 +231,7 @@
         eof-object  ;; return an empty generator
         (begin
 
-          ;Previously (char=? char #\xFEFF) but Skint does not support it
+          ;Previously (char=? char #\xFEFF) but it's not required to work by R7RS
           (unless (= (char->integer char) 65279)
             ;; if it is not a UTF-8 BOM, put back the char in front of
             ;; the generator
@@ -380,7 +380,7 @@
 
 ;; XXX: procedure foldts is not used as-is. It was copied here for
 ;; documentation purpose (public domain, by Oleg Kiselyov).
-(define (foldts fdown fup fhere seed tree)
+#;(define (foldts fdown fup fhere seed tree)
   ;; - fhere is applied to the leafs of the tree
   ;;
   ;; - fdown is invoked when a non-leaf node is entered before any of
