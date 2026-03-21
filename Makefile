@@ -19,6 +19,11 @@ ifeq "${SCHEME}" "capyscheme"
 IMAGE=${SCHEME}:head
 endif
 
+SRFI_DEPENDS=srfi.64
+ifeq "${SRFI}" "180"
+SRFI_DEPENDS += srfi.60 srfi.145
+endif
+
 all: build
 
 build:
@@ -31,20 +36,17 @@ build:
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
-index:
-	snow-chibi index ${PKG}
-
-install: index
+install:
 	snow-chibi install --impls=${SCHEME} srfi.${SRFI}
 
-test: srfi-test build index
+test: srfi-test build
 	mkdir -p logs
 	rm -rf .tmp
 	mkdir -p .tmp
 	cp -r srfi-test/180 .tmp/
 	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} .tmp/test.${SFX}
-	cd .tmp && ${SNOW} "(srfi 64)"
-	cd .tmp && ${SNOW} "(srfi ${SRFI})"
+	cd .tmp && ${SNOW} ${SRFI_DEPENDS}
+	cd .tmp && ${SNOW} ../${PKG}
 	cd .tmp && akku install akku-r7rs 2> /dev/null
 	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs ${LIB_PATHS} test.${SFX}
 	cd .tmp && timeout 600 ./test
