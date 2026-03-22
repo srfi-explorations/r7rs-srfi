@@ -3,7 +3,7 @@ FROM docker.io/schemers/${IMAGE}
 ARG SCHEME=chibi
 ENV COMPILE_R7RS=${SCHEME}
 
-RUN apt-get update && apt-get install -y curl guile-3.0 git ca-certificates
+RUN apt-get update && apt-get install -y curl guile-3.0 git ca-certificates make
 
 COPY --from=schemers/loko:head /usr/local /usr/loko
 RUN cp -r /usr/loko/* /usr/local/
