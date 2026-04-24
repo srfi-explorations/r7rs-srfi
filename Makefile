@@ -1,7 +1,7 @@
 SCHEME=chibi
 RNRS=r7rs
 SRFI=64
-VERSION=2026.03.13
+VERSION=2026.04.24
 PKG=srfi-${SRFI}-${VERSION}.tgz
 SRFI_64_PKG=srfi-64-${VERSION}.tgz
 IMAGE=${SCHEME}:latest
@@ -31,13 +31,10 @@ build:
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
-index:
-	snow-chibi index ${PKG}
+install:
+	snow-chibi --impls=${SCHEME} install ${PKG}
 
-install: index
-	snow-chibi install --impls=${SCHEME} srfi.${SRFI}
-
-test: srfi-test build index
+test: srfi-test build
 	mkdir -p logs
 	rm -rf .tmp
 	mkdir -p .tmp
@@ -46,7 +43,7 @@ test: srfi-test build index
 	cd .tmp && ${SNOW} "(srfi 64)"
 	cd .tmp && ${SNOW} "(srfi ${SRFI})"
 	cd .tmp && akku install akku-r7rs 2> /dev/null
-	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs ${LIB_PATHS} test.${SFX}
+	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs ${LIB_PATHS} -o test test.${SFX}
 	cd .tmp && timeout 600 ./test
 	if [ -f .tmp/*.log ]; then cp .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log; fi
 

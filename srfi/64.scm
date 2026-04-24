@@ -206,7 +206,9 @@
 
 ;;; Main
 
-(define test-env (environment '(scheme base)))
+(define test-env
+  (cond-expand (cyclone (setup-environment))
+               (else (environment '(scheme base)))))
 
 (define (test-runner-simple)
   (let ((runner (test-runner-null)))
