@@ -232,7 +232,7 @@
         (begin
 
           ;Previously (char=? char #\xFEFF) but it's not required to work by R7RS
-          (unless (= (char->integer char) 65279)
+          (unless (= (char->integer char) #xFEFF)
             ;; if it is not a UTF-8 BOM, put back the char in front of
             ;; the generator
             (set! generator (gcons char generator)))
