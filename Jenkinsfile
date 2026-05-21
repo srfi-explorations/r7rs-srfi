@@ -2,7 +2,7 @@ pipeline {
 
     agent {
         dockerfile {
-            label 'docker-x86_64'
+            label 'guix'
             filename 'Dockerfile.jenkins'
             args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
             reuseNode true
@@ -11,7 +11,7 @@ pipeline {
 
     options {
         disableConcurrentBuilds()
-            buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
     parameters {
