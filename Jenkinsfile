@@ -16,6 +16,14 @@ pipeline {
     }
 
     stages {
+
+        stage('Install tools') {
+            steps {
+                sh "guix install make git gcc-toolchain libffi chibi-scheme"
+                sh "snow-chibi install --impls=chibi --install-prefix=.tools retropikzel.test-r7rs"
+            }
+        }
+
         stage('Clean and build testprograms') {
             steps {
                 sh "rm -rf logs"
@@ -33,7 +41,7 @@ pipeline {
                             params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "guix shell --container --emulate-fhs chibi-scheme -- snow-chibi install --impls=chibi retropikzel.test-r7rs && timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
+                                        sh "PATH=./tools/bin:${PATH} make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
@@ -44,7 +52,49 @@ pipeline {
                             params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "guix shell --container --emulate-fhs chibi-scheme -- snow-chibi install --impls=chibi retropikzel.test-r7rs && timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
+                                        sh "PATH=./tools/bin:${PATH} make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
+                                        archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
+                                        sh "rm -rf logs"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+        stage('Clean and build testprograms') {
+            steps {
+                sh "rm -rf logs"
+                sh "rm -rf srfi-test"
+                sh "make srfi-test"
+                sh "cd srfi-test && guix shell chibi-scheme -- chibi-scheme convert.scm"
+            }
+        }
+
+        stage('Tests') {
+            steps {
+                script {
+                    params.SRFIS.split().each { SRFI ->
+                        stage("SRFI-${SRFI} R6RS") {
+                            params.R6RS_SCHEMES.split().each { SCHEME ->
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "guix shell --container --emulate-fhs chibi-scheme gcc-toolchain libffi -- snow-chibi install --impls=chibi retropikzel.test-r7rs && timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
+                                        archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
+                                        sh "rm -rf logs"
+                                    }
+                                }
+                            }
+                        }
+                        stage("SRFI-${SRFI} R7RS") {
+                            params.R7RS_SCHEMES.split().each { SCHEME ->
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "guix shell --container --emulate-fhs chibi-scheme gcc-toolchain libffi -- snow-chibi install --impls=chibi retropikzel.test-r7rs && timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
