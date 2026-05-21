@@ -19,7 +19,7 @@ pipeline {
         LD_LIBRARY_PATH=".tools/lib:"
         DYLD_LIBRARY_PATH=".tools/lib:"
         CHIBI_MODULE_PATH=".tools/share/chibi:.tools/lib/chibi"
-        PATH="${WORKSPACE}/.tools/bin:${PATH}"
+        PATH="${WORKSPACE}/.tools/bin:${WORKSPACE}/.chibi/bin:${PATH}"
     }
 
     stages {
@@ -28,8 +28,8 @@ pipeline {
             steps {
                 sh "rm -rf chibi-scheme"
                 sh "guix shell git nss-certs -- git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
-                sh "guix shell make gcc-toolchain libffi -- make -C chibi-scheme CC=gcc PREFIX=.tools"
-                sh "guix shell make gcc-toolchain libffi -- make -C chibi-scheme CC=gcc PREFIX=.tools install"
+                sh "guix shell make gcc-toolchain libffi -- make -C chibi-scheme CC=gcc PREFIX=.chibi "
+                sh "guix shell make gcc-toolchain libffi -- make -C chibi-scheme CC=gcc PREFIX=.chibi install"
                 sh "guix shell make gcc-toolchain libffi -- snow-chibi install --impls=chibi --install-prefix=.tools --always-yes retropikzel.test-r7rs"
             }
         }
