@@ -19,8 +19,8 @@ pipeline {
 
         stage('Install tools') {
             steps {
-                sh "guix install make git gcc-toolchain libffi chibi-scheme"
-                sh "snow-chibi install --impls=chibi --install-prefix=.tools retropikzel.test-r7rs"
+                sh "guix install make git gcc-toolchain libffi chibi-scheme chicken"
+                sh "snow-chibi install --impls=chicken --install-prefix=.tools retropikzel.test-r7rs"
             }
         }
 
