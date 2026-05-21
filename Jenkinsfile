@@ -51,7 +51,7 @@ pipeline {
                             params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "PATH=${WORKSPACE}/.tools/bin make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
+                                        sh "PATH=${WORKSPACE}/.tools/bin:${PATH} make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
@@ -62,7 +62,7 @@ pipeline {
                             params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "PATH=${WORKSPACE}/.tools/bin make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
+                                        sh "PATH=${WORKSPACE}/.tools/bin:${PATH} make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
