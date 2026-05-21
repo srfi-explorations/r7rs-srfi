@@ -2,8 +2,9 @@ pipeline {
 
     agent {
         dockerfile {
-            label 'guix-x86_64'
+            label 'docker-x86_64'
             filename 'Dockerfile.jenkins'
+            args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
             reuseNode true
         }
     }
