@@ -16,9 +16,9 @@ pipeline {
     }
 
     environment {
-        LD_LIBRARY_PATH=".tools/lib:"
-        DYLD_LIBRARY_PATH=".tools/lib:"
-        CHIBI_MODULE_PATH=".tools/share/chibi:.tools/lib/chibi"
+        LD_LIBRARY_PATH="${WORKSPACE}/.tools/lib:"
+        DYLD_LIBRARY_PATH="${WORKSPACE}/.tools/lib:"
+        CHIBI_MODULE_PATH="${WORKSPACE}/.tools/share/chibi:${WORKSPACE}/.tools/lib/chibi"
         PATH="${WORKSPACE}/.tools/bin:${PATH}"
     }
 
