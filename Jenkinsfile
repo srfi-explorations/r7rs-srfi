@@ -27,7 +27,7 @@ pipeline {
             steps {
                 sh "rm -rf chibi-scheme"
                 sh "guix shell git -- git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
-                sh "guix shell gcc-toolchain libffi -- sh -c 'make -C chibi-scheme PREFIX=.tools && make -C chibi-scheme PREFIX=.tools install && snow-chibi install --impls=chibi --install-prefix=.tools --always-yes retropikzel.test-r7rs'"
+                sh "guix shell gcc-toolchain libffi -- sh -c 'make -C chibi-scheme CC=gcc PREFIX=.tools && make -C chibi-scheme CC=gcc PREFIX=.tools install && snow-chibi install --impls=chibi --install-prefix=.tools --always-yes retropikzel.test-r7rs'"
             }
         }
 
