@@ -1,4 +1,4 @@
-FROM debian:trixie
+FROM docker.io/debian:trixie
 RUN apt-get update && apt-get install -y \
     make gcc git ca-certificates libffi-dev podman-docker git
 RUN git clone https://github.com/ashinn/chibi-scheme.git

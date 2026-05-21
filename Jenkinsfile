@@ -1,11 +1,7 @@
 pipeline {
 
     agent {
-        dockerfile {
-            label 'podman-x86_64'
-            filename 'Dockerfile.jenkins'
-            reuseNode true
-        }
+        label 'guix-x86_64'
     }
 
     options {
@@ -25,7 +21,7 @@ pipeline {
                 sh "rm -rf logs"
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
-                sh "cd srfi-test && chibi-scheme convert.scm"
+                sh "cd srfi-test && guix shell chibi-scheme -- chibi-scheme convert.scm"
             }
         }
 
@@ -37,7 +33,7 @@ pipeline {
                             params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
+                                        sh "guix shell --container --emulate-fhs chibi-scheme -- snow-chibi install --impls=chibi retropikzel.test-r7rs && timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
@@ -48,7 +44,7 @@ pipeline {
                             params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
+                                        sh "guix shell --container --emulate-fhs chibi-scheme -- snow-chibi install --impls=chibi retropikzel.test-r7rs && timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
