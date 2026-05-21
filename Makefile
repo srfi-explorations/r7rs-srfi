@@ -1,27 +1,21 @@
-SCHEME=chibi
 RNRS=r7rs
+SCHEME=chibi
 SRFI=64
+DOCKER_TAG=head
+
 VERSION=2026.04.26
 PKG=srfi-${SRFI}-${VERSION}.tgz
-SRFI_64_PKG=srfi-64-${VERSION}.tgz
-IMAGE=${SCHEME}:latest
 
-SNOW=snow-chibi --impls=${SCHEME} install --always-yes
 SFX=scm
 LIB_PATHS=
 ifeq "${RNRS}" "r6rs"
-SNOW=snow-chibi --impls=${SCHEME} install --always-yes --install-source-dir=. --install-library-dir=.
 SFX=sps
 LIB_PATHS=-I .akku/lib
 endif
 
-ifeq "${SCHEME}" "capyscheme"
-IMAGE=${SCHEME}:head
-endif
+all: package
 
-all: build
-
-build:
+package:
 	echo "<pre>$$(cat README.md)</pre>" > README.html
 	snow-chibi package \
 		--always-yes \
@@ -34,23 +28,27 @@ build:
 install:
 	snow-chibi --impls=${SCHEME} install ${PKG}
 
-test: srfi-test build
-	mkdir -p logs
+testfiles: package
 	rm -rf .tmp
 	mkdir -p .tmp
-	cp -r srfi-test/180 .tmp/
 	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} .tmp/test.${SFX}
-	cd .tmp && ${SNOW} "(srfi 64)"
-	cd .tmp && ${SNOW} "(srfi ${SRFI})"
-	cd .tmp && akku install akku-r7rs 2> /dev/null
-	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs ${LIB_PATHS} -o test test.${SFX}
-	cd .tmp && timeout 600 ./test
-	if [ -f .tmp/*.log ]; then cp .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log; fi
+	cp ${PKG} .tmp/
 
-test-docker: srfi-test
-	docker build --build-arg IMAGE=${IMAGE} --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
-	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
-		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test"
+test: srfi-test testfiles
+	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.${SFX}
+	cd .tmp && timeout 600 ./test-program
+	mkdir -p logs/${SCHEME}/
+	cp .tmp/*.log logs/${SCHEME}/ || true
+
+test-docker: testfiles
+	cd .tmp && \
+		TEST_R7RS_DEBUG=1 \
+		DOCKER_TAG=${DOCKER_TAG} \
+		SNOW_PACKAGES="srfi.60 srfi.64 srfi.145 srfi.180 ${PKG}"\
+		COMPILE_R7RS=${SCHEME} \
+		test-r7rs -o test-program test.${SFX}
+	mkdir -p logs/${SCHEME}/
+	cp .tmp/*.log logs/${SCHEME}/ || true
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
