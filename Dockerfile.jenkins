@@ -4,4 +4,5 @@ RUN apt-get update && apt-get install -y \
 RUN git clone https://github.com/ashinn/chibi-scheme.git
 WORKDIR /chibi-scheme
 RUN make && make install
+RUN mkdir -p "${HOME}/.snow" && echo "()" > "${HOME}/.snow/config.scm"
 RUN snow-chibi install --impls=chibi retropikzel.test-r7rs
