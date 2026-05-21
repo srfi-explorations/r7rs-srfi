@@ -51,7 +51,7 @@ pipeline {
                             params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
+                                        sh "guix shell make gcc-toolchain libffi -- make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
@@ -62,7 +62,7 @@ pipeline {
                             params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
+                                        sh "guix shell make gcc-toolchain libffi -- make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
