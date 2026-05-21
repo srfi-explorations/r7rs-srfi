@@ -19,7 +19,7 @@ pipeline {
         LD_LIBRARY_PATH=".tools/lib:"
         DYLD_LIBRARY_PATH=".tools/lib:"
         CHIBI_MODULE_PATH=".tools/share/chibi:.tools/lib/chibi"
-        PATH=".tools/bin:${PATH}"
+        PATH="${WORKSPACE}/.tools/bin:${PATH}"
     }
 
     stages {
