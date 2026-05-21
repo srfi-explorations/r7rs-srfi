@@ -5,4 +5,4 @@ RUN git clone https://github.com/ashinn/chibi-scheme.git
 WORKDIR /chibi-scheme
 RUN make && make install
 RUN mkdir -p "${HOME}/.snow" && echo "()" > "${HOME}/.snow/config.scm"
-RUN snow-chibi install --impls=chibi retropikzel.test-r7rs
+RUN snow-chibi install --impls=chibi --always-yes retropikzel.test-r7rs
