@@ -29,7 +29,6 @@ install:
 	snow-chibi --impls=${SCHEME} install ${PKG}
 
 testfiles: package
-	mkdir -p logs
 	rm -rf .tmp
 	mkdir -p .tmp
 	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} .tmp/test.${SFX}
