@@ -15,11 +15,19 @@ pipeline {
         string(name: 'SRFIS', defaultValue: '2 8 11 19 27 28 39 60 64 69 145 180', description: 'Test SRFIs')
     }
 
+    environment {
+        LD_LIBRARY_PATH=".tools/lib:"
+        DYLD_LIBRARY_PATH=".tools/lib:"
+        CHIBI_MODULE_PATH=".tools/share/chibi:.tools/lib/chibi"
+    }
+
     stages {
 
         stage('Install tools') {
             steps {
-                sh "guix shell chibi-scheme gcc-toolchain libffi chicken -- snow-chibi install --impls=chicken --install-prefix=.tools retropikzel.test-r7rs"
+                sh "rm -rf chibi-scheme"
+                sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
+                sh "guix shell chibi-scheme gcc-toolchain libffi -- sh -c 'cd chibi-scheme && make PREFIX=.tools && make PREFIX=.tools && snow-chibi install --impls=chibi --install-prefix=.tools --always-yes retropikzel.test-r7rs'"
             }
         }
 
