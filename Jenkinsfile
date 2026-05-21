@@ -21,9 +21,12 @@ pipeline {
     }
 
     stages {
-        stage('Clean and build testfiles') {
+        stage('Clean and build testprograms') {
             steps {
+                sh "rm -rf logs"
                 sh "rm -rf srfi-test"
+                sh "make srfi-test"
+                sh "cd srfi-test && chibi-scheme convert.scm"
             }
         }
 
