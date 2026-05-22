@@ -40,7 +40,7 @@ pipeline {
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
-                                        archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
+                                        archiveArtifacts artifacts: "logs/${SHCEME}/*.log", fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
                                 }
@@ -51,7 +51,7 @@ pipeline {
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
-                                        archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
+                                        archiveArtifacts artifacts: "logs/${SHCEME}/*.log", fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
                                 }
