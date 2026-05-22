@@ -10,7 +10,7 @@ pipeline {
     }
 
     triggers {
-        cron '5 1 * * 3' // Run every wednesday night
+        cron '5 1 * * 2' // Run every tuesday night
     }
 
     options {
