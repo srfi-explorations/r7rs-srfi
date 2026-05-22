@@ -41,7 +41,6 @@ pipeline {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: "logs/${SHCEME}/*.log", fingerprint: true, allowEmptyArchive: true
-                                        sh "rm -rf logs"
                                     }
                                 }
                             }
@@ -52,7 +51,6 @@ pipeline {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: "logs/${SHCEME}/*.log", fingerprint: true, allowEmptyArchive: true
-                                        sh "rm -rf logs"
                                     }
                                 }
                             }
@@ -60,6 +58,11 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }
