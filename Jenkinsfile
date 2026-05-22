@@ -59,7 +59,9 @@ pipeline {
         }
 
         stage('Artifacts') {
-            archiveArtifacts artifacts: "logs/*/*.log", fingerprint: true, allowEmptyArchive: true
+            steps {
+                archiveArtifacts artifacts: "logs/*/*.log", fingerprint: true, allowEmptyArchive: true
+            }
         }
     }
     post {
