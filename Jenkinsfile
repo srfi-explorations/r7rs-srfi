@@ -10,7 +10,7 @@ pipeline {
     }
 
     triggers {
-        cron '0 22 * * *' // Run every night
+        cron '0 22 * * *'
     }
 
     options {

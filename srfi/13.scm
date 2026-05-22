@@ -747,8 +747,6 @@
 ;;; I sure hope the %STRING-COMPARE calls get integrated.
 
 (define (string= s1 s2 . maybe-starts+ends)
-  (check-arg string? s1 string=)
-  (check-arg string? s2 string=)
   (let-string-start+end2 (start1 end1 start2 end2)
                          string= s1 s2 maybe-starts+ends
                          (and (= (- end1 start1) (- end2 start2))   ; Quick filter
