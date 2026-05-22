@@ -3,7 +3,7 @@ SCHEME=chibi
 SRFI=64
 DOCKER_TAG=head
 
-VERSION=2026.05.21
+VERSION=$(shell cat srfi/${SRFI}/VERSION)
 PKG=srfi-${SRFI}-${VERSION}.tgz
 
 SFX=scm
@@ -15,7 +15,7 @@ endif
 
 all: package
 
-package:
+package: srfi/${SRFI}/VERSION
 	echo "<pre>$$(cat README.md)</pre>" > README.html
 	snow-chibi package \
 		--always-yes \
