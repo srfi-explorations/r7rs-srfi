@@ -3,6 +3,7 @@
 ;;; - Ported from MIT Scheme runtime by Brian D. Carlstrom.
 ;;; - Massively rehacked & extended by Olin Shivers 6/98.
 ;;; - Massively redesigned and rehacked 5/2000 during SRFI process.
+;;; - Smally updated to use (srfi 227) let-optionals* by Retropikzel in 2026
 ;;; At this point, the code bears the following relationship to the
 ;;; MIT Scheme code: "This is my grandfather's axe. My father replaced
 ;;; the head, and I have replaced the handle." Nonetheless, we preserve
@@ -71,58 +72,13 @@
 (define (check-arg pred val caller)
   (if (pred val) val (error "Bad argument" val pred caller)))
 (define (optional a b) (if (null? a) b (car a)))
-(define (%latin1->char l) (integer->char l))
-(define (%char->latin1 c) (char->integer c))
-(define-syntax let-optionals*
-  (syntax-rules ()
-    ((let-optionals arg (opt-clause ...) body ...)
-     (let ((rest arg))
-       (internal-let-optionals rest (opt-clause ...) body ...)))))
-
-(define-syntax internal-let-optionals
-  (syntax-rules ()
-    ((internal-let-optionals arg (((var ...) xparser) opt-clause ...) body ...)
-     (call-with-values (lambda () (xparser arg))
-                       (lambda (rest var ...)
-                         (internal-let-optionals rest (opt-clause ...) body ...))))
-
-    ((internal-let-optionals arg ((var default) opt-clause ...) body ...)
-     (call-with-values (lambda () (if (null? arg) (values default '())
-                                    (values (car arg) (cdr arg))))
-                       (lambda (var rest)
-                         (internal-let-optionals rest (opt-clause ...) body ...))))
-
-    ((internal-let-optionals arg ((var default test) opt-clause ...) body ...)
-     (call-with-values (lambda ()
-                         (if (null? arg) (values default '())
-                           (let ((var (car arg)))
-                             (if test (values var (cdr arg))
-                               (error "arg failed LET-OPT test" var)))))
-                       (lambda (var rest)
-                         (internal-let-optionals rest (opt-clause ...) body ...))))
-
-    ((internal-let-optionals arg ((var default test supplied?) opt-clause ...) body ...)
-     (call-with-values (lambda ()
-                         (if (null? arg) (values default #f '())
-                           (let ((var (car arg)))
-                             (if test (values var #t (cdr arg))
-                               (error "arg failed LET-OPT test" var)))))
-                       (lambda (var supplied? rest)
-                         (internal-let-optionals rest (opt-clause ...) body ...))))
-
-    ((internal-let-optionals arg (rest) body ...)
-     (let ((rest arg)) body ...))
-
-    ((internal-let-optionals arg () body ...)
-     (if (null? arg) (begin body ...)
-       (error "Too many arguments in let-opt" arg)))))
 ;; r7rs-srfi util end
 
 
 (define-record-type <char-set>
   (make-char-set s)
   char-set?
-  (s char-set:s))
+  (s char-set-s))
 
 
 (define (%string-copy s) (string-copy s 0 (string-length s)))
@@ -137,19 +93,19 @@
     (let ((bcs  (car maybe-base))
           (tail (cdr maybe-base)))
       (if (null? tail)
-        (if (char-set? bcs) (%string-copy (char-set:s bcs))
+        (if (char-set? bcs) (%string-copy (char-set-s bcs))
           (error "BASE-CS parameter not a char-set" proc bcs))
         (error "Expected final base char set -- too many parameters"
                proc maybe-base)))
-    (make-string 256 (%latin1->char 0))))
+    (make-string 256 (integer->char 0))))
 
-;;; If CS is really a char-set, do CHAR-SET:S, otw report an error msg on
+;;; If CS is really a char-set, do CHAR-SET-S, otw report an error msg on
 ;;; behalf of our caller, PROC. This procedure exists basically to provide
 ;;; explicit error-checking & reporting.
 
 (define (%char-set:s/check cs proc)
   (let lp ((cs cs))
-    (if (char-set? cs) (char-set:s cs)
+    (if (char-set? cs) (char-set-s cs)
       (lp (error "Not a char-set" cs proc)))))
 
 
@@ -158,18 +114,18 @@
 ;;; underlying string representation of char sets. They should be
 ;;; inlined if possible.
 
-(define (si=0? s i) (zero? (%char->latin1 (string-ref s i))))
+(define (si=0? s i) (zero? (char->integer (string-ref s i))))
 (define (si=1? s i) (not (si=0? s i)))
-(define c0 (%latin1->char 0))
-(define c1 (%latin1->char 1))
-(define (si s i) (%char->latin1 (string-ref s i)))
+(define c0 (integer->char 0))
+(define c1 (integer->char 1))
+(define (si s i) (char->integer (string-ref s i)))
 (define (%set0! s i) (string-set! s i c0))
 (define (%set1! s i) (string-set! s i c1))
 
 ;;; These do various "s[i] := s[i] op val" operations -- see 
 ;;; %CHAR-SET-ALGEBRA. They are used to implement the various
 ;;; set-algebra procedures.
-(define (setv!   s i v) (string-set! s i (%latin1->char v))) ; SET to a Value.
+(define (setv!   s i v) (string-set! s i (integer->char v))) ; SET to a Value.
 (define (%not!   s i v) (setv! s i (- 1 v)))
 (define (%and!   s i v) (if (zero? v) (%set0! s i)))
 (define (%or!    s i v) (if (not (zero? v)) (%set1! s i)))
@@ -242,7 +198,7 @@
 
 (define (char-set-contains? cs char)
   (si=1? (%char-set:s/check cs char-set-contains?)
-         (%char->latin1 (check-arg char? char char-set-contains?))))
+         (char->integer (check-arg char? char char-set-contains?))))
 
 (define (char-set-size cs)
   (let ((s (%char-set:s/check cs char-set-size)))
@@ -256,7 +212,7 @@
     (let lp ((i 255) (count 0))
       (if (< i 0) count
         (lp (- i 1)
-            (if (and (si=1? s i) (pred (%latin1->char i)))
+            (if (and (si=1? s i) (pred (integer->char i)))
               (+ count 1)
               count))))))
 
@@ -265,13 +221,13 @@
 
 (define (%set-char-set set proc cs chars)
   (let ((s (%string-copy (%char-set:s/check cs proc))))
-    (for-each (lambda (c) (set s (%char->latin1 c)))
+    (for-each (lambda (c) (set s (char->integer c)))
               chars)
     (make-char-set s)))
 
 (define (%set-char-set! set proc cs chars)
   (let ((s (%char-set:s/check cs proc)))
-    (for-each (lambda (c) (set s (%char->latin1 c)))
+    (for-each (lambda (c) (set s (char->integer c)))
               chars))
   cs)
 
@@ -300,7 +256,7 @@
 
 (define (end-of-char-set? cursor) (< cursor 0))
 
-(define (char-set-ref cset cursor) (%latin1->char cursor))
+(define (char-set-ref cset cursor) (integer->char cursor))
 
 (define (char-set-cursor-next cset cursor)
   (check-arg (lambda (i) (and (integer? i) (exact? i) (<= 0 i 255))) cursor
@@ -322,7 +278,7 @@
   (let ((s (%char-set:s/check cs char-set-for-each)))
     (let lp ((i 255))
       (cond ((>= i 0)
-             (if (si=1? s i) (proc (%latin1->char i)))
+             (if (si=1? s i) (proc (integer->char i)))
              (lp (- i 1)))))))
 
 (define (char-set-map proc cs)
@@ -332,7 +288,7 @@
     (let lp ((i 255))
       (cond ((>= i 0)
              (if (si=1? s i)
-               (%set1! ans (%char->latin1 (proc (%latin1->char i)))))
+               (%set1! ans (char->integer (proc (integer->char i)))))
              (lp (- i 1)))))
     (make-char-set ans)))
 
@@ -343,14 +299,14 @@
       (if (< i 0) ans
         (lp (- i 1)
             (if (si=0? s i) ans
-              (kons (%latin1->char i) ans)))))))
+              (kons (integer->char i) ans)))))))
 
 (define (char-set-every pred cs)
   (check-arg procedure? pred char-set-every)
   (let ((s (%char-set:s/check cs char-set-every)))
     (let lp ((i 255))
       (or (< i 0)
-          (and (or (si=0? s i) (pred (%latin1->char i)))
+          (and (or (si=0? s i) (pred (integer->char i)))
                (lp (- i 1)))))))
 
 (define (char-set-any pred cs)
@@ -358,7 +314,7 @@
   (let ((s (%char-set:s/check cs char-set-any)))
     (let lp ((i 255))
       (and (>= i 0)
-           (or (and (si=1? s i) (pred (%latin1->char i)))
+           (or (and (si=1? s i) (pred (integer->char i)))
                (lp (- i 1)))))))
 
 
@@ -368,7 +324,7 @@
   (check-arg procedure? g proc)
   (let lp ((seed seed))
     (cond ((not (p seed))   ; P says we are done.
-           (%set1! s (%char->latin1 (f seed))) ; Add (F SEED) to set.
+           (%set1! s (char->integer (f seed))) ; Add (F SEED) to set.
            (lp (g seed))))))   ; Loop on (G SEED).
 
 (define (char-set-unfold p f g seed . maybe-base)
@@ -387,7 +343,7 @@
 ;;; list <--> char-set
 
 (define (%list->char-set! chars s)
-  (for-each (lambda (char) (%set1! s (%char->latin1 char)))
+  (for-each (lambda (char) (%set1! s (char->integer char)))
             chars))
 
 (define (char-set . chars)
@@ -411,7 +367,7 @@
       (if (< i 0) ans
         (lp (- i 1)
             (if (si=0? s i) ans
-              (cons (%latin1->char i) ans)))))))
+              (cons (integer->char i) ans)))))))
 
 
 
@@ -421,7 +377,7 @@
   (check-arg string? str proc)
   (do ((i (- (string-length str) 1) (- i 1)))
     ((< i 0))
-    (%set1! bs (%char->latin1 (string-ref str i)))))
+    (%set1! bs (char->integer (string-ref str i)))))
 
 (define (string->char-set str . maybe-base)
   (let ((bs (%default-base maybe-base string->char-set)))
@@ -440,7 +396,7 @@
     (let lp ((i 255) (j 0))
       (if (< i 0) ans
         (let ((j (if (si=0? s i) j
-                   (begin (string-set! ans j (%latin1->char i))
+                   (begin (string-set! ans j (integer->char i))
                           (+ j 1)))))
           (lp (- i 1) j))))))
 
@@ -459,10 +415,11 @@
     (cond ((<= lower i) (%set1! bs i) (lp (- i 1))))))
 
 (define (ucs-range->char-set lower upper . rest)
-  (let-optionals* rest ((error? #f) rest)
-                  (let ((bs (%default-base rest ucs-range->char-set)))
-                    (%ucs-range->char-set! lower upper error? bs ucs-range->char-set)
-                    (make-char-set bs))))
+  (let ((error? (if (not (null? rest)) (car rest) #f))
+        (base-cs (if (= (length rest) 2) (list-ref rest 1) (string->char-set ""))))
+    (let ((bs (%default-base base-cs ucs-range->char-set)))
+      (%ucs-range->char-set! lower upper error? bs ucs-range->char-set)
+      (make-char-set bs))))
 
 (define (ucs-range->char-set! lower upper error? base-cs)
   (%ucs-range->char-set! lower upper error?
@@ -477,7 +434,7 @@
   (check-arg procedure? pred proc)
   (let lp ((i 255))
     (cond ((>= i 0)
-           (if (and (si=1? ds i) (pred (%latin1->char i)))
+           (if (and (si=1? ds i) (pred (integer->char i)))
              (%set1! bs i))
            (lp (- i 1))))))
 
@@ -523,7 +480,7 @@
 (define (%string-iter p s)
   (let lp ((i (- (string-length s) 1)))
     (cond ((>= i 0)
-           (p i (%char->latin1 (string-ref s i)))
+           (p i (char->integer (string-ref s i)))
            (lp (- i 1))))))
 
 ;;; String S represents some initial char-set. (OP s i val) does some
@@ -660,7 +617,7 @@
   (let* ((a-z (ucs-range->char-set #x61 #x7B))
          (latin1 (ucs-range->char-set! #xdf #xf7  #t a-z))
          (latin2 (ucs-range->char-set! #xf8 #x100 #t latin1)))
-    (char-set-adjoin! latin2 (%latin1->char #xb5))))
+    (char-set-adjoin! latin2 (integer->char #xb5))))
 
 (define char-set:upper-case
   (let ((A-Z (ucs-range->char-set #x41 #x5B)))
@@ -673,8 +630,8 @@
 (define char-set:letter
   (let ((u/l (char-set-union char-set:upper-case char-set:lower-case)))
     (char-set-adjoin! u/l
-                      (%latin1->char #xaa) ; FEMININE ORDINAL INDICATOR
-                      (%latin1->char #xba)))) ; MASCULINE ORDINAL INDICATOR
+                      (integer->char #xaa) ; FEMININE ORDINAL INDICATOR
+                      (integer->char #xba)))) ; MASCULINE ORDINAL INDICATOR
 
 (define char-set:digit     (string->char-set "0123456789"))
 (define char-set:hex-digit (string->char-set "0123456789abcdefABCDEF"))
@@ -684,7 +641,7 @@
 
 (define char-set:punctuation
   (let ((ascii (string->char-set "!\"#%&'()*,-./:;?@[\\]_{}"))
-        (latin-1-chars (map %latin1->char '(#xA1 ; INVERTED EXCLAMATION MARK
+        (latin-1-chars (map integer->char '(#xA1 ; INVERTED EXCLAMATION MARK
                                             #xAB ; LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
                                             #xAD ; SOFT HYPHEN
                                             #xB7 ; MIDDLE DOT
@@ -694,7 +651,7 @@
 
 (define char-set:symbol
   (let ((ascii (string->char-set "$+<=>^`|~"))
-        (latin-1-chars (map %latin1->char '(#x00A2 ; CENT SIGN
+        (latin-1-chars (map integer->char '(#x00A2 ; CENT SIGN
                                             #x00A3 ; POUND SIGN
                                             #x00A4 ; CURRENCY SIGN
                                             #x00A5 ; YEN SIGN
@@ -719,7 +676,7 @@
   (char-set-union char-set:letter+digit char-set:punctuation char-set:symbol))
 
 (define char-set:whitespace
-  (list->char-set (map %latin1->char '(#x09 ; HORIZONTAL TABULATION
+  (list->char-set (map integer->char '(#x09 ; HORIZONTAL TABULATION
                                        #x0A ; LINE FEED  
                                        #x0B ; VERTICAL TABULATION
                                        #x0C ; FORM FEED
@@ -730,7 +687,7 @@
 (define char-set:printing (char-set-union char-set:whitespace char-set:graphic)) ; NO-BREAK SPACE
 
 (define char-set:blank
-  (list->char-set (map %latin1->char '(#x09 ; HORIZONTAL TABULATION
+  (list->char-set (map integer->char '(#x09 ; HORIZONTAL TABULATION
                                        #x20 ; SPACE
                                        #xA0)))) ; NO-BREAK SPACE
 

@@ -42,7 +42,7 @@ Add files:
     - srfi/N/VERSION
         - Version, start with 0.1.0
     - srfi/N/DEPENDS
-        - List of dependendis fron snow-fort, like so: srfi.N srfi.N
+        - List of dependendis fron snow-fort, like so on one line: srfi.N srfi.N
             - Do not depend on SRFI 64, it will always be installed in docker
             and otherwise you should install it by hand
 
