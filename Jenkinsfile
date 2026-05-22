@@ -42,8 +42,11 @@ pipeline {
                         stage("SRFI-${SRFI} R6RS") {
                             params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
+                                    options {
+                                        timeout(time: 10, unit: 'MINUTES')
+                                    }
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
+                                        sh "make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
                                         sh "ls"
                                     }
                                 }
@@ -52,8 +55,11 @@ pipeline {
                         stage("SRFI-${SRFI} R7RS") {
                             params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
+                                    options {
+                                        timeout(time: 10, unit: 'MINUTES')
+                                    }
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
+                                        sh "make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
                                         sh "ls"
                                     }
                                 }

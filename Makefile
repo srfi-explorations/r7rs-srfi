@@ -47,7 +47,6 @@ test-docker: testfiles
 		DOCKER_TAG=${DOCKER_TAG} \
 		SNOW_PACKAGES="srfi.64 ${DEPENDS} ${PKG}"\
 		COMPILE_R7RS=${SCHEME} \
-		TEST_R7RS_TIMEOUT=120 \
 		test-r7rs -o test-program test.${SFX}
 	mkdir -p logs/${SCHEME}/
 	-cp .tmp/*.log logs/${SCHEME}/
