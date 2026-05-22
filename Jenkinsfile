@@ -1,7 +1,12 @@
 pipeline {
 
     agent {
-        label 'guix-x86_64'
+        dockerfile {
+            filename 'Dockerfile.jenkins'
+            label 'docker-x86_64'
+            args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
+            reuseNode true
+        }
     }
 
     options {
@@ -15,31 +20,14 @@ pipeline {
         string(name: 'SRFIS', defaultValue: '2 8 11 19 27 28 39 60 64 69 145 180', description: 'Test SRFIs')
     }
 
-    environment {
-        LD_LIBRARY_PATH="${WORKSPACE}/.tools/lib:"
-        DYLD_LIBRARY_PATH="${WORKSPACE}/.tools/lib:"
-        CHIBI_MODULE_PATH="${WORKSPACE}/.tools/share/chibi:${WORKSPACE}/.tools/lib/chibi"
-        PATH="${WORKSPACE}/.tools/bin:${PATH}"
-    }
-
     stages {
-
-        stage('Install tools') {
-            steps {
-                sh "rm -rf chibi-scheme"
-                sh "guix shell git nss-certs -- git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
-                sh "guix shell make gcc-toolchain libffi -- make -C chibi-scheme CC=gcc PREFIX=../.tools"
-                sh "guix shell make gcc-toolchain libffi -- make -C chibi-scheme CC=gcc PREFIX=../.tools install"
-                sh "guix shell make gcc-toolchain libffi -- snow-chibi install --impls=chibi --install-prefix=.tools --always-yes retropikzel.test-r7rs"
-            }
-        }
 
         stage('Clean and build testprograms') {
             steps {
                 sh "rm -rf logs"
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
-                sh "cd srfi-test && guix shell chibi-scheme -- chibi-scheme convert.scm"
+                sh "cd srfi-test && chibi-scheme convert.scm"
             }
         }
 
@@ -51,7 +39,7 @@ pipeline {
                             params.R6RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "PATH=${WORKSPACE}/.tools/bin:${PATH} make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
+                                        sh "make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
@@ -62,7 +50,7 @@ pipeline {
                             params.R7RS_SCHEMES.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "PATH=${WORKSPACE}/.tools/bin:${PATH} make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
+                                        sh "make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
                                         archiveArtifacts artifacts: 'logs/**/*.log', fingerprint: true, allowEmptyArchive: true
                                         sh "rm -rf logs"
                                     }
