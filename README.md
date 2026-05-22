@@ -37,14 +37,21 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
+    - srfi/N
+        - Directory for misc files
+    - srfi/N/VERSION
+        - Version, start with 0.1.0
+    - srfi/N/DEPENDS
+        - List of dependendis fron snow-fort, like so: srfi.N srfi.N
+            - Do not depend on SRFI 64, it will always be installed in docker
+            and otherwise you should install it by hand
 
 
-Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
+Every SRFI needs corresponding test file in
+[test repository](https://github.com/srfi-explorations/srfi-test).
 The test file needs to be named N.scm. Use SRFI-64 for testing!
 
-Add the SRFI into the Jenkinsfiles running list and after it has been published
-to snow-fort.org add it to the Makefile SNOW_PACKAGES variable under test-docker
-job.
+Add the SRFI into the Jenkinsfiles running list.
 
 ## Adding support for new implementation
 

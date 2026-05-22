@@ -1,7 +1,7 @@
 ;; From here https://github.com/scheme-requests-for-implementation/srfi-180
 
-;; Copyright © Amirouche Boubekki (2020).
-;; Copyright © Retropikzel (2025).
+;; Copyright Amirouche Boubekki (2020).
+;; Copyright Retropikzel (2025).
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
 ;; of this software and associated documentation files (the "Software"), to
 ;; deal in the Software without restriction, including without limitation the
