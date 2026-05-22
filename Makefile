@@ -44,7 +44,7 @@ test-docker: testfiles
 	cd .tmp && \
 		TEST_R7RS_DEBUG=1 \
 		DOCKER_TAG=${DOCKER_TAG} \
-		SNOW_PACKAGES="srfi.2 srfi.8 srfi.11 srfi.19 srfi.27 srfi.28 srfi.39 srfi.60 srfi.64 srfi.69 srfi.145 srfi.180 ${PKG}"\
+		SNOW_PACKAGES="srfi.2 srfi.8 srfi.11 srfi.27 srfi.28 srfi.39 srfi.60 srfi.64 srfi.69 srfi.145 srfi.180 ${PKG}"\
 		COMPILE_R7RS=${SCHEME} \
 		test-r7rs -o test-program test.${SFX}
 	mkdir -p logs/${SCHEME}/

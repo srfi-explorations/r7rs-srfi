@@ -16,8 +16,8 @@ pipeline {
 
     parameters {
         string(name: 'R6RS_SCHEMES', defaultValue: 'chezscheme ikarus ironscheme sagittarius', description: 'Test SRFIs')
-        string(name: 'R7RS_SCHEMES', defaultValue: 'chibi foment gauche gambit kawa loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
-        string(name: 'SRFIS', defaultValue: '2 8 11 19 27 28 39 60 64 69 145 180', description: 'Test SRFIs')
+        string(name: 'R7RS_SCHEMES', defaultValue: 'capyscheme chibi chicken cyclone foment gauche kawa loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
+        string(name: 'SRFIS', defaultValue: '1 2 8 11 19 27 28 39 60 64 69 145 180', description: 'Test SRFIs')
     }
 
     stages {
@@ -40,7 +40,6 @@ pipeline {
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
-                                        archiveArtifacts artifacts: "logs/${SHCEME}/*.log", fingerprint: true, allowEmptyArchive: true
                                     }
                                 }
                             }
@@ -50,7 +49,6 @@ pipeline {
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
-                                        archiveArtifacts artifacts: "logs/${SHCEME}/*.log", fingerprint: true, allowEmptyArchive: true
                                     }
                                 }
                             }
@@ -58,6 +56,10 @@ pipeline {
                     }
                 }
             }
+        }
+
+        stage('Artifacts') {
+            archiveArtifacts artifacts: "logs/*/*.log", fingerprint: true, allowEmptyArchive: true
         }
     }
     post {
