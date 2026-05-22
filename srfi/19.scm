@@ -707,10 +707,10 @@
     (receive (secs date month year)
              (tm:decode-julian-day-number
                (tm:time->julian-day-number (time-second time) offset))
-             (let* ( (hours    (quotient secs (* 60 60)))
-                    (rem      (remainder secs (* 60 60)))
-                    (minutes  (quotient rem 60))
-                    (seconds  (remainder rem 60)) )
+             (let* ((hours (quotient secs (* 60 60)))
+                    (rem (remainder secs (* 60 60)))
+                    (minutes (quotient rem 60))
+                    (seconds (remainder rem 60)))
                (make-date (time-nanosecond time)
                           seconds
                           minutes
