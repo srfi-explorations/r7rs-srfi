@@ -39,7 +39,7 @@ test: srfi-test testfiles
 	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.${SFX}
 	cd .tmp && ./test-program
 	mkdir -p logs/${SCHEME}/
-	@-cp .tmp/*.log logs/${SCHEME}/
+	@cp .tmp/*.log logs/${SCHEME}/ || true
 
 test-docker: testfiles
 	cd .tmp && \
@@ -49,7 +49,7 @@ test-docker: testfiles
 		COMPILE_R7RS=${SCHEME} \
 		test-r7rs -o test-program test.${SFX}
 	mkdir -p logs/${SCHEME}/
-	@-cp .tmp/*.log logs/${SCHEME}/
+	@cp .tmp/*.log logs/${SCHEME}/ || true
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1

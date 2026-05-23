@@ -310,8 +310,7 @@
   (let ((current-ms (proc)))
     (make-time time-type
                (* (remainder current-ms 1000) 10000)
-               (quotient current-ms 10000)
-               )))
+               (quotient current-ms 10000))))
 
 ;; -- we define it to be the same as tai.
 ;;    a different implemation of current-time-montonic
@@ -322,9 +321,7 @@
   (receive (seconds ms) (tm:get-time-of-day)
            (make-time time-monotonic
                       (* ms 10000)
-                      (+ seconds (tm:leap-second-delta seconds))
-                      )))
-
+                      (+ seconds (tm:leap-second-delta seconds)))))
 
 (define (tm:current-time-thread)
   (tm:current-time-ms-time time-process current-process-milliseconds))
