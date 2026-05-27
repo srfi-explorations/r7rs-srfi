@@ -43,6 +43,10 @@
              test-assert/source-info
              test-compare/source-info
              test-error/source-info))
+    (meevax
+     ; Need to export extra for these to work
+     (export %test-compare
+             test-assert/source-info))
     (else))
   (export test-begin
           test-end
