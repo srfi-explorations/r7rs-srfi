@@ -49,7 +49,7 @@ test-docker: testfiles
 		COMPILE_R7RS=${SCHEME} \
 		test-r7rs -o test-program test.${SFX}
 	mkdir -p logs/${SCHEME}/
-	@cp .tmp/*.log logs/${SCHEME}/ || true
+	-cp .tmp/*.log logs/${SCHEME}/
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
