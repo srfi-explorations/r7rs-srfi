@@ -52,7 +52,7 @@ test-docker: testfiles
 	@cp .tmp/*.log logs/${SCHEME}/ || true
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
+	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes
 	cd srfi-test && chibi-scheme convert.scm
 
 clean:
