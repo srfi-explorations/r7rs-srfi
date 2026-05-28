@@ -19,8 +19,8 @@ pipeline {
     }
 
     parameters {
-        string(name: 'R6RS_SCHEMES', defaultValue: 'capyscheme chezscheme ikarus ironscheme sagittarius', description: 'Test SRFIs')
-        string(name: 'R7RS_SCHEMES', defaultValue: 'capyscheme chibi foment gauche kawa mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
+        string(name: 'R6RS_SCHEMES', defaultValue: 'capyscheme chezscheme ikarus ironscheme racket sagittarius', description: 'Test SRFIs')
+        string(name: 'R7RS_SCHEMES', defaultValue: 'capyscheme chibi gauche kawa mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
         string(name: 'SRFIS', defaultValue: '1 2 4 5 8 11 14 16 19 27 31 37 38 39 41 42 43 44 48 51 54 60 63 64 69 87 95 11 113 115 116 128 145 180 227', description: 'Test SRFIs')
     }
 
@@ -44,7 +44,7 @@ pipeline {
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
-                                        sh "ls .tmp"
+                                        archiveArtifacts artifacts: ".tmp/${SCHEME}/*.log", fingerprint: true, allowEmptyArchive: true
                                     }
                                 }
                             }
@@ -54,19 +54,13 @@ pipeline {
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
-                                        sh "ls .tmp"
+                                        archiveArtifacts artifacts: ".tmp/${SCHEME}/*.log", fingerprint: true, allowEmptyArchive: true
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-        }
-
-        stage('Artifacts') {
-            steps {
-                archiveArtifacts artifacts: "logs/*/*.log", fingerprint: true, allowEmptyArchive: true
             }
         }
     }

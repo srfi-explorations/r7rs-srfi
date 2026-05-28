@@ -30,26 +30,21 @@ install:
 	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
 
 testfiles: package
-	rm -rf .tmp
-	mkdir -p .tmp
-	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} .tmp/test.${SFX}
-	cp ${PKG} .tmp/
+	rm -rf .tmp/${SCHEME}
+	mkdir -p .tmp/${SCHEME}
+	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} .tmp/${SCHEME}/test.${SFX}
+	cp ${PKG} .tmp/${SCHEME}/
 
 test: srfi-test testfiles
-	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.${SFX}
-	cd .tmp && ./test-program
-	mkdir -p logs/${SCHEME}/
-	-cp .tmp/*.log logs/${SCHEME}/
+	cd .tmp/${SCHEME} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.${SFX}
+	cd .tmp/${SCHEME} && ./test-program
 
 test-docker: testfiles
-	cd .tmp && \
-		TEST_R7RS_DEBUG=1 \
+	cd .tmp/${SCHEME} && \
 		DOCKER_TAG=${DOCKER_TAG} \
 		SNOW_PACKAGES="srfi.64 ${DEPENDS} ${PKG}"\
 		COMPILE_R7RS=${SCHEME} \
 		test-r7rs -o test-program test.${SFX}
-	mkdir -p logs/${SCHEME}/
-	-cp .tmp/*.log logs/${SCHEME}/
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
