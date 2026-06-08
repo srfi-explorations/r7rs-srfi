@@ -30,7 +30,7 @@ install:
 	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
 
 install-with-dependencies:
-	snow-chibi --impls=${SCHEME} --always-yes install ${DEPENDS} ${PKG}
+	snow-chibi --impls=${SCHEME} --always-yes install srfi.64 ${DEPENDS} ${PKG}
 
 testfiles: package
 	rm -rf .tmp/${SCHEME}
