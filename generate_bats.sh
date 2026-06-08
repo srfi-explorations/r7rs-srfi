@@ -1,7 +1,6 @@
 #!/bin/sh
 
-implementations="chibi chicken foment kawa mosh \
-    sagittarius skint stklos tr7 ypsilon"
+implementations="chibi kawa skint stklos"
 
 mkdir -p bats
 

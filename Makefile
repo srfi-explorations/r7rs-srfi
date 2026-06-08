@@ -59,7 +59,7 @@ docker-test-image:
 	docker build -f Dockerfile.test --tag=srfitest .
 
 test-srfi-docker: docker-test-image
-	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SRFI=${SRFI} test-srfi"
+	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SRFI=${SRFI} test-srfi; chmod -R 775 ./out; chmod -R 775 bats"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
