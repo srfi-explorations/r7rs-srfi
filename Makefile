@@ -63,7 +63,7 @@ bats:
 test-srfi: bats
 	rm -rf out/tests/${SRFI}
 	mkdir -p out/tests/${SRFI}
-	bats --jobs 12 --timing --gather-test-outputs-in out/tests/${SRFI} bats/srfi-${SRFI}.bats
+	bats --jobs 13 --timing --gather-test-outputs-in out/tests/${SRFI} bats/srfi-${SRFI}.bats
 
 test-srfi-docker: docker-test-image
 	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SRFI=${SRFI} test-srfi; chmod -R 775 ./out; chmod -R 775 bats; chmod -R 775 ${tmpdir}"
