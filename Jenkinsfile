@@ -43,7 +43,7 @@ pipeline {
     }
     post {
         success {
-            archiveArtifacts artifacts: "out/tests/*/*.log", allowEmpty: true
+            archiveArtifacts artifacts: "out/tests/*/*.log", allowEmptyArchive: true
         }
         always {
             cleanWs()
