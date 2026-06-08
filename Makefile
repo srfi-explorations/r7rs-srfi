@@ -53,10 +53,10 @@ bats:
 test-srfi: bats
 	rm -rf out/tests/${SRFI}
 	mkdir -p out/tests/${SRFI}
-	bats --timing --gather-test-outputs-in out/tests/${SRFI} bats/srfi-${SRFI}.bats
+	bats --jobs 8 --timing --gather-test-outputs-in out/tests/${SRFI} bats/srfi-${SRFI}.bats
 
 docker-test-image:
-	docker build -f Dockerfile.test --tag=srfitest
+	docker build -f Dockerfile.test --tag=srfitest .
 
 test-srfi-docker: docker-test-image
 	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SRFI=${SRFI} test-srfi"
