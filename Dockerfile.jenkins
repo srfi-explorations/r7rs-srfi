@@ -1,9 +1,0 @@
-FROM docker.io/debian:trixie
-RUN apt-get update && apt-get install -y \
-    make gcc git ca-certificates libffi-dev docker.io git
-RUN git clone https://github.com/ashinn/chibi-scheme.git
-WORKDIR /chibi-scheme
-RUN make && make install
-RUN mkdir -p "${HOME}/.snow" && echo "()" > "${HOME}/.snow/config.scm"
-RUN snow-chibi update
-RUN snow-chibi install --impls=chibi --always-yes retropikzel.test-r7rs
