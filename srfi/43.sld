@@ -39,6 +39,3 @@
           list->vector
           reverse-list->vector)
   (include "43.scm"))
-
-
-
