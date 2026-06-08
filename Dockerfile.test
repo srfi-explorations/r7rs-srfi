@@ -1,4 +1,5 @@
 FROM schemers/all-r7rs:head
-RUN apt-get update && apt-get install -y bats make libffi-dev parallel time
+RUN apt-get update && apt-get install -y \
+    bats make libffi-dev parallel time git ca-certificates
 RUN mkdir -p "${HOME}/.snow/" && echo "()" > "${HOME}/.snow/config.scm"
 RUN snow-chibi --impls=chibi install retropikzel.compile-r7rs
