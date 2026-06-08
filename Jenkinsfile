@@ -32,8 +32,7 @@ pipeline {
         stage('Tests R7RS') {
             steps {
                 script {
-                    def srfis = new File('test_srfis.txt').text
-
+                    def srfis = readFile 'test_srfis.txt'
                     srfis.split().each { SRFI ->
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh "make SRFI=${SRFI} test-srfi"
