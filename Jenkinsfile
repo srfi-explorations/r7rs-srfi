@@ -3,7 +3,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile.test'
-            label 'docker-x864_64'
+            label 'docker-x86_64'
             reuseNode true
         }
     }
