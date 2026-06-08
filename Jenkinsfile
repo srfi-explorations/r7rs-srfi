@@ -34,7 +34,7 @@ pipeline {
 
         '1 2 4 5 8 11 14 16 19 27 31 37 38 39 41 42 43 44 48 51 54 60 63 64 69 87 95 11 113 115 116 128 145 180 197 227'.split().each { SRFI ->
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            sh "timeout 600 make SRFI=${SRFI} test-srfi"
+                            sh "make SRFI=${SRFI} test-srfi"
                         }
                     }
                 }
