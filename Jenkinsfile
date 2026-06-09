@@ -4,7 +4,6 @@ pipeline {
         dockerfile {
             filename 'Dockerfile.test'
             label 'podman && x86_64'
-            args '--user=root'
             reuseNode true
         }
     }
