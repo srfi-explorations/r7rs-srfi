@@ -7,12 +7,12 @@ RUN mkdir -p "${HOME}/.snow/" && echo "()" > "${HOME}/.snow/config.scm"
 RUN snow-chibi --impls=chibi install retropikzel.compile-r7rs
 RUN mkdir /workdir && chmod -R 775 /workdir
 WORKDIR /workdir
-COPY srfi srfi/
+COPY README.md .
 COPY test_implementations.txt .
 COPY test_srfis.txt .
 COPY Makefile .
-COPY README.md .
 COPY bats.sh .
 RUN sh bats.sh
 RUN snow-chibi update
+COPY srfi srfi/
 

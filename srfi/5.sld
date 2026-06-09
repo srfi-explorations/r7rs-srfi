@@ -2,7 +2,7 @@
   (srfi 5)
   (import (rename (scheme base)
                   (let standard-let)))
-  (export let
+  (export (rename srfi-5-let let)
           let-loop)
   (include "5.scm"))
 
