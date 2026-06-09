@@ -20,19 +20,11 @@ pipeline {
 
     stages {
 
-        stage('Init') {
-            steps {
-                sh "rm -rf logs"
-                sh "rm -rf srfi-test"
-                sh "make srfi-test"
-                sh "sh bats.sh"
-            }
-        }
-
         stage('Tests R7RS') {
             steps {
                 script {
-                    'chibi chicken foment gauche kawa mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon'.split().each { SCHEME ->
+                    def schemes = readFile 'test_implementations.txt'
+                    schemes.split().each { SCHEME ->
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             stage("${SCHEME}") {
                                 sh "make SRFI=64 SCHEME=${SCHEME} all install"

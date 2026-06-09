@@ -34,6 +34,16 @@
           (lambda (value expected)
             (error "approx= not supported, missing (scheme complex)"))))))
   (cond-expand
+    (chicken
+      ; To reduce warnings
+      (export test-error/source-info
+              test-approximate/source-info
+              test-compare/source-info
+              test-compare
+              test-assert/source-info
+              false-if-error
+              test-assert/source-info
+              false-if-error))
     (stklos
      ; Need to export extra for these to work
      (export %test-assert

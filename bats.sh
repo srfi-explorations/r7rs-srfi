@@ -1,9 +1,9 @@
 #!/bin/sh
 
-implementations="chibi chicken foment gauche kawa mosh racket \
-sagittarius skint stklos tr7 ypsilon"
-srfis="1 2 5 8 11 14 16 19 25 26 28 29 31 37 38 39 41 42 43 48 51 60 63 64 66 \
-69 87 95 111 113 115 116 128 145 180 197 227"
+implementations="$(cat test_implementations.txt)"
+echo "Schemes: $implementations"
+srfis="SRFIs: $(cat test_srfis.txt)"
+echo "$srfis"
 
 printf "" > "tests.bats"
 

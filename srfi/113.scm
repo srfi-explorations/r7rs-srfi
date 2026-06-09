@@ -47,9 +47,9 @@
 ;; order, so in the Chicken module we suppress importing it to muffle
 ;; the conflict warning.
 
-(define hash-table-contains? hash-table-exists?)
+(define internal-hash-table-contains? hash-table-exists?)
 
-(define (hash-table-for-each proc hash-table)
+(define (internal-hash-table-for-each proc hash-table)
   (hash-table-walk hash-table proc))
 
 
@@ -166,7 +166,7 @@
 ;; Just a wrapper of hash-table-contains?.
 
 (define (sob-contains? sob member)
-  (hash-table-contains? (sob-hash-table sob) member))
+  (internal-hash-table-contains? (sob-hash-table sob) member))
 
 (define (set-contains? set member)
   (check-set set)
@@ -198,8 +198,8 @@
         (hb (sob-hash-table b)))
     (call/cc
       (lambda (return)
-        (hash-table-for-each
-          (lambda (key val) (if (hash-table-contains? hb key) (return #f)))
+        (internal-hash-table-for-each
+          (lambda (key val) (if (internal-hash-table-contains? hb key) (return #f)))
           ha)
       #t))))
 
@@ -228,7 +228,7 @@
   (define (same? a b) (=? (sob-comparator sob) a b))
   (call/cc
     (lambda (return)
-      (hash-table-for-each
+      (internal-hash-table-for-each
         (lambda (key val) (if (same? key element) (return key)))
         (sob-hash-table sob))
       default)))
@@ -296,7 +296,7 @@
 
 (define (nonpositive-keys ht)
   (let ((result '()))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value)
         (when (<= value 0)
           (set! result (cons key result))))
@@ -363,7 +363,7 @@
     (comparator-check-type comparator element)
     (call/cc
       (lambda (return)
-        (hash-table-for-each
+        (internal-hash-table-for-each
           (lambda (key value)
             (when (= key element)
               (hash-table-delete! ht key)
@@ -483,7 +483,7 @@
 (define (sob-size sob)
   (if (sob-multi? sob)
     (let ((result 0))
-      (hash-table-for-each
+      (internal-hash-table-for-each
         (lambda (elem count) (set! result (+ count result)))
         (sob-hash-table sob))
       result)
@@ -505,7 +505,7 @@
 (define (sob-find pred sob failure)
   (call/cc
     (lambda (return)
-      (hash-table-for-each
+      (internal-hash-table-for-each
         (lambda (key value)
           (if (pred key) (return key)))
         (sob-hash-table sob))
@@ -542,7 +542,7 @@
 (define (sob-any? pred sob)
   (call/cc
     (lambda (return)
-      (hash-table-for-each
+      (internal-hash-table-for-each
         (lambda (elem value) (if (pred elem) (return #t)))
         (sob-hash-table sob))
       #f)))
@@ -560,7 +560,7 @@
 (define (sob-every? pred sob)
   (call/cc
     (lambda (return)
-      (hash-table-for-each
+      (internal-hash-table-for-each
         (lambda (elem value) (if (not (pred elem)) (return #f)))
         (sob-hash-table sob))
       #t)))
@@ -589,7 +589,7 @@
 ;; Basic iterator over a sob.
 
 (define (sob-for-each proc sob)
-  (hash-table-for-each
+  (internal-hash-table-for-each
     (lambda (key value) (do-n-times (lambda () (proc key)) value))
     (sob-hash-table sob)))
 
@@ -607,7 +607,7 @@
 
 (define (sob-map comparator proc sob)
   (let ((result (make-sob comparator (sob-multi? sob))))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value) (sob-increment! result (proc key) value))
       (sob-hash-table sob))
     result))
@@ -645,7 +645,7 @@
 
 (define (sob-filter pred sob)
   (let ((result (sob-empty-copy sob)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value)
         (if (pred key) (sob-increment! result key value)))
       (sob-hash-table sob))
@@ -671,7 +671,7 @@
 ;; This does its own cleanup, and is used for both filter! and remove!.
 
 (define (sob-filter! pred sob)
-  (hash-table-for-each
+  (internal-hash-table-for-each
     (lambda (key value)
       (if (not (pred key)) (sob-decrement! sob key value)))
     (sob-hash-table sob))
@@ -700,7 +700,7 @@
 (define (sob-partition pred sob)
   (let ((res1 (sob-empty-copy sob))
         (res2 (sob-empty-copy sob)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value)
         (if (pred key)
           (sob-increment! res1 key value)
@@ -722,7 +722,7 @@
 
 (define (sob-partition! pred sob)
   (let ((result (sob-empty-copy sob)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value)
         (if (not (pred key))
           (begin
@@ -816,7 +816,7 @@
             (ht2 (sob-hash-table sob2)))
         (if (not (= (hash-table-size ht1) (hash-table-size ht2)))
           (return #f))
-        (hash-table-for-each
+        (internal-hash-table-for-each
           (lambda (key value)
             (if (not (= value (hash-table-ref/default ht2 key 0)))
               (return #f)))
@@ -850,7 +850,7 @@
             (ht2 (sob-hash-table sob2)))
         (if (not (<= (hash-table-size ht1) (hash-table-size ht2)))
           (return #f))
-        (hash-table-for-each
+        (internal-hash-table-for-each
           (lambda (key value)
             (if (not (<= value (hash-table-ref/default ht2 key 0)))
               (return #f)))
@@ -885,7 +885,7 @@
                 ((< (hash-table-size ht1) (hash-table-size ht2)) 1)
                 ((= (hash-table-size ht1) (hash-table-size ht2)) 0)
                 (else (return #f)))))
-          (hash-table-for-each
+          (internal-hash-table-for-each
            (lambda (key value)
              (let ((value2 (hash-table-ref/default ht2 key 0)))
                (if (not (<= value value2))
@@ -972,12 +972,12 @@
   (let ((sob1-ht (sob-hash-table sob1))
         (sob2-ht (sob-hash-table sob2))
         (result-ht (sob-hash-table result)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value1)
         (let ((value2 (hash-table-ref/default sob2-ht key 0)))
           (hash-table-set! result-ht key (max value1 value2))))
       sob1-ht)
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value2)
         (let ((value1 (hash-table-ref/default sob1-ht key 0)))
           (if (= value1 0)
@@ -1024,7 +1024,7 @@
   (let ((sob1-ht (sob-hash-table sob1))
         (sob2-ht (sob-hash-table sob2))
         (result-ht (sob-hash-table result)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value1)
         (let ((value2 (hash-table-ref/default sob2-ht key 0)))
           (hash-table-set! result-ht key (min value1 value2))))
@@ -1070,7 +1070,7 @@
   (let ((sob1-ht (sob-hash-table sob1))
         (sob2-ht (sob-hash-table sob2))
         (result-ht (sob-hash-table result)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value1)
         (let ((value2 (hash-table-ref/default sob2-ht key 0)))
           (hash-table-set! result-ht key (- value1 value2))))
@@ -1114,12 +1114,12 @@
   (let ((sob1-ht (sob-hash-table sob1))
         (sob2-ht (sob-hash-table sob2))
         (result-ht (sob-hash-table result)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value1)
         (let ((value2 (hash-table-ref/default sob2-ht key 0)))
           (hash-table-set! result-ht key (+ value1 value2))))
       sob1-ht)
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value2)
         (let ((value1 (hash-table-ref/default sob1-ht key 0)))
           (if (= value1 0)
@@ -1158,13 +1158,13 @@
   (let ((sob1-ht (sob-hash-table sob1))
         (sob2-ht (sob-hash-table sob2))
         (result-ht (sob-hash-table result)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value2)
         (let ((value1 (hash-table-ref/default sob1-ht key 0)))
           (if (= value1 0)
               (hash-table-set! result-ht key value2))))
       sob2-ht)
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value1)
         (let ((value2 (hash-table-ref/default sob2-ht key 0)))
           (hash-table-set! result-ht key (abs (- value1 value2)))))
@@ -1200,7 +1200,7 @@
 
 (define (sob-product! n result sob)
   (let ((rht (sob-hash-table result)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (elem count) (hash-table-set! rht elem (* count n)))
       (sob-hash-table sob))
     result))
@@ -1228,14 +1228,14 @@
 
 (define (bag-for-each-unique proc bag)
   (check-bag bag)
-  (hash-table-for-each
+  (internal-hash-table-for-each
     (lambda (key value) (proc key value))
     (sob-hash-table bag)))
 
 (define (bag-fold-unique proc nil bag)
   (check-bag bag)
   (let ((result nil))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (elem count) (set! result (proc elem count result)))
       (sob-hash-table bag))
     result))
@@ -1243,7 +1243,7 @@
 (define (bag->set bag)
   (check-bag bag)
   (let ((result (make-sob (sob-comparator bag) #f)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value) (sob-increment! result key value))
       (sob-hash-table bag))
     result))
@@ -1251,7 +1251,7 @@
 (define (set->bag set)
   (check-set set)
   (let ((result (make-sob (sob-comparator set) #t)))
-    (hash-table-for-each
+    (internal-hash-table-for-each
       (lambda (key value) (sob-increment! result key value))
       (sob-hash-table set))
     result))
@@ -1260,7 +1260,7 @@
   (check-bag bag)
   (check-set set)
   (check-same-comparator set bag)
-  (hash-table-for-each
+  (internal-hash-table-for-each
     (lambda (key value) (sob-increment! bag key value))
     (sob-hash-table set))
   bag)
@@ -1278,7 +1278,7 @@
     (for-each
       (lambda (assoc)
         (let ((element (car assoc)))
-          (if (not (hash-table-contains? ht element))
+          (if (not (internal-hash-table-contains? ht element))
               (sob-increment! result element (cdr assoc)))))
       alist)
     result))
