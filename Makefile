@@ -30,6 +30,16 @@ test: srfi-test
 	cd ${tmpdir} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.scm
 	cd ${tmpdir} && ./test-program
 
+test-docker: srfi-test docker-test-image
+	rm -rf ${tmpdir}
+	mkdir -p ${tmpdir}
+	cp srfi-test/r7rs-programs/${SRFI}.scm ${tmpdir}/test.scm
+	docker run -it \
+		-v "${PWD}:/workdir" \
+		--workdir /workdir srfitest \
+		sh -c "snow-chibi install --impls=${SCHEME} --always-yes srfi.64 \
+		&& make SCHEME=${SCHEME} SRFI=${SRFI} all install test"
+
 tests.bats: bats.sh srfi/*.scm srfi/*.sld
 	sh bats.sh
 
