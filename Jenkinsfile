@@ -1,7 +1,12 @@
 pipeline {
 
     agent {
-        label 'guix'
+        dockerfile {
+            filename 'Dockerfile.test'
+            label 'docker-x86_64'
+            args '--user=root'
+            reuseNode true
+        }
     }
 
     triggers {
@@ -19,7 +24,8 @@ pipeline {
             steps {
                 sh "rm -rf logs"
                 sh "rm -rf srfi-test"
-                sh "guix shell make chibi-scheme -- make srfi-test"
+                sh "make srfi-test"
+                sh "cd srfi-test && chibi-scheme convert.scm"
             }
         }
 
@@ -29,11 +35,6 @@ pipeline {
                     'chibi chicken'.split().each { SCHEME ->
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             stage("${SCHEME}") {
-                                agent {
-                                    docker {
-                                        image "docker.io/schemers/${SCHEME}:head"
-                                    }
-                                }
                                 sh "make BATS_JOBS=8 SCHEME=${SCHEME} test-implementation"
                             }
                         }
