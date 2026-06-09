@@ -32,7 +32,7 @@ pipeline {
         stage('Tests R7RS') {
             steps {
                 script {
-                    'chibi chicken'.split().each { SCHEME ->
+                    'capyscheme chibi chicken foment gauche kawa mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon'.split().each { SCHEME ->
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             stage("${SCHEME}") {
                                 sh "make BATS_JOBS=8 SCHEME=${SCHEME} test-implementation"
