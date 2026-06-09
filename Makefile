@@ -38,13 +38,13 @@ docker-test-image:
 	docker build -f Dockerfile.test --tag=srfitest .
 
 test-srfi: tests.bats
-	bats --jobs ${BATS_JOBS} --filter-tags ${SRFI} --timing --gather-test-outputs-in out/tests/${SRFI} tests.bats
+	bats --jobs ${BATS_JOBS} --filter-tags ${SRFI} --timing tests.bats
 
 test-srfi-docker: tests.bats docker-test-image
 	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SRFI=${SRFI} test-srfi"
 
 test-implementation: tests.bats
-	bats --jobs ${BATS_JOBS} --filter-tags ${SCHEME} --timing --gather-test-outputs-in out/tests/${SCHEME} tests.bats
+	bats --jobs ${BATS_JOBS} --filter-tags ${SCHEME} --timing tests.bats
 
 test-implementation-docker: tests.bats docker-test-image
 	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SCHEME=${SCHEME} test-implementation"
