@@ -1,9 +1,9 @@
 pipeline {
 
     agent {
-        label 'docker && x86_64'
         dockerfile {
             filename 'Dockerfile.test'
+            label 'docker-x86_64'
             args '--user=root'
             reuseNode true
         }
