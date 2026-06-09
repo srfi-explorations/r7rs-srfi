@@ -25,7 +25,6 @@ pipeline {
                 sh "rm -rf logs"
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
-                sh "cd srfi-test && chibi-scheme convert.scm"
             }
         }
 
