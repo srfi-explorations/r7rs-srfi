@@ -40,29 +40,29 @@ test-docker: srfi-test docker-test-image
 		sh -c "snow-chibi install --impls=${SCHEME} --always-yes srfi.64 \
 		&& make SCHEME=${SCHEME} SRFI=${SRFI} all install test"
 
-tests.bats: bats.sh srfi/*.scm srfi/*.sld
+bats: bats.sh srfi/*.scm srfi/*.sld
 	sh bats.sh
 
 docker-test-image:
 	docker build -f Dockerfile.test --tag=srfitest .
 
-test-srfi: tests.bats
+test-srfi: bats
 	bats --jobs ${BATS_JOBS} --filter-tags ${SRFI} --timing tests.bats
 
-test-srfi-docker: tests.bats docker-test-image
+test-srfi-docker: bats docker-test-image
 	docker run -it \
 		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
-		sh -c "make BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} test-srfi"
+		sh -c "make BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} bats test-srfi"
 
-test-implementation: tests.bats
+test-implementation: bats
 	bats --jobs ${BATS_JOBS} --filter-tags ${SCHEME} --timing tests.bats
 
-test-implementation-docker: tests.bats docker-test-image
+test-implementation-docker: bats docker-test-image
 	docker run -it \
 		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
-		sh -c "make BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} test-implementation"
+		sh -c "make BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} bats test-implementation"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
