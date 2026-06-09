@@ -53,7 +53,7 @@ test-srfi-docker: tests.bats docker-test-image
 	docker run -it \
 		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
-		sh -c "BATS_JOBS=${BATS_JOBS} make SRFI=${SRFI} test-srfi; chmod -R 775 .tmp"
+		sh -c "make BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} test-srfi"
 
 test-implementation: tests.bats
 	bats --jobs ${BATS_JOBS} --filter-tags ${SCHEME} --timing tests.bats
@@ -62,7 +62,7 @@ test-implementation-docker: tests.bats docker-test-image
 	docker run -it \
 		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
-		sh -c "make BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} test-implementation; chmod -R 775 .tmp"
+		sh -c "make BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} test-implementation"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2

@@ -11,8 +11,8 @@ COPY README.md .
 COPY test_implementations.txt .
 COPY test_srfis.txt .
 COPY Makefile .
-COPY bats.sh .
-RUN sh bats.sh
 RUN snow-chibi update
+COPY bats.sh .
+COPY tests.bats .
 COPY srfi srfi/
 
