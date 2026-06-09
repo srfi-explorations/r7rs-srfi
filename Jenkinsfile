@@ -22,7 +22,7 @@ pipeline {
         stage('Init') {
             steps {
                 sh "make srfi-test"
-                sh "bats.sh"
+                sh "sh bats.sh"
             }
         }
 
