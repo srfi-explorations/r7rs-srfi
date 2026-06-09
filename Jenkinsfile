@@ -32,10 +32,11 @@ pipeline {
         stage('Tests R7RS') {
             steps {
                 script {
-                    def srfis = readFile 'test_srfis.txt'
-                    srfis.split().each { SRFI ->
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            sh "make BATS_JOBS=13 SRFI=${SRFI} test-srfi"
+                    'chibi'.split().each { SCHEME ->
+                        stage("${SCHEME}") {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                sh "make BATS_JOBS=16 SCHEME=${SCHEME} test-implementation"
+                            }
                         }
                     }
                 }

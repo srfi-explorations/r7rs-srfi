@@ -40,13 +40,13 @@ test-srfi: tests.bats
 	bats --jobs ${BATS_JOBS} --filter-tags ${SRFI} --timing tests.bats
 
 test-srfi-docker: tests.bats docker-test-image
-	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "BATS_JOBS=${BATS_JOBS} make SRFI=${SRFI} test-srfi"
+	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "BATS_JOBS=${BATS_JOBS} make SRFI=${SRFI} test-srfi; chmod -R 775 .tmp"
 
 test-implementation: tests.bats
 	bats --jobs ${BATS_JOBS} --filter-tags ${SCHEME} --timing tests.bats
 
 test-implementation-docker: tests.bats docker-test-image
-	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} test-implementation"
+	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} test-implementation; chmod -R 775 .tmp"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
