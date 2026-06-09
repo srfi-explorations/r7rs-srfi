@@ -26,10 +26,9 @@ install:
 test: srfi-test
 	rm -rf ${tmpdir}
 	mkdir -p ${tmpdir}
-	COMPILE_R7RS=${SCHEME} compile-r7rs \
-				-o ${tmpdir}/test-program-${SRFI} \
-				srfi-test/r7rs-programs/${SRFI}.scm
-	cd ${tmpdir} && ./test-program-${SRFI}
+	cp srfi-test/r7rs-programs/${SRFI}.scm ${tmpdir}/test.scm
+	cd ${tmpdir} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.scm
+	cd ${tmpdir} && ./test-program
 
 tests.bats: bats.sh srfi/*.scm srfi/*.sld
 	sh bats.sh
@@ -54,10 +53,5 @@ srfi-test:
 	cd srfi-test && chibi-scheme convert.scm
 
 clean:
-	rm -rf *.log
-	rm -rf *.html
-	rm -rf *.tgz
-	find . -name "*.so" -delete
-	rm -rf ${tmpdir}
-	rm -rf bats
+	git clean -X -f
 
