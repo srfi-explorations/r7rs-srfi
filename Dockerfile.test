@@ -1,4 +1,4 @@
-FROM schemers/all-r7rs:head
+FROM docker.io/schemers/all-r7rs:head
 RUN apt-get update && apt-get install -y \
     bats make libffi-dev parallel time git ca-certificates sudo
 RUN git clone https://github.com/Retropikzel/chibi-scheme.git --depth=1 --branch=install-dependencies-when-installing-from-file2
