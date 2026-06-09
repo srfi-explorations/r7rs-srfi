@@ -35,7 +35,7 @@ pipeline {
                     def srfis = readFile 'test_srfis.txt'
                     srfis.split().each { SRFI ->
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            sh "make SRFI=${SRFI} test-srfi"
+                            sh "make BATS_JOBS=13 SRFI=${SRFI} test-srfi"
                         }
                     }
                 }

@@ -34,4 +34,4 @@ venv
 *.html
 run-test*
 *.bats
-bats
+test-program*

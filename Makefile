@@ -1,18 +1,8 @@
-RNRS=r7rs
 SCHEME=chibi
 SRFI=64
-DOCKER_TAG=head
-
 VERSION=$(shell cat srfi/${SRFI}/VERSION)
-DEPENDS=$(shell cat srfi/${SRFI}/DEPENDS || echo "")
 PKG=srfi-${SRFI}-${VERSION}.tgz
-
-SFX=scm
-LIB_PATHS=
-ifeq "${RNRS}" "r6rs"
-SFX=sps
-LIB_PATHS=-I .akku/lib
-endif
+BATS_JOBS=1
 
 tmpdir=.tmp/${SCHEME}-${SRFI}
 
@@ -33,48 +23,31 @@ ${PKG}: package
 install:
 	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
 
-install-with-dependencies:
-	snow-chibi --impls=${SCHEME} --always-yes install srfi.64 ${DEPENDS} ${PKG}
-
-testfiles: ${PKG}
+test: srfi-test
 	rm -rf ${tmpdir}
 	mkdir -p ${tmpdir}
-	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} ${tmpdir}/test.${SFX}
-	cp -r ${PKG} ${tmpdir}
+	COMPILE_R7RS=${SCHEME} compile-r7rs \
+				-o ${tmpdir}/test-program-${SRFI} \
+				srfi-test/r7rs-programs/${SRFI}.scm
+	cd ${tmpdir} && ./test-program-${SRFI}
 
-test: srfi-test testfiles
-	cd ${tmpdir} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.${SFX}
-	cd ${tmpdir} && ./test-program
+tests.bats: bats.sh srfi/*.scm srfi/*.sld
+	sh bats.sh
 
 docker-test-image:
 	docker build -f Dockerfile.test --tag=srfitest .
 
-test-docker: testfiles
-	cd ${tmpdir} && \
-		DOCKER_TAG=${DOCKER_TAG} \
-		SNOW_PACKAGES="srfi.64 ${DEPENDS} ${PKG}"\
-		COMPILE_R7RS=${SCHEME} \
-		test-r7rs -o test-program test.${SFX}
+test-srfi: tests.bats
+	bats --jobs ${BATS_JOBS} --filter-tags ${SRFI} --timing --gather-test-outputs-in out/tests/${SRFI} tests.bats
 
-bats:
-	mkdir -p bats
-	sh generate_bats.sh
+test-srfi-docker: tests.bats docker-test-image
+	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SRFI=${SRFI} test-srfi"
 
-test-srfi: bats
-	rm -rf out/tests/${SRFI}
-	mkdir -p out/tests/${SRFI}
-	bats --jobs 13 --timing --gather-test-outputs-in out/tests/${SRFI} bats/srfi-${SRFI}.bats
+test-implementation: tests.bats
+	bats --jobs ${BATS_JOBS} --filter-tags ${SCHEME} --timing --gather-test-outputs-in out/tests/${SCHEME} tests.bats
 
-test-srfi-docker: docker-test-image
-	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SRFI=${SRFI} test-srfi; chmod -R 775 ./out; chmod -R 775 bats; chmod -R 775 ${tmpdir}"
-
-test-implementation: bats
-	rm -rf out/tests/${SCHEME}
-	mkdir -p out/tests/${SCHEME}
-	bats --timing --gather-test-outputs-in out/tests/${SCHEME} bats/${SCHEME}.bats
-
-test-implementation-docker: docker-test-image
-	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SCHEME=${SCHEME} test-implementation; chmod -R 775 ./out; chmod -R 775 bats; chmod -R 775 ${tmpdir}"
+test-implementation-docker: tests.bats docker-test-image
+	docker run -it -v "${PWD}:/workdir" --workdir /workdir srfitest sh -c "make SCHEME=${SCHEME} test-implementation"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
