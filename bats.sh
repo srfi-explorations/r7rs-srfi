@@ -2,7 +2,8 @@
 
 implementations="capyscheme chibi chicken foment gauche kawa mosh racket \
 sagittarius skint stklos tr7 ypsilon"
-srfis=$(cat test_srfis.txt)
+srfis="1 2 5 8 11 14 16 19 25 26 37 38 39 41 42 43 48 51 54 60 63 66 64 87 69 \
+95 111 113 115 116 128 145 180 197 227"
 
 printf "" > "tests.bats"
 
