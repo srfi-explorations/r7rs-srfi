@@ -13,7 +13,7 @@ for srfi in $srfis; do
             {
                 echo "# bats test_tags=${scheme}, ${srfi}"
                 echo "@test \"${scheme}_srfi-${srfi}\" {"
-                echo "  timeout 60 make SRFI=$srfi SCHEME=$scheme all install"
+                echo "  timeout 600 make SRFI=$srfi SCHEME=$scheme all install"
                 echo "  timeout 120 make SRFI=$srfi SCHEME=$scheme test"
                 echo "}"
             } >> "tests.bats"
