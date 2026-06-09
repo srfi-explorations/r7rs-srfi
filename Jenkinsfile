@@ -3,7 +3,7 @@ pipeline {
     agent {
         dockerfile {
             filename 'Dockerfile.test'
-            label 'docker-x86_64'
+            label 'podman'
             args '--user=root'
             reuseNode true
         }
