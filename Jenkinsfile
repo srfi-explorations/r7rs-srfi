@@ -19,8 +19,7 @@ pipeline {
             steps {
                 sh "rm -rf logs"
                 sh "rm -rf srfi-test"
-                sh "guix shell make -- make srfi-test"
-                sh "guix shell chibi-scheme -- cd srfi-test && chibi-scheme convert.scm"
+                sh "guix shell make chibi-scheme -- make srfi-test"
             }
         }
 
