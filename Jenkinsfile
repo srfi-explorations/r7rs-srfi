@@ -19,6 +19,11 @@ pipeline {
     }
 
     stages {
+        stage('Init') {
+            steps {
+                sh "make srfi-test"
+            }
+        }
 
         stage('Tests R7RS') {
             steps {
