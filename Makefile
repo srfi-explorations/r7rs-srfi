@@ -35,6 +35,7 @@ test-docker: srfi-test docker-test-image
 	mkdir -p ${tmpdir}
 	cp srfi-test/r7rs-programs/${SRFI}.scm ${tmpdir}/test.scm
 	docker run -it \
+		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
 		sh -c "snow-chibi install --impls=${SCHEME} --always-yes srfi.64 \
 		&& make SCHEME=${SCHEME} SRFI=${SRFI} all install test"
@@ -50,6 +51,7 @@ test-srfi: tests.bats
 
 test-srfi-docker: tests.bats docker-test-image
 	docker run -it \
+		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
 		sh -c "BATS_JOBS=${BATS_JOBS} make SRFI=${SRFI} test-srfi; chmod -R 775 .tmp"
 
@@ -58,6 +60,7 @@ test-implementation: tests.bats
 
 test-implementation-docker: tests.bats docker-test-image
 	docker run -it \
+		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
 		sh -c "make BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} test-implementation; chmod -R 775 .tmp"
 
