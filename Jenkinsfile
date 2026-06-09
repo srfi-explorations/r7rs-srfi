@@ -33,8 +33,8 @@ pipeline {
             steps {
                 script {
                     'chibi'.split().each { SCHEME ->
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            stage("${SCHEME}") {
+                        stage("${SCHEME}") {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                 sh "make BATS_JOBS=8 SCHEME=${SCHEME} test-implementation"
                             }
                         }
