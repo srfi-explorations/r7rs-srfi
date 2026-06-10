@@ -3,6 +3,7 @@ SRFI=64
 VERSION=$(shell cat srfi/${SRFI}/VERSION)
 PKG=srfi-${SRFI}-${VERSION}.tgz
 BATS_JOBS=1
+TIER=1
 
 tmpdir=.tmp/${SCHEME}-${SRFI}
 
@@ -48,7 +49,7 @@ docker-test-image:
 	docker build -f Dockerfile.test --tag=srfitest .
 
 test-srfi: bats
-	bats --jobs ${BATS_JOBS} --filter-tags ${SRFI} --timing tests.bats
+	bats --jobs ${BATS_JOBS} --filter-tags srfi-${SRFI},tier-${TIER} --timing tests.bats
 
 test-srfi-docker: bats docker-test-image
 	docker run -it \
@@ -57,7 +58,7 @@ test-srfi-docker: bats docker-test-image
 		sh -c "make BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} bats test-srfi"
 
 test-implementation: bats
-	bats --jobs ${BATS_JOBS} --filter-tags ${SCHEME} --timing tests.bats
+	bats --jobs ${BATS_JOBS} --filter-tags srfi-${SCHEME},tier-${TIER} --timing tests.bats
 
 test-implementation-docker: bats docker-test-image
 	docker run -it \
