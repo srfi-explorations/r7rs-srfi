@@ -25,7 +25,7 @@ for srfi in $srfis; do
             if [ "${scheme}" = "larceny" ]; then tier=3; fi
 
             {
-                echo "# bats test_tags=${scheme}, srfi-${srfi}, tier-${tier}"
+                echo "# bats test_tags=${scheme},srfi_${srfi},tier_${tier}"
                 echo "@test \"${scheme}_srfi-${srfi}\" {"
                 echo "  timeout 600 snow-chibi install --impls=${scheme} --always-yes srfi.64"
                 echo "  timeout 600 make SRFI=$srfi SCHEME=$scheme all install"

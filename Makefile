@@ -49,22 +49,22 @@ docker-test-image:
 	docker build -f Dockerfile.test --tag=srfitest .
 
 test-srfi: bats
-	bats --jobs ${BATS_JOBS} --filter-tags srfi-${SRFI},tier-${TIER} --timing tests.bats
+	bats --jobs ${BATS_JOBS} --filter-tags srfi_${SRFI},tier_${TIER} --timing tests.bats
 
 test-srfi-docker: bats docker-test-image
 	docker run -it \
 		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
-		sh -c "make BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} bats test-srfi"
+		sh -c "make TIER=${TIER} BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} bats test-srfi"
 
 test-implementation: bats
-	bats --jobs ${BATS_JOBS} --filter-tags srfi-${SCHEME},tier-${TIER} --timing tests.bats
+	bats --jobs ${BATS_JOBS} --filter-tags srfi_${SCHEME},tier_${TIER} --timing tests.bats
 
 test-implementation-docker: bats docker-test-image
 	docker run -it \
 		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
-		sh -c "make BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} bats test-implementation"
+		sh -c "make TIER=${TIER} BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} bats test-implementation"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
