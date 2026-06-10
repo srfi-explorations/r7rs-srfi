@@ -33,7 +33,7 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             stage("${SCHEME}") {
                                 sh "make TIER=1 SRFI=64 SCHEME=${SCHEME} all install"
-                                sh "make TIER=1 BATS_JOBS=8 SCHEME=${SCHEME} test-implementation"
+                                sh "make TIER=1 BATS_JOBS=4 SCHEME=${SCHEME} test-implementation"
                             }
                         }
                     }
@@ -48,7 +48,7 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             stage("${SCHEME}") {
                                 sh "make TIER=2 SRFI=64 SCHEME=${SCHEME} all install"
-                                sh "make TIER=2 BATS_JOBS=8 SCHEME=${SCHEME} test-implementation"
+                                sh "make TIER=2 BATS_JOBS=4 SCHEME=${SCHEME} test-implementation"
                             }
                         }
                     }
@@ -63,7 +63,7 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             stage("${SCHEME}") {
                                 sh "make TIER=3 SRFI=64 SCHEME=${SCHEME} all install"
-                                sh "make TIER=3 BATS_JOBS=8 SCHEME=${SCHEME} test-implementation"
+                                sh "make TIER=3 BATS_JOBS=4 SCHEME=${SCHEME} test-implementation"
                             }
                         }
                     }
