@@ -58,7 +58,7 @@ test-srfi-docker: bats docker-test-image
 		sh -c "make TIER=${TIER} BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} bats test-srfi"
 
 test-implementation: bats
-	bats --jobs ${BATS_JOBS} --filter-tags srfi_${SCHEME},tier_${TIER} --timing tests.bats
+	bats --jobs ${BATS_JOBS} --filter-tags srfi_${SRFI},tier_${TIER} --timing tests.bats
 
 test-implementation-docker: bats docker-test-image
 	docker run -it \
