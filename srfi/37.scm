@@ -42,11 +42,7 @@
   (processor option-processor))
 
 (define args-fold
-  (lambda (args
-            options
-            unrecognized-option-proc
-            operand-proc
-            . seeds)
+  (lambda (args options unrecognized-option-proc operand-proc . seeds)
     (letrec
       ((find
          (lambda (l ?)

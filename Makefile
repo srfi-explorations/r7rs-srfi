@@ -70,6 +70,10 @@ srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
 	cd srfi-test && chibi-scheme convert.scm
 
+local-srfi-test:
+	cp ../srfi-test/*.scm srfi-test/
+	cd srfi-test && chibi-scheme convert.scm
+
 clean:
 	git clean -X -f
 	rm -rf .tmp
