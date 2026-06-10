@@ -1,1 +1,1 @@
-chibi chicken gauche kawa mosh racket sagittarius skint stklos tr7 ypsilon
+capyscheme chibi chicken cyclone foment gauche gambit guile kawa larceny loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon

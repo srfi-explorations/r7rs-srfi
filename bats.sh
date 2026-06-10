@@ -18,6 +18,7 @@ for srfi in $srfis; do
                 echo "  runtime=600"
                 echo "  if [ \"${scheme}\" = \"skint\" ]; then runtime=30; fi"
                 echo "  if [ \"${scheme}\" = \"larceny\" ]; then runtime=30; fi"
+                echo "  if [ \"${scheme}\" = \"mit-scheme\" ]; then runtime=30; fi"
                 echo "  timeout \${runtime} make SRFI=$srfi SCHEME=$scheme test"
                 echo "}"
             } >> "tests.bats"

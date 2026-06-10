@@ -26,11 +26,10 @@ pipeline {
             }
         }
 
-        stage('Tests R7RS') {
+        stage('Tier 1 R7RS') {
             steps {
                 script {
-                    def schemes = readFile 'test_implementations.txt'
-                    schemes.split().each { SCHEME ->
+                    'chibi chicken gauche kawa mosh racket sagittarius stklos ypsilon'.split().each { SCHEME ->
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             stage("${SCHEME}") {
                                 sh "make SRFI=64 SCHEME=${SCHEME} all install"
@@ -41,6 +40,37 @@ pipeline {
                 }
             }
         }
+
+        stage('Tier 2 R7RS') {
+            steps {
+                script {
+                    'capyscheme cyclone gambit guile loko meevax skint tr7'.split().each { SCHEME ->
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            stage("${SCHEME}") {
+                                sh "make SRFI=64 SCHEME=${SCHEME} all install"
+                                sh "make BATS_JOBS=8 SCHEME=${SCHEME} test-implementation"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Tier 3 R7RS') {
+            steps {
+                script {
+                    'foment mit-scheme larceny'.split().each { SCHEME ->
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            stage("${SCHEME}") {
+                                sh "make SRFI=64 SCHEME=${SCHEME} all install"
+                                sh "make BATS_JOBS=8 SCHEME=${SCHEME} test-implementation"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
     post {
         success {

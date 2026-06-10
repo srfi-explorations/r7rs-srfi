@@ -1,9 +1,13 @@
 (define-library
   (srfi 42)
-  (import (scheme base)
-          (scheme read)
-          (scheme complex)
-          (scheme cxr))
+  (cond-expand
+    (tr7 (import (scheme base)
+                 (scheme read)
+                 (scheme cxr)))
+    (else (import (scheme base)
+                  (scheme read)
+                  (scheme cxr)
+                  (scheme complex))))
   (export do-ec
           list-ec
           append-ec
