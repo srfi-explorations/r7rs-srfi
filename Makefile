@@ -4,6 +4,7 @@ VERSION=$(shell cat srfi/${SRFI}/VERSION)
 PKG=srfi-${SRFI}-${VERSION}.tgz
 BATS_JOBS=1
 TIER=1
+BATS_ARGS=
 
 tmpdir=.tmp/${SCHEME}-${SRFI}
 
@@ -49,22 +50,22 @@ docker-test-image:
 	docker build -f Dockerfile.test --tag=srfitest .
 
 test-srfi: bats
-	bats --jobs ${BATS_JOBS} --filter-tags srfi_${SRFI},tier_${TIER} --timing tests.bats
+	bats ${BATS_ARGS} --jobs ${BATS_JOBS} --filter-tags srfi_${SRFI},tier_${TIER} --timing tests.bats
 
 test-srfi-docker: bats docker-test-image
 	docker run -it \
 		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
-		sh -c "make TIER=${TIER} BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} bats test-srfi"
+		sh -c "make BATS_ARGS=${BATS_ARGS} TIER=${TIER} BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} bats test-srfi"
 
 test-implementation: bats
-	bats --jobs ${BATS_JOBS} --filter-tags ${SCHEME},tier_${TIER} --timing tests.bats
+	bats ${BATS_ARGS} --jobs ${BATS_JOBS} --filter-tags ${SCHEME},tier_${TIER} --timing tests.bats
 
 test-implementation-docker: bats docker-test-image
 	docker run -it \
 		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
-		sh -c "make TIER=${TIER} BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} bats test-implementation"
+		sh -c "make BATS_ARGS=${BATS_ARGS} TIER=${TIER} BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} bats test-implementation"
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2

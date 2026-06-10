@@ -1,6 +1,8 @@
 (define-library
   (srfi 37)
-  (import (scheme base)
+  (import (except (scheme base)
+                  let-values
+                  let*-values)
           (srfi 11))
   (export option
           option-names
