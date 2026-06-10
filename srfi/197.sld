@@ -4,7 +4,8 @@
 
 (define-library
   (srfi 197)
-  (import (scheme base))
+  (import (scheme base)
+          (srfi 2))
   (export chain
           chain-and
           chain-when

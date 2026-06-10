@@ -2,7 +2,7 @@
   (srfi 63)
   (import (scheme base))
   (export array?
-          ;equal?
+          equal?
           array-rank
           array-dimensions
           make-array
@@ -35,7 +35,3 @@
           A:fixN8b
           A:bool)
   (include "63.scm"))
-
-
-
-
