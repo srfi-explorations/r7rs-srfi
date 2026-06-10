@@ -23,17 +23,18 @@ ${PKG}: package
 install:
 	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
 
-test: srfi-test
+testfiles:
 	rm -rf ${tmpdir}
 	mkdir -p ${tmpdir}
+	mkdir -p ${tmpdir}/180
+	cp -r srfi-test/180 ${tmpdir}/
 	cp srfi-test/r7rs-programs/${SRFI}.scm ${tmpdir}/test.scm
+
+test: srfi-test testfiles
 	cd ${tmpdir} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.scm
 	cd ${tmpdir} && ./test-program
 
-test-docker: srfi-test docker-test-image
-	rm -rf ${tmpdir}
-	mkdir -p ${tmpdir}
-	cp srfi-test/r7rs-programs/${SRFI}.scm ${tmpdir}/test.scm
+test-docker: srfi-test docker-test-image testfiles
 	docker run -it \
 		-v "${PWD}/srfi-test:/workdir/srfi-test" \
 		srfitest \
