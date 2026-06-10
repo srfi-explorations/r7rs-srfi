@@ -1,6 +1,6 @@
 (define-syntax rec
   (syntax-rules ()
-    ((rec (NAME . VARIABLES) . BODY)
-     (letrec ( (NAME (lambda VARIABLES . BODY)) ) NAME))
-    ((rec NAME EXPRESSION)
-     (letrec ( (NAME EXPRESSION) ) NAME))))
+    ((rec (name . variables) . body)
+     (letrec ( (name (lambda variables. body))) name ))
+    ((rec name expression)
+     (letrec ((name expression)) name ))))
