@@ -1,7 +1,12 @@
 (define-library
   (srfi 43)
-  (import (scheme base)
-          (scheme cxr))
+  (import (except (scheme base)
+                  vector-copy
+                  vector-map
+                  vector-for-each)
+          (scheme cxr)
+          (srfi 8)
+          (srfi 227))
   (export make-vector
           vector
           vector-unfold
