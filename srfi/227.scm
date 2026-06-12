@@ -23,11 +23,11 @@
     ;;; all optional args gathered
     ((_ (req-name ...) ((opt-name opt-default optarg) ...) rest . body)
      (%lambda-optional-generate-temporaries
-      (req-name ...)
-      (req-name ...)
-      ()
-      ((opt-name opt-default optarg) ...)
-      rest . body))))
+       (req-name ...)
+       (req-name ...)
+       ()
+       ((opt-name opt-default optarg) ...)
+       rest . body))))
 
 (define-syntax %lambda-optional-generate-temporaries
   (syntax-rules ()
@@ -36,21 +36,21 @@
         gensyms
         opts rest . body)
      (%lambda-optional-generate-temporaries
-      (req-name ...)
-      more-names-w/o-gensyms
-      (reqarg . gensyms)
-      opts rest . body))
+       (req-name ...)
+       more-names-w/o-gensyms
+       (reqarg . gensyms)
+       opts rest . body))
     ((_ (req-name ...)
         ()
         (req-gensym ...)
         ((opt-name opt-default opt-gensym) ...)
         rest . body)
      (%lambda-optional-case-lambda
-      () (req-name ...) (req-gensym ...)
-      (opt-name ...)
-      (opt-default ...)
-      (opt-gensym ...)
-      rest . body))))
+       () (req-name ...) (req-gensym ...)
+       (opt-name ...)
+       (opt-default ...)
+       (opt-gensym ...)
+       rest . body))))
 
 (define-syntax %lambda-optional-case-lambda
   (syntax-rules ()
@@ -60,15 +60,15 @@
         (opt-gensym . more-opt-gensyms)
         rest . body)
      (%lambda-optional-case-lambda
-      (clause ...
-       ((req-gensym ...)
-        (req-gensym ...
-         default
-         . more-defaults)))
-      (req-name ... opt-name)
-      (req-gensym ... opt-gensym)
-      more-opt-names more-defaults more-opt-gensyms
-      rest . body))
+       (clause ...
+               ((req-gensym ...)
+                (req-gensym ...
+                            default
+                            . more-defaults)))
+       (req-name ... opt-name)
+       (req-gensym ... opt-gensym)
+       more-opt-names more-defaults more-opt-gensyms
+       rest . body))
     ((_ (((clause-formals ...) (clause-reals ...)) ...)
         (req-name ...) gensyms () () () rest  . body)
      (letrec ((f (case-lambda ((clause-formals ...) (f clause-reals ...)) ...
@@ -96,18 +96,18 @@
         ((n d) ...) rest
         . body)
      (%lambda-optional*-parse (req-name ...)
-                             ((opt-name opt-default)
-                              (n d) ...
-                              . more)
-                             rest
-                             . body))
+                              ((opt-name opt-default)
+                               (n d) ...
+                               . more)
+                              rest
+                              . body))
     ;;; all optional args gathered
     ((_ (req-name ...) ((opt-name opt-default) ...) rest . body)
      (%lambda-optional*-case-lambda
-      ()
-      (req-name ...)
-      ((opt-name opt-default) ...)
-      rest . body))))
+       ()
+       (req-name ...)
+       ((opt-name opt-default) ...)
+       rest . body))))
 
 (define-syntax %lambda-optional*-case-lambda
   (syntax-rules ()
@@ -115,10 +115,10 @@
         ((opt-name opt-default) . more-opts)
         rest . body)
      (%lambda-optional*-case-lambda
-      (clause ...
-       ((req-name ...) (req-name ... opt-default)))
-      (req-name ... opt-name)
-      more-opts rest . body))
+       (clause ...
+               ((req-name ...) (req-name ... opt-default)))
+       (req-name ... opt-name)
+       more-opts rest . body))
     ((_ (((clause-formals ...) (clause-reals ...)) ...) (req-name ...)
         ()
         rest . body)

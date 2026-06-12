@@ -1,7 +1,7 @@
 ;; R7RS small implementation of lambda-optional, assuming an optimized
 ;; case-lambda, by Daphne Preston-Kendal.
 
-;; Edited to remove rename by Retropikzel
+;; Edited by Retropikzel
 
 (define-library (srfi 227)
   (import (scheme base)
@@ -10,6 +10,17 @@
           opt*-lambda
           let-optionals
           let-optionals*)
+  (cond-expand
+    (chicken (export define-optional*
+                     %lambda-optional*-case-lambda
+                     %lambda-optional*-parse
+                     define-optional
+                     %lambda-optional-case-lambda
+                     %lambda-optional-generate-temporaries
+                     %lambda-optional-parse
+                     define-optional*
+                     %lambda-optional*-case-lambda))
+    (else))
   (include "227.scm")
   (begin
     (define-syntax let-optionals
