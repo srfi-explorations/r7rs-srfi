@@ -79,7 +79,7 @@
   (syntax-rules ()
     ((_ (name . formals) . body)
      (define name (opt-lambda formals . body)))))
-
+
 (define-syntax opt*-lambda
   (syntax-rules ()
     ((_ (req-name ... (opt-name opt-default) . rest) . body)
