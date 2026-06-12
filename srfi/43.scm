@@ -79,14 +79,10 @@
 ;;;   error was signalled.
 (define (check-type pred? value callee)
   (if (pred? value)
-      value
-      ;; Recur: when (or if) the user gets a debugger prompt, he can
-      ;; proceed where the call to ERROR was with the correct value.
-      (check-type pred?
-                  (error "erroneous value"
-                         (list pred? value)
-                         `(while calling ,callee))
-                  callee)))
+    value
+    ;; Recur: when (or if) the user gets a debugger prompt, he can
+    ;; proceed where the call to ERROR was with the correct value.
+    (error "erroneous value" (list pred? value) `(while calling ,callee))))
 
 ;;; (CHECK-INDEX <vector> <index> <callee>) -> index
 ;;;   Ensure that INDEX is a valid index into VECTOR; if not, signal an
@@ -96,19 +92,17 @@
 (define (check-index vec index callee)
   (let ((index (check-type integer? index callee)))
     (cond ((< index 0)
-           (check-index vec
-                        (error "vector index too low"
-                               index
-                               `(into vector ,vec)
-                               `(while calling ,callee))
-                        callee))
+           (error "vector index too low"
+                  index
+                  `(into vector ,vec)
+                  `(while calling ,callee))
+           callee)
           ((>= index (vector-length vec))
-           (check-index vec
-                        (error "vector index too high"
-                               index
-                               `(into vector ,vec)
-                               `(while calling ,callee))
-                        callee))
+           (error "vector index too high"
+                  index
+                  `(into vector ,vec)
+                  `(while calling ,callee))
+           callee)
           (else index))))
 
 ;;; (CHECK-INDICES <vector>
