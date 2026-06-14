@@ -1,3 +1,4 @@
+
 ; <PLAINTEXT>
 ; Eager Comprehensions in [outer..inner|expr]-Convention
 ; ======================================================
@@ -61,7 +62,7 @@
 ;;   internal- instead
 
 (define-syntax do-ec
-  (syntax-rules (nested if not and or begin :do let)
+  (syntax-rules (nested if not and or begin |:do| let)
 
     ; explicit nesting -> implicit nesting
     ((_ (nested q ...) etc ...)
@@ -91,26 +92,26 @@
     ((_ (begin etc ...) cmd)
      (begin etc ... (do-ec cmd)))
 
-    ; fully decorated internal-do-generator -> delegate to do-ec:do
-    ((_ (:do olet lbs ne1? ilet ne2? lss) cmd)
-     (do-ec:do cmd (:do olet lbs ne1? ilet ne2? lss)))
+    ; fully decorated internal-do-generator -> delegate to do-ec-do
+    ((_ (|:do| olet lbs ne1? ilet ne2? lss) cmd)
+     (do-ec-do cmd (|:do| olet lbs ne1? ilet ne2? lss)))
 
     ; anything else -> call generator-macro in CPS; reentry at (*)
 
     ((_ (g arg1 arg ...) cmd)
-     (g (do-ec:do cmd) arg1 arg ...))))
+     (g (do-ec-do cmd) arg1 arg ...))))
 
 
-; (do-ec:do cmd (:do olet lbs ne1? ilet ne2? lss))
+; (do-ec-do cmd (:do olet lbs ne1? ilet ne2? lss))
 ;   generates code for a single fully decorated internal-do-generator
 ;   with cmd as payload, taking care of special cases.
 
-(define-syntax do-ec:do
+(define-syntax do-ec-do
   (syntax-rules (:do let)
 
     ; reentry point (*) -> generate code
     ((_ cmd
-               (:do (let obs oc ...)
+               (|:do| (let obs oc ...)
                     lbs
                     ne1?
                     (let ibs ic ...)
@@ -191,26 +192,26 @@
 ; The special generators :do, :let, :parallel, :while, and :until
 ; ==========================================================================
 
-(define-syntax :do
+(define-syntax |:do|
   (syntax-rules ()
 
     ; full decorated -> continue with cc, reentry at (*)
     ((_ (cc ...) olet lbs ne1? ilet ne2? lss)
-     (cc ... (:do olet lbs ne1? ilet ne2? lss)))
+     (cc ... (|:do| olet lbs ne1? ilet ne2? lss)))
 
     ; short form -> fill in default values
     ((_ cc lbs ne1? lss)
-     (:do cc (let ()) lbs ne1? (let ()) #t lss))))
+     (|:do| cc (let ()) lbs ne1? (let ()) #t lss))))
 
 
-(define-syntax :let
+(define-syntax |:let|
   (syntax-rules (index)
     ((_ cc var (index i) expression)
-     (:do cc (let ((var expression) (i 0))) () #t (let ()) #f ()))
+     (|:do| cc (let ((var expression) (i 0))) () #t (let ()) #f ()))
     ((_ cc var expression)
-     (:do cc (let ((var expression))) () #t (let ()) #f ()))))
+     (|:do| cc (let ((var expression))) () #t (let ()) #f ()))))
 
-(define-syntax :parallel
+(define-syntax |:parallel|
   (syntax-rules (:do)
     ((_ cc)
      cc )
@@ -232,13 +233,13 @@
     ((_
        cc
        gens
-       (:do (let (ob1 ...) oc1 ...)
+       (|:do| (let (ob1 ...) oc1 ...)
             (lb1 ...)
             ne1?1
             (let (ib1 ...) ic1 ...)
             ne2?1
             (ls1 ...))
-       (:do (let (ob2 ...) oc2 ...)
+       (|:do| (let (ob2 ...) oc2 ...)
             (lb2 ...)
             ne1?2
             (let (ib2 ...) ic2 ...)
@@ -247,7 +248,7 @@
      (internal-parallel-1
        cc
        gens
-       (:do (let (ob1 ... ob2 ...) oc1 ... oc2 ...)
+       (|:do| (let (ob1 ... ob2 ...) oc1 ... oc2 ...)
             (lb1 ... lb2 ...)
             (and ne1?1 ne1?2)
             (let (ib1 ... ib2 ...) ic1 ... ic2 ...)
@@ -258,7 +259,7 @@
     ((_ (cc ...) () result)
      (cc ... result))))
 
-(define-syntax :while
+(define-syntax |:while|
   (syntax-rules ()
     ((_ cc (g arg1 arg ...) test)
      (g (internal-while-1 cc test) arg1 arg ...))))
@@ -320,18 +321,18 @@
 ;    of ib-rhs with a check on ne1?-value.
 
 (define-syntax internal-while-1
-  (syntax-rules (:do let)
-    ((_ cc test (:do olet lbs ne1? ilet ne2? lss))
-     (internal-while-2 cc test () () () (:do olet lbs ne1? ilet ne2? lss)))))
+  (syntax-rules (|:do| let)
+    ((_ cc test (|:do| olet lbs ne1? ilet ne2? lss))
+     (internal-while-2 cc test () () () (|:do| olet lbs ne1? ilet ne2? lss)))))
 
 (define-syntax internal-while-2
-  (syntax-rules (:do let)
+  (syntax-rules (|:do| let)
     ((_ cc
                test
                (ib-let     ...)
                (ib-save    ...)
                (ib-restore ...)
-               (:do olet
+               (|:do| olet
                     lbs
                     ne1?
                     (let ((ib-var ib-rhs) ib ...) ic ...)
@@ -342,7 +343,7 @@
                (ib-let     ... (ib-tmp #f))
                (ib-save    ... (ib-var ib-rhs))
                (ib-restore ... (ib-var ib-tmp))
-               (:do olet
+               (|:do| olet
                     lbs
                     ne1?
                     (let (ib ...) ic ... (set! ib-tmp ib-var))
@@ -353,8 +354,8 @@
                (ib-let     ...)
                (ib-save    ...)
                (ib-restore ...)
-               (:do (let (ob ...) oc ...) lbs ne1? (let () ic ...) ne2? lss))
-     (:do cc
+               (|:do| (let (ob ...) oc ...) lbs ne1? (let () ic ...) ne2? lss))
+     (|:do| cc
           (let (ob ... ib-let ...) oc ...)
           lbs
           (let ((ne1?-value ne1?))
@@ -367,41 +368,41 @@
           lss))))
 
 
-(define-syntax :until
+(define-syntax |:until|
   (syntax-rules ()
     ((_ cc (g arg1 arg ...) test)
      (g (internal-until-1 cc test) arg1 arg ...))))
 
 (define-syntax internal-until-1
-  (syntax-rules (:do)
-    ((_ cc test (:do olet lbs ne1? ilet ne2? lss))
-     (:do cc olet lbs ne1? ilet (and ne2? (not test)) lss))))
+  (syntax-rules (|:do|)
+    ((_ cc test (|:do| olet lbs ne1? ilet ne2? lss))
+     (|:do| cc olet lbs ne1? ilet (and ne2? (not test)) lss))))
 
 
 ; ==========================================================================
 ; The typed generators :list :string :vector etc.
 ; ==========================================================================
 
-(define-syntax :list
+(define-syntax |:list|
   (syntax-rules (index)
     ((_ cc var (index i) arg ...)
-     (:parallel cc (:list var arg ...) (:integers i)))
+     (|:parallel| cc (|:list| var arg ...) (|:integers| i)))
     ((_ cc var arg1 arg2 arg ...)
-     (:list cc var (append arg1 arg2 arg ...)))
+     (|:list| cc var (append arg1 arg2 arg ...)))
     ((_ cc var arg)
-     (:do cc
-          (let ())
-          ((t arg))
-          (not (null? t))
-          (let ((var (car t))))
-          #t
-          ((cdr t))))))
+     (|:do| cc
+            (let ())
+            ((t arg))
+            (not (null? t))
+            (let ((var (car t))))
+            #t
+            ((cdr t))))))
 
 
-(define-syntax :string
+(define-syntax |:string|
   (syntax-rules (index)
     ((_ cc var (index i) arg)
-     (:do cc
+     (|:do| cc
           (let ((str arg) (len 0))
             (set! len (string-length str)))
           ((i 0))
@@ -410,49 +411,49 @@
           #t
           ((+ i 1))))
     ((_ cc var (index i) arg1 arg2 arg ...)
-     (:string cc var (index i) (string-append arg1 arg2 arg ...)))
+     (|:string| cc var (index i) (string-append arg1 arg2 arg ...)))
     ((_ cc var arg1 arg ...)
-     (:string cc var (index i) arg1 arg ...))))
+     (|:string| cc var (index i) arg1 arg ...))))
 
 ; Alternative: An implementation in the style of :vector can also
 ;   be used for :string. However, it is less interesting as the
 ;   overhead of string-append is much less than for 'vector-append'.
 
 
-(define-syntax :vector
+(define-syntax |:vector|
   (syntax-rules (index)
     ((_ cc var arg)
-     (:vector cc var (index i) arg))
+     (|:vector| cc var (index i) arg))
     ((_ cc var (index i) arg)
-     (:do cc
-          (let ((vec arg) (len 0))
-            (set! len (vector-length vec)))
-          ((i 0))
-          (< i len)
-          (let ((var (vector-ref vec i))))
-          #t
-          ((+ i 1))))
+     (|:do| cc
+            (let ((vec arg) (len 0))
+              (set! len (vector-length vec)))
+            ((i 0))
+            (< i len)
+            (let ((var (vector-ref vec i))))
+            #t
+            ((+ i 1))))
 
     ((_ cc var (index i) arg1 arg2 arg ...)
-     (:parallel cc (:vector cc var arg1 arg2 arg ...) (:integers i)))
+     (|:parallel| cc (|:vector| cc var arg1 arg2 arg ...) (|:integers| i)))
     ((_ cc var arg1 arg2 arg ...)
-     (:do cc
-          (let ((vec #f)
-                (len 0)
-                (vecs (ec-:vector-filter (list arg1 arg2 arg ...)))))
-          ((k 0))
-          (if (< k len)
+     (|:do| cc
+            (let ((vec #f)
+                  (len 0)
+                  (vecs (ec-:vector-filter (list arg1 arg2 arg ...)))))
+            ((k 0))
+            (if (< k len)
+              #t
+              (if (null? vecs)
+                #f
+                (begin (set! vec (car vecs))
+                       (set! vecs (cdr vecs))
+                       (set! len (vector-length vec))
+                       (set! k 0)
+                       #t )))
+            (let ((var (vector-ref vec k))))
             #t
-            (if (null? vecs)
-              #f
-              (begin (set! vec (car vecs))
-                     (set! vecs (cdr vecs))
-                     (set! len (vector-length vec))
-                     (set! k 0)
-                     #t )))
-          (let ((var (vector-ref vec k))))
-          #t
-          ((+ k 1))))))
+            ((+ k 1))))))
 
 (define (ec-:vector-filter vecs)
   (if (null? vecs)
@@ -465,200 +466,200 @@
 ;   append and :list in the multi-argument case. Please refer to the
 ;   'design.scm' for more details.
 
-(define-syntax :integers
+
+(define-syntax |:integers|
   (syntax-rules (index)
     ((_ cc var (index i))
-     (:do cc ((var 0) (i 0)) #t ((+ var 1) (+ i 1))))
+     (|:do| cc ((var 0) (i 0)) #t ((+ var 1) (+ i 1))))
     ((_ cc var)
-     (:do cc ((var 0)) #t ((+ var 1))))))
+     (|:do| cc ((var 0)) #t ((+ var 1))))))
 
-
-(define-syntax :range
+(define-syntax |:range|
   (syntax-rules (index)
 
     ; handle index variable and add optional args
     ((_ cc var (index i) arg1 arg ...)
-     (:parallel cc (:range var arg1 arg ...) (:integers i)))
+     (|:parallel| cc (|:range| var arg1 arg ...) (|:integers| i)))
     ((_ cc var arg1)
-     (:range cc var 0 arg1 1))
+     (|:range| cc var 0 arg1 1))
     ((_ cc var arg1 arg2)
-     (:range cc var arg1 arg2 1))
+     (|:range| cc var arg1 arg2 1))
 
     ; special cases (partially evaluated by hand from general case)
 
     ((_ cc var 0 arg2 1)
-     (:do cc
-          (let ((b arg2))
-            (if (not (and (integer? b) (exact? b)))
-              (error
-                "arguments of :range are not exact integer "
-                "(use :real-range?)" 0 b 1 )))
-          ((var 0))
-          (< var b)
-          (let ())
-          #t
-          ((+ var 1))))
+     (|:do| cc
+            (let ((b arg2))
+              (if (not (and (integer? b) (exact? b)))
+                (error
+                  "arguments of :range are not exact integer "
+                  "(use :real-range?)" 0 b 1 )))
+            ((var 0))
+            (< var b)
+            (let ())
+            #t
+            ((+ var 1))))
 
     ((_ cc var 0 arg2 -1)
-     (:do cc
-          (let ((b arg2))
-            (if (not (and (integer? b) (exact? b)))
-              (error
-                "arguments of :range are not exact integer "
-                "(use :real-range?)" 0 b 1 )))
-          ((var 0))
-          (> var b)
-          (let ())
-          #t
-          ((- var 1))))
+     (|:do| cc
+            (let ((b arg2))
+              (if (not (and (integer? b) (exact? b)))
+                (error
+                  "arguments of :range are not exact integer "
+                  "(use :real-range?)" 0 b 1 )))
+            ((var 0))
+            (> var b)
+            (let ())
+            #t
+            ((- var 1))))
 
     ((_ cc var arg1 arg2 1)
-     (:do cc
-          (let ((a arg1) (b arg2))
-            (if (not (and (integer? a) (exact? a)
-                          (integer? b) (exact? b)))
-              (error
-                "arguments of :range are not exact integer "
-                "(use :real-range?)" a b 1 )))
-          ((var a))
-          (< var b)
-          (let ())
-          #t
-          ((+ var 1))))
+     (|:do| cc
+            (let ((a arg1) (b arg2))
+              (if (not (and (integer? a) (exact? a)
+                            (integer? b) (exact? b)))
+                (error
+                  "arguments of :range are not exact integer "
+                  "(use :real-range?)" a b 1 )))
+            ((var a))
+            (< var b)
+            (let ())
+            #t
+            ((+ var 1))))
 
     ((_ cc var arg1 arg2 -1)
-     (:do cc
-          (let ((a arg1) (b arg2) (s -1) (stop 0))
-            (if (not (and (integer? a) (exact? a)
-                          (integer? b) (exact? b)))
-              (error
-                "arguments of :range are not exact integer "
-                "(use :real-range?)" a b -1 )))
-          ((var a))
-          (> var b)
-          (let ())
-          #t
-          ((- var 1))))
+     (|:do| cc
+            (let ((a arg1) (b arg2) (s -1) (stop 0))
+              (if (not (and (integer? a) (exact? a)
+                            (integer? b) (exact? b)))
+                (error
+                  "arguments of :range are not exact integer "
+                  "(use :real-range?)" a b -1 )))
+            ((var a))
+            (> var b)
+            (let ())
+            #t
+            ((- var 1))))
 
     ; the general case
 
     ((_ cc var arg1 arg2 arg3)
-     (:do cc
-          (let ((a arg1) (b arg2) (s arg3) (stop 0))
-            (if (not (and (integer? a) (exact? a)
-                          (integer? b) (exact? b)
-                          (integer? s) (exact? s)))
-              (error
-                "arguments of :range are not exact integer "
-                "(use :real-range?)" a b s ))
-            (if (zero? s)
-              (error "step size must not be zero in :range"))
-            (set! stop (+ a (* (max 0 (ceiling (/ (- b a) s))) s))))
-          ((var a))
-          (not (= var stop))
-          (let ())
-          #t
-          ((+ var s))))))
+     (|:do| cc
+            (let ((a arg1) (b arg2) (s arg3) (stop 0))
+              (if (not (and (integer? a) (exact? a)
+                            (integer? b) (exact? b)
+                            (integer? s) (exact? s)))
+                (error
+                  "arguments of :range are not exact integer "
+                  "(use :real-range?)" a b s ))
+              (if (zero? s)
+                (error "step size must not be zero in :range"))
+              (set! stop (+ a (* (max 0 (ceiling (/ (- b a) s))) s))))
+            ((var a))
+            (not (= var stop))
+            (let ())
+            #t
+            ((+ var s))))))
 
 ; Comment: The macro :range inserts some code to make sure the values
 ;   are exact integers. This overhead has proven very helpful for
 ;   saving users from themselves.
 
 
-(define-syntax :real-range
+(define-syntax |:real-range|
   (syntax-rules (index)
 
     ; add optional args and index variable
     ((_ cc var arg1)
-     (:real-range cc var (index i) 0 arg1 1))
+     (|:real-range| cc var (index i) 0 arg1 1))
     ((_ cc var (index i) arg1)
-     (:real-range cc var (index i) 0 arg1 1))
+     (|:real-range| cc var (index i) 0 arg1 1))
     ((_ cc var arg1 arg2)
-     (:real-range cc var (index i) arg1 arg2 1))
+     (|:real-range| cc var (index i) arg1 arg2 1))
     ((_ cc var (index i) arg1 arg2)
-     (:real-range cc var (index i) arg1 arg2 1))
+     (|:real-range| cc var (index i) arg1 arg2 1))
     ((_ cc var arg1 arg2 arg3)
-     (:real-range cc var (index i) arg1 arg2 arg3))
+     (|:real-range| cc var (index i) arg1 arg2 arg3))
 
     ; the fully qualified case
     ((_ cc var (index i) arg1 arg2 arg3)
-     (:do cc
-          (let ((a arg1) (b arg2) (s arg3) (istop 0))
-            (if (not (and (real? a) (real? b) (real? s)))
-              (error "arguments of :real-range are not real" a b s))
-            (if (and (exact? a) (or (not (exact? b)) (not (exact? s))))
-              (set! a (exact a)))
-            (set! istop (/ (- b a) s)))
-          ((i 0))
-          (< i istop)
-          (let ((var (+ a (* s i)))))
-          #t
-          ((+ i 1))))))
+     (|:do| cc
+            (let ((a arg1) (b arg2) (s arg3) (istop 0))
+              (if (not (and (real? a) (real? b) (real? s)))
+                (error "arguments of :real-range are not real" a b s))
+              (if (and (exact? a) (or (not (exact? b)) (not (exact? s))))
+                (set! a (exact a)))
+              (set! istop (/ (- b a) s)))
+            ((i 0))
+            (< i istop)
+            (let ((var (+ a (* s i)))))
+            #t
+            ((+ i 1))))))
 
 ; Comment: The macro :real-range adapts the exactness of the start
 ;   value in case any of the other values is inexact. This is a
 ;   precaution to avoid (list-ec (: x 0 3.0) x) => '(0 1.0 2.0).
 
 
-(define-syntax :char-range
+(define-syntax |:char-range|
   (syntax-rules (index)
     ((_ cc var (index i) arg1 arg2)
-     (:parallel cc (:char-range var arg1 arg2) (:integers i)))
+     (|:parallel| cc (|:char-range| var arg1 arg2) (|:integers| i)))
     ((_ cc var arg1 arg2)
-     (:do cc
-          (let ((imax (char->integer arg2))))
-          ((i (char->integer arg1)))
-          (<= i imax)
-          (let ((var (integer->char i))))
-          #t
-          ((+ i 1))))))
+     (|:do| cc
+            (let ((imax (char->integer arg2))))
+            ((i (char->integer arg1)))
+            (<= i imax)
+            (let ((var (integer->char i))))
+            #t
+            ((+ i 1))))))
 
 ; Warning: There is no R5RS-way to implement the :char-range generator
 ;   because the integers obtained by char->integer are not necessarily
 ;   consecutive. We simply assume this anyhow for illustration.
 
-(define-syntax :port
+
+(define-syntax |:port|
   (syntax-rules (index)
     ((_ cc var (index i) arg1 arg ...)
-     (:parallel cc (:port var arg1 arg ...) (:integers i)))
+     (|:parallel| cc (|:port| var arg1 arg ...) (|:integers| i)))
     ((_ cc var arg)
-     (:port cc var arg read))
+     (|:port| cc var arg read))
     ((_ cc var arg1 arg2)
-     (:do cc
-          (let ((port arg1) (read-proc arg2)))
-          ((var (read-proc port)))
-          (not (eof-object? var))
-          (let ())
-          #t
-          ((read-proc port))))))
-
+     (|:do| cc
+            (let ((port arg1) (read-proc arg2)))
+            ((var (read-proc port)))
+            (not (eof-object? var))
+            (let ())
+            #t
+            ((read-proc port))))))
 
 ; ==========================================================================
 ; The typed generator :dispatched and utilities for constructing dispatchers
 ; ==========================================================================
 
-(define-syntax :dispatched
+(define-syntax |:dispatched|
   (syntax-rules (index)
     ((_ cc var (index i) dispatch arg1 arg ...)
-     (:parallel cc
-                (:integers i)
-                (:dispatched var dispatch arg1 arg ...)))
+     (|:parallel| cc
+                  (|:integers| i)
+                  (|:dispatched| var dispatch arg1 arg ...)))
     ((_ cc var dispatch arg1 arg ...)
-     (:do cc
-          (let ((d dispatch)
-                (args (list arg1 arg ...))
-                (g #f)
-                (empty (list #f)))
-            (set! g (d args))
-            (if (not (procedure? g))
-              (error "unrecognized arguments in dispatching"
-                     args
-                     (d '()))))
-          ((var (g empty)))
-          (not (eq? var empty))
-          (let ())
-          #t
-          ((g empty))))))
+     (|:do| cc
+            (let ((d dispatch)
+                  (args (list arg1 arg ...))
+                  (g #f)
+                  (empty (list #f)))
+              (set! g (d args))
+              (if (not (procedure? g))
+                (error "unrecognized arguments in dispatching"
+                       args
+                       (d '()))))
+            ((var (g empty)))
+            (not (eq? var empty))
+            (let ())
+            #t
+            ((g empty))))))
 
 ; Comment: The unique object empty is created as a newly allocated
 ;   non-empty list. It is compared using eq? which distinguishes
@@ -666,7 +667,7 @@
 
 
 (define-syntax internal-generator-proc
-  (syntax-rules (:do let)
+  (syntax-rules (|:do| let)
 
     ; call g with a variable, reentry at (**)
     ((_ (g arg ...))
@@ -675,7 +676,7 @@
     ; reentry point (**) -> make the code from a single :do
     ((_
        var
-       (:do (let obs oc ...)
+       (|:do| (let obs oc ...)
             ((lv li) ...)
             ne1?
             (let ((i v) ...) ic ...)
@@ -731,51 +732,51 @@
       ((1) (let ((a1 (car args)))
              (cond
                ((list? a1)
-                (internal-generator-proc (:list a1)))
+                (internal-generator-proc (|:list| a1)))
                ((string? a1)
-                (internal-generator-proc (:string a1)))
+                (internal-generator-proc (|:string| a1)))
                ((vector? a1)
-                (internal-generator-proc (:vector a1)))
+                (internal-generator-proc (|:vector| a1)))
                ((and (integer? a1) (exact? a1))
-                (internal-generator-proc (:range a1)))
+                (internal-generator-proc (|:range| a1)))
                ((real? a1)
-                (internal-generator-proc (:real-range a1)))
+                (internal-generator-proc (|:real-range| a1)))
                ((input-port? a1)
-                (internal-generator-proc (:port a1)))
+                (internal-generator-proc (|:port| a1)))
                (else
                  #f ))))
       ((2) (let ((a1 (car args)) (a2 (cadr args)))
              (cond
                ((and (list? a1) (list? a2))
-                (internal-generator-proc (:list a1 a2)))
+                (internal-generator-proc (|:list| a1 a2)))
                ((and (string? a1) (string? a1))
-                (internal-generator-proc (:string a1 a2)))
+                (internal-generator-proc (|:string| a1 a2)))
                ((and (vector? a1) (vector? a2))
-                (internal-generator-proc (:vector a1 a2)))
+                (internal-generator-proc (|:vector| a1 a2)))
                ((and (integer? a1) (exact? a1) (integer? a2) (exact? a2))
-                (internal-generator-proc (:range a1 a2)))
+                (internal-generator-proc (|:range| a1 a2)))
                ((and (real? a1) (real? a2))
-                (internal-generator-proc (:real-range a1 a2)))
+                (internal-generator-proc (|:real-range| a1 a2)))
                ((and (char? a1) (char? a2))
-                (internal-generator-proc (:char-range a1 a2)))
+                (internal-generator-proc (|:char-range| a1 a2)))
                ((and (input-port? a1) (procedure? a2))
-                (internal-generator-proc (:port a1 a2)))
+                (internal-generator-proc (|:port| a1 a2)))
                (else
                  #f ))))
       ((3) (let ((a1 (car args)) (a2 (cadr args)) (a3 (caddr args)))
              (cond
                ((and (list? a1) (list? a2) (list? a3))
-                (internal-generator-proc (:list a1 a2 a3)))
+                (internal-generator-proc (|:list| a1 a2 a3)))
                ((and (string? a1) (string? a1) (string? a3))
-                (internal-generator-proc (:string a1 a2 a3)))
+                (internal-generator-proc (|:string| a1 a2 a3)))
                ((and (vector? a1) (vector? a2) (vector? a3))
-                (internal-generator-proc (:vector a1 a2 a3)))
+                (internal-generator-proc (|:vector| a1 a2 a3)))
                ((and (integer? a1) (exact? a1)
                      (integer? a2) (exact? a2)
                      (integer? a3) (exact? a3))
-                (internal-generator-proc (:range a1 a2 a3)))
+                (internal-generator-proc (|:range| a1 a2 a3)))
                ((and (real? a1) (real? a2) (real? a3))
-                (internal-generator-proc (:real-range a1 a2 a3)))
+                (internal-generator-proc (|:real-range| a1 a2 a3)))
                (else
                  #f ))))
       (else
@@ -787,11 +788,11 @@
                             (every? pred (cdr args)))))))
           (cond
             ((every? list? args)
-             (internal-generator-proc (:list (apply append args))))
+             (internal-generator-proc (|:list| (apply append args))))
             ((every? string? args)
-             (internal-generator-proc (:string (apply string-append args))))
+             (internal-generator-proc (|:string| (apply string-append args))))
             ((every? vector? args)
-             (internal-generator-proc (:list (apply append (map vector->list args)))))
+             (internal-generator-proc (|:list| (apply append (map vector->list args)))))
             (else
               #f )))))))
 
@@ -806,13 +807,12 @@
     (error "not a procedure" dispatch))
   (set! internal-dispatch dispatch))
 
-(define-syntax :
+(define-syntax |:|
   (syntax-rules (index)
     ((_ cc var (index i) arg1 arg ...)
-     (:dispatched cc var (index i) (internal-dispatch-ref) arg1 arg ...))
+     (|:dispatched| cc var (index i) (internal-dispatch-ref) arg1 arg ...))
     ((_ cc var arg1 arg ...)
-     (:dispatched cc var (internal-dispatch-ref) arg1 arg ...))))
-
+     (|:dispatched| cc var (internal-dispatch-ref) arg1 arg ...))))
 
 ; ==========================================================================
 ; The utility comprehensions fold-ec, fold3-ec
@@ -1005,7 +1005,7 @@
 
     ((_ stop (nested gen q ...) cmd)
      (do-ec
-       (:until gen stop)
+       (|:until| gen stop)
        (ec-guarded-do-ec stop (nested q ...) cmd)))
 
     ((_ stop (nested) cmd)

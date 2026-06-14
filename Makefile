@@ -1,3 +1,4 @@
+.SILENT:
 SCHEME=chibi
 SRFI=64
 VERSION=$(shell cat srfi/${SRFI}/VERSION)
@@ -5,6 +6,7 @@ PKG=srfi-${SRFI}-${VERSION}.tgz
 BATS_JOBS=1
 TIER=1
 BATS_ARGS=
+DOCKER_TAG=head
 
 tmpdir=.tmp/${SCHEME}-${SRFI}
 
@@ -36,36 +38,11 @@ test: srfi-test testfiles
 	cd ${tmpdir} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.scm
 	cd ${tmpdir} && ./test-program
 
-test-docker: srfi-test docker-test-image testfiles
-	docker run -it \
-		-v "${PWD}/srfi-test:/workdir/srfi-test" \
-		srfitest \
-		sh -c "snow-chibi install --impls=${SCHEME} --always-yes srfi.64 \
-		&& make SCHEME=${SCHEME} SRFI=${SRFI} all install test"
-
-bats: bats.sh srfi/*.scm srfi/*.sld
-	sh bats.sh
-
-docker-test-image:
-	docker build -f Dockerfile.test --tag=srfitest .
-
-test-srfi: bats
-	bats ${BATS_ARGS} --jobs ${BATS_JOBS} --filter-tags srfi_${SRFI},tier_${TIER} --timing tests.bats
-
-test-srfi-docker: bats docker-test-image
-	docker run -it \
-		-v "${PWD}/srfi-test:/workdir/srfi-test" \
-		srfitest \
-		sh -c "make BATS_ARGS=${BATS_ARGS} TIER=${TIER} BATS_JOBS=${BATS_JOBS} SRFI=${SRFI} bats test-srfi"
-
-test-implementation: bats
-	bats ${BATS_ARGS} --jobs ${BATS_JOBS} --filter-tags ${SCHEME},tier_${TIER} --timing tests.bats
-
-test-implementation-docker: bats docker-test-image
-	docker run -it \
-		-v "${PWD}/srfi-test:/workdir/srfi-test" \
-		srfitest \
-		sh -c "make BATS_ARGS=${BATS_ARGS} TIER=${TIER} BATS_JOBS=${BATS_JOBS} SCHEME=${SCHEME} bats test-implementation"
+test-docker: package testfiles
+	DOCKER_TAG=${DOCKER_TAG} \
+			SNOW_PACKAGES="srfi.64 ${PKG}" \
+			COMPILE_R7RS=${SCHEME} \
+			test-r7rs -o ${tmpdir}/test-program ${tmpdir}/test.scm
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
