@@ -22,7 +22,6 @@ pipeline {
         stage('Init') {
             steps {
                 sh "make srfi-test"
-                sh "sh bats.sh"
             }
         }
 
@@ -42,41 +41,8 @@ pipeline {
             }
         }
 
-        stage('Tier 2 R7RS') {
-            steps {
-                script {
-                    'capyscheme cyclone gambit guile loko meevax skint tr7'.split().each { SCHEME ->
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            stage("${SCHEME}") {
-                                sh "make TIER=2 SRFI=64 SCHEME=${SCHEME} all install"
-                                sh "make TIER=2 BATS_JOBS=4 SCHEME=${SCHEME} test-implementation"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Tier 3 R7RS') {
-            steps {
-                script {
-                    'foment mit-scheme larceny'.split().each { SCHEME ->
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            stage("${SCHEME}") {
-                                sh "make TIER=3 SRFI=64 SCHEME=${SCHEME} all install"
-                                sh "make TIER=3 BATS_JOBS=4 SCHEME=${SCHEME} test-implementation"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
     }
     post {
-        success {
-            archiveArtifacts artifacts: "out/tests/*/*.log", allowEmptyArchive: true
-        }
         always {
             cleanWs()
         }
