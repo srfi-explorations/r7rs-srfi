@@ -21,6 +21,7 @@ pipeline {
     stages {
         stage('Init') {
             steps {
+                sh 'echo "deb https://mirror.hetzner.com/debian/packages  trixie" > /etc/apt/sources.list.d/hetzner-mirror.list'
                 sh "apt-get update && apt-get install -y git make gcc sudo docker.io"
                 sh "git clone https://codeberg.org/Schemeists/apt-packages.git --depth=1"
                 sh "make -C apt-packages install-repository"
