@@ -16,7 +16,7 @@ to test with.
 
 To run test:
 
-    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> all install test
+    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test
 
 ## Running tests in docker
 
@@ -37,26 +37,17 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
-    - srfi/N
-        - Directory for misc files
-    - srfi/N/VERSION
-        - Version, start with 0.1.0
-    - srfi/N/DEPENDS
-        - List of dependendis fron snow-fort, like so on one line: srfi.N srfi.N
-            - Do not depend on SRFI 64, it will always be installed in docker
-            and otherwise you should install it by hand
 
+Add the SRFI number into test_srfis.txt.
 
-Every SRFI needs corresponding test file in
-[test repository](https://github.com/srfi-explorations/srfi-test).
-The test file needs to be named N.scm. Use SRFI-64 for testing!
+Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
+The test file needs to be named N.scm.
 
-Add the SRFI into the Jenkinsfiles running list.
 
 ## Adding support for new implementation
 
-Add support for implementation into compile-r7rs here
-[https://codeberg.org/retropikzel/scheme-programs](https://codeberg.org/retropikzel/scheme-programs).
+Add support for implementation
+into compile-r7rs in [https://codeberg.org/retropikzel/scheme-programs](https://codeberg.org/retropikzel/scheme-programs).
 
 Add support for implementation
 into snow-chibi here [https://github.com/ashinn/chibi-scheme](https://github.com/ashinn/chibi-scheme).

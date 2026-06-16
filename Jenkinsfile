@@ -1,16 +1,32 @@
 pipeline {
 
     agent {
-        docker {
-            image 'debian:trixie'
-            label 'docker-x86_64'
+        dockerfile {
+            label 'agent1'
+            filename 'Dockerfile.jenkins'
             args '--user=root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
             reuseNode true
         }
     }
 
     triggers {
-        cron '0 22 * * *'
+        cron '5 4 * * *'
+        GenericTrigger(
+                    genericVariables: [
+                    [key: 'ref', value: '$.ref']
+                    ],
+
+                    causeString: 'Triggered on $ref',
+
+                    printContributedVariables: true,
+                    printPostContent: true,
+
+                    silentResponse: false,
+
+                    shouldNotFlatten: false,
+
+                    regexpFilterText: '$ref',
+                    regexpFilterExpression: 'refs/heads/' + BRANCH_NAME)
     }
 
     options {
@@ -35,11 +51,27 @@ pipeline {
         stage('Tests') {
             steps {
                 script {
-                    '1 2 5 8 11 14 16 19 25 26 27 28 29 31 37 38 39 41 42 43 48 51 60 63 64 66 69 87 95 111 113 115 116 128 145 180 197 227'.split().each { SRFI ->
-                        'capyscheme chibi chicken cyclone foment gauche gambit guile kawa larceny loko meevax mit-scheme mosh racket sagittarius skint stklos tr7 ypsilon'.split().each { SCHEME ->
-                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                stage("SRFI-${SRFI} - ${SCHEME}") {
-                                    sh "make SRFI=${SRFI} SCHEME=${SCHEME} test-docker"
+                    def r6rs_schemes = readFile 'test_r6rs_schemes.txt'
+                    def r7rs_schemes = readFile 'test_r7rs_schemes.txt'
+                    def srfis = readFile 'test_srfis.txt'
+
+                    srfis.split().each { SRFI ->
+                        stage("SRFI-${SRFI} R6RS") {
+
+                            r6rs_schemes.split().each { SCHEME ->
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
+                                    }
+                                }
+                            }
+                        }
+                        stage("SRFI-${SRFI} R7RS") {
+                            r7rs_schemes.split().each { SCHEME ->
+                                stage("${SCHEME}") {
+                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                        sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
+                                    }
                                 }
                             }
                         }
