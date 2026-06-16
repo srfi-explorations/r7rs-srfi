@@ -15,13 +15,13 @@ And implementations you want to test with.
 
 To run test:
 
-    make test SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER>
+    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test
 
 ## Running tests in docker
 
 Only make and docker are needed.
 
-    make test-docker SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER>
+    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test-docker
 
 If you are on windows look up the docker commands from the Makefile.
 
@@ -33,29 +33,17 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
-    - srfi/N.rkt
-        - Racket compability file
-        - Content:
-#lang r7rs
-(import (scheme base))
-(include "N.sld")
-        - Use make job: racket-compability to build it
-    - srfi/srfi-N.scm
-        - Guile compability file
-        - Content should be identical to srfi/N.sld content except the name of the library
-        - Use make job: guile-compability to build it
 
+Add the SRFI number into test_srfis.txt.
 
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
-The test file needs to be named N.scm. If you dont use SRFI-64 for testing then
-port your preferred test library first to be portable on all all implementations.
+The test file needs to be named N.scm.
 
-Add the SRFI number into srfis.scm.
 
 ## Adding new implementation
 
 Add support for implementation
-into [https://gitea.scheme.org/Retropikzel/compile-r7rs](https://gitea.scheme.org/Retropikzel/compile-r7rs).
+into compile-r7rs in [https://codeberg.org/retropikzel/scheme-programs](https://codeberg.org/retropikzel/scheme-programs).
 
 Add support for implementation
 into [snow-chibi](https://github.com/ashinn/chibi-scheme).

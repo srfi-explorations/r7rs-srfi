@@ -18,12 +18,6 @@ pipeline {
             buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
-    parameters {
-        string(name: 'R6RS_SCHEMES', defaultValue: 'capyscheme chezscheme ironscheme sagittarius', description: 'Test SRFIs')
-        string(name: 'R7RS_SCHEMES', defaultValue: 'capyscheme chibi chicken foment gauche kawa mosh racket sagittarius skint stklos tr7 ypsilon', description: 'Test SRFIs')
-        string(name: 'SRFIS', defaultValue: '64 60 145 180', description: 'Test SRFIs')
-    }
-
     stages {
         stage('Clean and build testfiles') {
             steps {
@@ -36,9 +30,14 @@ pipeline {
         stage('Tests') {
             steps {
                 script {
-                    params.SRFIS.split().each { SRFI ->
+                    def r6rs_schemes = readFile 'test_r6rs_schemes.txt'
+                    def r7rs_schemes = readFile 'test_r7rs_schemes.txt'
+                    def srfis = readFile 'test_srfis.txt'
+
+                    srfis.split().each { SRFI ->
                         stage("SRFI-${SRFI} R6RS") {
-                            params.R6RS_SCHEMES.split().each { SCHEME ->
+
+                            r6rs_schemes.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
@@ -47,7 +46,7 @@ pipeline {
                             }
                         }
                         stage("SRFI-${SRFI} R7RS") {
-                            params.R7RS_SCHEMES.split().each { SCHEME ->
+                            r7rs_schemes.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                         sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
