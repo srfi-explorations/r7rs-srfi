@@ -18,9 +18,6 @@ pipeline {
             buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
-    parameters {
-    }
-
     stages {
         stage('Clean and build testfiles') {
             steps {
