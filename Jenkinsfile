@@ -25,7 +25,7 @@ pipeline {
             shouldNotFlatten: false,
 
             regexpFilterText: '$ref',
-            regexpFilterExpression: 'r7rs_srfi/r7rs-srfi/' + BRANCH_NAME)
+            regexpFilterExpression: 'refs/heads/' + BRANCH_NAME)
     }
 
     options {
