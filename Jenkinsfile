@@ -10,7 +10,6 @@ pipeline {
     }
 
     triggers {
-        cron '5 4 * * *'
         GenericTrigger(
                     genericVariables: [
                     [key: 'ref', value: '$.ref']
