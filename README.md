@@ -51,3 +51,5 @@ into compile-r7rs in [https://codeberg.org/retropikzel/scheme-programs](https://
 
 Add support for implementation
 into snow-chibi here [https://github.com/ashinn/chibi-scheme](https://github.com/ashinn/chibi-scheme).
+
+Add the name into test_r6rs.txt or/and test_r7rs.txt.
