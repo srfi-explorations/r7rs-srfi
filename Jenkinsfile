@@ -11,21 +11,21 @@ pipeline {
 
     triggers {
         GenericTrigger(
-                    genericVariables: [
-                    [key: 'ref', value: '$.ref']
-                    ],
+            genericVariables: [
+            [key: 'ref', value: '$.ref']
+            ],
 
-                    causeString: 'Triggered on $ref',
+            causeString: 'Triggered on $ref',
 
-                    printContributedVariables: true,
-                    printPostContent: true,
+            printContributedVariables: true,
+            printPostContent: true,
 
-                    silentResponse: false,
+            silentResponse: false,
 
-                    shouldNotFlatten: false,
+            shouldNotFlatten: false,
 
-                    regexpFilterText: '$ref',
-                    regexpFilterExpression: 'refs/heads/' + BRANCH_NAME)
+            regexpFilterText: '$ref',
+            regexpFilterExpression: 'r7rs_srfi/r7rs-srfi/' + BRANCH_NAME)
     }
 
     options {
