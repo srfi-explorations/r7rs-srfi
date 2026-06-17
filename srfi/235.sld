@@ -1,3 +1,5 @@
+;; SPDX-FileCopyrightText: 2026 Arthur A. Gleckler
+;; SPDX-License-Identifier: MIT
 (define-library
   (srfi 235)
   (import (scheme base)
