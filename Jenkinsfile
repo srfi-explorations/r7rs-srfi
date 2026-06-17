@@ -55,7 +55,7 @@ pipeline {
                             r6rs_schemes.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker"
+                                        sh "make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker; chmod -R 775 ."
                                     }
                                 }
                             }
@@ -64,7 +64,7 @@ pipeline {
                             r7rs_schemes.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker"
+                                        sh "make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
                                     }
                                 }
                             }
