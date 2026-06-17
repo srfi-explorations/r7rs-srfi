@@ -13,9 +13,11 @@ tmpdir=.tmp/${SCHEME}-${SRFI}
 
 SFX=scm
 LIB_DIR=
-ifeq "${RNRS}" "r6r"
+AKKU_PACKAGES=
+ifeq "${RNRS}" "r6rs"
 SFX=sps
-LIB_DIR=.akku/lib
+LIB_DIR=-I .akku/lib
+AKKU_PACKAGES=akku-r7rs
 endif
 
 all: package
@@ -43,14 +45,15 @@ testfiles:
 	cp srfi-test/r7rs-programs/${SRFI}.scm ${tmpdir}/test.${SFX}
 
 test: srfi-test testfiles
-	cd ${tmpdir} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program test.${SFX}
+	cd ${tmpdir} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${LIB_DIR} test.${SFX}
 	cd ${tmpdir} && ./test-program
 
 test-docker: package testfiles
 	DOCKER_TAG=${DOCKER_TAG} \
 			SNOW_PACKAGES="srfi.64 ${PKG}" \
+			AKKU_PACKAGES="${AKKU_PACKAGES}" \
 			COMPILE_R7RS=${SCHEME} \
-			test-r7rs -o ${tmpdir}/test-program ${tmpdir}/test.${SFX}
+			test-r7rs -o ${tmpdir}/test-program ${LIB_DIR} ${tmpdir}/test.${SFX}
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2

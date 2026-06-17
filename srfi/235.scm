@@ -1,6 +1,3 @@
-;; SPDX-FileCopyrightText: 2026 Arthur A. Gleckler
-;; SPDX-License-Identifier: MIT
-
 (define (constantly . args)
   (lambda ignored-args
     (apply values args)))
