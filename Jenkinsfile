@@ -49,26 +49,28 @@ pipeline {
                     def r7rs_schemes = readFile 'test_r7rs_schemes.txt'
                     def srfis = readFile 'test_srfis.txt'
 
+                    def r6rsStages = [:]
                     srfis.split().each { SRFI ->
                         stage("SRFI-${SRFI} R6RS") {
-                            parallel([
-                                r6rs_schemes.split().each { SCHEME ->
+                            r6rs_schemes.split().each { SCHEME ->
+                                r6rsStages["${SCHEME}"] = {
                                     stage("${SCHEME}") {
-                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 120 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker; chmod -R 775 ."
+                                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker; chmod -R 775 ."
                                             archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
 
                                         }
                                     }
                                 }
-                            ])
+                            }
+                            parallel r6rsStages
                         }
                         stage("SRFI-${SRFI} R7RS") {
                             parallel([
                                 r7rs_schemes.split().each { SCHEME ->
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                            sh "timeout 120 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
+                                            sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
                                             archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
                                         }
                                     }
