@@ -60,7 +60,7 @@ test-docker: testfiles
 			test-r7rs -o test-program ${LIB_DIR} test.${SFX}
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
+	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
 	cd srfi-test && chibi-scheme convert.scm
 
 local-srfi-test:
