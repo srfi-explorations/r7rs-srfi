@@ -33,3 +33,5 @@ Akku.lock
 venv
 *.html
 run-test*
+*.bats
+test-program*

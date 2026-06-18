@@ -207,8 +207,9 @@
 ;;; Main
 
 (define test-env
-  (cond-expand (cyclone (setup-environment))
-               (else (environment '(scheme base)))))
+  (cond-expand
+    (cyclone (setup-environment))
+    (else (environment '(scheme base)))))
 
 (define (test-runner-simple)
   (let ((runner (test-runner-null)))
@@ -323,7 +324,8 @@
                              ((fail) "fail")
                              ((xpass) "xpass")
                              ((xfail) "xfail")
-                             ((skip) "skip")))
+                             ((skip) "skip")
+                             (else "SHOULD_NOT_HAPPEN")))
          (name (let ((name (test-runner-test-name runner)))
                  (if (string=? "" name)
                    "" ;(test-result-ref runner 'source-form)

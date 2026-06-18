@@ -308,15 +308,15 @@
             (b2h (quotient (vector-ref B j2) w))
             (b2l (modulo   (vector-ref B j2) w)))
         (modulo
-          (+ (* (+ (* a0h b0h) 
-                   (* a1h b1h) 
-                   (* a2h b2h)) 
+          (+ (* (+ (* a0h b0h)
+                   (* a1h b1h)
+                   (* a2h b2h))
                 w-sqr)
-             (* (+ (* a0h b0l) 
+             (* (+ (* a0h b0l)
                    (* a0l b0h)
-                   (* a1h b1l) 
+                   (* a1h b1l)
                    (* a1l b1h)
-                   (* a2h b2l) 
+                   (* a2h b2l)
                    (* a2l b2h))
                 w)
              (* a0l b0l)
@@ -389,7 +389,7 @@
              (product
                (power (list-ref mrg32k3a-generators 0)
                       (modulo i (expt 2 28)))
-               (power (list-ref mrg32k3a-generators 1) 
+               (power (list-ref mrg32k3a-generators 1)
                       (modulo j (expt 2 28)))))))
     (mrg32k3a-pack-state
       (vector
@@ -436,8 +436,8 @@
 ; Large Integers
 ; ==============
 ;
-; To produce large integer random deviates, for n > m-max, we first 
-; construct large random numbers in the range {0..m-max^k-1} for some 
+; To produce large integer random deviates, for n > m-max, we first
+; construct large random numbers in the range {0..m-max^k-1} for some
 ; k such that m-max^k >= n and then use the rejection method to choose
 ; uniformly from the range {0..n-1}.
 
@@ -509,7 +509,7 @@
       (lambda args
         (cond
           ((null? args)
-           (lambda () 
+           (lambda ()
              (mrg32k3a-random-real state)))
           ((null? (cdr args))
            (let ((unit (car args)))
@@ -549,7 +549,7 @@
 
 ; ---
 
-(define default-random-source 
+(define default-random-source
   (make-random-source))
 
 (define random-integer

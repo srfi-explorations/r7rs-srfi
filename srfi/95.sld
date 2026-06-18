@@ -1,6 +1,6 @@
 (define-library
   (srfi 95)
-  (import (scheme base)
+  (import (except (scheme base) equal?)
           (srfi 63))
   (export sorted?
           merge

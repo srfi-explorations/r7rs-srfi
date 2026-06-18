@@ -30,18 +30,18 @@
 ;;     ((let ((var val) ...) body ...)
 ;;      ((lambda (var ...) body ...) val ...))))
 
-(define-syntax let
+(define-syntax srfi-5-let
 
   (syntax-rules ()
 
     ;; No bindings: use standard-let.
-    ((let () body ...)
+    ((_ () body ...)
      (standard-let () body ...))
     ;; Or call a lambda.
     ;; ((lambda () body ...))
 
     ;; All standard bindings: use standard-let.
-    ((let ((var val) ...) body ...)
+    ((_ ((var val) ...) body ...)
      (standard-let ((var val) ...) body ...))
     ;; Or call a lambda.
     ;; ((lambda (var ...) body ...) val ...)
@@ -49,15 +49,15 @@
     ;; One standard binding: loop.
     ;; The all-standard-bindings clause didn't match,
     ;; so there must be a rest binding.
-    ((let ((var val) . bindings) body ...)
+    ((_ ((var val) . bindings) body ...)
      (let-loop #f bindings (var) (val) (body ...)))
 
     ;; Signature-style name: loop.
-    ((let (name binding ...) body ...)
+    ((_ (name binding ...) body ...)
      (let-loop name (binding ...) () () (body ...)))
 
     ;; defun-style name: loop.
-    ((let name bindings body ...)
+    ((_ name bindings body ...)
      (let-loop name bindings () () (body ...)))))
 
 (define-syntax let-loop

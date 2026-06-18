@@ -1,5 +1,6 @@
 # R7RS-SRFI
 
+
 This is a project for collection of R7RS SRFI implementations.
 
 [Repository](https://github.com/srfi-explorations/r7rs-srfi)
@@ -9,9 +10,10 @@ This is a project for collection of R7RS SRFI implementations.
 
 ## Running tests
 
-You will need to install
-[https://gitea.scheme.org/Retropikzel/compile-r7rs](https://gitea.scheme.org/Retropikzel/compile-r7rs).
-And implementations you want to test with.
+You will need to install snow-chibi, compile-r7rs and implementations you want
+to test with.
+
+    snow-chibi install --impls=chibi retropikzel.compile-r7rs
 
 To run test:
 
@@ -19,13 +21,16 @@ To run test:
 
 ## Running tests in docker
 
-Only make and docker are needed.
+You will need to install test-r7rs and docker. Make docker work without sudo.
+
+    snow-chibi install --impls=chibi retropikzel.test-r7rs
+
+To run test:
 
     make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test-docker
 
-If you are on windows look up the docker commands from the Makefile.
 
-# Adding new srfi
+# Adding new SRFI
 
 Add files:
 
@@ -40,10 +45,12 @@ Every SRFI needs corresponding test file in [test repository](https://github.com
 The test file needs to be named N.scm.
 
 
-## Adding new implementation
+## Adding support for new implementation
 
 Add support for implementation
 into compile-r7rs in [https://codeberg.org/retropikzel/scheme-programs](https://codeberg.org/retropikzel/scheme-programs).
 
 Add support for implementation
-into [snow-chibi](https://github.com/ashinn/chibi-scheme).
+into snow-chibi here [https://github.com/ashinn/chibi-scheme](https://github.com/ashinn/chibi-scheme).
+
+Add the name into test_r6rs.txt or/and test_r7rs.txt.

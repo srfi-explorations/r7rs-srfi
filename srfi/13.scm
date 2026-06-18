@@ -3,9 +3,12 @@
 ;;;
 ;;; Copyright (c) 1988-1994 Massachusetts Institute of Technology.
 ;;; Copyright (c) 1998, 1999, 2000 Olin Shivers. All rights reserved.
-;;; Copyright (c) 2024, 2025 Retropikzel. All rights reserved.
+;;; Copyright (c) 2024, 2025, 2026 Retropikzel. All rights reserved.
 ;;;   The details of the copyrights appear at the end of the file. Short
 ;;;   summary: BSD-style open source.
+
+;;; Ported from using it's own let-optionals macros to (srfi 227) and check-arg
+;;; by Retropikzel
 
 ;;; Exports:
 ;;; string-map string-map!
@@ -119,80 +122,10 @@
 
 
 ;; r7rs-srfi util begin
-
-(define (char-cased? c) (char-alphabetic? c))
-(define (char-titlecase c) (char-upcase c))
-
+(define (char-cased? c) (or (char-upper-case? c) (char-lower-case? c)))
 (define (check-arg pred val caller)
   (if (pred val) val (error "Bad argument" val pred caller)))
-
 (define optional (lambda (a b) (if (null? a) b (car a))))
-
-(cond-expand
-  (tr7
-    ;; Begin from https://cookbook.scheme.org/bind-optional-arguments/
-
-    (define-syntax let-optionals
-      (syntax-rules ()
-        ((_ expr ((v d) ... . tail) . body)
-         ($let-optionals (v ...) () (d ...) () f tail expr body))))
-
-    (define-syntax $let-optionals
-      (syntax-rules ()
-
-        ((_ () (vt ...) _ (cl ...) f tail expr body)
-         (letrec ((f (case-lambda cl ... ((vt ... . tail) . body))))
-           (apply f expr)))
-
-        ((_ (vrf . vr*) (vt ...) (df . dr*) (cl ...) f . tailexprbody)
-         ($let-optionals vr* (vt ... vrf) dr* (cl ... ((vt ...) (f vt ... df))) f . tailexprbody))))
-    ;; End from
-    )
-  (else
-    (define-syntax let-optionals*
-      (syntax-rules ()
-        ((let-optionals arg (opt-clause ...) body ...)
-         (let ((rest arg))
-           (internal-let-optionals rest (opt-clause ...) body ...)))))
-
-    (define-syntax internal-let-optionals
-      (syntax-rules ()
-        ((internal-let-optionals arg (((var ...) xparser) opt-clause ...) body ...)
-         (call-with-values (lambda () (xparser arg))
-                           (lambda (rest var ...)
-                             (internal-let-optionals rest (opt-clause ...) body ...))))
-
-        ((internal-let-optionals arg ((var default) opt-clause ...) body ...)
-         (call-with-values (lambda () (if (null? arg) (values default '())
-                                        (values (car arg) (cdr arg))))
-                           (lambda (var rest)
-                             (internal-let-optionals rest (opt-clause ...) body ...))))
-
-        ((internal-let-optionals arg ((var default test) opt-clause ...) body ...)
-         (call-with-values (lambda ()
-                             (if (null? arg) (values default '())
-                               (let ((var (car arg)))
-                                 (if test (values var (cdr arg))
-                                   (error "arg failed LET-OPT test" var)))))
-                           (lambda (var rest)
-                             (internal-let-optionals rest (opt-clause ...) body ...))))
-
-        ((internal-let-optionals arg ((var default test supplied?) opt-clause ...) body ...)
-         (call-with-values (lambda ()
-                             (if (null? arg) (values default #f '())
-                               (let ((var (car arg)))
-                                 (if test (values var #t (cdr arg))
-                                   (error "arg failed LET-OPT test" var)))))
-                           (lambda (var supplied? rest)
-                             (internal-let-optionals rest (opt-clause ...) body ...))))
-
-        ((internal-let-optionals arg (rest) body ...)
-         (let ((rest arg)) body ...))
-
-        ((internal-let-optionals arg () body ...)
-         (if (null? arg) (begin body ...)
-           (error "Too many arguments in let-opt" arg)))))))
-
 ;; r7rs-srfi util end
 
 ;; r7rs-srfi additions begin
@@ -225,7 +158,6 @@
   (if (not (string? s)) (error "Non-string value" proc s))
   (let ((slen (string-length s)))
     (if (pair? args)
-
       (let ((start (car args))
             (args (cdr args)))
         (if (and (integer? start) (exact? start) (>= start 0))
@@ -440,8 +372,10 @@
   (check-arg procedure? f string-unfold)
   (check-arg procedure? g string-unfold)
   (let-optionals* base+make-final
-                  ((base       ""              (string? base))
-                   (make-final (lambda (x) "") (procedure? make-final)))
+                  ((base "")
+                   (make-final (lambda (x) "")))
+                  (check-arg string? base string-unfold)
+                  (check-arg procedure? make-final string-unfold)
                   (let lp ((chunks '())  ; Previously filled chunks
                            (nchars 0)   ; Number of chars in CHUNKS
                            (chunk (make-string 40)) ; Current chunk into which we write
@@ -485,8 +419,10 @@
 
 (define (string-unfold-right p f g seed . base+make-final)
   (let-optionals* base+make-final
-                  ((base       ""              (string? base))
-                   (make-final (lambda (x) "") (procedure? make-final)))
+                  ((base "")
+                   (make-final (lambda (x) "")))
+                  (check-arg string? base string-unfold-right)
+                  (check-arg procedure? make-final string-unfold-right)
                   (let lp ((chunks '())  ; Previously filled chunks
                            (nchars 0)   ; Number of chars in CHUNKS
                            (chunk (make-string 40)) ; Current chunk into which we write
@@ -811,7 +747,7 @@
 ;;; I sure hope the %STRING-COMPARE calls get integrated.
 
 (define (string= s1 s2 . maybe-starts+ends)
-  (let-string-start+end2 (start1 end1 start2 end2) 
+  (let-string-start+end2 (start1 end1 start2 end2)
                          string= s1 s2 maybe-starts+ends
                          (and (= (- end1 start1) (- end2 start2))   ; Quick filter
                               (or (and (eq? s1 s2) (= start1 start2))  ; Fast path
@@ -966,21 +902,27 @@
         (lp (+ i 1) (bitwise-and mask (+ (* 37 ans) (iref s i))))))))
 
 (define (string-hash s . maybe-bound+start+end)
-  (let-optionals* maybe-bound+start+end ((bound 4194304 (and (integer? bound)
-                                                             (exact? bound)
-                                                             (<= 0 bound)))
-                                         rest)
+  (let-optionals* maybe-bound+start+end
+                  ((bound 4194304)
+                   (start 0)
+                   (end (string-length s)))
+                  (check-arg integer? bound string-hash)
+                  (check-arg exact? bound string-hash)
+                  (check-arg (lambda (bound) (<= bound 0)) bound string-hash)
                   (let ((bound (if (zero? bound) 4194304 bound))) ; 0 means default.
-                    (let-string-start+end (start end) string-hash s rest
+                    (let-string-start+end (start end) string-hash s (list start end)
                                           (%string-hash s char->integer bound start end)))))
 
 (define (string-hash-ci s . maybe-bound+start+end)
-  (let-optionals* maybe-bound+start+end ((bound 4194304 (and (integer? bound)
-                                                             (exact? bound)
-                                                             (<= 0 bound)))
-                                         rest)
+  (let-optionals* maybe-bound+start+end
+                  ((bound 4194304)
+                   (start 0)
+                   (end (string-length s)))
+                  (check-arg integer? bound string-hash-ci)
+                  (check-arg exact? bound string-hash-ci)
+                  (check-arg (lambda (bound) (<= bound 0)) bound string-hash-ci)
                   (let ((bound (if (zero? bound) 4194304 bound))) ; 0 means default.
-                    (let-string-start+end (start end) string-hash-ci s rest
+                    (let-string-start+end (start end) string-hash-ci s (list start end)
                                           (%string-hash s (lambda (c) (char->integer (char-downcase c)))
                                                         bound start end)))))
 
@@ -1016,7 +958,7 @@
   (let lp ((i start))
     (cond ((string-index s char-cased? i end) =>
                                               (lambda (i)
-                                                (string-set! s i (char-titlecase (string-ref s i)))
+                                                (string-set! s i (char-upcase (string-ref s i)))
                                                 (let ((i1 (+ i 1)))
                                                   (cond ((string-skip s char-cased? i1 end) =>
                                                                                             (lambda (j)
@@ -1082,22 +1024,31 @@
 
 
 (define (string-trim s . criterion+start+end)
-  (let-optionals* criterion+start+end ((criterion char-set:whitespace) rest)
-                  (let-string-start+end (start end) string-trim s rest
+  (let-optionals* criterion+start+end
+                  ((criterion char-set:whitespace)
+                   (start 0)
+                   (end (string-length s)))
+                  (let-string-start+end (start end) string-trim s (list start end)
                                         (cond ((string-skip s criterion start end) =>
                                                                                    (lambda (i) (%substring/shared s i end)))
                                               (else "")))))
 
 (define (string-trim-right s . criterion+start+end)
-  (let-optionals* criterion+start+end ((criterion char-set:whitespace) rest)
-                  (let-string-start+end (start end) string-trim-right s rest
+  (let-optionals* criterion+start+end
+                  ((criterion char-set:whitespace)
+                   (start 0)
+                   (end (string-length s)))
+                  (let-string-start+end (start end) string-trim-right s (list start end)
                                         (cond ((string-skip-right s criterion start end) =>
                                                                                          (lambda (i) (%substring/shared s start (+ 1 i))))
                                               (else "")))))
 
 (define (string-trim-both s . criterion+start+end)
-  (let-optionals* criterion+start+end ((criterion char-set:whitespace) rest)
-                  (let-string-start+end (start end) string-trim-both s rest
+  (let-optionals* criterion+start+end
+                  ((criterion char-set:whitespace)
+                   (start 0)
+                   (end (string-length s)))
+                  (let-string-start+end (start end) string-trim-both s (list start end)
                                         (cond ((string-skip s criterion start end) =>
                                                                                    (lambda (i)
                                                                                      (%substring/shared s i (+ 1 (string-skip-right s criterion i end)))))
@@ -1105,8 +1056,12 @@
 
 
 (define (string-pad-right s n . char+start+end)
-  (let-optionals* char+start+end ((char #\space (char? char)) rest)
-                  (let-string-start+end (start end) string-pad-right s rest
+  (let-optionals* char+start+end
+                  ((char #\space)
+                   (start 0)
+                   (end (string-length s)))
+                  (check-arg char? char string-pad-right)
+                  (let-string-start+end (start end) string-pad-right s (list start end)
                                         (check-arg (lambda (n) (and (integer? n) (exact? n) (<= 0 n)))
                                                    n string-pad-right)
                                         (let ((len (- end start)))
@@ -1117,8 +1072,12 @@
                                               ans))))))
 
 (define (string-pad s n . char+start+end)
-  (let-optionals* char+start+end ((char #\space (char? char)) rest)
-                  (let-string-start+end (start end) string-pad s rest
+  (let-optionals* char+start+end
+                  ((char #\space)
+                   (start 0)
+                   (end (string-length s)))
+                  (check-arg char? char string-pad)
+                  (let-string-start+end (start end) string-pad s (list start end)
                                         (check-arg (lambda (n) (and (integer? n) (exact? n) (<= 0 n)))
                                                    n string-pad)
                                         (let ((len (- end start)))
@@ -1452,10 +1411,14 @@
 
 (define (make-kmp-restart-vector pattern . maybe-c=+start+end)
   (let-optionals* maybe-c=+start+end
-                  ((c= char=? (procedure? c=))
-                   ((start end) (lambda (args)
-                                  (string-parse-start+end make-kmp-restart-vector
-                                                          pattern args))))
+                  ((c= char=?)
+                   (start (lambda (args)
+                            (string-parse-start+end make-kmp-restart-vector
+                                                           pattern args)))
+                   (end (lambda (args)
+                            (string-parse-start+end make-kmp-restart-vector
+                                                           pattern args))))
+                  (check-arg procedure? c= make-kmp-restart-vector)
                   (let* ((rvlen (- end start))
                          (rv (make-vector rvlen -1)))
                     (if (> rvlen 0)
@@ -1520,11 +1483,17 @@
 (define (string-kmp-partial-search pat rv s i . c=+p-start+s-start+s-end)
   (check-arg vector? rv string-kmp-partial-search)
   (let-optionals* c=+p-start+s-start+s-end
-                  ((c=      char=? (procedure? c=))
-                   (p-start 0 (and (integer? p-start) (exact? p-start) (<= 0 p-start)))
-                   ((s-start s-end) (lambda (args)
-                                      (string-parse-start+end string-kmp-partial-search
-                                                              s args))))
+                  ((c= char=?)
+                   (p-start 0)
+                   (s-start (lambda (args)
+                              (string-parse-start+end string-kmp-partial-search
+                                                      s args)))
+                   (s-end (lambda (args)
+                            (string-parse-start+end string-kmp-partial-search))))
+                  (check-arg procedure? c= string-kmp-partial-search)
+                  (check-arg integer? p-start string-kmp-partial-search)
+                  (check-arg exact? p-start string-kmp-partial-search)
+                  (check-arg (lambda (p-start) (<= 0 p-start)) p-start string-kmp-partial-search)
                   (let ((patlen (vector-length rv)))
                     (check-arg (lambda (i) (and (integer? i) (exact? i) (<= 0 i) (< i patlen)))
                                i string-kmp-partial-search)
@@ -1670,11 +1639,12 @@
 ;;;       (cons (string-copy final-string 0 end) string-list)))
 
 (define (string-concatenate-reverse string-list . maybe-final+end)
-  (let-optionals* maybe-final+end ((final "" (string? final))
-                                   (end (string-length final)
-                                        (and (integer? end)
-                                             (exact? end)
-                                             (<= 0 end (string-length final)))))
+  (let-optionals* maybe-final+end ((final "")
+                                   (end (string-length final)))
+                  (check-arg string? final string-concatenate-reverse)
+                  (check-arg integer? end string-concatenate-reverse)
+                  (check-arg exact? end string-concatenate-reverse)
+                  (check-arg (lambda (end) (<= 0 end)) end string-concatenate-reverse)
                   (let ((len (let lp ((sum 0) (lis string-list))
                                (if (pair? lis)
                                  (lp (+ sum (string-length (car lis))) (cdr lis))
@@ -1683,11 +1653,12 @@
                     (%finish-string-concatenate-reverse len string-list final end))))
 
 (define (string-concatenate-reverse/shared string-list . maybe-final+end)
-  (let-optionals* maybe-final+end ((final "" (string? final))
-                                   (end (string-length final)
-                                        (and (integer? end)
-                                             (exact? end)
-                                             (<= 0 end (string-length final)))))
+  (let-optionals* maybe-final+end ((final "")
+                                   (end (string-length final)))
+                  (check-arg string? final string-concatenate-reverse)
+                  (check-arg integer? end string-concatenate-reverse)
+                  (check-arg exact? end string-concatenate-reverse)
+                  (check-arg (lambda (end) (<= 0 end (string-length final))) end string-concatenate-reverse)
                   ;; Add up the lengths of all the strings in STRING-LIST; also get a
                   ;; pointer NZLIST into STRING-LIST showing where the first non-zero-length
                   ;; string starts.
@@ -1748,8 +1719,11 @@
 
 (define (string-tokenize s . token-chars+start+end)
   (let-optionals* token-chars+start+end
-                  ((token-chars char-set:graphic (char-set? token-chars)) rest)
-                  (let-string-start+end (start end) string-tokenize s rest
+                  ((token-chars char-set:graphic)
+                   (start 0)
+                   (end (string-length s)))
+                  (check-arg char-set? token-chars token-chars)
+                  (let-string-start+end (start end) string-tokenize s (list start end)
                                         (let lp ((i end) (ans '()))
                                           (cond ((and (< start i) (string-index-right s token-chars start i)) =>
                                                                                                               (lambda (tend-1)
@@ -1903,8 +1877,9 @@
 ;;; STRING-CONCATENATE is less efficient.
 
 (define (string-join strings . delim+grammar)
-  (let-optionals* delim+grammar ((delim " " (string? delim))
+  (let-optionals* delim+grammar ((delim " ")
                                  (grammar 'infix))
+                  (check-arg string? delim string-join)
                   (let ((buildit (lambda (lis final)
                                    (let recur ((lis lis))
                                      (if (pair? lis)

@@ -17,7 +17,7 @@
 ;promotional, or sales literature without prior written consent in
 ;each case.
 
-(define logical:boole-xor
+(define logical-boole-xor
   '#(#(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
      #(1 0 3 2 5 4 7 6 9 8 11 10 13 12 15 14)
      #(2 3 0 1 6 7 4 5 10 11 8 9 14 15 12 13)
@@ -35,7 +35,7 @@
      #(14 15 12 13 10 11 8 9 6 7 4 5 2 3 0 1)
      #(15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0)))
 
-(define logical:boole-and
+(define logical-boole-and
   '#(#(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
      #(0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1)
      #(0 0 2 2 0 0 2 2 0 0 2 2 0 0 2 2)
@@ -53,12 +53,12 @@
      #(0 0 2 2 4 4 6 6 8 8 10 10 12 12 14 14)
      #(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)))
 
-(define (logical:ash-4 x)
+(define (logical-ash-4 x)
   (if (negative? x)
     (+ -1 (quotient (+ 1 x) 16))
     (quotient x 16)))
 
-(define (logical:reduce op4 ident)
+(define (logical-reduce op4 ident)
   (lambda args
     (do ((res ident (op4 res (car rgs) 1 0))
          (rgs args (cdr rgs)))
@@ -72,15 +72,15 @@
          (cond ((= n1 n2) (+ acc (* scl n1)))
                ((zero? n2) acc)
                ((zero? n1) acc)
-               (else (lgand (logical:ash-4 n2)
-                            (logical:ash-4 n1)
+               (else (lgand (logical-ash-4 n2)
+                            (logical-ash-4 n1)
                             (* 16 scl)
-                            (+ (* (vector-ref (vector-ref logical:boole-and
+                            (+ (* (vector-ref (vector-ref logical-boole-and
                                                           (modulo n1 16))
                                               (modulo n2 16))
                                   scl)
                                acc)))))))
-    (logical:reduce lgand -1)))
+    (logical-reduce lgand -1)))
 ;@
 (define logior
   (letrec
@@ -89,16 +89,16 @@
          (cond ((= n1 n2) (+ acc (* scl n1)))
                ((zero? n2) (+ acc (* scl n1)))
                ((zero? n1) (+ acc (* scl n2)))
-               (else (lgior (logical:ash-4 n2)
-                            (logical:ash-4 n1)
+               (else (lgior (logical-ash-4 n2)
+                            (logical-ash-4 n1)
                             (* 16 scl)
                             (+ (* (- 15 (vector-ref
-                                          (vector-ref logical:boole-and
+                                          (vector-ref logical-boole-and
                                                       (- 15 (modulo n1 16)))
                                           (- 15 (modulo n2 16))))
                                   scl)
                                acc)))))))
-    (logical:reduce lgior 0)))
+    (logical-reduce lgior 0)))
 ;@
 (define logxor
   (letrec
@@ -107,15 +107,15 @@
          (cond ((= n1 n2) acc)
                ((zero? n2) (+ acc (* scl n1)))
                ((zero? n1) (+ acc (* scl n2)))
-               (else (lgxor (logical:ash-4 n2)
-                            (logical:ash-4 n1)
+               (else (lgxor (logical-ash-4 n2)
+                            (logical-ash-4 n1)
                             (* 16 scl)
-                            (+ (* (vector-ref (vector-ref logical:boole-xor
+                            (+ (* (vector-ref (vector-ref logical-boole-xor
                                                           (modulo n1 16))
                                               (modulo n2 16))
                                   scl)
                                acc)))))))
-    (logical:reduce lgxor 0)))
+    (logical-reduce lgxor 0)))
 ;@
 (define (lognot n) (- -1 n))
 ;@
@@ -169,13 +169,13 @@
                        ((or (= n 1) (= n -2)) (+ 1 tot))
                        ((or (= n 2) (= n 3) (= n -3) (= n -4)) (+ 2 tot))
                        ((or (= n 4) (= n 5) (= n 6) (= n 7) (= n -5) (= n -6) (= n -7) (= n -8)) (+ 3 tot))
-                       (else (intlen (logical:ash-4 n) (+ 4 tot))))
+                       (else (intlen (logical-ash-4 n) (+ 4 tot))))
                      #;(case n
                      ((0 -1) (+ 0 tot))
                      ((1 -2) (+ 1 tot))
                      ((2 3 -3 -4) (+ 2 tot))
                      ((4 5 6 7 -5 -6 -7 -8) (+ 3 tot))
-                     (else (intlen (logical:ash-4 n) (+ 4 tot)))))))
+                     (else (intlen (logical-ash-4 n) (+ 4 tot)))))))
     (lambda (n) (intlen n 0))))
 ;@
 (define logcount
@@ -238,6 +238,6 @@
 (define bitwise-merge bitwise-if)
 
 ;;; Legacy
-;;(define (logical:rotate k count len) (rotate-bit-field k count 0 len))
-;;(define (logical:ones deg) (lognot (ash -1 deg)))
+;;(define (logical-rotate k count len) (rotate-bit-field k count 0 len))
+;;(define (logical-ones deg) (lognot (ash -1 deg)))
 ;;(define integer-expt expt)            ; legacy nam

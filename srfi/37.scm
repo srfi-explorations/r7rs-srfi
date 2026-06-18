@@ -33,34 +33,16 @@
 ;;; NOTE: The scsh-utils and Chicken implementations use regular
 ;;; expressions. These might be easier to read and understand.
 
-(define option #f)
-(define option-names #f)
-(define option-required-arg? #f)
-(define option-optional-arg? #f)
-(define option-processor #f)
-(define option? #f)
-
-(let ()
-  (define-record-type option-type
-    ($option names required-arg? optional-arg? processor)
-    $option?
-    (names $option-names)
-    (required-arg? $option-required-arg?)
-    (optional-arg? $option-optional-arg?)
-    (processor $option-processor))
-  (set! option $option)
-  (set! option-names $option-names)
-  (set! option-required-arg? $option-required-arg?)
-  (set! option-optional-arg? $option-optional-arg?)
-  (set! option-processor $option-processor)
-  (set! option? $option?))
+(define-record-type option-type
+  (option names required-arg? optional-arg? processor)
+  option?
+  (names option-names)
+  (required-arg? option-required-arg?)
+  (optional-arg? option-optional-arg?)
+  (processor option-processor))
 
 (define args-fold
-  (lambda (args
-            options
-            unrecognized-option-proc
-            operand-proc
-            . seeds)
+  (lambda (args options unrecognized-option-proc operand-proc . seeds)
     (letrec
       ((find
          (lambda (l ?)

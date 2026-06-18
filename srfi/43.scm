@@ -4,50 +4,7 @@
 ;;;
 ;;; Taylor Campbell wrote this code; he places it in the public domain.
 ;;; Will Clinger [wdc] made some corrections, also in the public domain.
-
-;;; --------------------
-;;; Exported procedure index
-;;;
-;;; * Constructors
-;;; make-vector vector
-;;; vector-unfold                   vector-unfold-right
-;;; vector-copy                     vector-reverse-copy
-;;; vector-append                   vector-concatenate
-;;;
-;;; * Predicates
-;;; vector?
-;;; vector-empty?
-;;; vector=
-;;;
-;;; * Selectors
-;;; vector-ref
-;;; vector-length
-;;;
-;;; * Iteration
-;;; vector-fold                     vector-fold-right
-;;; vector-map                      vector-map!
-;;; vector-for-each
-;;; vector-count
-;;;
-;;; * Searching
-;;; vector-index                    vector-skip
-;;; vector-index-right              vector-skip-right
-;;; vector-binary-search
-;;; vector-any                      vector-every
-;;;
-;;; * Mutators
-;;; vector-set!
-;;; vector-swap!
-;;; vector-fill!
-;;; vector-reverse!
-;;; vector-copy!                    vector-reverse-copy!
-;;; vector-reverse!
-;;;
-;;; * Conversion
-;;; vector->list                    reverse-vector->list
-;;; list->vector                    reverse-list->vector
-
-
+;;; Retropikzel made some changes, also in the public domain.
 
 ;;; --------------------
 ;;; Commentary on efficiency of the code
@@ -76,47 +33,6 @@
 ;;; Efficiency of the actual algorithms is a rather mundane point to
 ;;; mention; vector operations are rarely beyond being straightforward.
 
-
-
-;;; --------------------
-;;; Utilities
-
-;;; SRFI 8, too trivial to put in the dependencies list.
-(define-syntax receive
-  (syntax-rules ()
-    ((receive ?formals ?producer ?body1 ?body2 ...)
-     (call-with-values (lambda () ?producer)
-       (lambda ?formals ?body1 ?body2 ...)))))
-
-;;; Not the best LET*-OPTIONALS, but not the worst, either.  Use Olin's
-;;; if it's available to you.
-(define-syntax let*-optionals
-  (syntax-rules ()
-    ((let*-optionals (?x ...) ((?var ?default) ...) ?body1 ?body2 ...)
-     (let ((args (?x ...)))
-       (let*-optionals args ((?var ?default) ...) ?body1 ?body2 ...)))
-    ((let*-optionals ?args ((?var ?default) ...) ?body1 ?body2 ...)
-     (let*-optionals:aux ?args ?args ((?var ?default) ...)
-       ?body1 ?body2 ...))))
-
-(define-syntax let*-optionals:aux
-  (syntax-rules ()
-    ((aux ?orig-args-var ?args-var () ?body1 ?body2 ...)
-     (if (null? ?args-var)
-         (let () ?body1 ?body2 ...)
-         (error "too many arguments" (length ?orig-args-var)
-                ?orig-args-var)))
-    ((aux ?orig-args-var ?args-var
-         ((?var ?default) ?more ...)
-       ?body1 ?body2 ...)
-     (if (null? ?args-var)
-         (let* ((?var ?default) ?more ...) ?body1 ?body2 ...)
-         (let ((?var (car ?args-var))
-               (new-args (cdr ?args-var)))
-           (let*-optionals:aux ?orig-args-var new-args
-               (?more ...)
-             ?body1 ?body2 ...))))))
-
 (define (nonneg-int? x)
   (and (integer? x)
        (not (negative? x))))
@@ -132,8 +48,6 @@
 ;++ be reused.
 (define (vectors-ref vectors i)
   (map (lambda (v) (vector-ref v i)) vectors))
-
-
 
 ;;; --------------------
 ;;; Error checking
@@ -165,14 +79,10 @@
 ;;;   error was signalled.
 (define (check-type pred? value callee)
   (if (pred? value)
-      value
-      ;; Recur: when (or if) the user gets a debugger prompt, he can
-      ;; proceed where the call to ERROR was with the correct value.
-      (check-type pred?
-                  (error "erroneous value"
-                         (list pred? value)
-                         `(while calling ,callee))
-                  callee)))
+    value
+    ;; Recur: when (or if) the user gets a debugger prompt, he can
+    ;; proceed where the call to ERROR was with the correct value.
+    (error "erroneous value" (list pred? value) `(while calling ,callee))))
 
 ;;; (CHECK-INDEX <vector> <index> <callee>) -> index
 ;;;   Ensure that INDEX is a valid index into VECTOR; if not, signal an
@@ -182,19 +92,17 @@
 (define (check-index vec index callee)
   (let ((index (check-type integer? index callee)))
     (cond ((< index 0)
-           (check-index vec
-                        (error "vector index too low"
-                               index
-                               `(into vector ,vec)
-                               `(while calling ,callee))
-                        callee))
+           (error "vector index too low"
+                  index
+                  `(into vector ,vec)
+                  `(while calling ,callee))
+           callee)
           ((>= index (vector-length vec))
-           (check-index vec
-                        (error "vector index too high"
-                               index
-                               `(into vector ,vec)
-                               `(while calling ,callee))
-                        callee))
+           (error "vector index too high"
+                  index
+                  `(into vector ,vec)
+                  `(while calling ,callee))
+           callee)
           (else index))))
 
 ;;; (CHECK-INDICES <vector>
@@ -544,7 +452,7 @@
 ;;;   VECTOR, in which case the vector is enlarged; if FILL is passed,
 ;;;   the new locations from which there is no respective element in
 ;;;   VECTOR are filled with FILL.
-#;(define (vector-copy vec . args)
+(define (vector-copy vec . args)
   (let ((vec (check-type vector? vec vector-copy)))
     ;; We can't use LET-VECTOR-START+END, because we have one more
     ;; argument, and we want finer control, too.
@@ -810,7 +718,7 @@
 ;;;   arguments.  Each element at index I of the new vector is mapped
 ;;;   from the old vectors by (F I (vector-ref VECTOR I) ...).  The
 ;;;   dynamic order of application of F is unspecified.
-#;(define (vector-map f vec . vectors)
+(define (vector-map f vec . vectors)
   (let ((f   (check-type procedure? f   vector-map))
         (vec (check-type vector?    vec vector-map)))
     (if (null? vectors)
@@ -848,7 +756,7 @@
 ;;;   contrast with VECTOR-MAP, F is reliably applied to each
 ;;;   subsequent elements, starting at index 0 from left to right, in
 ;;;   the vectors.
-#;(define vector-for-each
+(define vector-for-each
   (letrec ((for-each1
             (lambda (f vec i len)
               (cond ((< i len)
@@ -1295,7 +1203,7 @@
 ;;; This also diverges on circular lists unless, again, LENGTH returns
 ;;; something that makes - bork.
 (define (reverse-list->vector lst . maybe-start+end)
-  (let*-optionals maybe-start+end
+  (let-optionals* maybe-start+end
       ((start 0)
        (end (length lst)))              ; Ugh -- LENGTH
     (let ((start (check-type nonneg-int? start reverse-list->vector))

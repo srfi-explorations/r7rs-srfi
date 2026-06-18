@@ -2,6 +2,7 @@
   (srfi 14)
   (import (scheme base)
           (scheme char)
+          (scheme write)
           (srfi 60))
   (export char-set?
           char-set=

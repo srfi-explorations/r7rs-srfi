@@ -1,29 +1,18 @@
-ARG IMAGE=chibi:latest
-FROM docker.io/schemers/${IMAGE}
-ARG SCHEME=chibi
-ENV COMPILE_R7RS=${SCHEME}
-
+FROM docker.io/schemers/all-r7rs:head
 RUN apt-get update && apt-get install -y \
-    build-essential libffi-dev libcurl4-openssl-dev curl guile-3.0 \
-    git ca-certificates
-
-COPY --from=schemers/loko:head /usr/local /usr/loko
-RUN cp -r /usr/loko/* /usr/local/
-COPY --from=schemers/chibi:head /usr/local /usr/chibi
-RUN cp -r /usr/chibi/lib/* /usr/local/lib/
-RUN cp -r /usr/chibi/share/* /usr/local/share/
-RUN cp -r /usr/chibi/bin/*chibi* /usr/local/bin/
-RUN ldconfig
-
-ADD https://codeberg.org/retropikzel/compile-r7rs/raw/branch/main/compile-r7rs .
-RUN install compile-r7rs /usr/local/bin/compile-r7rs
-
-RUN mkdir -p /root/.snow && echo "()" > /root/.snow/config.scm
-
+    bats make libffi-dev parallel time git ca-certificates sudo
+RUN git clone https://github.com/Retropikzel/chibi-scheme.git --depth=1 --branch=install-dependencies-when-installing-from-file2
+RUN make -C chibi-scheme && make -C chibi-scheme install
+RUN mkdir -p "${HOME}/.snow/" && echo "()" > "${HOME}/.snow/config.scm"
+RUN snow-chibi --impls=chibi install retropikzel.compile-r7rs
+RUN mkdir /workdir && chmod -R 775 /workdir
 WORKDIR /workdir
-ENV COMPILE_R7RS=${SCHEME}
-COPY srfi-test srfi-test/
 COPY README.md .
+COPY test_implementations.txt .
+COPY test_srfis.txt .
 COPY Makefile .
+RUN snow-chibi update
+COPY bats.sh .
+RUN sh bats.sh
 COPY srfi srfi/
 

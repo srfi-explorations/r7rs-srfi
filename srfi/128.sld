@@ -4,11 +4,16 @@
 
 (define-library
   (srfi 128)
-  (import (scheme base)
-          (scheme case-lambda)
-          (scheme char)
-          (scheme complex)
-          (scheme inexact))
+  (cond-expand
+    (tr7 (import (scheme base)
+                 (scheme case-lambda)
+                 (scheme char)
+                 (scheme inexact)))
+    (else (import (scheme base)
+                  (scheme case-lambda)
+                  (scheme char)
+                  (scheme inexact)
+                  (scheme complex))))
   (export comparator?
           comparator-ordered?
           comparator-hashable?

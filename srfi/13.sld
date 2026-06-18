@@ -1,6 +1,7 @@
 (define-library
   (srfi 13)
-  (import (except (scheme base)
+  (import
+    (except (scheme base)
                   string-copy
                   string-map
                   string-for-each
@@ -13,12 +14,15 @@
                 char-downcase
                 char-upcase
                 char-alphabetic?
+                char-upper-case?
+                char-lower-case?
                 ;string-downcase
                 ;string-upcase
                 )
           (srfi 8)
           (srfi 14)
-          (srfi 60))
+          (srfi 60)
+          (srfi 227))
   (export string-map
           string-map!
           string-fold
@@ -103,5 +107,5 @@
           string-tokenize
           string-replace)
   (cond-expand
-    (mosh (import (srfi :13 strings)))
+    ;(mosh (import (srfi :13 strings)))
     (else (include "13.scm"))))

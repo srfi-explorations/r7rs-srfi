@@ -1,27 +1,28 @@
+.SILENT:
 SCHEME=chibi
-RNRS=r7rs
 SRFI=64
-VERSION=2026.04.26
+RNRS=r7rs
+VERSION=$(shell cat srfi/${SRFI}/VERSION)
 PKG=srfi-${SRFI}-${VERSION}.tgz
-SRFI_64_PKG=srfi-64-${VERSION}.tgz
-IMAGE=${SCHEME}:latest
+BATS_JOBS=1
+TIER=1
+BATS_ARGS=
+DOCKER_TAG=head
 
-SNOW=snow-chibi --impls=${SCHEME} install --always-yes
+tmpdir=.tmp/${SCHEME}-${SRFI}
+
 SFX=scm
-LIB_PATHS=
+LIB_DIR=
+AKKU_PACKAGES=
 ifeq "${RNRS}" "r6rs"
-SNOW=snow-chibi --impls=${SCHEME} install --always-yes --install-source-dir=. --install-library-dir=.
 SFX=sps
-LIB_PATHS=-I .akku/lib
+LIB_DIR=-I .akku/lib
+AKKU_PACKAGES=akku-r7rs
 endif
 
-ifeq "${SCHEME}" "capyscheme"
-IMAGE=${SCHEME}:head
-endif
+all: package
 
-all: build
-
-build:
+package: srfi/${SRFI}/VERSION
 	echo "<pre>$$(cat README.md)</pre>" > README.html
 	snow-chibi package \
 		--always-yes \
@@ -31,35 +32,42 @@ build:
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
+${PKG}: package
+
 install:
-	snow-chibi --impls=${SCHEME} install ${PKG}
+	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
 
-test: srfi-test build
-	mkdir -p logs
-	rm -rf .tmp
-	mkdir -p .tmp
-	cp -r srfi-test/180 .tmp/
-	cp srfi-test/${RNRS}-programs/${SRFI}.${SFX} .tmp/test.${SFX}
-	cd .tmp && ${SNOW} "(srfi 64)"
-	cd .tmp && ${SNOW} "(srfi ${SRFI})"
-	cd .tmp && akku install akku-r7rs 2> /dev/null
-	cd .tmp && COMPILE_R7RS=${SCHEME} compile-r7rs ${LIB_PATHS} -o test test.${SFX}
-	cd .tmp && timeout 600 ./test
-	if [ -f .tmp/*.log ]; then cp .tmp/*.log logs/${SCHEME}-${RNRS}-${SRFI}.log; fi
+testfiles: ${PKG}
+	rm -rf ${tmpdir}
+	mkdir -p ${tmpdir}
+	mkdir -p ${tmpdir}/180
+	cp -r srfi-test/180 ${tmpdir}/
+	cp srfi-test/r6rs-programs/${SRFI}.sps ${tmpdir}/test.sps
+	cp srfi-test/r7rs-programs/${SRFI}.scm ${tmpdir}/test.scm
+	cp ${PKG} ${tmpdir}/
 
-test-docker: srfi-test
-	docker build --build-arg IMAGE=${IMAGE} --build-arg SCHEME=${SCHEME} --tag=${SCHEME}-testing -f Dockerfile.test .
-	docker run --memory=2G --cpus=2 -v "${PWD}/logs:/workdir/logs" ${SCHEME}-testing \
-		sh -c "make SCHEME=${SCHEME} RNRS=${RNRS} SRFI=${SRFI} test"
+test: srfi-test testfiles
+	cd ${tmpdir} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${LIB_DIR} test.${SFX}
+	cd ${tmpdir} && ./test-program
+
+test-docker: testfiles
+	cd ${tmpdir} \
+		&&	DOCKER_TAG=${DOCKER_TAG} \
+			TEST_R7RS_DEBUG=1 \
+			SNOW_PACKAGES="srfi.64 ${PKG}" \
+			AKKU_PACKAGES="${AKKU_PACKAGES}" \
+			COMPILE_R7RS=${SCHEME} \
+			test-r7rs -o test-program ${LIB_DIR} test.${SFX}
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
 	cd srfi-test && chibi-scheme convert.scm
 
+local-srfi-test:
+	cp ../srfi-test/*.scm srfi-test/
+	cd srfi-test && chibi-scheme convert.scm
+
 clean:
-	rm -rf *.log
-	rm -rf *.html
-	rm -rf *.tgz
-	find . -name "*.so" -delete
+	git clean -X -f
 	rm -rf .tmp
 
