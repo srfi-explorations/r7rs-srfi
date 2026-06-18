@@ -58,7 +58,7 @@ pipeline {
                                     stage("${SCHEME}") {
                                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "timeout 600 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker; chmod -R 775 ."
-                                            archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
+                                            archiveArtifacts artifacts: ".tmp/${SCHEME}-${SRFI}/*.log", allowEmptyArchive: true, fingerprint: true
 
                                         }
                                     }
@@ -72,7 +72,7 @@ pipeline {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
-                                            archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
+                                            archiveArtifacts artifacts: ".tmp/${SCHEME}-${SRFI}/*.log", allowEmptyArchive: true, fingerprint: true
                                         }
                                     }
                                 }
