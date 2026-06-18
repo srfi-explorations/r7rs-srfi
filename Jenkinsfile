@@ -48,8 +48,9 @@ pipeline {
                     def r6rs_schemes = readFile 'test_r6rs_schemes.txt'
                     def r7rs_schemes = readFile 'test_r7rs_schemes.txt'
                     def srfis = readFile 'test_srfis.txt'
-
                     def r6rsStages = [:]
+                    def r7rsStages = [:]
+
                     srfis.split().each { SRFI ->
                         stage("SRFI-${SRFI} R6RS") {
                             r6rs_schemes.split().each { SCHEME ->
@@ -66,8 +67,8 @@ pipeline {
                             parallel r6rsStages
                         }
                         stage("SRFI-${SRFI} R7RS") {
-                            parallel([
-                                r7rs_schemes.split().each { SCHEME ->
+                            r7rs_schemes.split().each { SCHEME ->
+                                r6rsStages["${SCHEME}"] = {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
@@ -75,7 +76,8 @@ pipeline {
                                         }
                                     }
                                 }
-                            ])
+                            }
+                            parallel r7rsStages
                         }
                     }
                 }
