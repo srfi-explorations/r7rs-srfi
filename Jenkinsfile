@@ -68,7 +68,7 @@ pipeline {
                         }
                         stage("SRFI-${SRFI} R7RS") {
                             r7rs_schemes.split().each { SCHEME ->
-                                r6rsStages["${SCHEME}"] = {
+                                r7rsStages["${SCHEME}"] = {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                                             sh "timeout 600 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
