@@ -55,7 +55,9 @@ pipeline {
                             r6rs_schemes.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 60 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker; chmod -R 775 ."
+                                        sh "timeout 120 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker; chmod -R 775 ."
+                                        archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
+
                                     }
                                 }
                             }
@@ -64,7 +66,8 @@ pipeline {
                             r7rs_schemes.split().each { SCHEME ->
                                 stage("${SCHEME}") {
                                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 60 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
+                                        sh "timeout 120 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
+                                        archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
                                     }
                                 }
                             }

@@ -37,23 +37,25 @@ ${PKG}: package
 install:
 	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
 
-testfiles:
+testfiles: ${PKG}
 	rm -rf ${tmpdir}
 	mkdir -p ${tmpdir}
 	mkdir -p ${tmpdir}/180
 	cp -r srfi-test/180 ${tmpdir}/
 	cp srfi-test/r7rs-programs/${SRFI}.scm ${tmpdir}/test.${SFX}
+	cp ${PKG} ${tmpdir}/
 
 test: srfi-test testfiles
 	cd ${tmpdir} && COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${LIB_DIR} test.${SFX}
 	cd ${tmpdir} && ./test-program
 
-test-docker: package testfiles
-	DOCKER_TAG=${DOCKER_TAG} \
+test-docker: testfiles
+	cd ${tmpdir} \
+		&&	DOCKER_TAG=${DOCKER_TAG} \
 			SNOW_PACKAGES="srfi.64 ${PKG}" \
 			AKKU_PACKAGES="${AKKU_PACKAGES}" \
 			COMPILE_R7RS=${SCHEME} \
-			test-r7rs -o ${tmpdir}/test-program ${LIB_DIR} ${tmpdir}/test.${SFX}
+			test-r7rs -o test-program ${LIB_DIR} test.${SFX}
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1 --branch=retropikzel-fixes2
