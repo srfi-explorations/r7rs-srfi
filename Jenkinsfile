@@ -51,7 +51,7 @@ pipeline {
 
                     srfis.split().each { SRFI ->
                         stage("SRFI-${SRFI} R6RS") {
-                            parallel {
+                            parallel([
                                 r6rs_schemes.split().each { SCHEME ->
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -61,10 +61,10 @@ pipeline {
                                         }
                                     }
                                 }
-                            }
+                            ])
                         }
                         stage("SRFI-${SRFI} R7RS") {
-                            parallel {
+                            parallel([
                                 r7rs_schemes.split().each { SCHEME ->
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -73,7 +73,7 @@ pipeline {
                                         }
                                     }
                                 }
-                            }
+                            ])
                         }
                     }
                 }
