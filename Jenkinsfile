@@ -51,23 +51,26 @@ pipeline {
 
                     srfis.split().each { SRFI ->
                         stage("SRFI-${SRFI} R6RS") {
+                            parallel {
+                                r6rs_schemes.split().each { SCHEME ->
+                                    stage("${SCHEME}") {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "timeout 120 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker; chmod -R 775 ."
+                                            archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
 
-                            r6rs_schemes.split().each { SCHEME ->
-                                stage("${SCHEME}") {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 120 make SCHEME=${SCHEME} RNRS=r6rs SRFI=${SRFI} test-docker; chmod -R 775 ."
-                                        archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
-
+                                        }
                                     }
                                 }
                             }
                         }
                         stage("SRFI-${SRFI} R7RS") {
-                            r7rs_schemes.split().each { SCHEME ->
-                                stage("${SCHEME}") {
-                                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                                        sh "timeout 120 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
-                                        archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
+                            parallel {
+                                r7rs_schemes.split().each { SCHEME ->
+                                    stage("${SCHEME}") {
+                                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                                            sh "timeout 120 make SCHEME=${SCHEME} RNRS=r7rs SRFI=${SRFI} test-docker; chmod -R 775 ."
+                                            archiveArtifacts artifacts: '.tmp/${SCHEME}-${SRFI}/*.log', allowEmptyArchive: true, fingerprint: true
+                                        }
                                     }
                                 }
                             }
