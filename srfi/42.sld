@@ -4,10 +4,18 @@
     (tr7 (import (scheme base)
                  (scheme read)
                  (scheme cxr)))
+    (stklos (import (scheme base)
+                  (scheme read)
+                  (scheme cxr)
+                  (scheme complex)
+                  (only (stklos) keyword-colon-position)))
     (else (import (scheme base)
                   (scheme read)
                   (scheme cxr)
                   (scheme complex))))
+  (cond-expand
+    (stklos (when-load-and-compile (keyword-colon-position 'none)))
+    (else #f))
   (cond-expand
     (stklos
       (export do-ec
@@ -84,7 +92,6 @@
              internal-while-1
              internal-parallel-1
              ec-simplify
-             do-ec-do
              ec-guarded-do-ec
              internal-generator-proc
              internal-until-1
@@ -92,9 +99,6 @@
              internal-while-1
              internal-parallel-1
              ec-simplify
-             do-ec-do))
+             do-ec:do))
     (else))
-  (cond-expand
-    (else (include "42.stklos.scm"))
-    ;(else (include "42.scm"))
-    ))
+  (include "42.scm"))

@@ -60,6 +60,10 @@
 ;;   Changed anything not exported that had : as the first char to use prefix
 ;;   internal- instead
 
+(cond-expand
+  (stklos (when-load-and-compile (keyword-colon-position 'none)))
+  (else #f))
+
 (define-syntax do-ec
   (syntax-rules (nested if not and or begin :do let)
 
