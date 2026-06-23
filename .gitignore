@@ -35,3 +35,4 @@ venv
 run-test*
 *.bats
 test-program*
+!.snow-repo.scm
