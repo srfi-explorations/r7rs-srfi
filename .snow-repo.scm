@@ -1,7 +1,7 @@
 (repository
   (package
     (git
-      (hash "c9c50e94a387d96cf609a0b84242b5bb340afe89")
+      (hash "6150d85222aa79745219a5190038f95180dc6e7f")
       (url "https://github.com/srfi-explorations/r7rs-srfi.git"))
     (maintainers "Retropikzel")
     (version "0.1.0")
@@ -20,10 +20,42 @@
         (srfi 145)))
     (manual "README.html")
     (description "SRFI-180")
-    (updated "2026-06-23T17:18:15+00:00"))
+    (updated "2026-06-23T17:37:46+00:00"))
   (package
     (git
-      (hash "c9c50e94a387d96cf609a0b84242b5bb340afe89")
+      (hash "6150d85222aa79745219a5190038f95180dc6e7f")
+      (url "https://github.com/srfi-explorations/r7rs-srfi.git"))
+    (maintainers "Retropikzel")
+    (version "0.1.0")
+    (library
+      (name
+        (srfi 145))
+      (path "srfi/145.sld")
+      (foreign-depends)
+      (depends
+        (scheme base)))
+    (manual "README.html")
+    (description "SRFI-145")
+    (updated "2026-06-23T17:37:36+00:00"))
+  (package
+    (git
+      (hash "6150d85222aa79745219a5190038f95180dc6e7f")
+      (url "https://github.com/srfi-explorations/r7rs-srfi.git"))
+    (maintainers "Retropikzel")
+    (version "0.1.0")
+    (library
+      (name
+        (srfi 60))
+      (path "srfi/60.sld")
+      (foreign-depends)
+      (depends
+        (scheme base)))
+    (manual "README.html")
+    (description "SRFI-60")
+    (updated "2026-06-23T17:37:04+00:00"))
+  (package
+    (git
+      (hash "6150d85222aa79745219a5190038f95180dc6e7f")
       (url "https://github.com/srfi-explorations/r7rs-srfi.git"))
     (maintainers "Retropikzel")
     (version "0.1.3")
@@ -74,4 +106,4 @@
       (depends))
     (manual "README.html")
     (description "SRFI-64")
-    (updated "2026-06-23T17:17:56+00:00")))
+    (updated "2026-06-23T17:36:58+00:00")))
