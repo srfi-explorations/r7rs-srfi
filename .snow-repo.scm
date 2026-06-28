@@ -1,6 +1,34 @@
 (repository
   (package
     (git
+      (hash "725d1f7d8d539b6b7656b36f02e2d71b5a28bf39")
+      (url "https://github.com/srfi-explorations/r7rs-srfi.git"))
+    (maintainers "Retropikzel")
+    (version "1.0.1")
+    (library
+      (name
+        (srfi 19))
+      (path "srfi/19.sld")
+      (foreign-depends)
+      (cond-expand
+        (chicken
+          (depends))
+        (else
+          (depends)))
+      (depends
+        (scheme base)
+        (scheme write)
+        (scheme read)
+        (scheme file)
+        (scheme time)
+        (scheme char)
+        (scheme cxr)
+        (srfi 8)))
+    (manual "README.html")
+    (description "SRFI-19")
+    (updated "2026-06-28T16:03:47+00:00"))
+  (package
+    (git
       (hash "6150d85222aa79745219a5190038f95180dc6e7f")
       (url "https://github.com/srfi-explorations/r7rs-srfi.git"))
     (maintainers "Retropikzel")
