@@ -34,6 +34,9 @@ package: srfi/${SRFI}/VERSION
 
 ${PKG}: package
 
+snow-index: ${PKG}
+	snow-chibi git-index ${PKG}
+
 install:
 	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
 

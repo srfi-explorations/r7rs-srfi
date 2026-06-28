@@ -1,21 +1,19 @@
 (define-library
   (srfi 42)
   (cond-expand
-    (tr7 (import (scheme base)
-                 (scheme read)
-                 (scheme cxr)))
-    (stklos (import (scheme base)
-                  (scheme read)
-                  (scheme cxr)
-                  (scheme complex)
-                  (only (stklos) keyword-colon-position)))
-    (else (import (scheme base)
-                  (scheme read)
-                  (scheme cxr)
-                  (scheme complex))))
+    ((library (scheme complex))
+     (import (scheme base)
+             (scheme read)
+             (scheme cxr)
+             (scheme complex)))
+    (else
+      (import (scheme base)
+              (scheme read)
+              (scheme cxr))))
   (cond-expand
-    (stklos (when-load-and-compile (keyword-colon-position 'none)))
-    (else #f))
+    (stklos (import (only (stklos) keyword-colon-position))
+            (begin (when-load-and-compile (keyword-colon-position 'none))))
+    (else))
   (cond-expand
     (stklos
       (export do-ec

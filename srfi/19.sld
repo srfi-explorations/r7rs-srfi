@@ -88,4 +88,7 @@
           time-tai->time-utc!
           date->string
           string->date)
+  (cond-expand
+    (chicken (export optional))
+    (else))
   (include "19.scm"))
