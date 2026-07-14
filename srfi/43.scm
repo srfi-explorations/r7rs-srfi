@@ -95,14 +95,12 @@
            (error "vector index too low"
                   index
                   `(into vector ,vec)
-                  `(while calling ,callee))
-           callee)
+                  `(while calling ,callee)))
           ((>= index (vector-length vec))
            (error "vector index too high"
                   index
                   `(into vector ,vec)
-                  `(while calling ,callee))
-           callee)
+                  `(while calling ,callee)))
           (else index))))
 
 ;;; (CHECK-INDICES <vector>

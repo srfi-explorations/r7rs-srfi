@@ -8,8 +8,6 @@ RUN snow-chibi --impls=chibi install retropikzel.compile-r7rs
 RUN mkdir /workdir && chmod -R 775 /workdir
 WORKDIR /workdir
 COPY README.md .
-COPY test_implementations.txt .
-COPY test_srfis.txt .
 COPY Makefile .
 RUN snow-chibi update
 COPY bats.sh .

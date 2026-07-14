@@ -11,15 +11,16 @@
           let-optionals
           let-optionals*)
   (cond-expand
-    (chicken (export define-optional*
-                     %lambda-optional*-case-lambda
-                     %lambda-optional*-parse
-                     define-optional
-                     %lambda-optional-case-lambda
-                     %lambda-optional-generate-temporaries
-                     %lambda-optional-parse
-                     define-optional*
-                     %lambda-optional*-case-lambda))
+    ((or chicken stklos)
+     (export define-optional*
+             %lambda-optional*-case-lambda
+             %lambda-optional*-parse
+             define-optional
+             %lambda-optional-case-lambda
+             %lambda-optional-generate-temporaries
+             %lambda-optional-parse
+             define-optional*
+             %lambda-optional*-case-lambda))
     (else))
   (include "227.scm")
   (begin

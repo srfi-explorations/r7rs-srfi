@@ -27,6 +27,13 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
+    environment {
+        R6RS_SCHEMES="capyscheme chezscheme ironscheme sagittarius"
+        R7RS_SCHEMES="capyscheme chibi chicken gauche kawa mosh racket sagittarius skint stklos tr7 ypsilon"
+        SRFIS="1 2 5 8 11 14 16 19 25 26 27 28 29 31 37 38 39 41 42 43 48 51 60 63 64 66 69 87 95 111 113 115 116 128 145 180 197 227 235"
+        PWD="${WORKSPACE}"
+    }
+
     stages {
         stage('Init') {
             steps {
@@ -39,15 +46,12 @@ pipeline {
         stage('Tests') {
             steps {
                 script {
-                    def r6rs_schemes = readFile 'test_r6rs_schemes.txt'
-                    def r7rs_schemes = readFile 'test_r7rs_schemes.txt'
-                    def srfis = readFile 'test_srfis.txt'
                     def r6rsStages = [:]
                     def r7rsStages = [:]
 
-                    srfis.split().each { SRFI ->
+                    env.SRFIS.split().each { SRFI ->
                         stage("SRFI-${SRFI} R6RS") {
-                            r6rs_schemes.split().each { SCHEME ->
+                            env.R6RS_SCHEMES.split().each { SCHEME ->
                                 r6rsStages["${SCHEME}"] = {
                                     stage("${SCHEME}") {
                                             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -61,7 +65,7 @@ pipeline {
                             parallel r6rsStages
                         }
                         stage("SRFI-${SRFI} R7RS") {
-                            r7rs_schemes.split().each { SCHEME ->
+                            env.R7RS_SCHEMES.split().each { SCHEME ->
                                 r7rsStages["${SCHEME}"] = {
                                     stage("${SCHEME}") {
                                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {

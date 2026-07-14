@@ -39,7 +39,7 @@ Add files:
     - srfi/N.scm
         - Library body/content
 
-Add the SRFI number into test_srfis.txt.
+Add the SRFI number into Jenkinsfile.
 
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
 The test file needs to be named N.scm.
@@ -53,4 +53,4 @@ into compile-r7rs in [https://codeberg.org/retropikzel/scheme-programs](https://
 Add support for implementation
 into snow-chibi here [https://github.com/ashinn/chibi-scheme](https://github.com/ashinn/chibi-scheme).
 
-Add the name into test_r6rs.txt or/and test_r7rs.txt.
+Add the name into Jenkinsfile.

@@ -1,4 +1,4 @@
-.SILENT:
+SILENT:
 SCHEME=chibi
 SRFI=64
 RNRS=r7rs
@@ -7,7 +7,20 @@ PKG=srfi-${SRFI}-${VERSION}.tgz
 BATS_JOBS=1
 TIER=1
 BATS_ARGS=
+DOCKER_TAG=latest
+
+ifeq "${SCHEME}" "capyscheme"
 DOCKER_TAG=head
+endif
+ifeq "${SCHEME}" "chicken"
+DOCKER_TAG=head
+endif
+ifeq "${SCHEME}" "gauche"
+DOCKER_TAG=head
+endif
+ifeq "${SCHEME}" "stklos"
+DOCKER_TAG=head
+endif
 
 tmpdir=.tmp/${SCHEME}-${SRFI}
 
@@ -56,7 +69,6 @@ test: srfi-test testfiles
 test-docker: testfiles
 	cd ${tmpdir} \
 		&&	DOCKER_TAG=${DOCKER_TAG} \
-			TEST_R7RS_DEBUG=1 \
 			SNOW_PACKAGES="srfi.64 ${PKG}" \
 			AKKU_PACKAGES="${AKKU_PACKAGES}" \
 			COMPILE_R7RS=${SCHEME} \
