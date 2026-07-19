@@ -84,7 +84,7 @@
 ;; r7rs-srfi util begin
 (define (inexact->exact i) (exact i))
 (define (exact->inexact i) (inexact i))
-(define (current-seconds) (current-second))
+(define (current-seconds) (exact (floor (current-second))))
 (define (current-milliseconds) (exact (floor (/ (current-second) 1000))))
 (define start-milliseconds (current-milliseconds))
 (define (current-process-milliseconds) (- start-milliseconds (current-milliseconds)))
