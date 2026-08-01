@@ -69,6 +69,7 @@ test: srfi-test testfiles
 test-docker: testfiles
 	cd ${tmpdir} \
 		&&	DOCKER_TAG=${DOCKER_TAG} \
+			TEST_R7RS_DEBUG=1 \
 			SNOW_PACKAGES="srfi.64 ${PKG}" \
 			AKKU_PACKAGES="${AKKU_PACKAGES}" \
 			COMPILE_R7RS=${SCHEME} \

@@ -823,10 +823,10 @@
          (offset (if (> first-day-of-the-week 4) 0 1))
          ;; -2: decrement one day to compensate 1-origin of date-year-day,
          ;; and decrement one more day for Sunday belongs to the previous week
-         (fq (floor-quotient (+ (date-year-day date)
+         (fq (floor (quotient (+ (date-year-day date)
                                   first-day-of-the-week
                                   -2)
-                               7))
+                               7)))
          (w (+ fq offset)))
     (cond ((zero? w)
            ;; date belongs to the last week of the previous year
