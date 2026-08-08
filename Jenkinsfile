@@ -9,19 +9,6 @@ pipeline {
         }
     }
 
-    triggers {
-      GenericTrigger(
-        genericVariables: [[key: 'ref', value: '$.ref']],
-        causeString: 'Triggered on $ref',
-        printContributedVariables: true,
-        printPostContent: true,
-        silentResponse: false,
-        shouldNotFlatten: false,
-        regexpFilterText: '$ref',
-        regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
-      )
-    }
-
     options {
         disableConcurrentBuilds()
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
