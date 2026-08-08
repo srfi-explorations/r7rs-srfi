@@ -17,7 +17,7 @@ to test with.
 
 To run test:
 
-    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test
+    make SCHEME=<IMPLEMENTATION> SRFI=64 test
 
 ## Running tests in docker
 

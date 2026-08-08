@@ -3,24 +3,13 @@ SCHEME=chibi
 SRFI=64
 RNRS=r7rs
 VERSION=$(shell cat srfi/${SRFI}/VERSION)
+ORIG_TESTFILE=srfi-test/r7rs-programs/${SRFI}.scm
+TESTFILE=srfi-test/r7rs-programs/test-${SRFI}.scm
 PKG=srfi-${SRFI}-${VERSION}.tgz
 BATS_JOBS=1
 TIER=1
 BATS_ARGS=
 DOCKER_TAG=latest
-
-ifeq "${SCHEME}" "capyscheme"
-DOCKER_TAG=head
-endif
-ifeq "${SCHEME}" "chicken"
-DOCKER_TAG=head
-endif
-ifeq "${SCHEME}" "gauche"
-DOCKER_TAG=head
-endif
-ifeq "${SCHEME}" "stklos"
-DOCKER_TAG=head
-endif
 
 tmpdir=.tmp/${SCHEME}-${SRFI}
 
@@ -30,20 +19,24 @@ AKKU_PACKAGES=
 ifeq "${RNRS}" "r6rs"
 SFX=sps
 LIB_DIR=-I .akku/lib
-AKKU_PACKAGES=akku-r7rs
+AKKU_PACKAGES="AKKU_PACKAGES=akku-r7rs"
 endif
 
 all: package
 
-package: srfi/${SRFI}/VERSION
+package: srfi/${SRFI}/VERSION srfi-test ${TESTFILE}
 	echo "<pre>$$(cat README.md)</pre>" > README.html
 	snow-chibi package \
 		--always-yes \
 		--version=${VERSION} \
 		--maintainers="Retropikzel" \
 		--doc=README.html \
+		--test=${TESTFILE} \
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
+
+${TESTFILE}: ${ORIG_TESTFILE}
+	cp ${ORIG_TESTFILE} ${TESTFILE}
 
 ${PKG}: package
 
@@ -53,7 +46,7 @@ snow-index: ${PKG}
 install:
 	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
 
-testfiles: ${PKG}
+testfiles: package
 	rm -rf ${tmpdir}
 	mkdir -p ${tmpdir}
 	mkdir -p ${tmpdir}/180
@@ -69,9 +62,8 @@ test: srfi-test testfiles
 test-docker: testfiles
 	cd ${tmpdir} \
 		&&	DOCKER_TAG=${DOCKER_TAG} \
-			TEST_R7RS_DEBUG=1 \
 			SNOW_PACKAGES="srfi.64 ${PKG}" \
-			AKKU_PACKAGES="${AKKU_PACKAGES}" \
+			${AKKU_PACKAGES} \
 			COMPILE_R7RS=${SCHEME} \
 			test-r7rs -o test-program ${LIB_DIR} test.${SFX}
 
