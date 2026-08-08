@@ -17,7 +17,7 @@ to test with.
 
 To run test:
 
-    make SCHEME=<IMPLEMENTATION> SRFI=64 test
+    make SCHEME=chibi SRFI=64 all install test
 
 ## Running tests in docker
 
@@ -27,7 +27,7 @@ You will need to install test-r7rs and docker. Make docker work without sudo.
 
 To run test:
 
-    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test-docker
+    make SCHEME=chibi SRFI=64 test-docker
 
 
 # Adding new SRFI
@@ -42,7 +42,7 @@ Add files:
 Add the SRFI number into Jenkinsfile.
 
 Every SRFI needs corresponding test file in [test repository](https://github.com/srfi-explorations/srfi-test).
-The test file needs to be named N.scm.
+The test file needs to be named N.scm. Dont forget to put it into the convert.scm too.
 
 
 ## Adding support for new implementation
