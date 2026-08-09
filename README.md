@@ -17,7 +17,9 @@ to test with.
 
 To run test:
 
-    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test
+    make SCHEME=chibi SRFI=64 all install test
+
+Change chibi and 64 to other implementations and SRFI numbers.
 
 ## Running tests in docker
 
@@ -27,8 +29,9 @@ You will need to install test-r7rs and docker. Make docker work without sudo.
 
 To run test:
 
-    make SCHEME=<IMPLEMENTATION> SRFI=<SRFI_NUMBER> test-docker
+    make SCHEME=chibi SRFI=64 test-docker
 
+Change chibi and 64 to other implementations and SRFI numbers.
 
 # Adding new SRFI
 
