@@ -48,8 +48,8 @@ Every SRFI needs corresponding test file in [test repository](https://github.com
 The test file needs to be named N.scm.
 
 If you want to test your SRFI locally before the test is in git, run
-`make srfi-test`. Then put your test into srfi-tests/N.scm and run
-`chibi-scheme convert.scm` inside the srfi-test directory.
+`make srfi-test`. Then put your test into srfi-tests/N.scm, all-srfis list
+in convert.scm and run `chibi-scheme convert.scm` inside the srfi-test directory.
 
 
 ## Adding support for new implementation
