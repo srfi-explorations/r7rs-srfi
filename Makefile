@@ -3,6 +3,7 @@ SCHEME=chibi
 SRFI=64
 RNRS=r7rs
 VERSION=$(shell cat srfi/${SRFI}/VERSION)
+INSTALL_PREFIX=/usr/local
 PKG=srfi-${SRFI}-${VERSION}.tgz
 BATS_JOBS=1
 TIER=1
@@ -38,7 +39,9 @@ snow-index: ${PKG}
 	snow-chibi git-index ${PKG}
 
 install:
-	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
+	snow-chibi --impls=${SCHEME} \
+		--install-prefix ${INSTALL_PREFIX} \
+		--always-yes install ${PKG}
 
 testfiles: ${PKG}
 	rm -rf ${tmpdir}
