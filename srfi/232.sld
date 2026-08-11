@@ -2,7 +2,7 @@
 ;;; SPDX-FileCopyrightText: 2024 Wolfgang Corcoran-Mathe
 ;;; (C) 2022 Wolfgang Corcoran-Mathe
 
-(define-library (srfi srfi-232)
+(define-library (srfi 232)
   (export curried define-curried)
   (import (scheme base)
           (scheme case-lambda))
