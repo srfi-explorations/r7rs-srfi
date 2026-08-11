@@ -89,8 +89,7 @@
                 (bytevector-u8-set! u8vec i b)
                 (lp (+ i 1) seed*))))
           u8vec))))
-    (else (import (only (srfi 160 u8) u8vector-for-each
-                                      u8vector-unfold))))
+    (else (import (srfi 160 u8))))
 
   (cond-expand
     ((library (srfi 158))
