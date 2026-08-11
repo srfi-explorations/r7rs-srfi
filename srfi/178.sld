@@ -6,6 +6,7 @@
   (import (scheme base))
   (import (scheme case-lambda))
   (import (srfi 151))
+  (import (srfi 160 base))
   (import (srfi 160 u8))
 
   (cond-expand
