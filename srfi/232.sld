@@ -1,0 +1,6 @@
+(define-library (srfi srfi-232)
+  (export curried define-curried)
+  (import (scheme base)
+          (scheme case-lambda))
+  (include "srfi-232.scm")
+  )
