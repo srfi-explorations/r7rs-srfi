@@ -4,7 +4,7 @@ SRFI=64
 VERSION=$(shell cat srfi/${SRFI}/VERSION)
 TESTFILE=srfi-test/r7rs-programs/${SRFI}.scm
 PKG=srfi-${SRFI}-${VERSION}.tgz
-MAINTAINERS=$(shell cat srfi/${SRFI}/MAINTAINERS || echo "Retropikzel")
+MAINTAINERS=$(shell cat srfi/${SRFI}/MAINTAINERS 2> /dev/null || echo "Retropikzel")
 
 all: package
 

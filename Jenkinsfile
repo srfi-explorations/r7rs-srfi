@@ -98,7 +98,7 @@ def scheme_stage(scheme) {
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test"
-            stage("${srfi}") {
+            stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "runuser -u r7rstester -- snow-chibi update"
                     sh "mkdir -p '${resultdir}' && chmod -R 777 ."
