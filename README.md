@@ -10,6 +10,17 @@ This is a project for collection of R7RS SRFI implementations.
 
 ## Running tests
 
+You will need to install snow-chibi and implementations you want
+to test with.
+To run test:
+
+    make SCHEME=chibi SRFI=64 test
+
+Change chibi and 64 to other implementations and SRFI numbers.
+
+
+## Running tests with compile-r7rs
+
 You will need to install snow-chibi, compile-r7rs and implementations you want
 to test with.
 
@@ -17,9 +28,10 @@ to test with.
 
 To run test:
 
-    make SCHEME=chibi SRFI=64 all install test
+    make SCHEME=chibi SRFI=64 test
 
 Change chibi and 64 to other implementations and SRFI numbers.
+
 
 ## Running tests in docker
 
@@ -32,6 +44,7 @@ To run test:
     make SCHEME=chibi SRFI=64 test-docker
 
 Change chibi and 64 to other implementations and SRFI numbers.
+
 
 # Adding new SRFI
 
