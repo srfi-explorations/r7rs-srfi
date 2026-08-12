@@ -108,6 +108,7 @@ def scheme_stage(scheme) {
                     sh "mkdir -p '${resultdir}' && chmod -R 777 ."
                     sh "timeout 60 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
                     sh "cp -r *.log *.log *.json *.xml ${resultdir}/ || true"
+                    sh "rm -rf *.log *.json *.xml *.txt"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/*.txt, ${resultdir}/*.log, ${resultdir}/*.json, ${resultdir}/*.xml", allowEmptyArchive: 'true'
             }
