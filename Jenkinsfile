@@ -71,6 +71,10 @@ pipeline {
     }
 
     post {
+        success {
+            sh "date --utc --iso-8601=minutes > timestamp.txt"
+            archiveArtifacts artifacts: "timestamp.txt", allowEmptyArchive: 'true'
+        }
         always {
             cleanWs()
         }
