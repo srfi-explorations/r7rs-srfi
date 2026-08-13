@@ -31,7 +31,7 @@ pipeline {
         stage('SRFI files') {
             agent {
                 docker {
-                    image "debian:trixie"
+                    image "debian:trixie-slim"
                     reuseNode 'true'
                     args "${env.DOCKER_ARGS}"
                 }
@@ -46,7 +46,7 @@ pipeline {
         stage('Build stash') {
             agent {
                 docker {
-                    image "debian:trixie"
+                    image "debian:trixie-slim"
                     reuseNode 'true'
                     args "${env.DOCKER_ARGS}"
                 }
