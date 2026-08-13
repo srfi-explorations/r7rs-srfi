@@ -4,7 +4,7 @@
 This is a project for collection of R7RS SRFI implementations.
 
 [Repository](https://github.com/srfi-explorations/r7rs-srfi)
-[Issues](https://github.com/srfi-explorations/r7rs-srfi/issues)
+
 [Jenkins](https://jenkins.scheme.org/job/r7rs_srfi/job/r7rs-srfi/)
 
 
@@ -54,6 +54,23 @@ Add files:
         - Library definition
     - srfi/N.scm
         - Library body/content
+    - srfi/N/LICENSE
+        - Short version of the library license, use the SPDX ID from
+        [https://opensource.org/licenses](https://opensource.org/licenses)
+        - Only one license identifier in the file
+            - Snow limitation
+    - srfi/N/VERSION
+        - Current version of the library
+    - srfi/N/AUTHORS
+        - If there are multiple, separate them with ",". No spaces before or after ",".
+    - srfi/N/MAINTAINERS
+        - If there are multiple, separate them with ",". No spaces before or after ",".
+    - Run: make SRFI=N index
+        - Creates file srfi/N/index.html
+        - Contains the number, title and link
+    - Run: make SRFI=N description
+        - Creates file srfi/N/DESCRIPTION
+        - Contains number and title
 
 Add the SRFI number into test_srfis.txt.
 
