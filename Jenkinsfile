@@ -85,6 +85,7 @@ def scheme_stage(scheme) {
     def stages = []
     stages.plus(stage("Container init") {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+            archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
             sh "apt-get update && apt-get install -y git ca-certificates gcc make libffi-dev coreutils sudo"
             sh "mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
