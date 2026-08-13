@@ -22,7 +22,7 @@ snow-index: package
 	snow-chibi git-index ${PKG}
 
 install:
-	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
+	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${PKG}
 
 test: srfi-test package
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}

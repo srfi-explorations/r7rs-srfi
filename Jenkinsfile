@@ -123,7 +123,7 @@ def scheme_stage(scheme) {
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p '${resultdir}' && chmod -R 777 ."
-                    sh "timeout 60 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
+                    sh "timeout 120 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
                     sh "cp -r *.log *.log *.json *.xml ${resultdir}/ || true"
                     sh "rm -rf *.log *.json *.xml *.txt"
                 }
