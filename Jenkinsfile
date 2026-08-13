@@ -118,11 +118,12 @@ def scheme_stage(scheme) {
         def srfis = readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
-            def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test"
+            def cmd = "make SCHEME=${scheme} SRFI=${srfi} test"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "runuser -u r7rstester -- snow-chibi update"
                     sh "mkdir -p '${resultdir}' && chmod -R 777 ."
+                    sh "make SCHEME=${scheme} SRFI=${srfi} all install"
                     sh "timeout 60 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
                     sh "cp -r *.log *.log *.json *.xml ${resultdir}/ || true"
                     sh "rm -rf *.log *.json *.xml *.txt"
