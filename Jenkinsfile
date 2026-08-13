@@ -27,6 +27,22 @@ pipeline {
     }
 
     stages {
+        /*
+        stage('SRFI files') {
+            agent {
+                docker {
+                    image "debian:trixie"
+                    reuseNode 'true'
+                    args "${env.DOCKER_ARGS}"
+                }
+            }
+            steps {
+                sh "apt-get update && apt-get install -y curl"
+                sh "/bin/sh srfis.sh"
+                archiveArtifacts artifacts: "srfis/*.txt", allowEmptyArchive: 'false'
+            }
+        }
+        */
         stage('Build stash') {
             agent {
                 docker {
