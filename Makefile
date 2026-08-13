@@ -19,7 +19,7 @@ package: srfi/${SRFI}/VERSION
 	srfi/${SRFI}.sld
 
 install:
-	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${PKG}
+	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
 
 test: srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TESTFILE}
