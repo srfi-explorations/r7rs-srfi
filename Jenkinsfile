@@ -110,6 +110,7 @@ def scheme_stage(scheme) {
             sh 'useradd r7rstester -m'
             sh 'echo "r7rstester ALL=(root) /usr/bin/cp" >> /etc/sudoers'
             sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
+            sh "runuser -u r7rstester -- snow-chibi update"
             unstash 'tests'
         }
     })
@@ -121,7 +122,6 @@ def scheme_stage(scheme) {
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "runuser -u r7rstester -- snow-chibi update"
                     sh "mkdir -p '${resultdir}' && chmod -R 777 ."
                     sh "timeout 60 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
                     sh "cp -r *.log *.log *.json *.xml ${resultdir}/ || true"
