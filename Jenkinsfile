@@ -132,7 +132,7 @@ pipeline {
                 stage('Foment') {
                     agent {
                         docker {
-                            label '${env.LABEL}'
+                            label "${env.LABEL}"
                             image "schemers/foment"
                             args "${env.DOCKER_ARGS}"
                         }
