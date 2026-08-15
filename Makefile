@@ -63,7 +63,7 @@ test-docker-tap: ${TESTFILE} package
 	test-r7rs -o test-program ${TESTFILE}
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git --branch=retropikzel-tap-output --depth=1
+	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
 	cd srfi-test && chibi-scheme convert.scm
 
 clean:
