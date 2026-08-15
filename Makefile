@@ -61,7 +61,9 @@ snow-index: package
 	snow-chibi git-index ${PKG}
 
 install:
-	snow-chibi --impls=${SCHEME} --always-yes install ${PKG}
+	snow-chibi --impls=${SCHEME} \
+		--install-prefix ${INSTALL_PREFIX} \
+		--always-yes install ${PKG}
 
 test: srfi-test package
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
