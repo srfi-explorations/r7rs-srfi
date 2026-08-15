@@ -94,6 +94,14 @@ If you want to test your SRFI locally before the test is in git, run
 in convert.scm and run `chibi-scheme convert.scm` inside the srfi-test directory.
 
 
+### Additional notes
+
+Some guidelines to get uniformity, but not mandatory
+
+- Put license (header/short version) into srfi/N.scm file at the top
+- Remove professions, for example Dr., from author names in srfi/N/AUTHORS file
+
+
 ## Adding support for new implementation
 
 Add support for implementation

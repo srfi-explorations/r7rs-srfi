@@ -1,24 +1,25 @@
-.SILENT:
+.DEFAULT: package
+.POSIX:
 SCHEME=chibi
 SRFI=64
 PKG=srfi-${SRFI}-${VERSION}.tgz
 TAPPKG=tap-${PKG}
 
 LICENSEFILE=srfi/${SRFI}/LICENSE
-LICENSE=$(shell cat ${LICENSEFILE} 2> /dev/null | tr -d '\n' | tr -d ' ')
+LICENSE=$$(cat ${LICENSEFILE} 2> /dev/null)
 VERSIONFILE=srfi/${SRFI}/VERSION
-VERSION=$(shell cat ${VERSIONFILE})
+VERSION=$$(cat ${VERSIONFILE})
 MAINTAINERSFILE=srfi/${SRFI}/MAINTAINERS
-MAINTAINERS=$(shell cat ${MAINTAINERSFILE} 2> /dev/null | tr -d '\n')
+MAINTAINERS=$$(cat ${MAINTAINERSFILE} 2> /dev/null || echo "Retropikzel")
 AUTHORSFILE=srfi/${SRFI}/AUTHORS
-AUTHORS=$(shell cat ${AUTHORSFILE} 2> /dev/null | tr -d '\n')
+AUTHORS=$$(cat ${AUTHORSFILE} 2> /dev/null)
 ORIGTESTFILE=srfi-test/r7rs-programs/${SRFI}.scm
 TESTFILE=test.scm
 TAPTESTFILE=srfi-test/r7rs-programs/tap-${SRFI}.scm
 ORIGINDEXFILE=srfi/${SRFI}/index.html
 INDEXFILE=index.html
 DESCFILE=srfi/${SRFI}/DESCRIPTION
-DESCRIPTION=$(shell cat ${DESCFILE} 2> /dev/null | tr -d '\n')
+DESCRIPTION=$$(cat ${DESCFILE} 2> /dev/null)
 
 all: package
 
@@ -30,7 +31,13 @@ ${TESTFILE}: ${ORIGTESTFILE}
 ${INDEXFILE}: ${ORIGINDEXFILE}
 	cp ${ORIGINDEXFILE} ${INDEXFILE}
 
-package: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
+testfile:
+	cp ${ORIGTESTFILE} ${TESTFILE}
+
+indexfile:
+	cp ${ORIGINDEXFILE} ${INDEXFILE}
+
+package: srfi-test testfile indexfile ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
 		--license="${LICENSE}" \
@@ -39,13 +46,13 @@ package: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFIL
 		--authors="${AUTHORS}" \
 		--test="${TESTFILE}" \
 		--doc="${INDEXFILE}" \
-		--description='${DESCRIPTION}' \
+		--description="${DESCRIPTION}" \
 	srfi/${SRFI}.sld
 
-package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TAPTESTFILE} ${INDEXFILE} ${DESCFILE}
+package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TAPTESTFILE} ${INDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
-		--license="${LICENSE}" \
+		--license=${LICENSE} \
 		--version="${VERSION}" \
 		--maintainers="${MAINTAINERS}" \
 		--authors="${AUTHORS}" \
@@ -74,7 +81,7 @@ description: .tmp/srfi-${SRFI}.html
 deftaul-maintainer:
 	echo "Retropikzel" > ${MAINTAINERSFILE}
 
-install: ${PKG}
+install: package
 	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${PKG}
 
 test: package srfi-test
@@ -104,6 +111,7 @@ test-docker-tap: ${TAPTESTFILE}
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
 	cd srfi-test && chibi-scheme convert.scm
+	cp -r srfi-test/180 .
 
 clean:
 	git clean -X -f
