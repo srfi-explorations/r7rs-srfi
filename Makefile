@@ -5,6 +5,7 @@ VERSION=$(shell cat srfi/${SRFI}/VERSION)
 TESTFILE=srfi-test/r7rs-programs/${SRFI}.scm
 TAPTESTFILE=srfi-test/r7rs-programs/tap-${SRFI}.scm
 PKG=srfi-${SRFI}-${VERSION}.tgz
+TAPPKG=tap-${PKG}
 INSTALL_ARGS=
 
 all: package
@@ -30,6 +31,7 @@ package-tap: srfi/${SRFI}/VERSION ${TESTFILE}
 		--test=${TAPTESTFILE} \
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
+	mv ${PKG} ${TAPPKG}
 
 snow-index: package
 	snow-chibi git-index ${PKG}
@@ -41,17 +43,22 @@ test: srfi-test package
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
 
 test-tap: srfi-test package-tap
-	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
+	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${TAPPKG}
 
 test-compile-r7rs: srfi-test ${TESTFILE}
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TESTFILE}
 	./test-program
 
-test-compile-r7rs-tap: srfi-test ${TESTFILE}
+test-compile-r7rs-tap: srfi-test ${TAPTESTFILE}
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TAPTESTFILE}
 	./test-program
 
 test-docker: ${TESTFILE} package
+	SNOW_PACKAGES="srfi.64 ${PKG}" \
+	COMPILE_R7RS=${SCHEME} \
+	test-r7rs -o test-program ${TESTFILE}
+
+test-docker-tap: ${TESTFILE} package
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TESTFILE}
