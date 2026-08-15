@@ -421,7 +421,7 @@ def scheme_stage(scheme) {
             sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
             sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
             sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-            sh "apt-get update && apt-get install -y git ca-certificates gcc make libffi-dev coreutils sudo && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
+            sh "apt-get update && apt-get install -y sudo && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
             sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
             sh 'useradd r7rstester -m'
