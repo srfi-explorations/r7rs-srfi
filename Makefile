@@ -3,6 +3,7 @@ SCHEME=chibi
 SRFI=64
 VERSION=$(shell cat srfi/${SRFI}/VERSION)
 TESTFILE=srfi-test/r7rs-programs/${SRFI}.scm
+TAPTESTFILE=srfi-test/r7rs-programs/tap-${SRFI}.scm
 PKG=srfi-${SRFI}-${VERSION}.tgz
 
 all: package
@@ -18,6 +19,17 @@ package: srfi/${SRFI}/VERSION ${TESTFILE}
 		--description="SRFI-${SRFI}" \
 	srfi/${SRFI}.sld
 
+package-tap: srfi/${SRFI}/VERSION ${TESTFILE}
+	echo "<pre>$$(cat README.md)</pre>" > README.html
+	snow-chibi package \
+		--always-yes \
+		--version=${VERSION} \
+		--maintainers="${MAINTAINERS}" \
+		--doc=README.html \
+		--test=${TAPTESTFILE} \
+		--description="SRFI-${SRFI}" \
+	srfi/${SRFI}.sld
+
 snow-index: package
 	snow-chibi git-index ${PKG}
 
@@ -27,8 +39,15 @@ install:
 test: srfi-test package
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
 
+test-tap: srfi-test package-tap
+	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
+
 test-compile-r7rs: srfi-test ${TESTFILE}
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TESTFILE}
+	./test-program
+
+test-compile-r7rs-tap: srfi-test ${TESTFILE}
+	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TAPTESTFILE}
 	./test-program
 
 test-docker: ${TESTFILE} package
@@ -37,7 +56,7 @@ test-docker: ${TESTFILE} package
 	test-r7rs -o test-program ${TESTFILE}
 
 srfi-test:
-	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
+	git clone https://github.com/srfi-explorations/srfi-test.git --branch=retropikzel-tap-output --depth=1
 	cd srfi-test && chibi-scheme convert.scm
 
 clean:

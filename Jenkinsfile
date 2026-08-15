@@ -119,7 +119,7 @@ def scheme_stage(scheme) {
         def srfis = readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
-            def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs"
+            def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs-tap"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p '${resultdir}' && chmod -R 777 ."
