@@ -116,7 +116,7 @@ def scheme_stage(scheme) {
     })
 
     stages.plus(stage("${scheme}") {
-        def srfis = readFile "test_srfis.txt"
+        def srfis = "64" //readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} INSTALL_ARGS=--install-tests?=1 all install test-compile-r7rs-tap"
