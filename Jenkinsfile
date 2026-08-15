@@ -125,7 +125,7 @@ def scheme_stage(scheme) {
                     sh "mkdir -p '${resultdir}' && chmod -R 777 . && snow-chibi install --impls=${scheme} retropikzel.tap"
                     sh "timeout 120 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
                 }
-                archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt, allowEmptyArchive: 'true'
+                archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
         }
     })
