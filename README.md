@@ -38,7 +38,7 @@ Change chibi and 64 to other implementations and SRFI numbers.
 
 To get Test Anything Protocl (TAP) output run:
 
-    make SCHEME=chibi SRFI=64 test-compile-r7rs-tap
+    make SCHEME=chibi SRFI=64 all install-tap test-compile-r7rs
 
 
 ## Running tests in docker

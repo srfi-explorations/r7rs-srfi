@@ -79,6 +79,9 @@ deftaul-maintainer:
 install:
 	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${PKG}
 
+install-tap: ${TAPPKG}
+	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${TAPPKG}
+
 test: package srfi-test
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
 
@@ -89,19 +92,15 @@ test-compile-r7rs: ${TESTFILE} srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TESTFILE}
 	./test-program
 
-test-compile-r7rs-tap: ${TAPTESTFILE} srfi-test
-	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TAPTESTFILE}
-	./test-program
-
 test-docker: ${TESTFILE} package srfi-test
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TESTFILE}
 
-test-docker-tap: ${TAPTESTFILE} package-tap
+test-docker-tap: ${TAPTESTFILE}
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
-	test-r7rs -o test-program ${TESTFILE}
+	test-r7rs -o test-program ${TAPTESTFILE}
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
