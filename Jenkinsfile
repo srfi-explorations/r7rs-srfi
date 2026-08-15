@@ -22,7 +22,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS='-t --user=root --cpus=1 --memory=1G --rm -v /etc/apt/apt.conf.d/:/etc/apt/apt.conf.d:ro'
+        DOCKER_ARGS='-t --user=root --cpus=1 --memory=1G --rm'
         LABEL='parallel'
     }
 
@@ -37,6 +37,9 @@ pipeline {
                 }
             }
             steps {
+                sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
+                sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
+                sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
                 sh "apt-get update && apt-get install -y curl"
                 sh "/bin/sh srfis.sh"
                 archiveArtifacts artifacts: "srfis/*.txt", allowEmptyArchive: 'false'
@@ -52,6 +55,9 @@ pipeline {
                 }
             }
             steps {
+                sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
+                sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
+                sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
                 sh "apt-get update && apt-get install -y git ca-certificates gcc make"
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1 || true"
                 sh "make -C chibi-scheme"
@@ -412,6 +418,9 @@ def scheme_stage(scheme) {
     stages.plus(stage("Container init") {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
+            sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
+            sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
+            sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
             sh "apt-get update && apt-get install -y make sudo && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
             sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
