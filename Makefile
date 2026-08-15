@@ -22,13 +22,15 @@ DESCRIPTION=$(shell cat ${DESCFILE} 2> /dev/null | tr -d '\n')
 
 all: package
 
+${ORIGTESTFILE}: srfi-test
+
 ${TESTFILE}: ${ORIGTESTFILE}
 	cp ${ORIGTESTFILE} ${TESTFILE}
 
 ${INDEXFILE}: ${ORIGINDEXFILE}
 	cp ${ORIGINDEXFILE} ${INDEXFILE}
 
-package: ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
+package: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
 		--license="${LICENSE}" \
@@ -40,15 +42,16 @@ package: ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTF
 		--description='${DESCRIPTION}' \
 	srfi/${SRFI}.sld
 
-package-tap: srfi/${SRFI}/VERSION ${TESTFILE}
-	echo "<pre>$$(cat README.md)</pre>" > README.html
+package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
-		--version=${VERSION} \
+		--license="${LICENSE}" \
+		--version="${VERSION}" \
 		--maintainers="${MAINTAINERS}" \
-		--doc=README.html \
-		--test=${TAPTESTFILE} \
-		--description="SRFI-${SRFI}" \
+		--authors="${AUTHORS}" \
+		--test="${TAPTESTFILE}" \
+		--doc="${INDEXFILE}" \
+		--description='${DESCRIPTION}' \
 	srfi/${SRFI}.sld
 	mv ${PKG} ${TAPPKG}
 
@@ -56,6 +59,8 @@ package-tap: srfi/${SRFI}/VERSION ${TESTFILE}
 	mkdir -p .tmp
 	curl -L -o .tmp/srfi-${SRFI}.html https://srfi.schemers.org/srfi-${SRFI}
 	grep -F "<title>" .tmp/srfi-${SRFI}.html || rm -rf .tmp/srfi-${SRFI}.html
+
+${ORIGINDEXFILE}: index
 
 index: .tmp/srfi-${SRFI}.html
 	printf "<html><head><title>SRFI-${SRFI}</title></head><body>" > ${ORIGINDEXFILE}
@@ -71,29 +76,26 @@ description: .tmp/srfi-${SRFI}.html
 deftaul-maintainer:
 	echo "Retropikzel" > ${MAINTAINERSFILE}
 
-snow-index: package
-	snow-chibi git-index ${PKG}
-
 install:
 	snow-chibi --impls=${SCHEME} \
 		--install-prefix ${INSTALL_PREFIX} \
 		--always-yes install ${PKG}
 
-test: srfi-test package
+test: package srfi-test
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
 
-test-tap: srfi-test package-tap
+test-tap: package-tap srfi-test
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${TAPPKG}
 
-test-compile-r7rs: srfi-test ${TESTFILE}
+test-compile-r7rs: ${TESTFILE} srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TESTFILE}
 	./test-program
 
-test-compile-r7rs-tap: srfi-test ${TAPTESTFILE}
+test-compile-r7rs-tap: ${TAPTESTFILE} srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TAPTESTFILE}
 	./test-program
 
-test-docker: ${TESTFILE} package
+test-docker: ${TESTFILE} package srfi-test
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TESTFILE}
@@ -111,6 +113,6 @@ clean:
 	git clean -X -f
 	rm -rf .tmp
 
-cleaner: clean
+distclean: clean
 	rm -rf srfi-test
 
