@@ -58,7 +58,8 @@ pipeline {
                 sh "make -C chibi-scheme install"
                 stash includes: 'chibi-scheme/**', name: 'chibi'
 
-                sh "make distclean srfi-test"
+                sh "rm -rf srfi-test"
+                sh "make srfi-test"
                 stash includes: 'srfi-test/**', name: 'tests'
             }
         }
