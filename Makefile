@@ -42,7 +42,7 @@ package: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFIL
 		--description='${DESCRIPTION}' \
 	srfi/${SRFI}.sld
 
-package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
+package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TAPTESTFILE} ${INDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
 		--license="${LICENSE}" \
@@ -60,8 +60,6 @@ package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHOR
 	curl -L -o .tmp/srfi-${SRFI}.html https://srfi.schemers.org/srfi-${SRFI}
 	grep -F "<title>" .tmp/srfi-${SRFI}.html || rm -rf .tmp/srfi-${SRFI}.html
 
-${ORIGINDEXFILE}: index
-
 index: .tmp/srfi-${SRFI}.html
 	printf "<html><head><title>SRFI-${SRFI}</title></head><body>" > ${ORIGINDEXFILE}
 	printf "<a href='https://srfi.schemers.org/srfi-${SRFI}'>" >> ${ORIGINDEXFILE}
@@ -76,10 +74,8 @@ description: .tmp/srfi-${SRFI}.html
 deftaul-maintainer:
 	echo "Retropikzel" > ${MAINTAINERSFILE}
 
-install:
-	snow-chibi --impls=${SCHEME} \
-		--install-prefix ${INSTALL_PREFIX} \
-		--always-yes install ${PKG}
+install: ${PKG}
+	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${PKG}
 
 test: package srfi-test
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
@@ -91,7 +87,7 @@ test-compile-r7rs: ${TESTFILE} srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TESTFILE}
 	./test-program
 
-test-compile-r7rs-tap: ${TAPTESTFILE} srfi-test
+test-compile-r7rs-tap: ${TESTFILE} srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TAPTESTFILE}
 	./test-program
 
@@ -100,10 +96,10 @@ test-docker: ${TESTFILE} package srfi-test
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TESTFILE}
 
-test-docker-tap: ${TAPTESTFILE} package-tap
+test-docker-tap: ${TAPTESTFILE}
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
-	test-r7rs -o test-program ${TESTFILE}
+	test-r7rs -o test-program ${TAPTESTFILE}
 
 srfi-test:
 	git clone https://github.com/srfi-explorations/srfi-test.git --depth=1
