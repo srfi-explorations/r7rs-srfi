@@ -3,9 +3,9 @@
 
 This is a project for collection of R7RS SRFI implementations.
 
-[Repository](https://github.com/srfi-explorations/r7rs-srfi)
-
-[Jenkins](https://jenkins.scheme.org/job/r7rs_srfi/job/r7rs-srfi/)
+- [Repository](https://github.com/srfi-explorations/r7rs-srfi)
+- [Issues](https://github.com/srfi-explorations/r7rs-srfi/issues)
+- [Jenkins](https://jenkins.scheme.org/job/r7rs_srfi/job/r7rs-srfi/)
 
 
 ## Running tests
@@ -18,6 +18,10 @@ To run test:
 
 Change chibi and 64 to other implementations and SRFI numbers.
 
+To get Test Anything Protocl (TAP) output run:
+
+    make SCHEME=chibi SRFI=64 test-tap
+
 
 ## Running tests with compile-r7rs
 
@@ -28,9 +32,13 @@ to test with.
 
 To run test:
 
-    make SCHEME=chibi SRFI=64 test
+    make SCHEME=chibi SRFI=64 all install test-compile-r7rs
 
 Change chibi and 64 to other implementations and SRFI numbers.
+
+To get Test Anything Protocl (TAP) output run:
+
+    make SCHEME=chibi SRFI=64 test-compile-r7rs-tap
 
 
 ## Running tests in docker
@@ -44,6 +52,10 @@ To run test:
     make SCHEME=chibi SRFI=64 test-docker
 
 Change chibi and 64 to other implementations and SRFI numbers.
+
+To get Test Anything Protocl (TAP) output run:
+
+    make SCHEME=chibi SRFI=64 test-docker-tap
 
 
 # Adding new SRFI
