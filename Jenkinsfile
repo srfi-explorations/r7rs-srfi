@@ -40,7 +40,6 @@ pipeline {
                 sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
                 sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
                 sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-                sh "sed -i 's/https/http/g' /etc/apt/sources.list"
                 sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
                 sh "apt-get update && apt-get install -y curl"
                 sh "/bin/sh srfis.sh"
@@ -60,7 +59,6 @@ pipeline {
                 sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
                 sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
                 sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-                sh "sed -i 's/https/http/g' /etc/apt/sources.list"
                 sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
                 sh "apt-get update && apt-get install -y git ca-certificates gcc make"
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1 || true"
@@ -433,7 +431,6 @@ def scheme_stage(scheme) {
             sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
             sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
             sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-            sh "sed -i 's/https/http/g' /etc/apt/sources.list"
             sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
             sh "apt-get update && apt-get install -y make && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
