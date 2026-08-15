@@ -82,6 +82,22 @@ pipeline {
                         cleanWs()
                     }
                 }
+                stage('Chicken') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/chicken"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "csi -version | grep Version | awk '{print(\$2)}' > chicken_version.txt"
+                        script {
+                            scheme_stage("chicken")
+                        }
+                        cleanWs()
+                    }
+                }
             }
         }
     }
@@ -113,7 +129,7 @@ def scheme_stage(scheme) {
     })
 
     stages.plus(stage("${scheme}") {
-        def srfis = "64" //readFile "test_srfis.txt"
+        def srfis = readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs-tap"
