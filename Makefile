@@ -42,7 +42,7 @@ package: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFIL
 		--description='${DESCRIPTION}' \
 	srfi/${SRFI}.sld
 
-package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
+package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TAPTESTFILE} ${INDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
 		--license="${LICENSE}" \
@@ -74,11 +74,8 @@ description: .tmp/srfi-${SRFI}.html
 deftaul-maintainer:
 	echo "Retropikzel" > ${MAINTAINERSFILE}
 
-install:
+install: ${PKG}
 	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${PKG}
-
-install-tap: ${TAPPKG}
-	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${TAPPKG}
 
 test: package srfi-test
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
@@ -88,6 +85,10 @@ test-tap: package-tap srfi-test
 
 test-compile-r7rs: ${TESTFILE} srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TESTFILE}
+	./test-program
+
+test-compile-r7rs-tap: ${TESTFILE} srfi-test
+	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TAPTESTFILE}
 	./test-program
 
 test-docker: ${TESTFILE} package srfi-test
