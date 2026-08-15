@@ -22,6 +22,8 @@ DESCRIPTION=$(shell cat ${DESCFILE} 2> /dev/null | tr -d '\n')
 
 all: package
 
+${ORIGTESTFILE}: srfi-test
+
 ${TESTFILE}: ${ORIGTESTFILE}
 	cp ${ORIGTESTFILE} ${TESTFILE}
 
@@ -74,27 +76,24 @@ description: .tmp/srfi-${SRFI}.html
 deftaul-maintainer:
 	echo "Retropikzel" > ${MAINTAINERSFILE}
 
-snow-index: package
-	snow-chibi git-index ${PKG}
-
 install:
 	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${PKG}
 
-test: srfi-test package
+test: package srfi-test
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
 
-test-tap: srfi-test package-tap
+test-tap: package-tap srfi-test
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${TAPPKG}
 
-test-compile-r7rs: srfi-test ${TESTFILE}
+test-compile-r7rs: ${TESTFILE} srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TESTFILE}
 	./test-program
 
-test-compile-r7rs-tap: srfi-test ${TAPTESTFILE}
+test-compile-r7rs-tap: ${TAPTESTFILE} srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TAPTESTFILE}
 	./test-program
 
-test-docker: ${TESTFILE} package
+test-docker: ${TESTFILE} package srfi-test
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TESTFILE}
@@ -112,6 +111,6 @@ clean:
 	git clean -X -f
 	rm -rf .tmp
 
-cleaner: clean
+distclean: clean
 	rm -rf srfi-test
 
