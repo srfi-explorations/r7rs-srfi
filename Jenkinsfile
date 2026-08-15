@@ -328,6 +328,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                /* FIXME
                 stage('Sagittarius') {
                     agent {
                         docker {
@@ -344,6 +345,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 stage('Skint') {
                     agent {
                         docker {
