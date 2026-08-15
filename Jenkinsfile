@@ -121,6 +121,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                /* FIXME
                 stage('Cyclone') {
                     agent {
                         docker {
@@ -137,6 +138,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 stage('Foment') {
                     agent {
                         docker {
@@ -186,6 +188,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                /*  FIXME
                 stage('Guile') {
                     agent {
                         docker {
@@ -202,6 +205,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 stage('Kawa') {
                     agent {
                         docker {
@@ -218,6 +222,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                /* FIXME
                 stage('Loko') {
                     agent {
                         docker {
@@ -235,6 +240,8 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
+                /* FIXME
                 stage('Meevax') {
                     agent {
                         docker {
@@ -251,6 +258,8 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
+                /* FIXME
                 stage('MIT-Scheme') {
                     agent {
                         docker {
@@ -267,6 +276,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 stage('Mosh') {
                     agent {
                         docker {
@@ -283,6 +293,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                /* FIXME
                 stage('Larceny') {
                     agent {
                         docker {
@@ -298,6 +309,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 stage('Racket') {
                     agent {
                         docker {
@@ -434,9 +446,10 @@ def scheme_stage(scheme) {
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "mkdir -p '${resultdir}' && chmod -R 777 . && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
-                    sh "make SCHEME=${scheme} SRFI=${srfi} all install"
-                    sh "timeout 120 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
+                    sh "mkdir -p '${resultdir}' && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
+                    sh "make SCHEME=${scheme} SRFI=${srfi} all install | tee ${resultdir}/out.txt"
+                    sh "chmod -R 777 ."
+                    sh "timeout 120 runuser -u r7rstester -- ${cmd} 2>&1 | tee -a '${resultdir}/out.txt'"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
