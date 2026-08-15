@@ -18,6 +18,10 @@ To run test:
 
 Change chibi and 64 to other implementations and SRFI numbers.
 
+To get Test Anything Protocl (TAP) output run:
+
+    make SCHEME=chibi SRFI=64 test-tap
+
 
 ## Running tests with compile-r7rs
 
@@ -28,9 +32,13 @@ to test with.
 
 To run test:
 
-    make SCHEME=chibi SRFI=64 test
+    make SCHEME=chibi SRFI=64 test-compile-r7rs
 
 Change chibi and 64 to other implementations and SRFI numbers.
+
+To get Test Anything Protocl (TAP) output run:
+
+    make SCHEME=chibi SRFI=64 test-compile-r7rs-tap
 
 
 ## Running tests in docker
@@ -44,6 +52,10 @@ To run test:
     make SCHEME=chibi SRFI=64 test-docker
 
 Change chibi and 64 to other implementations and SRFI numbers.
+
+To get Test Anything Protocl (TAP) output run:
+
+    make SCHEME=chibi SRFI=64 test-docker-tap
 
 
 # Adding new SRFI
