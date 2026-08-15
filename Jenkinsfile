@@ -66,6 +66,21 @@ pipeline {
 
         stage('Parallel') {
             parallel {
+                stage('Capyscheme') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/capyscheme"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "capy --version | awk '{print(\$2)}' > capyscheme_version.txt"
+                        script {
+                            scheme_stage("capyscheme")
+                        }
+                    }
+                }
                 stage('Chibi') {
                     agent {
                         docker {
@@ -94,6 +109,277 @@ pipeline {
                         sh "csi -version | grep Version | awk '{print(\$2)}' > chicken_version.txt"
                         script {
                             scheme_stage("chicken")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Cyclone') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/cyclone"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "icyc -v | grep Version | awk '{print(\$4)}' > cyclone_version.txt"
+                        script {
+                            scheme_stage("cyclone")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Foment') {
+                    agent {
+                        docker {
+                            label '${env.LABEL}'
+                            image "schemers/foment"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "foment -v | grep Foment | awk '{print(\$3)}' > foment_version.txt"
+                        script {
+                            scheme_stage("foment")
+                        }
+                    }
+                }
+                stage('Gambit') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/gambit"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        script {
+                            sh "gsi -v | awk '{print(\$1)}' | tr -d 'v' > gambit_version.txt"
+                            scheme_stage("gambit")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Gauche') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/gauche"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "gosh -V | grep Gauche | awk '{print(\$5)}' > gauche_version.txt"
+                        script {
+                            scheme_stage("gauche")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Guile') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/guile"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "guile --version | grep guile | awk '{print(\$4)}' > guile_version.txt"
+                        script {
+                            scheme_stage("guile")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Kawa') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/kawa"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "kawa --version | grep Kawa | awk '{print(\$2)}' > kawa_version.txt"
+                        script {
+                            scheme_stage("kawa")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Loko') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/loko"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "echo '(import (loko)) (display (loko-version)) (newline)' > loko_version.scm"
+                        sh "loko --program loko_version.scm > loko_version.txt"
+                        script {
+                            scheme_stage("loko")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Meevax') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/meevax"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "meevax --version > meevax_version.txt"
+                        script {
+                            scheme_stage("meevax")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('MIT-Scheme') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/mit-scheme"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "mit-scheme --version | grep MIT | awk '{print(\$3)}' > mit-scheme_version.txt"
+                        script {
+                            scheme_stage("mit-scheme")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Mosh') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/mosh"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "mosh -v | grep Mosh | awk '{print(\$8)}' > mosh_version.txt"
+                        script {
+                            scheme_stage("mosh")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Larceny') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/larceny"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "larceny --version | awk '{print(\$2)}' | tr -d 'v' > larceny_version.txt"
+                        script {
+                            scheme_stage("larceny")
+                        }
+                    }
+                }
+                stage('Racket') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/racket"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "racket --version | awk '{print(\$4)}' | tr -d 'v' > racket_version.txt"
+                        script {
+                            scheme_stage("racket")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Sagittarius') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/sagittarius"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "sash --version | awk '{print(\$5)}' > sagittarius_version.txt"
+                        script {
+                            scheme_stage("sagittarius")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Skint') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/skint"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "skint --version | grep version | awk -F '\"' '{print(\$2)}' > skint_version.txt"
+                        script {
+                            scheme_stage("skint")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('STklos') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/stklos"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "stklos --version | grep stklos | awk '{print(\$2)}' > stklos_version.txt"
+                        script {
+                            scheme_stage("stklos")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('tr7') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/tr7"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "printf '(exit)\n' | tr7i | grep TR7 | awk '{print(\$5)}' > tr7_version.txt"
+                        script {
+                            scheme_stage("tr7")
+                        }
+                        cleanWs()
+                    }
+                }
+                stage('Ypsilon') {
+                    agent {
+                        docker {
+                            label "${env.LABEL}"
+                            image "schemers/ypsilon"
+                            args "${env.DOCKER_ARGS}"
+                        }
+                    }
+                    steps {
+                        sh "ypsilon --version | awk -F '-' '{print(\$2)}' | awk '{print(\$1)}' > ypsilon_version.txt"
+                        script {
+                            scheme_stage("ypsilon")
                         }
                         cleanWs()
                     }
@@ -129,7 +415,7 @@ def scheme_stage(scheme) {
     })
 
     stages.plus(stage("${scheme}") {
-        def srfis = readFile "test_srfis.txt"
+        def srfis = "64" //readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs-tap"
