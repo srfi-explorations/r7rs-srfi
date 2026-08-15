@@ -71,18 +71,6 @@ description: .tmp/srfi-${SRFI}.html
 deftaul-maintainer:
 	echo "Retropikzel" > ${MAINTAINERSFILE}
 
-package-tap: srfi/${SRFI}/VERSION ${TESTFILE}
-	echo "<pre>$$(cat README.md)</pre>" > README.html
-	snow-chibi package \
-		--always-yes \
-		--version=${VERSION} \
-		--maintainers="${MAINTAINERS}" \
-		--doc=README.html \
-		--test=${TAPTESTFILE} \
-		--description="SRFI-${SRFI}" \
-	srfi/${SRFI}.sld
-	mv ${PKG} ${TAPPKG}
-
 snow-index: package
 	snow-chibi git-index ${PKG}
 

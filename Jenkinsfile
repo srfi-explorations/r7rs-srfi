@@ -70,7 +70,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/capyscheme"
+                            image "schemers/capyscheme:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -148,7 +148,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/gambit"
+                            image "schemers/gambit:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
