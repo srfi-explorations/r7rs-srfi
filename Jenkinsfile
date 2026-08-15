@@ -421,8 +421,6 @@ def scheme_stage(scheme) {
             unstash 'chibi'
             sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
             sh 'useradd r7rstester -m'
-            sh 'chmod -R 777 /usr/local'
-            //sh 'echo "r7rstester ALL=(root) NOPASSWD: /usr/bin/cp" >> /etc/sudoers'
             sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
             sh "runuser -u r7rstester -- snow-chibi update"
             unstash 'tests'
@@ -433,10 +431,11 @@ def scheme_stage(scheme) {
         def srfis = "64" //readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
-            def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs-tap"
+            def cmd = "make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p '${resultdir}' && chmod -R 777 . && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
+                    sh "make SCHEME=${scheme} SRFI=${srfi} all install"
                     sh "timeout 120 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
