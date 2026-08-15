@@ -6,7 +6,6 @@ TESTFILE=srfi-test/r7rs-programs/${SRFI}.scm
 TAPTESTFILE=srfi-test/r7rs-programs/tap-${SRFI}.scm
 PKG=srfi-${SRFI}-${VERSION}.tgz
 TAPPKG=tap-${PKG}
-INSTALL_ARGS=
 
 all: package
 
@@ -37,7 +36,7 @@ snow-index: package
 	snow-chibi git-index ${PKG}
 
 install:
-	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${INSTALL_ARGS} ${PKG}
+	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${PKG}
 
 test: srfi-test package
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}

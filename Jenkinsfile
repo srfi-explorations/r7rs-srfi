@@ -119,9 +119,10 @@ def scheme_stage(scheme) {
         def srfis = "64" //readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
-            def cmd = "make SCHEME=${scheme} SRFI=${srfi} INSTALL_ARGS=--install-tests?=1 all install test-compile-r7rs-tap"
+            def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs-tap"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh "snow-chibi install --impls=${scheme} retropikzel.tap"
                     sh "mkdir -p '${resultdir}' && chmod -R 777 ."
                     sh "timeout 120 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
                     sh "cp -r *.log *.log *.json *.xml ${resultdir}/ || true"
