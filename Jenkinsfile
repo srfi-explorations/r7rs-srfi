@@ -99,6 +99,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                /*
                 stage('Chicken') {
                     agent {
                         docker {
@@ -388,6 +389,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
             }
         }
     }
