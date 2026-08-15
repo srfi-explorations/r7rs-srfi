@@ -425,7 +425,7 @@ def scheme_stage(scheme) {
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs-tap"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "mkdir -p '${resultdir}' && chmod -R 777 . && snow-chibi install --impls=${scheme} --always-yes srfi.64 retropikzel.tap"
+                    sh "mkdir -p '${resultdir}' && chmod -R 777 . && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 --install-tests?=1 srfi.64 retropikzel.tap"
                     sh "timeout 120 runuser -u r7rstester -- ${cmd} 2>&1 | tee '${resultdir}/out.txt'"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
