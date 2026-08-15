@@ -60,8 +60,6 @@ package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHOR
 	curl -L -o .tmp/srfi-${SRFI}.html https://srfi.schemers.org/srfi-${SRFI}
 	grep -F "<title>" .tmp/srfi-${SRFI}.html || rm -rf .tmp/srfi-${SRFI}.html
 
-${ORIGINDEXFILE}: index
-
 index: .tmp/srfi-${SRFI}.html
 	printf "<html><head><title>SRFI-${SRFI}</title></head><body>" > ${ORIGINDEXFILE}
 	printf "<a href='https://srfi.schemers.org/srfi-${SRFI}'>" >> ${ORIGINDEXFILE}
