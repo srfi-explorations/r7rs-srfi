@@ -102,13 +102,10 @@ def scheme_stage(scheme) {
     stages.plus(stage("Container init") {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
-            sh "apt-get update && apt-get install -y git ca-certificates gcc make libffi-dev coreutils sudo"
-            sh "mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
+            sh "apt-get update && apt-get install -y git ca-certificates gcc make libffi-dev coreutils sudo && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
-            sh 'make -C chibi-scheme install'
-            sh "snow-chibi install --impls=chibi retropikzel.compile-r7rs"
-            sh 'useradd r7rstester -m'
-            sh 'echo "r7rstester ALL=(root) /usr/bin/cp" >> /etc/sudoers'
+            sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs"
+            sh 'useradd r7rstester -m && echo "r7rstester ALL=(root) /usr/bin/cp" >> /etc/sudoers'
             sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
             sh "runuser -u r7rstester -- snow-chibi update"
             unstash 'tests'
