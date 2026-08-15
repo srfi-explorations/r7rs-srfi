@@ -23,7 +23,7 @@ pipeline {
 
     environment {
         // No swap for docker
-        DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512 --rm'
+        DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512 --memory-swappiness=0 --rm'
         LABEL='parallel'
     }
 
