@@ -147,6 +147,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 /* FIXME
                 stage('Gambit') {
                     agent {
@@ -165,6 +166,7 @@ pipeline {
                     }
                 }
                 */
+                /*
                 stage('Gauche') {
                     agent {
                         docker {
