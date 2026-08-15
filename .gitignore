@@ -36,4 +36,6 @@ run-test*
 *.bats
 test-program*
 !.snow-repo.scm
-results
+test.scm
+index.html
+.tmp
