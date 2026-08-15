@@ -27,26 +27,6 @@ pipeline {
     }
 
     stages {
-        /*
-        stage('SRFI files') {
-            agent {
-                docker {
-                    image "debian:trixie-slim"
-                    reuseNode 'true'
-                    args "${env.DOCKER_ARGS}"
-                }
-            }
-            steps {
-                sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
-                sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
-                sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-                sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
-                sh "apt-get update && apt-get install -y curl"
-                sh "/bin/sh srfis.sh"
-                archiveArtifacts artifacts: "srfis/*.txt", allowEmptyArchive: 'false'
-            }
-        }
-        */
         stage('Build stash') {
             agent {
                 docker {
@@ -446,7 +426,7 @@ def scheme_stage(scheme) {
     })
 
     stages.plus(stage("${scheme}") {
-        def srfis = "64" //readFile "test_srfis.txt"
+        def srfis = readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap"
