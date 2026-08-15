@@ -22,7 +22,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS='-t --user=root -v /var/cache/apt/archives/:/tmp/srfi-support-table-apt-cache --cpus=1 --memory=1G --storage-opt size=10G --rm'
+        DOCKER_ARGS='-t --user=root -v /var/cache/apt/archives/:/tmp/srfi-support-table-apt-cache --cpus=1 --memory=1G --rm'
         LABEL='parallel'
     }
 
