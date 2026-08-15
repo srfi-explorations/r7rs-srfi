@@ -22,7 +22,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS='--user=root -v /var/cache/apt/archives/:/tmp/srfi-support-table-apt-cache'
+        DOCKER_ARGS='--user=root -v /var/cache/apt/archives/:/tmp/srfi-support-table-apt-cache --cpus=1 --mem=1G'
         LABEL='parallel'
     }
 
@@ -411,7 +411,7 @@ def scheme_stage(scheme) {
             sh "apt-get update && apt-get install -y git ca-certificates gcc make libffi-dev coreutils sudo && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
             sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
-            sh 'useradd r7rstester -m && echo "r7rstester ALL=(root) NOPASSWD:ALL /usr/bin/cp" >> /etc/sudoers'
+            sh 'useradd r7rstester -m && echo "r7rstester ALL=(root) NOPASSWD: /usr/bin/cp" >> /etc/sudoers'
             sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
             sh "runuser -u r7rstester -- snow-chibi update"
             unstash 'tests'
