@@ -39,3 +39,4 @@ test-program*
 test.scm
 index.html
 .tmp
+!srfi/**/index.html
