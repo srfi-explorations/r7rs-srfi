@@ -412,7 +412,7 @@ def scheme_stage(scheme) {
     stages.plus(stage("Container init") {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
             archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
-            sh "apt-get update && apt-get install -y sudo && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
+            sh "apt-get update && apt-get install -y make sudo && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
             sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
             sh 'useradd r7rstester -m'
