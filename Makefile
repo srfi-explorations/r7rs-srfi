@@ -28,7 +28,7 @@ ${TESTFILE}: ${ORIGTESTFILE}
 ${INDEXFILE}: ${ORIGINDEXFILE}
 	cp ${ORIGINDEXFILE} ${INDEXFILE}
 
-package: ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
+package: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
 		--license="${LICENSE}" \
@@ -40,15 +40,16 @@ package: ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTF
 		--description='${DESCRIPTION}' \
 	srfi/${SRFI}.sld
 
-package-tap: srfi/${SRFI}/VERSION ${TESTFILE}
-	echo "<pre>$$(cat README.md)</pre>" > README.html
+package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${MAINTAINERSFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
-		--version=${VERSION} \
+		--license="${LICENSE}" \
+		--version="${VERSION}" \
 		--maintainers="${MAINTAINERS}" \
-		--doc=README.html \
-		--test=${TAPTESTFILE} \
-		--description="SRFI-${SRFI}" \
+		--authors="${AUTHORS}" \
+		--test="${TAPTESTFILE}" \
+		--doc="${INDEXFILE}" \
+		--description='${DESCRIPTION}' \
 	srfi/${SRFI}.sld
 	mv ${PKG} ${TAPPKG}
 
@@ -56,6 +57,8 @@ package-tap: srfi/${SRFI}/VERSION ${TESTFILE}
 	mkdir -p .tmp
 	curl -L -o .tmp/srfi-${SRFI}.html https://srfi.schemers.org/srfi-${SRFI}
 	grep -F "<title>" .tmp/srfi-${SRFI}.html || rm -rf .tmp/srfi-${SRFI}.html
+
+${ORIGINDEXFILE}: index
 
 index: .tmp/srfi-${SRFI}.html
 	printf "<html><head><title>SRFI-${SRFI}</title></head><body>" > ${ORIGINDEXFILE}

@@ -66,11 +66,12 @@ pipeline {
 
         stage('Parallel') {
             parallel {
+                /* FIXME
                 stage('Capyscheme') {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/capyscheme:head"
+                            image "schemers/capyscheme"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -81,6 +82,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 stage('Chibi') {
                     agent {
                         docker {
@@ -144,11 +146,12 @@ pipeline {
                         }
                     }
                 }
+                /* FIXME
                 stage('Gambit') {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/gambit:head"
+                            image "schemers/gambit"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -160,6 +163,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 stage('Gauche') {
                     agent {
                         docker {
