@@ -22,7 +22,8 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=2.5G --rm'
+        DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
+        LOKO_DOCKER_ARGS='-t --user=root --rm'
         LABEL='parallel'
     }
 
@@ -209,7 +210,7 @@ pipeline {
                         docker {
                             label "${env.LABEL}"
                             image "schemers/loko"
-                            args "${env.DOCKER_ARGS}"
+                            args "${env.LOKO_DOCKER_ARGS}"
                         }
                     }
                     steps {
