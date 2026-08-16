@@ -22,7 +22,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS='-t --user=root --cpus=1 --memory=1G --memory-swap=2G --rm'
+        DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
         LABEL='parallel'
     }
 
@@ -432,7 +432,7 @@ def scheme_stage(scheme) {
                     sh "mkdir -p '${resultdir}' && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
                     sh "make SCHEME=${scheme} SRFI=${srfi} all install | tee ${resultdir}/out.txt"
                     sh "chmod -R 777 ."
-                    sh "timeout 120 runuser -u r7rstester -- ${cmd} 2>&1 | tee -a '${resultdir}/out.txt'"
+                    sh "timeout 600 runuser -u r7rstester -- ${cmd} 2>&1 | tee -a '${resultdir}/out.txt'"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
