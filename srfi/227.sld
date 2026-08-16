@@ -1,8 +1,3 @@
-;; R7RS small implementation of lambda-optional, assuming an optimized
-;; case-lambda, by Daphne Preston-Kendal.
-
-;; Edited by Retropikzel
-
 (define-library (srfi 227)
   (import (scheme base)
           (scheme case-lambda))
