@@ -75,7 +75,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/chibi"
+                            image "schemers/chibi:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -362,7 +362,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/tr7"
+                            image "schemers/tr7:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -426,7 +426,7 @@ def scheme_stage(scheme) {
     })
 
     stages.plus(stage("${scheme}") {
-        def srfis = readFile "test_srfis.txt"
+        def srfis = "64" //readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap"

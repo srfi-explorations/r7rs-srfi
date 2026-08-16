@@ -9,7 +9,8 @@
              (scheme file)
              (scheme process-context)
              (scheme read)
-             (scheme write))
+             (scheme write)
+             (srfi 1))
      (begin
        (define (approx= margin)
          (lambda (value expected)
@@ -28,7 +29,8 @@
               (scheme file)
               (scheme process-context)
               (scheme read)
-              (scheme write))
+              (scheme write)
+              (srfi 1))
       (begin
         (define (approx= margin)
           (lambda (value expected)
@@ -53,10 +55,6 @@
              test-assert/source-info
              test-compare/source-info
              test-error/source-info))
-    (meevax
-     ; Need to export extra for these to work
-     (export %test-compare
-             test-assert/source-info))
     (else))
   (export test-begin
           test-end
@@ -448,4 +446,5 @@
 
           (log-file %test-runner-log-file %test-runner-log-file!)
           (log-port %test-runner-log-port %test-runner-log-port!)))))
-  (include "64.scm"))
+  (include "64.scm")
+  (include "64/test-runner-simple.scm"))
