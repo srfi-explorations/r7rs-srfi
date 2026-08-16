@@ -22,7 +22,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
+        DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=1.5G --rm'
         LABEL='parallel'
     }
 
