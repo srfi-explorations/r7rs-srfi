@@ -1,6 +1,25 @@
 (define-library
   (srfi 64)
   (cond-expand
+    (loko
+     (import (scheme base)
+             (scheme case-lambda)
+             (scheme complex)
+             (scheme file)
+             (scheme process-context)
+             (scheme read)
+             (scheme write))
+     (begin
+       (define (approx= margin)
+         (lambda (value expected)
+           (let ((rval (real-part value))
+                 (ival (imag-part value))
+                 (rexp (real-part expected))
+                 (iexp (imag-part expected)))
+             (and (>= rval (- rexp margin))
+                  (>= ival (- iexp margin))
+                  (<= rval (+ rexp margin))
+                  (<= ival (+ iexp margin))))))))
     ((library (scheme complex))
      (import (scheme base)
              (scheme case-lambda)

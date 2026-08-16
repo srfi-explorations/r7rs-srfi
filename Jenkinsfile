@@ -23,6 +23,7 @@ pipeline {
 
     environment {
         DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
+        LOKO_DOCKER_ARGS='-t --user=root --rm'
         LABEL='parallel'
     }
 
@@ -41,7 +42,8 @@ pipeline {
                 sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
                 sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
                 sh "apt-get update && apt-get install -y git ca-certificates gcc make"
-                sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1 || true"
+                sh "rm -rf chibi-scheme"
+                sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
                 sh "make -C chibi-scheme"
                 sh "make -C chibi-scheme install"
                 stash includes: 'chibi-scheme/**', name: 'chibi'
@@ -170,7 +172,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                /*  FIXME
                 stage('Guile') {
                     agent {
                         docker {
@@ -187,7 +188,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 stage('Kawa') {
                     agent {
                         docker {
@@ -204,13 +204,12 @@ pipeline {
                         cleanWs()
                     }
                 }
-                /* FIXME
                 stage('Loko') {
                     agent {
                         docker {
                             label "${env.LABEL}"
                             image "schemers/loko"
-                            args "${env.DOCKER_ARGS}"
+                            args "${env.LOKO_DOCKER_ARGS}"
                         }
                     }
                     steps {
@@ -222,7 +221,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 /* FIXME
                 stage('Meevax') {
                     agent {
@@ -308,7 +306,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                /* FIXME
                 stage('Sagittarius') {
                     agent {
                         docker {
@@ -325,7 +322,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 stage('Skint') {
                     agent {
                         docker {
@@ -418,6 +414,7 @@ def scheme_stage(scheme) {
             unstash 'chibi'
             sh "rm -rf /usr/local/bin/compile-r7rs"
             sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
+            sh "compile-r7rs --list-r7rs"
             sh 'useradd r7rstester -m'
             sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
             sh "runuser -u r7rstester -- snow-chibi update"
@@ -435,7 +432,7 @@ def scheme_stage(scheme) {
                     sh "mkdir -p '${resultdir}' && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
                     sh "make SCHEME=${scheme} SRFI=${srfi} all install | tee ${resultdir}/out.txt"
                     sh "chmod -R 777 ."
-                    sh "timeout 120 runuser -u r7rstester -- ${cmd} 2>&1 | tee -a '${resultdir}/out.txt'"
+                    sh "timeout 600 runuser -u r7rstester -- ${cmd} 2>&1 | tee -a '${resultdir}/out.txt'"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
