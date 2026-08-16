@@ -6,20 +6,20 @@ PKG=srfi-${SRFI}-${VERSION}.tgz
 TAPPKG=tap-${PKG}
 
 LICENSEFILE=srfi/${SRFI}/LICENSE
-LICENSE=$$(cat ${LICENSEFILE} 2> /dev/null)
+LICENSE=$$(cat ${LICENSEFILE})
 VERSIONFILE=srfi/${SRFI}/VERSION
 VERSION=$$(cat ${VERSIONFILE})
 MAINTAINERSFILE=srfi/${SRFI}/MAINTAINERS
 MAINTAINERS=$$(cat ${MAINTAINERSFILE} 2> /dev/null || echo "Retropikzel")
 AUTHORSFILE=srfi/${SRFI}/AUTHORS
-AUTHORS=$$(cat ${AUTHORSFILE} 2> /dev/null)
+AUTHORS=$$(cat ${AUTHORSFILE})
 ORIGTESTFILE=srfi-test/r7rs-programs/${SRFI}.scm
 TESTFILE=test.scm
 TAPTESTFILE=srfi-test/r7rs-programs/tap-${SRFI}.scm
 ORIGINDEXFILE=srfi/${SRFI}/index.html
 INDEXFILE=index.html
 DESCFILE=srfi/${SRFI}/DESCRIPTION
-DESCRIPTION=$$(cat ${DESCFILE} 2> /dev/null)
+DESCRIPTION=$$(cat ${DESCFILE})
 
 all: package
 
@@ -33,6 +33,9 @@ ${INDEXFILE}: ${ORIGINDEXFILE}
 
 testfile:
 	cp ${ORIGTESTFILE} ${TESTFILE}
+
+taptestfile:
+	cp ${TAPTESTFILE} ${TESTFILE}
 
 indexfile:
 	cp ${ORIGINDEXFILE} ${INDEXFILE}
@@ -98,12 +101,13 @@ test-compile-r7rs-tap: ${TESTFILE} srfi-test
 	COMPILE_R7RS=${SCHEME} compile-r7rs -o test-program ${TAPTESTFILE}
 	./test-program
 
-test-docker: ${TESTFILE} package srfi-test
+test-docker: srfi-test package testfile
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TESTFILE}
 
-test-docker-tap: ${TAPTESTFILE}
+test-docker-tap: srfi-test package taptestfile
+	DOCKER_TAG=head \
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TAPTESTFILE}

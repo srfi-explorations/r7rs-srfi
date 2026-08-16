@@ -41,7 +41,9 @@ pipeline {
                 sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
                 sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
                 sh "apt-get update && apt-get install -y git ca-certificates gcc make"
-                sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1 || true"
+                sh "rm -rf chibi-scheme"
+                //sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
+                sh "git clone https://github.com/Retropikzel/chibi-scheme.git --depth=1 --branch=snow-chibi-guile-fix"
                 sh "make -C chibi-scheme"
                 sh "make -C chibi-scheme install"
                 stash includes: 'chibi-scheme/**', name: 'chibi'
@@ -136,6 +138,7 @@ pipeline {
                         }
                     }
                 }
+                /* FIXME
                 stage('Gambit') {
                     agent {
                         docker {
@@ -152,6 +155,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 stage('Gauche') {
                     agent {
                         docker {
@@ -168,7 +172,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                /*  FIXME
                 stage('Guile') {
                     agent {
                         docker {
@@ -185,7 +188,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 stage('Kawa') {
                     agent {
                         docker {

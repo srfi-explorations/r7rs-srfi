@@ -209,6 +209,7 @@
 (define test-env
   (cond-expand
     (cyclone (setup-environment))
+    (loko #f)
     (else (environment '(scheme base)))))
 
 (define (test-runner-simple)
@@ -749,19 +750,22 @@
     (test-postlude runner)))
 
 (define test-read-eval-string
-  (case-lambda
-    ((string)
-     (let* ((port (open-input-string string))
-            (form (read port)))
-       (if (eof-object? (read-char port))
-         (eval form test-env)
-         (error "(not at eof)"))))
-    ((string env)
-     (let* ((port (open-input-string string))
-            (form (read port)))
-       (if (eof-object? (read-char port))
-         (eval form env)
-         (error "(not at eof)"))))))
+  (cond-expand
+    (loko (lambda args (error "test-read-eval-string not supported on loko")))
+    (else
+      (case-lambda
+        ((string)
+         (let* ((port (open-input-string string))
+                (form (read port)))
+           (if (eof-object? (read-char port))
+             (eval form test-env)
+             (error "(not at eof)"))))
+        ((string env)
+         (let* ((port (open-input-string string))
+                (form (read port)))
+           (if (eof-object? (read-char port))
+             (eval form env)
+             (error "(not at eof)"))))))))
 
 ;;; Test runner control flow
 
