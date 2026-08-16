@@ -136,7 +136,6 @@ pipeline {
                         }
                     }
                 }
-                /* FIXME
                 stage('Gambit') {
                     agent {
                         docker {
@@ -153,7 +152,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 stage('Gauche') {
                     agent {
                         docker {
@@ -204,7 +202,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                /* FIXME
                 stage('Loko') {
                     agent {
                         docker {
@@ -222,7 +219,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 /* FIXME
                 stage('Meevax') {
                     agent {
@@ -241,7 +237,6 @@ pipeline {
                     }
                 }
                 */
-                /* FIXME
                 stage('MIT-Scheme') {
                     agent {
                         docker {
@@ -258,7 +253,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 stage('Mosh') {
                     agent {
                         docker {
@@ -308,7 +302,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                /* FIXME
                 stage('Sagittarius') {
                     agent {
                         docker {
@@ -325,7 +318,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 stage('Skint') {
                     agent {
                         docker {
@@ -426,7 +418,7 @@ def scheme_stage(scheme) {
     })
 
     stages.plus(stage("${scheme}") {
-        def srfis = readFile "test_srfis.txt"
+        def srfis = "64" //readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap"
