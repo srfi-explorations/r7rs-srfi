@@ -239,6 +239,7 @@ pipeline {
                     }
                 }
                 */
+                /* FIXME
                 stage('MIT-Scheme') {
                     agent {
                         docker {
@@ -255,6 +256,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 stage('Mosh') {
                     agent {
                         docker {
@@ -412,6 +414,7 @@ def scheme_stage(scheme) {
             unstash 'chibi'
             sh "rm -rf /usr/local/bin/compile-r7rs"
             sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
+            sh "compile-r7rs --list-r7rs"
             sh 'useradd r7rstester -m'
             sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
             sh "runuser -u r7rstester -- snow-chibi update"
