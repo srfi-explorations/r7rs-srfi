@@ -1,10 +1,12 @@
+;;; SPDX-License-Identifier: MIT
+
 ;; Copyright (c) 2005, 2006, 2007, 2012, 2013 Per Bothner
 ;; Added "full" support for Chicken, Gauche, Guile and SISC.
 ;;   Alex Shinn, Copyright (c) 2005.
 ;; Modified for Scheme Spheres by Álvaro Castro-Castilla, Copyright (c) 2012.
 ;; Support for Guile 2 by Mark H Weaver <mhw@netris.org>, Copyright (c) 2014.
 ;; Refactored by Taylan Ulrich Bayırlı/Kammer, Copyright (c) 2014, 2015.
-;; Modified for R7RS-SRFI project by Retropikzel <retropikzel@iki.fi>, Copyright (c) 2025.
+;; Modified for R7RS-SRFI project by Retropikzel, Copyright (c) 2025, 2026.
 ;;
 ;; Permission is hereby granted, free of charge, to any person
 ;; obtaining a copy of this software and associated documentation
@@ -26,7 +28,53 @@
 ;; CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-;;; The data type
+(define-record-type <test-runner>
+  (make-test-runner)
+  test-runner?
+
+  (result-alist test-result-alist test-result-alist!)
+
+  (pass-count test-runner-pass-count test-runner-pass-count!)
+  (fail-count test-runner-fail-count test-runner-fail-count!)
+  (xpass-count test-runner-xpass-count test-runner-xpass-count!)
+  (xfail-count test-runner-xfail-count test-runner-xfail-count!)
+  (skip-count test-runner-skip-count test-runner-skip-count!)
+  (total-count %test-runner-total-count %test-runner-total-count!)
+
+  ;; Stack (list) of (count-at-start . expected-count):
+  (count-list %test-runner-count-list %test-runner-count-list!)
+
+  ;; Normally #f, except when in a test-apply.
+  (run-list %test-runner-run-list %test-runner-run-list!)
+
+  (skip-list %test-runner-skip-list %test-runner-skip-list!)
+  (fail-list %test-runner-fail-list %test-runner-fail-list!)
+
+  (skip-save %test-runner-skip-save %test-runner-skip-save!)
+  (fail-save %test-runner-fail-save %test-runner-fail-save!)
+
+  (group-stack test-runner-group-stack test-runner-group-stack!)
+
+  ;; Note: on-test-begin and on-test-end are unrelated to the test-begin and
+  ;; test-end forms in the execution library.  They're called at the
+  ;; beginning/end of each individual test, whereas the test-begin and test-end
+  ;; forms demarcate test groups.
+
+  (on-group-begin test-runner-on-group-begin test-runner-on-group-begin!)
+  (on-test-begin test-runner-on-test-begin test-runner-on-test-begin!)
+  (on-test-end test-runner-on-test-end test-runner-on-test-end!)
+  (on-group-end test-runner-on-group-end test-runner-on-group-end!)
+  (on-final test-runner-on-final test-runner-on-final!)
+  (on-bad-count test-runner-on-bad-count test-runner-on-bad-count!)
+  (on-bad-end-name test-runner-on-bad-end-name test-runner-on-bad-end-name!)
+
+  (on-bad-error-type %test-runner-on-bad-error-type
+                     %test-runner-on-bad-error-type!)
+
+  (aux-value test-runner-aux-value test-runner-aux-value!)
+
+  (log-file %test-runner-log-file %test-runner-log-file!)
+  (log-port %test-runner-log-port %test-runner-log-port!))
 
 
 (define (test-runner-group-path runner)
@@ -113,278 +161,6 @@
 (define (test-runner-get)
   (or (test-runner-current)
       (error "test-runner not initialized - test-begin missing?")))
-
-;;; test-runner.scm ends here
-
-
-;; Copyright (c) 2005, 2006, 2007, 2012, 2013 Per Bothner
-;; Added "full" support for Chicken, Gauche, Guile and SISC.
-;;   Alex Shinn, Copyright (c) 2005.
-;; Modified for Scheme Spheres by Álvaro Castro-Castilla, Copyright (c) 2012.
-;; Support for Guile 2 by Mark H Weaver <mhw@netris.org>, Copyright (c) 2014.
-;; Refactored by Taylan Ulrich Bayırlı/Kammer, Copyright (c) 2014, 2015.
-;;
-;; Permission is hereby granted, free of charge, to any person
-;; obtaining a copy of this software and associated documentation
-;; files (the "Software"), to deal in the Software without
-;; restriction, including without limitation the rights to use, copy,
-;; modify, merge, publish, distribute, sublicense, and/or sell copies
-;; of the Software, and to permit persons to whom the Software is
-;; furnished to do so, subject to the following conditions:
-;;
-;; The above copyright notice and this permission notice shall be
-;; included in all copies or substantial portions of the Software.
-;;
-;; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-;; EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-;; MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-;; NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-;; BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-;; ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-;; CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-;; SOFTWARE.
-
-;;; Helpers
-
-;; From SRFI-1
-(define (filter pred lis)
-    (let recur ((lis lis))
-          (if (null? lis) lis
-                  (let ((head (car lis))
-                                    (tail (cdr lis)))
-                            (if (pred head)
-                                        (let ((new-tail (recur tail)))
-                                                      (if (eq? tail new-tail) lis
-                                                                      (cons head new-tail)))
-                                                  (recur tail))))))
-
-(define (remove  pred l) (filter (lambda (x) (not (pred x))) l))
-
-(define (last-pair lis)
-    (let lp ((lis lis))
-          (let ((tail (cdr lis)))
-                  (if (pair? tail) (lp tail) lis))))
-
-(define (last lis) (car (last-pair lis)))
-
-(define (drop lis k)
-    (let iter ((lis lis) (k k))
-          (if (zero? k) lis (iter (cdr lis) (- k 1)))))
-
-(define (drop-right lis k)
-    (let recur ((lag lis) (lead (drop lis k)))
-          (if (pair? lead)
-                  (cons (car lag) (recur (cdr lag) (cdr lead)))
-                        '())))
-
-;; From SRFI-1 ends
-
-
-(define (string-join strings delimiter)
-  (if (null? strings)
-    ""
-    (let loop ((result (car strings))
-               (rest (cdr strings)))
-      (if (null? rest)
-        result
-        (loop (string-append result delimiter (car rest))
-              (cdr rest))))))
-
-(define display-log
-  (lambda (runner . args)
-    (let ((port (%test-runner-log-port runner)))
-      (when port (map (lambda (item) (display item port)) args)))))
-
-(define display-map
-  (lambda args
-    (map (lambda (item) (display item)) args)))
-
-(define write-log
-  (lambda (runner . args)
-    (let ((port (%test-runner-log-port runner)))
-      (when port (map (lambda (item) (write item port)) args)))))
-
-;;; Main
-
-(define test-env
-  (cond-expand
-    (cyclone (setup-environment))
-    (loko #f)
-    (else (environment '(scheme base)))))
-
-(define (test-runner-simple)
-  (let ((runner (test-runner-null)))
-    (test-runner-reset runner)
-    (test-runner-on-group-begin!     runner test-on-group-begin-simple)
-    (test-runner-on-group-end!       runner test-on-group-end-simple)
-    (test-runner-on-final!           runner test-on-final-simple)
-    (test-runner-on-test-begin!      runner test-on-test-begin-simple)
-    (test-runner-on-test-end!        runner test-on-test-end-simple)
-    (test-runner-on-bad-count!       runner test-on-bad-count-simple)
-    (test-runner-on-bad-end-name!    runner test-on-bad-end-name-simple)
-    (%test-runner-on-bad-error-type! runner on-bad-error-type)
-    runner))
-
-(define (test-on-group-begin-simple runner name count)
-  (if (null? (test-runner-group-stack runner))
-    (begin (maybe-start-logging runner)
-           (display-map "%%%% Starting test "
-                        name
-                        " "
-                        "(Writing full log to \""
-                        name
-                        ".log\")"
-                        #\newline)
-           (display-log runner "%%%% Starting test " name #\newline)))
-  (begin (display-log runner "Group begin: " name #\newline)))
-
-(define (test-on-group-end-simple runner)
-  (let ((name (car (test-runner-group-stack runner))))
-    (display-log runner "Group end: " name #\newline)))
-
-(define (test-on-final-simple runner)
-
-  (when (> (test-runner-pass-count runner) 0)
-    (display-map "# of expected passes      "
-                 (test-runner-pass-count runner)
-                 #\newline)
-    (display-log runner
-                 "# of expected passes      "
-                 (test-runner-pass-count runner)
-                 #\newline))
-
-  (when (> (test-runner-xfail-count runner) 0)
-    (display-map "# of expected failures    "
-                 (test-runner-xfail-count runner)
-                 #\newline)
-    (display-log runner
-                 "# of expected failures    "
-                 (test-runner-xfail-count runner)
-                 #\newline))
-
-  (when (> (test-runner-xpass-count runner) 0)
-    (display-map "# of unexpected successes "
-                 (test-runner-xpass-count runner)
-                 #\newline)
-    (display-log runner
-                 "# of unexpected passes    "
-                 (test-runner-xpass-count runner)
-                 #\newline))
-
-  (when (> (test-runner-fail-count runner) 0)
-    (display-map "# of failures             "
-                 (test-runner-fail-count runner)
-                 #\newline)
-    (display-log runner
-                 "# of failures             "
-                 (test-runner-fail-count runner)
-                 #\newline))
-
-  (when (> (test-runner-skip-count runner) 0)
-    (display-map "# of skipped tests        "
-                 (test-runner-skip-count runner)
-                 #\newline)
-    (display-log runner
-                 "# of skipped tests        "
-                 (test-runner-skip-count runner)
-                 #\newline))
-
-  (maybe-finish-logging runner))
-
-(define (maybe-start-logging runner)
-  (let ((log-file (%test-runner-log-file runner)))
-    (when log-file
-      (when (file-exists? log-file) (delete-file log-file))
-      (%test-runner-log-port! runner (open-output-file log-file)))))
-
-(define (maybe-finish-logging runner)
-  (let ((log-file (%test-runner-log-file runner)))
-    (when log-file
-      (close-output-port (%test-runner-log-port runner)))))
-
-(define (test-on-test-begin-simple runner)
-  (let ((name (test-runner-test-name runner))
-        (file (test-result-ref runner 'source-file "(unknown file)"))
-        (line (test-result-ref runner 'source-line "(unknown line)")))
-    (display-log runner "Test begin:" #\newline)
-    (display-log runner "  test-name: ")
-    (write-log runner name)
-    (display-log runner #\newline)
-    (display-log runner "  source-file: " file #\newline)
-    (display-log runner "  source-line: " line #\newline)
-    (display-log runner
-                 "  source-form: "
-                 (test-result-ref runner 'source-form)
-                 #\newline)
-    (values)))
-
-(define (test-on-test-end-simple runner)
-  (let* ((result-kind (test-result-kind runner))
-         (result-kind-name (case result-kind
-                             ((pass) "pass")
-                             ((fail) "fail")
-                             ((xpass) "xpass")
-                             ((xfail) "xfail")
-                             ((skip) "skip")
-                             (else "SHOULD_NOT_HAPPEN")))
-         (name (let ((name (test-runner-test-name runner)))
-                 (if (string=? "" name)
-                   "" ;(test-result-ref runner 'source-form)
-                   name)))
-         (label (string-join (append (test-runner-group-path runner)
-                                     (list name))
-                             ": ")))
-    (when #t ;(memq result-kind '(fail xpass))
-      (let ((nil (cons #f #f)))
-        (let (;(file (test-result-ref runner 'source-file "(unknown file)"))
-              ;(line (test-result-ref runner 'source-line "(unknown line)"))
-              ;(expression (test-result-ref runner 'source-form))
-              (expected-value (test-result-ref runner 'expected-value nil))
-              (actual-value (test-result-ref runner 'actual-value nil))
-              (expected-error (test-result-ref runner 'expected-error nil))
-              (actual-error (test-result-ref runner 'actual-error nil)))
-          (display-log runner "Test end:" #\newline)
-          (display-log runner "  result-kind: " result-kind-name #\newline)
-          (display-log runner
-                       "  actual-value: "
-                       (test-result-ref runner 'actual-value nil)
-                       #\newline)
-          (display-log runner
-                       "  expected-value: "
-                       (test-result-ref runner 'expected-value nil)
-                       #\newline))))))
-
-(define (test-on-bad-count-simple runner count expected-count)
-  (display-log runner
-               "*** Total number of tests was "
-               count
-               " but should be "
-               expected-count
-               ". ***"
-               #\newline)
-  (display-log runner
-               "*** Discrepancy indicates testsuite error or exceptions. ***"
-               #\newline))
-
-(define (test-on-bad-end-name-simple runner begin-name end-name)
-  (error (string-append "Test-end \""
-                        end-name
-                        "\" does not match test-begin \""
-                        begin-name
-                        "\".")))
-
-(define (on-bad-error-type runner type error)
-  (display-log runner
-               "WARNING: unknown error type predicate: "
-               type
-               #\newline)
-  (display-log runner
-               "         error was: "
-               error
-               #\newline))
-
-;;; test-runner-simple.scm ends here
-
 
 ;; Copyright (c) 2005, 2006, 2007, 2012, 2013 Per Bothner
 ;; Added "full" support for Chicken, Gauche, Guile and SISC.
@@ -592,8 +368,9 @@
            (lambda ()
              <expression>)))))))
 
-(define (test-prelude runner name form)
+(define (test-prelude source-info runner name form)
   (test-result-clear runner)
+  (set-source-info! runner source-info)
   (when name
     (test-result-set! runner 'name name))
   (test-result-set! runner 'source-form form)
@@ -636,18 +413,18 @@
 (define-syntax test-assert
   (syntax-rules ()
     ((_ . <rest>)
-     (test-assert/source-info . <rest>))))
+     (test-assert/source-info (source-info <rest>) . <rest>))))
 
 (define-syntax test-assert/source-info
   (syntax-rules ()
-    ((_ <expr>)
-     (test-assert/source-info #f <expr>))
-    ((_ <name> <expr>)
-     (%test-assert <name> '<expr> (lambda () <expr>)))))
+    ((_ <source-info> <expr>)
+     (test-assert/source-info <source-info> #f <expr>))
+    ((_ <source-info> <name> <expr>)
+     (%test-assert <source-info> <name> '<expr> (lambda () <expr>)))))
 
-(define (%test-assert name form thunk)
+(define (%test-assert source-info name form thunk)
   (let ((runner (test-runner-get)))
-    (when (test-prelude runner name form)
+    (when (test-prelude source-info runner name form)
       (let ((val (false-if-error (thunk) runner)))
         (test-result-set! runner 'actual-value val)
         (set-result-kind! runner val)))
@@ -655,20 +432,20 @@
 
 (define-syntax test-compare
   (syntax-rules ()
-    ((_ item ...)
-     (test-compare/source-info item ...))))
+    ((_ . <rest>)
+     (test-compare/source-info (source-info <rest>) . <rest>))))
 
 (define-syntax test-compare/source-info
   (syntax-rules ()
-    ((_ <compare> <expected> <expr>)
-     (test-compare/source-info <compare> #f <expected> <expr>))
-    ((_ <compare> <name> <expected> <expr>)
-     (%test-compare <compare> <name> <expected> '<expr>
+    ((_ <source-info> <compare> <expected> <expr>)
+     (test-compare/source-info <source-info> <compare> #f <expected> <expr>))
+    ((_ <source-info> <compare> <name> <expected> <expr>)
+     (%test-compare <source-info> <compare> <name> <expected> '<expr>
                     (lambda () <expr>)))))
 
-(define (%test-compare compare name expected form thunk)
+(define (%test-compare source-info compare name expected form thunk)
   (let ((runner (test-runner-get)))
-    (when (test-prelude runner name form)
+    (when (test-prelude source-info runner name form)
       (test-result-set! runner 'expected-value expected)
       (let ((pass? (false-if-error
                      (let ((val (thunk)))
@@ -680,30 +457,46 @@
 
 (define-syntax test-equal
   (syntax-rules ()
-    ((_ item ...)
-     (test-compare/source-info equal? item ...))))
+    ((_ . <rest>)
+     (test-compare/source-info (source-info <rest>) equal? . <rest>))))
 
 (define-syntax test-eqv
   (syntax-rules ()
-    ((_ item ...)
-     (test-compare/source-info eqv? item ...))))
+    ((_ . <rest>)
+     (test-compare/source-info (source-info <rest>) eqv? . <rest>))))
 
 (define-syntax test-eq
   (syntax-rules ()
-    ((_ item ...)
-     (test-compare/source-info eq? item ...))))
+    ((_ . <rest>)
+     (test-compare/source-info (source-info <rest>) eq? . <rest>))))
 
 (define-syntax test-approximate
   (syntax-rules ()
-    ((_ item ...)
-     (test-approximate/source-info item ...))))
+    ((_ . <rest>)
+     (test-approximate/source-info (source-info <rest>) . <rest>))))
 
 (define-syntax test-approximate/source-info
   (syntax-rules ()
-    ((_ <expected> <expr> <error-margin>)
-     (test-approximate/source-info #f <expected> <expr> <error-margin>))
-    ((_ <name> <expected> <expr> <error-margin>)
-     (test-compare/source-info (approx= <error-margin>) <name> <expected> <expr>))))
+    ((_ <source-info> <expected> <expr> <error-margin>)
+     (test-approximate/source-info
+       <source-info> #f <expected> <expr> <error-margin>))
+    ((_ <source-info> <name> <expected> <expr> <error-margin>)
+     (test-compare/source-info
+       <source-info> (approx= <error-margin>) <name> <expected> <expr>))))
+
+(define-syntax test-error
+  (syntax-rules ()
+    ((_ . <rest>)
+     (test-error/source-info (source-info <rest>) . <rest>))))
+
+(define-syntax test-error/source-info
+  (syntax-rules ()
+    ((_ <source-info> <expr>)
+     (test-error/source-info <source-info> #f #t <expr>))
+    ((_ <source-info> <error-type> <expr>)
+     (test-error/source-info <source-info> #f <error-type> <expr>))
+    ((_ <source-info> <name> <error-type> <expr>)
+     (%test-error <source-info> <name> <error-type> '<expr> (lambda () <expr>)))))
 
 (define (error-matches? error type)
   (cond
@@ -717,23 +510,10 @@
       ((%test-runner-on-bad-error-type runner) runner type error))
     #f)))
 
-(define-syntax test-error
-  (syntax-rules ()
-    ((_ item ...)
-     (test-error/source-info item ...))))
 
-(define-syntax test-error/source-info
-  (syntax-rules ()
-    ((_ <expr>)
-     (test-error/source-info #f #t <expr>))
-    ((_ <error-type> <expr>)
-     (test-error/source-info #f <error-type> <expr>))
-    ((_ <name> <error-type> <expr>)
-     (%test-error <name> <error-type> '<expr> (lambda () <expr>)))))
-
-(define (%test-error name error-type form thunk)
+(define (%test-error source-info name error-type form thunk)
   (let ((runner (test-runner-get)))
-    (when (test-prelude runner name form)
+    (when (test-prelude source-info runner name form)
       (test-result-set! runner 'expected-error error-type)
       (let ((pass? (call-with-current-continuation
                      (lambda (k)
@@ -748,6 +528,12 @@
                            #f))))))
         (set-result-kind! runner pass?)))
     (test-postlude runner)))
+
+(define test-env
+  (cond-expand
+    (cyclone (setup-environment))
+    (loko #f)
+    (else (environment '(scheme base)))))
 
 (define test-read-eval-string
   (cond-expand
@@ -801,7 +587,6 @@
       (exit 0)
       (exit 1))))
 
-;;; execution.scm ends here
 (when (not (test-runner-factory))
   (test-runner-factory test-runner-simple))
 

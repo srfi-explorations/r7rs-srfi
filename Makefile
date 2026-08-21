@@ -65,27 +65,18 @@ package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TAPTESTFIL
 	srfi/${SRFI}.sld
 	mv ${PKG} ${TAPPKG}
 
-.tmp/srfi-${SRFI}.html:
-	mkdir -p .tmp
-	curl -L -o .tmp/srfi-${SRFI}.html https://srfi.schemers.org/srfi-${SRFI}
-	grep -F "<title>" .tmp/srfi-${SRFI}.html || rm -rf .tmp/srfi-${SRFI}.html
+index:
+	curl -L -o srfi/${SRFI}/index.html https://srfi.schemers.org/srfi-${SRFI}/srfi-${SRFI}.html
 
-index: .tmp/srfi-${SRFI}.html
-	printf "<html><head><title>SRFI-${SRFI}</title></head><body>" > ${ORIGINDEXFILE}
-	printf "<a href='https://srfi.schemers.org/srfi-${SRFI}'>" >> ${ORIGINDEXFILE}
-	printf "SRFI-${SRFI} - " >> ${ORIGINDEXFILE}
-	cat .tmp/srfi-${SRFI}.html | grep '<title>' | sed 's/<title>//' | sed 's/<\/title>//' | sed 's/^[ \t]*//' | tr -d '\n' >> ${ORIGINDEXFILE}
-	printf "</a></body></html>" >> ${ORIGINDEXFILE}
-
-description: .tmp/srfi-${SRFI}.html
+description: srfi/${SRFI}/index.html
 	printf "SRFI-${SRFI} - " > ${DESCFILE}
-	cat .tmp/srfi-${SRFI}.html | grep '<title>' | sed 's/<title>//' | sed 's/<\/title>//' | sed "s/^[ \t]*//" | tr -d '\n' >> ${DESCFILE}
+	cat srfi/${SRFI}/index.html | grep '<title>' | sed 's/<title>//' | sed 's/<\/title>//' | sed "s/^[ \t]*//" | tr -d '\n' >> ${DESCFILE}
 
 deftaul-maintainer:
 	echo "Retropikzel" > ${MAINTAINERSFILE}
 
 install: package
-	snow-chibi --impls=${SCHEME} --always-yes install --skip-tests?=1 ${PKG}
+	snow-chibi install --impls=${SCHEME} --always-yes --overwrite-native?=1 --skip-tests?=1 --verbose?=1 ${PKG}
 
 test: package srfi-test
 	snow-chibi test-package --impls=${SCHEME} --verbose?=1 ${PKG}
