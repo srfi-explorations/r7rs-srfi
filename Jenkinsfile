@@ -46,12 +46,12 @@ pipeline {
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
                 sh 'make -j $(nproc) -C chibi-scheme'
                 sh "make -C chibi-scheme install"
-                sh "zip chibi-scheme.zip chibi-scheme/*"
+                sh "zip -r chibi-scheme.zip chibi-scheme"
                 stash includes: 'chibi-scheme.zip', name: 'chibi'
 
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
-                sh "zip srfi-test.zip srfi-test/*"
+                sh "zip -r srfi-test.zip srfi-test"
                 stash includes: 'srfi-test.zip', name: 'tests'
             }
         }
