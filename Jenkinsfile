@@ -423,7 +423,7 @@ def scheme_stage(scheme) {
             sh "runuser -u r7rstester -- snow-chibi update"
             unstash 'tests'
             sh "unzip srfi-test.zip"
-            sh "mkdir -p '${resultdir}' && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
+            sh "snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
         }
     })
 
@@ -434,6 +434,7 @@ def scheme_stage(scheme) {
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh "mkdir -p ${resultdir}"
                     sh "make SCHEME=${scheme} SRFI=${srfi} all install | tee ${resultdir}/out.txt"
                     sh "chmod -R 777 ."
                     sh "timeout 600 runuser -u r7rstester -- ${cmd} 2>&1 | tee -a '${resultdir}/out.txt'"
