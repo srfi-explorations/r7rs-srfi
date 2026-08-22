@@ -44,7 +44,7 @@ pipeline {
                 sh "apt-get update && apt-get install -y git ca-certificates gcc make"
                 sh "rm -rf chibi-scheme"
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
-                sh "make -j $(nproc) -C chibi-scheme"
+                sh 'make -j $(nproc) -C chibi-scheme'
                 sh "make -C chibi-scheme install"
                 stash includes: 'chibi-scheme/**', name: 'chibi'
 
