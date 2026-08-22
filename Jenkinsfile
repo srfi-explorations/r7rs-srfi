@@ -41,16 +41,18 @@ pipeline {
                 sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
                 sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
                 sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
-                sh "apt-get update && apt-get install -y git ca-certificates gcc make"
+                sh "apt-get update && apt-get install -y git ca-certificates gcc make zip unzip"
                 sh "rm -rf chibi-scheme"
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
                 sh 'make -j $(nproc) -C chibi-scheme'
                 sh "make -C chibi-scheme install"
-                stash includes: 'chibi-scheme/**', name: 'chibi'
+                sh "zip chibi-scheme.zip chibi-scheme/*"
+                stash includes: 'chibi-scheme.zip', name: 'chibi'
 
                 sh "rm -rf srfi-test"
                 sh "make srfi-test"
-                stash includes: 'srfi-test/**', name: 'tests'
+                sh "zip srfi-test.zip srfi-test/*"
+                stash includes: 'srfi-test.zip', name: 'tests'
             }
         }
 
@@ -412,6 +414,7 @@ def scheme_stage(scheme) {
             sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
             sh "apt-get update && apt-get install -y make && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
+            sh "unzip chibi-scheme.zip"
             sh "rm -rf /usr/local/bin/compile-r7rs"
             sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
             sh "compile-r7rs --list-r7rs"
@@ -419,6 +422,7 @@ def scheme_stage(scheme) {
             sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
             sh "runuser -u r7rstester -- snow-chibi update"
             unstash 'tests'
+            sh "unzip srfi-test.zip"
             sh "mkdir -p '${resultdir}' && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
         }
     })
