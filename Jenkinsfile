@@ -41,7 +41,7 @@ pipeline {
                 sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
                 sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
                 sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
-                sh "apt-get update && apt-get install -y git ca-certificates gcc make zip unzip"
+                sh "apt-get update && apt-get install -y git ca-certificates gcc make zip"
                 sh "rm -rf chibi-scheme"
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
                 sh 'make -j $(nproc) -C chibi-scheme'
@@ -412,7 +412,7 @@ def scheme_stage(scheme) {
             sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
             sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
             sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
-            sh "apt-get update && apt-get install -y make && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
+            sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
             sh "unzip chibi-scheme.zip"
             sh "rm -rf /usr/local/bin/compile-r7rs"
