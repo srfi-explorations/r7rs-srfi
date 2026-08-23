@@ -50,7 +50,7 @@ pipeline {
                 stash includes: 'chibi-scheme.zip', name: 'chibi'
 
                 sh "rm -rf srfi-test"
-                sh "make srfi-test"
+                sh 'PATH=/opt/chibi/bin:${PATH} make srfi-test'
                 sh "zip -r srfi-test.zip srfi-test"
                 stash includes: 'srfi-test.zip', name: 'tests'
             }
