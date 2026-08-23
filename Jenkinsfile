@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'parallel' && 'debian'
+        label 'debian'
     }
 
     triggers {
