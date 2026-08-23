@@ -406,25 +406,23 @@ pipeline {
 def scheme_stage(scheme) {
     def stages = []
     stages.plus(stage("Container init") {
-        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-            archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
-            sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
-            sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
-            sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-            sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
-            sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
-            unstash 'chibi'
-            sh "unzip -o chibi-scheme.zip"
-            sh "rm -rf /usr/local/bin/compile-r7rs"
-            sh 'PATH=/opt/chibi/bin:${PATH} snow-chibi install --impls=chibi retropikzel.compile-r7rs'
-            sh "compile-r7rs --list-r7rs"
-            sh 'useradd r7rstester -m'
-            sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
-            sh "PATH=/opt/chibi/bin:${PATH} runuser -u r7rstester -- snow-chibi update"
-            unstash 'tests'
-            sh "unzip -o srfi-test.zip"
-            sh "PATH=/opt/chibi/bin:${PATH} snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && PATH=/opt/chibi/bin:${PATH} snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
-        }
+        archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
+        sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
+        sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
+        sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
+        sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
+        sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
+        unstash 'chibi'
+        sh "unzip -o chibi-scheme.zip"
+        sh "rm -rf /usr/local/bin/compile-r7rs"
+        sh 'PATH=/opt/chibi/bin:${PATH} snow-chibi install --impls=chibi retropikzel.compile-r7rs'
+        sh "compile-r7rs --list-r7rs"
+        sh 'useradd r7rstester -m'
+        sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
+        sh "PATH=/opt/chibi/bin:${PATH} runuser -u r7rstester -- snow-chibi update"
+        unstash 'tests'
+        sh "unzip -o srfi-test.zip"
+        sh "PATH=/opt/chibi/bin:${PATH} snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && PATH=/opt/chibi/bin:${PATH} snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
     })
 
     stages.plus(stage("${scheme}") {
