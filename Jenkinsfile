@@ -25,13 +25,14 @@ pipeline {
         DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
         LOKO_DOCKER_ARGS='-t --user=root --rm'
         LABEL='parallel'
+        LD_LIBRARY_PATH="/opt/chibi/lib"
     }
 
     stages {
         stage('Build stash') {
             agent {
                 docker {
-                    image "debian:trixie-slim"
+                    image "gcc:14-trixie"
                     reuseNode 'true'
                     args "${env.DOCKER_ARGS}"
                 }
@@ -39,7 +40,7 @@ pipeline {
             steps {
                 sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy & echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy & echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
                 sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/* & rm -rf chibi-scheme"
-                sh "apt-get update && apt-get install -y git ca-certificates gcc make zip"
+                sh "apt-get update && apt-get install -y git ca-certificates make zip"
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
                 sh 'make PREFIX=/opt/chibi -j $(nproc) -C chibi-scheme'
                 sh "make PREFIX=/opt/chibi -C chibi-scheme install"
@@ -410,14 +411,14 @@ def scheme_stage(scheme) {
         unstash 'chibi'
         sh "unzip -o chibi-scheme.zip"
         sh "rm -rf /usr/local/bin/compile-r7rs"
-        sh 'PATH=/opt/chibi/bin:${PATH} LD_LIBRARY_PATH=/opt/chibi/lib snow-chibi install --impls=chibi retropikzel.compile-r7rs'
+        sh '/opt/chibi/bin/snow-chibi install --impls=chibi retropikzel.compile-r7rs'
         sh "compile-r7rs --list-r7rs"
         sh 'useradd r7rstester -m'
         sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
-        sh "PATH=/opt/chibi/bin:${PATH} LD_LIBRARY_PATH=/opt/chibi/lib runuser -u r7rstester -- snow-chibi update"
+        sh "runuser -u r7rstester -- /opt/chibi/bin/snow-chibi update"
         unstash 'tests'
         sh "unzip -o srfi-test.zip"
-        sh "PATH=/opt/chibi/bin:${PATH} LD_LIBRARY_PATH=/opt/chibi/lib snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && PATH=/opt/chibi/bin:${PATH} LD_LIBRARY_PATH=/opt/chibi/lib snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
+        sh "/opt/chibi/bin/snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && /opt/chibi/bin/snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
     })
 
     stages.plus(stage("${scheme}") {
