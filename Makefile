@@ -98,8 +98,7 @@ test-docker: srfi-test package testfile
 	test-r7rs -o test-program ${TESTFILE}
 
 test-docker-tap: srfi-test package taptestfile
-	DOCKER_TAG=head \
-	SNOW_PACKAGES="srfi.64 ${PKG}" \
+	SNOW_PACKAGES="srfi.64 retropikzel.tap ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TAPTESTFILE}
 
