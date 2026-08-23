@@ -25,7 +25,7 @@ pipeline {
         DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
         LOKO_DOCKER_ARGS='-t --user=root --rm'
         LABEL='parallel'
-        PATH=/opt/chibi/bin
+        PATH=/opt/chibi/bin:${PATH}
         LD_LIBRARY_PATH=/opt/chibi/lib
     }
 
