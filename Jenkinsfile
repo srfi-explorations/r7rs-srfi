@@ -3,6 +3,11 @@ pipeline {
         label 'debian-x86_64'
     }
 
+    environment {
+        PATH=/opt/chibi/bin
+        LD_LIBRARY_PATH=/opt/chibi/lib
+    }
+
     triggers {
       GenericTrigger(
         genericVariables: [[key: 'ref', value: '$.ref']],
@@ -47,7 +52,7 @@ pipeline {
                 stash includes: 'chibi-scheme.zip', name: 'chibi'
 
                 sh "rm -rf srfi-test"
-                sh 'PATH=/opt/chibi/bin:${PATH} LD_LIBRARY_PATH=/opt/chibi/lib make srfi-test'
+                sh 'make srfi-test'
                 sh "zip -r srfi-test.zip srfi-test"
                 stash includes: 'srfi-test.zip', name: 'tests'
             }
@@ -410,14 +415,14 @@ def scheme_stage(scheme) {
         unstash 'chibi'
         sh "unzip -o chibi-scheme.zip"
         sh "rm -rf /usr/local/bin/compile-r7rs"
-        sh 'PATH=/opt/chibi/bin:${PATH} LD_LIBRARY_PATH=/opt/chibi/lib snow-chibi snow-chibi install --impls=chibi retropikzel.compile-r7rs'
+        sh 'snow-chibi snow-chibi install --impls=chibi retropikzel.compile-r7rs'
         sh "compile-r7rs --list-r7rs"
         sh 'useradd r7rstester -m'
         sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
-        sh "PATH=/opt/chibi/bin:${PATH} LD_LIBRARY_PATH=/opt/chibi/lib snow-chibi runuser -u r7rstester -- snow-chibi update"
+        sh "snow-chibi runuser -u r7rstester -- snow-chibi update"
         unstash 'tests'
         sh "unzip -o srfi-test.zip"
-        sh "PATH=/opt/chibi/bin:${PATH} LD_LIBRARY_PATH=/opt/chibi/lib snow-chibi snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && PATH=/opt/chibi/bin:${PATH} LD_LIBRARY_PATH=/opt/chibi/lib snow-chibi snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
+        sh "snow-chibi snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
     })
 
     stages.plus(stage("${scheme}") {
