@@ -414,7 +414,7 @@ def scheme_stage(scheme) {
             sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
             sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
             unstash 'chibi'
-            sh "unzip chibi-scheme.zip"
+            sh "unzip -o chibi-scheme.zip"
             sh "rm -rf /usr/local/bin/compile-r7rs"
             sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
             sh "compile-r7rs --list-r7rs"
@@ -422,7 +422,7 @@ def scheme_stage(scheme) {
             sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
             sh "runuser -u r7rstester -- snow-chibi update"
             unstash 'tests'
-            sh "unzip srfi-test.zip"
+            sh "unzip -o srfi-test.zip"
             sh "snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
         }
     })
