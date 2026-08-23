@@ -44,9 +44,9 @@ pipeline {
                 sh "apt-get update && apt-get install -y git ca-certificates gcc make zip"
                 sh "rm -rf chibi-scheme"
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
-                sh 'make -j $(nproc) -C chibi-scheme'
-                sh "make -C chibi-scheme install"
-                sh "zip -r chibi-scheme.zip chibi-scheme"
+                sh 'make PREFIX=/opt/chibi -j $(nproc) -C chibi-scheme'
+                sh "make PREFIX=/opt/chibi -C chibi-scheme install"
+                sh "zip -r chibi-scheme.zip /opt/chibi"
                 stash includes: 'chibi-scheme.zip', name: 'chibi'
 
                 sh "rm -rf srfi-test"
@@ -416,14 +416,14 @@ def scheme_stage(scheme) {
             unstash 'chibi'
             sh "unzip -o chibi-scheme.zip"
             sh "rm -rf /usr/local/bin/compile-r7rs"
-            sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
+            sh '/opt/chibi/bin/snow-chibi install --impls=chibi retropikzel.compile-r7rs'
             sh "compile-r7rs --list-r7rs"
             sh 'useradd r7rstester -m'
             sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
-            sh "runuser -u r7rstester -- snow-chibi update"
+            sh "runuser -u r7rstester -- /opt/chibi/bin/snow-chibi update"
             unstash 'tests'
             sh "unzip -o srfi-test.zip"
-            sh "snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
+            sh "/opt/chibi/bin/snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && /opt/chibi/bin/snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
         }
     })
 
