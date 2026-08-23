@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'parallel'
+        label 'parallel || alpine'
     }
 
     triggers {
