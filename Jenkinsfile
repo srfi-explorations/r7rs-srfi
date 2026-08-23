@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'parallel || alpine'
+        label 'parallel && debian'
     }
 
     triggers {
