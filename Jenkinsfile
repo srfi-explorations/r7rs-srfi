@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'debian'
+        label 'debian-x86_64'
     }
 
     triggers {
