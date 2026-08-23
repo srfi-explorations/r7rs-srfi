@@ -3,11 +3,6 @@ pipeline {
         label 'debian-x86_64'
     }
 
-    environment {
-        PATH=/opt/chibi/bin
-        LD_LIBRARY_PATH=/opt/chibi/lib
-    }
-
     triggers {
       GenericTrigger(
         genericVariables: [[key: 'ref', value: '$.ref']],
@@ -30,6 +25,8 @@ pipeline {
         DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
         LOKO_DOCKER_ARGS='-t --user=root --rm'
         LABEL='parallel'
+        PATH=/opt/chibi/bin
+        LD_LIBRARY_PATH=/opt/chibi/lib
     }
 
     stages {
