@@ -40,7 +40,7 @@ taptestfile:
 indexfile:
 	cp ${ORIGINDEXFILE} ${INDEXFILE}
 
-package: srfi-test testfile indexfile ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
+package: srfi-test testfile indexfile ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${ORIGTESTFILE} ${ORIGINDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
 		--license="${LICENSE}" \
@@ -52,7 +52,7 @@ package: srfi-test testfile indexfile ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFIL
 		--description="${DESCRIPTION}" \
 	srfi/${SRFI}.sld
 
-package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TAPTESTFILE} ${INDEXFILE} ${DESCFILE}
+package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TAPTESTFILE} ${ORIGINDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
 		--license=${LICENSE} \

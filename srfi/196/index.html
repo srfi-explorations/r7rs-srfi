@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SRFI 196: Range Objects</title>
+    <link href="/favicon.png" rel="icon" sizes="192x192" type="image/png">
+    <link rel="stylesheet" href="https://srfi.schemers.org/srfi.css" type="text/css">
+    <style>pre.example { margin-left: 2em; }</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></head>
+
+  <body>
+    <h1><a href="https://srfi.schemers.org/"><img class="srfi-logo" src="https://srfi.schemers.org/srfi-logo.svg" alt="SRFI logo" /></a>196: Range Objects</h1>
+
+<p>by John Cowan (text), Wolfgang Corcoran-Mathe (implementation)</p>
+
+<h2>Status</h2>
+
+<p>This SRFI is currently in <em>final</em> status.  Here is <a href="https://srfi.schemers.org/srfi-process.html">an explanation</a> of each status that a SRFI can hold.  To provide input on this SRFI, please send email to <code><a href="mailto:srfi+minus+196+at+srfi+dotschemers+dot+org">srfi-196@<span class="antispam">nospam</span>srfi.schemers.org</a></code>.  To subscribe to the list, follow <a href="https://srfi.schemers.org/srfi-list-subscribe.html">these instructions</a>.  You can access previous messages via the mailing list <a href="https://srfi-email.schemers.org/srfi-196">archive</a>.</p>
+<ul>
+  <li>Received: 2020-05-17</li>
+  <li>Draft #1 published: 2020-05-17</li>
+  <li>Draft #2 published: 2020-07-16</li>
+  <li>Draft #3 published: 2020-07-19</li>
+  <li>Draft #4 published: 2020-08-26</li>
+  <li>Draft #5 published: 2020-08-28</li>
+  <li>Draft #6 published: 2020-08-29</li>
+  <li>Draft #7 published: 2020-09-01</li>
+  <li>Draft #8 published: 2020-09-02</li>
+  <li>Draft #9 published: 2020-09-13</li>
+  <li>Finalized: 2020-09-17</li>
+  <li>Revised to fix errata:
+  <ul>
+    <li>2020-09-27 (The final term in the description of the sequence produced by <code>iota-range</code> was
+      wrong.)</li>
+    <li>2020-07-10 (The procedure <a href="#range-reverse"><code>range-reverse</code></a>
+      had been omitted from the document accidentally, so it was
+      added.  It was already in the sample implementation, with tests.
+      Also, fixed a simple editorial error in the <code>range-every</code>
+      entry.)</li>
+    <li>2022-10-07 (Revised to clarify the behavior of <a href="#range-any"><code>range-any</code></a>.)</li></ul></li></ul>
+
+<h2>Abstract</h2>
+
+<p>Ranges are collections somewhat similar to vectors, except that
+  they are immutable and have algorithmic representations instead of
+  the uniform per-element data structure of vectors. The storage required is
+  usually less than the size of the same collection stored in a
+  vector and the time needed to reference a particular element is
+  typically less for a range than for the same collection stored in a
+  list. This SRFI defines a large subset of the sequence operations
+  defined on lists, vectors, strings, and other collections.  If
+  necessary, a range can be converted to a list, vector, or string of
+  its elements or a generator that will lazily produce each element in
+  the range.</p>
+
+<h2>Rationale</h2>
+
+<p>One of the most common things to do in programming is to execute
+a block of code a fixed number of times, with access to the index
+used for the iteration.  Indeed, it is so common that there is generally
+a standard syntax for providing it, generally involving the keyword
+<code>for</code> (or if not, as in Fortran and Lisp, the word
+<code>do</code>).  It is also usual to be able to provide a lower bound,
+(generally defaulting to 0 or 1) as well as a step (generally
+defaulting to 1) which allows iterations through a sequence of odd
+numbers, or multiples of 10, or whatever.</p>
+
+<p>Languages with higher order functions, however, provide a second
+approach to such loops: construct a sequence of numbers and apply
+a function to each element of the sequence.  <a href="https://srfi.schemers.org/srfi-1/srfi-1.html">SRFI 1</a>'s <code>iota</code>
+and the standard <code>for-each</code> procedures make this easy:
+<code>(for-each (lambda (i) ...) (iota 0 10))</code>
+will execute the expressions represented as <code>...</code>
+with <code>i</code> bound to the numbers 0 through 9, as
+the generated list includes the lower bound and excludes the upper bound.</p>
+
+<p>This approach is less feasible as the number of numbers grows.
+To iterate a million times involves constructing a list of a million
+numbers to be iterated over and immediately discarded as garbage.
+This is not something you want to do in the inner loop of your code.
+The range objects of this SRFI represent such sequences using (as a rule)
+a small fixed amount of storage.  Using
+<code>(range-for-each (lambda (i) ...) (numeric-range 0 1000000))</code>
+iterates a million times but with less space overhead than
+<code>iota</code>'s list of ten elements.
+They can be thought of as compactly stored vectors.</p>
+
+<p>In addition, there are other sequences besides integers from
+which a range can be drawn.  In particular, inexact numbers can
+also specify ranges: <code>(numeric-range 0.0 1.0 0.1)</code>
+specifies the sequence 0.0, 0.1, ... 0.9,
+at least when inexact numbers are represented
+as IEEE 754 binary double floats (as is usually the case).
+Roundoff error is still possible when multiplying, but it is
+greatly reduced compared to accumulated error by repeated adding.</p>
+
+<p>The rationale for <code>string-range</code> is to provide efficient
+random access to strings.  There have been many attempts to ensure
+O(1) reference to string characters, such as string cursors, UTF-32
+encoding, <a href="https://srfi.schemers.org/srfi-135/srfi-135.html">SRFI 135</a> texts, immutable strings, and so on.  Because
+the <code>range-ref</code> procedure for a string created
+through <code>string-range</code> runs in O(1) time in the length of
+the string, a range created by <code>string-range</code> can
+efficiently access arbitrary characters of the range.
+
+<h2>Specification</h2>
+
+<p>Ranges belong to a disjoint type.</p>
+
+<p>Ranges provide certain running time guarantees.  With each range, we
+associate two lengths of time, the <em>average accessing time</em> and
+the <em>total accessing time</em>.  The <dfn>total accessing time</dfn>
+is the average accessing time multiplied by the length of the range.
+In the runtime guarantees below, the time spent
+in arguments designated by <var>pred</var>, <var>equal</var>,
+or <var>proc</var> is ignored.</p>
+
+<p>Unless otherwise noted, procedures in this SRFI that return
+ranges allocate at most O(1) new locations (see R[57]RS section 3.4
+for further information).  Such ranges are known as <dfn>compact
+ranges</dfn>.  Procedures marked as returning <dfn>expanded
+ranges</dfn> allocate at most O(<em>n</em>) locations, where
+<em>n</em> is the number of elements in the range.</p>
+
+<p>This SRFI recommends, but does not require, that Scheme implementations
+which also provide <a href="https://srfi.schemers.org/srfi-42/srfi-42.html">SRFI 42</a>
+modify it so that the typed generator <code>:range</code> also accepts
+a single argument which is a range in the sense of this SRFI.
+This feature should be used with caution, as SRFI 42 loops expect
+that <code>:range</code> iterates only over exact rationals.
+</p>
+
+<p>The following names are used for arguments to procedures:</p>
+
+<p><em>obj</em>: Any Scheme object.</p>
+
+<p><em>range</em>: A range object.</p>
+
+<p><em>pred</em>: A predicate that accepts zero or more arguments.</p>
+
+<p><em>equal</em>: A predicate that accepts two arguments and returns a
+boolean value. It is not necessarily an equivalence relation.</p>
+
+<p><em>length</em>: An exact positive integer.</p>
+
+<p><em>proc</em>: A procedure that accepts zero or more arguments and
+returns zero or more values.</p>
+
+<p><em>list</em>: A Scheme list.</p>
+
+<p><em>vector</em>: A Scheme vector.</p>
+
+<p><em>string</em>: A Scheme string.</p>
+
+<p>It is an error (unless otherwise noted) if the procedures are passed
+arguments that do not have the type implied by the argument names.</p>
+
+<h3 id="constructors">Constructors</h3>
+<p><code>(range</code>&nbsp;<em>length indexer</em><code>)</code></p>
+<p>Returns a range whose length (number of elements) is <i>length</i>.
+The <i>indexer</i> procedure returns the <i>n</i>th element (where 0
+&#x2264; <i>n</i> &lt; <i>length</i>) of the range, given <i>n</i>.
+This procedure must run in O(1) time.
+The range returned is compact, although <em>indexer</em> may close over
+arbitrarily large data structures.
+The average accessing time of
+the resulting range is the average time needed to
+run <code><var>indexer</var></code>.</p>
+
+<p>Examples:</p>
+
+<pre class="example"><code>(range-&gt;list (range 26 (lambda (n) (integer-&gt;char (+ 65 n)))))
+  &rArr; (#\A #\B #\C #\D #\E &hellip; #\Z)
+
+(range-&gt;list (range 10 (lambda (n) (expt 1/2 n))))
+  &rArr; (1 1/2 1/4 &hellip; 1/512)
+</code></pre>
+
+<p><code>(numeric-range</code>&nbsp;<em>start end</em> [<em>step</em>]<code>)</code></p>
+<p>Returns a numeric range, a special case of a range specified by an
+inclusive lower bound <em>start</em>, an exclusive upper bound <em>end</em>, and a
+<em>step</em> value (default 1), all of which can be exact or inexact real
+numbers.  This constructor produces the sequence</p>
+<blockquote>
+<em>start</em><code>, (+&nbsp;</code><em>start&nbsp;step</em><code>),
+(+&nbsp;</code><em>start</em><code>&nbsp;(* 2 </code><em>step</em><code>)),
+&hellip;, (+&nbsp;</code><em>start</em><code>
+(*&nbsp;</code><em>n step</em><code>))</code>,
+</blockquote>
+<p>where <em>n</em> is the greatest integer such that
+<code>(+&nbsp;</code><em>start</em><code> (*&nbsp;</code><em>n step</em><code>))</code>
+&lt; <em>end</em> if <em>step</em> is positive, or such that
+<code>(+&nbsp;</code><em>start</em><code> (*&nbsp;</code><em>n step</em><code>))</code>
+&gt; <em>end</em> if <em>step</em> is negative. It is is an error if an
+<em>n</em> satisfying this condition cannot be determined, or if
+<em>step</em> is numerically zero.  This procedure must run in O(1)
+time.  The average accessing time of the resulting range must be O(1).</p>
+
+<p>Note that an effect of this definition is that the elements of a
+range over inexact numbers are enumerated by multiplying the index by
+the step value rather than by adding the step value to itself
+repeatedly.  This reduces the likelihood of roundoff errors.</p>
+<pre class="example"><code>(range-&gt;list (numeric-range 0 1 1/10))
+  &rArr; (0 1/10 1/5 3/10 2/5 1/2 3/5 7/10 4/5 9/10)<br/>
+(range-&gt;list (numeric-range 5 -5 -3)) &rArr; (5 2 -1 -4)
+</code></pre>
+
+<p><code>(iota-range</code>&nbsp;<em>length</em> [<em>start</em> [<em>step</em>]]<code>)</code></p>
+<p>Returns an iota-numeric range, a special case of a range specified by
+a length (a non-negative exact integer) as well as an
+inclusive lower bound <em>start</em> (default 0) and a
+<em>step</em> value (default 1), both of which can be exact or inexact real
+numbers.  This constructor produces the sequence</p>
+<blockquote>
+<em>start</em><code>, (+&nbsp;</code><em>start&nbsp;step</em><code>),
+(+&nbsp;</code><em>start</em><code>&nbsp;(* 2 </code><em>step</em><code>)),
+&hellip;, (+&nbsp;</code><em>start</em><code>
+(*&nbsp;</code>(- <em>length</em> 1) <em>step</em><code>))</code>,
+</blockquote>
+<p>This procedure must run in O(1)
+time.  The average accessing time of the resulting range must be O(1).</p>
+
+<p>Note that an effect of this definition is that the elements of a
+range over inexact numbers are enumerated by multiplying the index by
+the step value rather than by adding the step value to itself
+repeatedly.  This reduces the likelihood of roundoff errors.</p>
+
+<p><code>(vector-range</code>&nbsp;<em>vector</em><code>)</code></p>
+<p>Returns a range whose elements are those of <em>vector</em>.  The
+procedure must run in O(1) time.
+The average accessing time of the
+resulting range must be O(1).  It is an error to
+mutate <em>vector</em>.</p>
+<pre class="example"><code>(range-&gt;list (vector-range #(1 3 5 7 9)))
+  &rArr; (1 3 5 7 9)
+</code></pre>
+
+<p><code>(string-range</code> <em>string</em><code>)</code></p>
+<p>Returns a range whose elements are those of <em>string</em>.  It is
+an error to mutate <em>string</em>.  This procedure must run in
+O(<em>n</em>) time, where <em>n</em> is the length of <em>string</em>.
+The average accessing time of the
+resulting range must be O(1).</p>
+<p>In a Scheme that guarantees O(1) random
+access to strings,
+<code>range-ref</code> on a range created by <code>string-range</code>
+can simply call <code>string-ref</code>, and the resulting range is compact.
+But if only O(<em>n</em>)
+access is available, this procedure may
+have to copy the string's characters into a vector,
+resulting in an expanded range.</p>
+<pre class="example"><code>(range-&gt;list (string-range "abcde"))
+  &rArr; (#\a #\b #\c #\d #\e)
+</code></pre>
+
+<p><code>(range-append</code>&nbsp;<em>range</em> ...<code>)</code></p>
+<p>Returns a range whose elements are the elements of
+the <em>ranges</em> in order.  This procedure must run in
+O(<em>n</em>) + O(<var>k</var>) time, where <em>n</em> is the total
+number of elements in all the ranges and <var>k</var> is the number of
+ranges.  The result is usually expanded but may be compact.  The average
+accessing time of the resulting range is asymptotically bounded by
+maximum of the average accessing times of the <var>ranges</var>.
+</p>
+<pre class="example"><code>(range-&gt;list (range-append (numeric-range 0 3)
+                           (numeric-range 3 6)))
+  &rArr; (0 1 2 3 4 5)
+</code></pre>
+
+<p id="range-reverse"><code>(range-reverse</code>&nbsp;<em>range</em><code>)</code></p>
+<p>Returns a range whose elements are the elements of the <em>range</em>
+but in reverse order.  This procedure must run in O(<em>s</em>) time,
+where <em>s</em> is the total accessing time of <em>range</em>.
+The resulting range may be expanded, and should have O(1) average
+accessing time.
+</p>
+<pre class="example"><code>(range-&gt;list (range-reverse (numeric-range 1 4)))
+  &rArr; (3 2 1)
+</code></pre>
+
+<h3 id="predicates">Predicates</h3>
+
+<p><code>(range?</code>&nbsp;<em>obj</em><code>)</code></p>
+<p>Returns <code>#t</code> if <em>obj</em> is a range and <code>#f</code>
+otherwise.
+This procedure must run in O(1) time.</p>
+
+<p><code>(range=?</code>&nbsp;<em>equal range1 range2 ...</em><code>)</code></p>
+<p>Returns <code>#t</code> if all the <em>ranges</em> are of the same
+length and if their corresponding values are the same in the sense of
+<em>equal</em>, and <code>#f</code> otherwise.
+The runtime of this procedure is O(<em>s</em>) + O(<em>k</em>),
+where <em>s</em> is the sum of the total accessing times of the
+<var>ranges</var> and <em>k</em> is the number of <var>ranges</var>.</p>
+<pre class="example"><code>(range=? = (numeric-range 10 30) (numeric-range 10 30)) &rArr; #t
+
+(range=? = (numeric-range 5 10) (numeric-range 6 11)) &rArr; #f
+
+(range=? eqv? (numeric-range 0 0) (range 0 (lambda (i) i))) &rArr; #t
+</code></pre>
+
+<h3 id="accessors">Accessors</h3>
+
+<p><code>(range-length</code>&nbsp;<em>range</em><code>)</code></p>
+<p>Returns the length (number of elements) of <em>range</em>.
+This procedure must run in O(1) time.</p>
+<pre class="example"><code>(range-length (numeric-range 10 30)) &rArr; 20
+</code></pre>
+
+<p><code>(range-ref</code>&nbsp;<em>range n</em><code>)</code></p>
+<p>Returns the <em>n</em>th element of <em>range</em>. It is an error if
+<em>n</em> is less than 0 or greater than or equal to the length of
+<em>range</em>.  The running time of this procedure must be
+asymptotically equal to the average accessing time
+of <code><var>range</var></code>.</p>
+<pre class="example"><code>(range-ref (numeric-range 10 30) 5) &rArr; 15
+(range-ref (range 2 (lambda (i) (not (zero? i)))) 1) &rArr; #t
+</code></pre>
+
+<p><code>(range-first</code>&nbsp;<em>range</em><code>)</code></p>
+<p>Equivalent (in running time as well)
+to <code>(range-ref</code>&nbsp;<em>range</em> 0)<code></code>.</p>
+<pre class="example"><code>(range-first (numeric-range 10 30)) &rArr; 10
+</code></pre>
+
+<p><code>(range-last</code>&nbsp;<em>range</em><code>)</code></p>
+<p>Equivalent (in running time as well)
+to <code>(range-ref</code>&nbsp;<em>range</em> <code>(-
+(range-length</code>&nbsp;<em>range</em><code>) 1))</code>.</p>
+<pre class="example"><code>(range-last (numeric-range 10 30)) &rArr; 29
+</code></pre>
+
+<h3 id="iteration">Iteration</h3>
+
+<p><code>(range-split-at</code>&nbsp;<em>range index</em><code>)</code></p>
+<p>Returns two values:
+<code>(range-take</code>&nbsp;<em>range index</em><code>)</code> and
+<code>(range-drop</code>&nbsp;<em>range index</em><code>)</code>.
+It is an error if <em>index</em> is not an exact integer
+between 0 and the length of <em>range</em>, both inclusive.
+This procedure must run in O(1) time.</p>
+<pre class="example"><code>(let-values (((ra rb) (range-split-at (numeric-range 10 20) 5)))
+  (values (range-&gt;list ra) (range-&gt;list rb)))
+    &rArr; (10 11 12 13 14)
+      (15 16 17 18 19)
+</code></pre>
+
+<p><code>(subrange</code>&nbsp;<em>range start end</em><code>)</code></p>
+<p>Returns a range which contains the elements of
+<i>range</i> from index <i>start</i>, inclusive, through index
+<i>end</i>, exclusive.  This procedure must run in O(1) time.
+The average accessing time of the
+resulting range is asymptotically bounded by the average accessing
+time of <code><var>range</var></code>.</p>
+<pre class="example"><code>(range-&gt;list (subrange (numeric-range 5 15) 5 8))
+  &rArr; (10 11 12)
+
+(range-&gt;list (subrange (string-range "abcdefghij") 2 8))
+  &rArr; (#\c #\d #\e #\f #\g #\h)
+</code></pre>
+
+<p><code>(range-segment</code>&nbsp;<em>range length</em><code>)</code></p>
+<p>Returns a list of ranges representing the consecutive subranges of
+length <em>length</em>.  The last range is allowed to be shorter
+than <em>length</em>. The procedure must run in O(<em>k</em>) time,
+where <em>k</em> is the number of ranges returned.
+The average accessing time of the ranges is asymptotically bounded
+by the average accessing time of <code><var>range</var></code>.</p>
+<pre class="example"><code>(map range-&gt;list (range-segment (numeric-range 0 12) 4))
+  &rArr; ((0 1 2 3) (4 5 6 7) (8 9 10 11))
+
+(map range-&gt;list (range-segment (numeric-range 0 2 1/3) 4))
+  &rArr; ((0 1/3 2/3 1) (4/3 5/3))
+</code></pre>
+
+<p><code>(range-take</code>&nbsp;<em>range count</em><code>)</code><br/>
+<code>(range-take-right</code>&nbsp;<em>range count</em><code>)</code></p>
+<p>Returns a range which contains the first/last <em>count</em> elements of
+<em>range</em>.
+
+The average accessing time of the resulting ranges is
+asymptotically bounded by the average accessing time
+of <code><var>range</var></code>.</p>
+<pre class="example"><code>(range-&gt;list (range-take (numeric-range 0 10) 5))
+  &rArr; (0 1 2 3 4)
+
+(range-&gt;list (range-take-right (numeric-range 0 10) 5))
+  &rArr; (5 6 7 8 9)
+</code></pre>
+
+<p><code>(range-drop</code>&nbsp;<em>range count</em><code>)</code><br/>
+<code>(range-drop-right</code>&nbsp;<em>range count</em><code>)</code></p>
+<p>Returns a range which contains all except the first/last <em>count</em> elements
+of <em>range</em>.
+These procedures must run in O(1) time.
+The average accessing time of the resulting ranges is
+asymptotically bounded by the average accessing time
+respectively of <code><var>range</var></code>.</p>
+<pre class="example"><code>(range-&gt;list (range-drop (numeric-range 0 10) 5))
+  &rArr; (5 6 7 8 9)
+
+(range-&gt;list (range-drop-right (numeric-range 0 10) 5))
+  &rArr; (0 1 2 3 4)
+</code></pre>
+
+<p><code>(range-count</code>&nbsp;<em>pred range1 range2</em> ...<code>)</code></p>
+<p>Applies <em>pred</em> element-wise to the elements of
+<em>ranges</em> and returns the number of applications which returned
+true values. If more than one <em>range</em> is given and not all
+ranges have the same length, <em>range-count</em> terminates when the
+shortest range is exhausted.  The runtime of this procedure is
+O(<em>s</em>) where <em>s</em> is the sum of the total accessing times
+of the <code><var>ranges</var></code>.</p>
+<pre class="example"><code>(range-count even? (numeric-range 0 10)) &rArr; 5
+
+(range-count &lt; (numeric-range 0 10 2) (numeric-range 5 15)) &rArr; 5
+</code></pre>
+
+<p id="range-any"><code>(range-any</code>&nbsp;<em>pred range1 range2</em> ...<code>)</code></p>
+<p>Invokes <em>pred</em> element-wise to the elements of the
+<em>ranges</em> until one call returns a true value, and then
+returns that value.  Otherwise, <code>#f</code> is returned. If more than
+one <em>range</em> is given and not all ranges have the same length,
+<em>range-any</em> terminates when the shortest range is exhausted.
+The runtime of this procedure is O(<em>s</em>) where <em>s</em> is the
+sum of the total accessing times of
+the <code><var>ranges</var></code>.</p>
+<pre class="example"><code>(range-any odd? (numeric-range 0 10)) &rArr; #t
+
+(range-any odd? (numeric-range 0 10 2)) &rArr; #f
+
+(range-any &lt; (numeric-range 0 10 2) (numeric-range 5 15)) &rArr; #t
+</code></pre>
+
+<p><code>(range-every</code>&nbsp;<em>pred range1 range2</em> ...<code>)</code></p>
+<p>Applies <em>pred</em> element-wise to the elements of the
+<em>ranges</em> and returns true if <em>pred</em> returns true on
+every application. Specifically it returns the last value returned by
+<em>pred</em>, or <code>#t</code> if <em>pred</em> was never invoked.
+Otherwise, <code>#f</code> is returned. If more than one
+<em>range</em> is given and not all ranges have the same length,
+<em>range-every</em> terminates when the shortest range is exhausted.
+The runtime of this procedure is O(<em>s</em>) + O(<em>k</em>),
+where <em>s</em> is the sum of the total accessing times of the
+<var>ranges</var> and <em>k</em> is the number of <var>ranges</var>.</p>
+<pre class="example"><code>(range-every integer? (numeric-range 0 10)) &rArr; #t
+
+(range-every odd? (numeric-range 0 10)) &rArr; #f
+
+(range-every &lt; (numeric-range 0 10 2) (numeric-range 5 15)) &rArr; #f
+</code></pre>
+
+<p><code>(range-map</code>&nbsp;<em>proc range1 range2</em> ...<code>)</code><br/>
+<code>(range-map-&gt;list</code>&nbsp;<em>proc range1 range2</em> ...<code>)</code><br/>
+<code>(range-map-&gt;vector</code>&nbsp;<em>proc range1 range2</em> ...<code>)</code></p>
+<p>Applies <em>proc</em> element-wise to the elements of the
+<em>ranges</em> and returns a range/list/vector of the results, in
+order. If more than one <em>range</em> is given and not all ranges
+have the same length, these procedures terminate when the shortest
+range is exhausted. The dynamic order in which <em>proc</em> is
+actually applied to the elements is unspecified.  The runtime of these
+procedures is O(<em>s</em>) where <em>s</em> is the sum of the total
+accessing times of the <code><var>ranges</var></code>.
+The <code>range-map</code> procedure eagerly computes its result
+and returns an expanded range.
+Its average accessing time is O(1).</p>
+<pre class="example"><code>(range-&gt;list (range-map square (numeric-range 5 10))) &rArr; (25 36 49 64 81)
+
+(range-&gt;list (range-map + (numeric-range 0 5) (numeric-range 5 10)))
+  &rArr; (5 7 9 11 13)
+
+(range-map-&gt;list square (numeric-range 5 10)) &rArr; (25 36 49 64 81)
+
+(range-map-&gt;vector square (numeric-range 5 10)) &rArr; #(25 36 49 64 81)
+</code></pre>
+
+<p><code>(range-for-each</code>&nbsp;<em>proc range1 range2</em> ...<code>)</code></p>
+<p>Applies <em>proc</em> element-wise to the elements of the
+<code>ranges</code> in order. Returns an unspecified result. If more
+than one <em>range</em> is given and not all ranges have the same
+length, <em>range-for-each</em> terminates when the shortest range is
+exhausted.  The runtime of this procedure is O(<em>s</em>)
+where <em>s</em> is the sum of the total accessing times of
+the <code><var>ranges</var></code>.</p>
+<pre class="example"><code>(let ((vec (make-vector 5)))
+  (range-for-each (lambda (i) (vector-set! vec i (* i i)))
+                  (numeric-range 0 5))
+  vec) &rArr; #(0 1 4 9 16)
+</code></pre>
+
+<p><code>(range-filter-map</code> <em>proc range1 range2</em> ...<code>)</code><br/>
+<code>(range-filter-map-&gt;list</code> <em>proc range1 range2</em> ...<code>)</code></p>
+<p>Applies <em>proc</em> element-wise to the elements of
+the <em>ranges</em> and returns a range/list of the true values
+returned by <em>proc</em>.  If more than one <em>range</em> is given
+and not all ranges have the same length, these procedures terminate
+when the shortest range is exhausted. The dynamic order in
+which <em>proc</em> is actually applied to the elements is unspecified.
+The <code>range-filter-map</code> procedure eagerly computes its result
+and returns an expanded range.
+The runtime of these procedures is O(<em>n</em>)
+where <em>n</em> is the sum of the total accessing times of
+the <code><var>ranges</var></code>.</p>
+<pre class="example"><code>(range-&gt;list (range-filter-map (lambda (x) (and (even? x) (* x x)))
+                               (numeric-range 0 10)))
+  &rArr; (0 4 16 36 64)
+
+(range-filter-map-&gt;list (lambda (x y)
+                          (and (&lt; x y) (* x y)))
+                        (numeric-range 0 10 2)
+                        (numeric-range 5 15))
+  &rArr; (0 12 28 48 72)
+</code></pre>
+
+<p><code>(range-filter</code>&nbsp;<em>pred range</em><code>)</code><br/>
+<code>(range-filter-&gt;list</code>&nbsp;<em>pred range</em><code>)</code><br/>
+<code>(range-remove</code>&nbsp;<em>pred range</em><code>)</code><br/>
+<code>(range-remove-&gt;list</code>&nbsp;<em>pred range</em><code>)</code><br/>
+<p>Returns a range/list containing the elements of <em>range</em> that
+satisfy / do not satisfy <em>pred</em>.  The runtime of these
+procedures is O(<em>s</em>) where <em>s</em> is the sum of the total
+accessing times of the <code><var>ranges</var></code>.</p>
+
+<p>The <code>range-filter</code> and <code>range-remove</code>
+procedures eagerly compute their results and return expanded ranges.
+Their average accessing time is O(1).</p>
+<pre class="example"><code>(range-&gt;list (range-filter even? (numeric-range 0 10)))
+  &rArr; (0 2 4 6 8)
+
+(range-filter-&gt;list odd? (numeric-range 0 10))
+  &rArr; (1 3 5 7 9)
+
+(range-&gt;list (range-remove even? (numeric-range 0 10)))
+  &rArr; (1 3 5 7 9)
+
+(range-remove-&gt;list odd? (numeric-range 0 10))
+  &rArr; (0 2 4 6 8)
+</code></pre>
+
+<p><code>(range-fold</code>&nbsp;<em>kons nil range1 range2</em> ...<code>)</code><br/>
+<code>(range-fold-right</code>&nbsp;<em>kons nil range1 range2</em> ...<code>)</code></p>
+<p>Folds <em>kons</em> over the elements of <em>ranges</em> in order / reverse order.
+<em>kons</em> is applied as
+<code>(</code><em>kons state</em> <code>(range-ref</code> <em>range1
+i</em><code>)</code> <code>(range-ref</code> <em>range2
+i</em><code>)</code> &hellip;<code>)</code> where <em>state</em> is
+the result of the previous invocation and <em>i</em> is the current
+index. For the first invocation, <em>nil</em> is used as the first
+argument. Returns the result of the last invocation, or <em>nil</em>
+if there was no invocation.  If more than one <em>range</em> is given
+and not all ranges have the same length, these procedures terminate
+when the shortest range is exhausted.  The runtime of these procedures
+must be O(<em>s</em>) where <em>s</em> is the sum of the total
+accessing times of the <code><var>ranges</var></code>.</p>
+<pre class="example"><code>(range-fold (lambda (n _) (+ 1 n)) 0 (numeric-range 0 30))
+  &rArr; 30
+
+(range-fold + 0 (numeric-range 0 100) (numeric-range 50 70))
+  &rArr; 1380
+
+(range-fold-right xcons '() (numeric-range 0 10))
+  &rArr; (0 1 2 3 4 5 6 7 8 9)
+
+(range-fold-right (lambda (lis x y) (cons (+ x y) lis))
+                  '()
+                  (numeric-range 3 6)
+                  (numeric-range 5 12))
+  &rArr; (8 10 12)
+</code></pre>
+
+<h3 id="searching">Searching</h3>
+
+<p><code>(range-index</code>&nbsp;<em>pred range1 range2</em>... <code>)</code><br/>
+<code>(range-index-right</code>&nbsp;<em>pred range1 range2</em>... <code>)</code></p>
+<p>Applies <em>pred</em> element-wise to the elements of
+<em>ranges</em> and returns the index of the first/last element at
+which <em>pred</em> returns true. Otherwise, returns <code>#f</code>.
+If more than one <em>range</em> is given and not all ranges have the same
+length, <em>range-index</em> terminates when the shortest range is
+exhausted. It is an error if the ranges passed to <em>range-index-right</em>
+do not all have the same lengths.  The runtime of these procedures
+must be O(<em>s</em>) where <em>s</em> is the sum of the total accessing times of
+the <code><var>ranges</var></code>.</p>
+<pre class="example"><code>(range-index (lambda (x) (&gt; x 10)) (numeric-range 5 15)) &rArr; 6
+
+(range-index odd? (numeric-range 0 10 2)) &rArr; #f
+
+(range-index = (numeric-range 0 12 2) (numeric-range 5 15)) &rArr; 5
+
+(range-index-right odd? (numeric-range 0 5)) &rArr; 3
+</code></pre>
+
+<p><code>(range-take-while</code>&nbsp;<em>pred range</em><code>)</code><br/>
+<code>(range-take-while-right</code>&nbsp;<em>pred range</em><code>)</code></p>
+<p>Returns a range containing the leading/trailing elements of <em>range</em> that satisfy
+<em>pred</em> up to the first/last one that does not.  The runtime of
+these procedures is asymptotically bounded by the total accessing time
+of the <code><var>range</var></code>.
+The average accessing time of the resulting range is O(1).</p>
+<pre class="example"><code>(range-&gt;list (range-take-while (lambda (x) (&lt; x 10))
+                               (numeric-range 5 15)))
+  &rArr; (5 6 7 8 9)
+
+(range-&gt;list (range-take-while-right (lambda (x) (&gt; x 10))
+                                     (numeric-range 5 15)))
+  &rArr; (11 12 13 14)
+</code></pre>
+
+<p><code>(range-drop-while pred</code>&nbsp;<em>range</em><code>)</code><br/>
+<code>(range-drop-while-right</code>&nbsp;<em>pred range</em><code>)</code></p>
+<p>Returns a range that omits leading/trailing elements of <em>range</em> that satisfy
+<em>pred</em> until the first/last one that does not.  The runtime of
+these procedures is asymptotically bounded by the total accessing time
+of the <code><var>range</var></code>.
+The average accessing time of the resulting range is O(1).</p>
+<pre class="example"><code>(range-&gt;list (range-drop-while (lambda (x) (&lt; x 10))
+                               (numeric-range 5 15)))
+  &rArr; (10 11 12 13 14)
+
+(range-&gt;list (range-drop-while-right (lambda (x) (&gt; x 10))
+                                     (numeric-range 5 15)))
+  &rArr; (5 6 7 8 9 10)
+</code></pre>
+
+<h3 id="conversion">Conversion</h3>
+
+<p><code>(range-&gt;list</code>&nbsp;<em>range</em><code>)</code><br/>
+<code>(range-&gt;vector</code>&nbsp;<em>range</em><code>)</code><br/>
+<code>(range-&gt;string</code>&nbsp;<em>range</em><code>)</code></p>
+<p>Returns a list/vector/string containing the elements
+of <em>range</em> in order.  It is an error to modify the result
+of <code>range-&gt;vector</code> or of <code>range-&gt;string</code>.
+In the case of <code>range-&gt;string</code>, it is an error if any
+element of <em>range</em> is not a character.  The running times of
+these procedures is O(<em>s</em>) where <em>s</em> is the total
+accessing time for <code><var>range</var></code>.</p>
+<pre class="example"><code>(range-&gt;list (numeric-range 0 0)) &rArr; ()
+
+(range-&gt;vector (range 2 (lambda (i) (not (zero? i))))) &rArr; #(#f #t)
+
+(range-&gt;string (range 5 (lambda (i) (integer-&gt;char (+ 65 i)))))
+  &rArr; "ABCDE"
+</code></pre>
+
+<p><code>(vector-&gt;range</code> <em>vector</em><code>)</code></p>
+<p>Returns an expanded range whose elements are those of <em>vector</em>.
+Note that, unlike <code>vector-range</code>, it is not
+an error to mutate <em>vector</em>; future mutations of
+<em>vector</em> are guaranteed not to affect the range returned by
+<code>vector-&gt;range</code>.  This procedure must run in O(<em>n</em>)
+where <em>n</em> is the length of <code><var>vector</var></code>.
+Otherwise, this procedure is equivalent
+to <code>vector-range</code>.</p>
+<pre class="example"><code>(range-&gt;list (vector-&gt;range #(1 3 5 7 9))) &rArr; (1 3 5 7 9)
+</code></pre>
+
+<p><code>(range-&gt;generator</code>&nbsp;<em>range</em><code>)</code></p>
+<p>Returns a <a href="https://srfi.schemers.org/srfi-158/srfi-158.html">SRFI 158</a> generator that generates the elements
+of <em>range</em> in order.  This procedure must run in O(1) time, and
+the running time of each call of the generator is asymptotically
+bounded by the average accessing time of <code><var>range</var></code>.
+<pre class="example"><code>(generator-&gt;list (range-&gt;generator (numeric-range 0 10)))
+  &rArr; (0 1 2 3 4 5 6 7 8 9)
+</code></pre>
+
+<h2>Implementation</h2>
+
+<p>The sample implementation is in <a href="https://github.com/scheme-requests-for-implementation/srfi-196">the
+  repository</a> of this SRFI and in <a href="https://srfi.schemers.org/srfi-196/srfi-196.tgz">this
+  .tgz file</a>.
+An R7RS library file and a separate file containing the actual
+implementation are provided, along with a test file that
+works with <a href="https://srfi.schemers.org/srfi-78/srfi-78.html">SRFI 78</a>, but is self-contained if SRFI 78 does not exist.
+The implementation uses SRFI 1 and can take
+advantage of <a href="https://srfi.schemers.org/srfi-145/srfi-145.html">SRFI 145</a> (<code>assume</code>) if it is present.</p>
+
+
+<h2>Acknowledgements</h2>
+
+<p>Without <a href="https://docs.python.org/3.8/library/stdtypes.html#ranges">Python's <code>range</code> object</a>,
+this SRFI would not exist.  Thanks also to the contributors on the SRFI 196 mailing list.
+</p>
+
+<p>Special thanks to Marc Nieper-Wißkirchen, who provided extensive
+feedback and invaluable insights during the development of this
+SRFI.</p>
+
+<h2>Copyright</h2>
+<p>&copy; 2020 John Cowan, Wolfgang Corcoran-Mathe.
+
+<p>
+  Permission is hereby granted, free of charge, to any person
+  obtaining a copy of this software and associated documentation files
+  (the "Software"), to deal in the Software without restriction,
+  including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+<p>
+  The above copyright notice and this permission notice (including the
+  next paragraph) shall be included in all copies or substantial
+  portions of the Software.
+<p>
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+  <hr>
+  <address>Editor: <a href="mailto:srfi-editors+at+srfi+dot+schemers+dot+org">Arthur A. Gleckler</a></address></body></html>
