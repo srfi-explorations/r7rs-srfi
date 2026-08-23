@@ -40,7 +40,7 @@ pipeline {
             steps {
                 sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy & echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy & echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
                 sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/* & rm -rf chibi-scheme"
-                sh "apt-get update && apt-get install -y git ca-certificates make zip"
+                sh "apt-get update && apt-get install -y zip"
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
                 sh 'make PREFIX=/opt/chibi -j $(nproc) -C chibi-scheme'
                 sh "make PREFIX=/opt/chibi -C chibi-scheme install"
