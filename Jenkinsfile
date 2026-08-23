@@ -409,7 +409,7 @@ def scheme_stage(scheme) {
         sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
         sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
         unstash 'chibi'
-        sh "unzip -o chibi-scheme.zip"
+        sh "unzip -o chibi-scheme.zip -d /"
         sh "rm -rf /usr/local/bin/compile-r7rs"
         sh '/opt/chibi/bin/snow-chibi install --impls=chibi retropikzel.compile-r7rs'
         sh "compile-r7rs --list-r7rs"
