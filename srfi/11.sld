@@ -2,6 +2,7 @@
   (srfi 11)
   (cond-expand
     (stklos (import (scheme base)))
+    (racket (import (scheme base)))
     (else (import (except (scheme base)
                           let-values
                           let*-values))))

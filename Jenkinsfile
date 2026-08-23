@@ -79,7 +79,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/chibi"
+                            image "schemers/chibi:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -360,7 +360,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/tr7"
+                            image "schemers/tr7:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
