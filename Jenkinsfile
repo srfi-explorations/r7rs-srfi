@@ -53,7 +53,7 @@ pipeline {
                 sh "zip -r srfi-test.zip srfi-test"
                 stash includes: 'srfi-test.zip', name: 'tests'
 
-                stash includes: '/var/lib/apt/lists/*', name: 'apt-lists'
+                stash includes: '/var/lib/apt/lists/**', name: 'apt-lists'
             }
         }
 
