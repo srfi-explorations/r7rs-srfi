@@ -25,7 +25,6 @@ pipeline {
         DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
         LOKO_DOCKER_ARGS='-t --user=root --rm'
         LABEL='parallel'
-        PATH='/opt/chibi/bin:${PATH}'
         LD_LIBRARY_PATH="/opt/chibi/lib"
     }
 
@@ -45,6 +44,8 @@ pipeline {
                 sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
                 sh 'make PREFIX=/opt/chibi -j $(nproc) -C chibi-scheme'
                 sh "make PREFIX=/opt/chibi -C chibi-scheme install"
+                sh "ln -sf /opt/chibi/bin/chibi-scheme /usr/local/bin/chibi-scheme"
+                sh "ln -sf /opt/chibi/bin/snow-chibi /usr/local/bin/snow-chibi"
                 sh "zip -r chibi-scheme.zip /opt/chibi"
                 stash includes: 'chibi-scheme.zip', name: 'chibi'
 
@@ -411,6 +412,8 @@ def scheme_stage(scheme) {
         sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
         unstash 'chibi'
         sh "unzip -o chibi-scheme.zip -d /"
+        sh "ln -sf /opt/chibi/bin/chibi-scheme /usr/local/bin/chibi-scheme"
+        sh "ln -sf /opt/chibi/bin/snow-chibi /usr/local/bin/snow-chibi"
         sh "rm -rf /usr/local/bin/compile-r7rs"
         sh 'snow-chibi install --impls=chibi retropikzel.compile-r7rs'
         sh "compile-r7rs --list-r7rs"
