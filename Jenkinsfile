@@ -53,7 +53,7 @@ pipeline {
                 sh "zip -r srfi-test.zip srfi-test"
                 stash includes: 'srfi-test.zip', name: 'tests'
 
-                stash includes: '/var/lib/apt/lists/**', name: 'apt-lists'
+                stash includes: '/etc/apt.conf.d/*proxy,/etc/apt/sources.list.d/*', name: 'apt'
             }
         }
 
@@ -408,10 +408,8 @@ def scheme_stage(scheme) {
     def stages = []
     stages.plus(stage("Container init") {
         archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
-        sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy & echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy & echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-        sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
-        unstash 'apt-lists'
-        sh "apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
+        unstash 'apt'
+        sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
         unstash 'chibi'
         sh "unzip -o chibi-scheme.zip -d /"
         sh "ln -sf /opt/chibi/bin/chibi-scheme /usr/local/bin/chibi-scheme"
