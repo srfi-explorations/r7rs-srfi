@@ -410,7 +410,11 @@ def scheme_stage(scheme) {
         sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
         sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
         sh "mkdir -p /opt/chibi"
-        unstash 'chibi'
+        try {
+            unstash 'chibi'
+        } catch (error) {
+            echo "error unstashing: ${error}"
+        }
         sh "unzip -o chibi-scheme.zip -d /"
         sh "ln -sf /opt/chibi/bin/chibi-scheme /usr/local/bin/chibi-scheme"
         sh "rm -rf /usr/local/bin/compile-r7rs"
