@@ -409,6 +409,7 @@ def scheme_stage(scheme) {
         sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy & echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy & echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
         sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
         sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
+        sh "mkdir -p /opt/chibi"
         unstash 'chibi'
         sh "unzip -o chibi-scheme.zip -d /"
         sh "ln -sf /opt/chibi/bin/chibi-scheme /usr/local/bin/chibi-scheme"
