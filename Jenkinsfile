@@ -442,11 +442,9 @@ def scheme_stage(scheme) {
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p ${resultdir}"
-                    sh "make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt"
-                    sh "cat ${resultdir}/out.txt"
+                    sh "make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt; cat ${resultdir}/out.txt"
                     sh "chmod -R 777 ."
-                    sh "timeout 600 runuser -u r7rstester -- ${cmd} 2>&1 >> ${resultdir}/out.txt || cat ${resultdir}/out.txt"
-                    sh "cat ${resultdir}/out.txt"
+                    sh "timeout 600 runuser -u r7rstester -- ${cmd} 2>&1 >> ${resultdir}/out.txt; cat ${resultdir}/out.txt"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
