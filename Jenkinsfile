@@ -413,7 +413,7 @@ def scheme_stage(scheme) {
         try {
             unstash 'chibi'
         } catch (error) {
-            echo "error unstashing: ${error}"
+            echo "error unstashing chibi: ${error}"
             exit 1
         }
         sh "unzip -o chibi-scheme.zip -d /"
@@ -424,7 +424,12 @@ def scheme_stage(scheme) {
         sh 'useradd r7rstester -m'
         sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
         sh "runuser -u r7rstester -- /opt/chibi/bin/snow-chibi update"
-        unstash 'tests'
+        try {
+            unstash 'tests'
+        } catch (error) {
+            echo "error unstashing tests: ${error}"
+            exit 1
+        }
         sh "unzip -o srfi-test.zip"
         sh "/opt/chibi/bin/snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && /opt/chibi/bin/snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
     })
