@@ -414,6 +414,7 @@ def scheme_stage(scheme) {
             unstash 'chibi'
         } catch (error) {
             echo "error unstashing: ${error}"
+            exit 1
         }
         sh "unzip -o chibi-scheme.zip -d /"
         sh "ln -sf /opt/chibi/bin/chibi-scheme /usr/local/bin/chibi-scheme"
