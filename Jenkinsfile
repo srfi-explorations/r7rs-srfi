@@ -86,7 +86,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 /* FIXME
                 stage('Cyclone') {
                     agent {
