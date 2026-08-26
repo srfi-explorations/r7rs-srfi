@@ -29,8 +29,8 @@ ADD --unpack=true https://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/make/make
 RUN mv make* make
 WORKDIR /make
 RUN ./configure --prefix=/opt/make
-RUN make
-RUN make install
+RUN make PREFIX=/opt/make
+RUN make PREFIX=/opt/make install
 
 
 ARG SCHEME=chibi
