@@ -5,7 +5,7 @@ FROM gcc:14-trixie AS build
 
 RUN apt-get update && apt-get install -y yacc
 
-COPY --from=schemers/snow-chibi:head /opt/chibi /opt/chibi
+COPY --from=schemers/snow-chibi:head /opt/snow-chibi /opt/snow-chibi
 ENV LD_LIBRARY_PATH=/opt/snow-chibi/lib
 ENV PATH=/opt/snow-chibi/bin:${PATH}
 
