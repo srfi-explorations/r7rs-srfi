@@ -406,7 +406,7 @@ def scheme_stage(scheme) {
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p ${resultdir}"
-                    sh "echo '# running command ${cmd}' > ${resultdir}/out.txt"
+                    sh "echo '# running command: ${cmd}' > ${resultdir}/out.txt"
                     sh "timeout 600 ${cmd} 2>&1 >> ${resultdir}/out.txt || exit 0"
                 }
                 sh "cat ${resultdir}/out.txt"
