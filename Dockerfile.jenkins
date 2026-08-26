@@ -33,6 +33,7 @@ ARG TAG=latest
 RUN apt-get update && apt-get install -y make
 
 COPY --from=build /opt /opt
+RUN cp -r /opt/srfi-test /workdir/srfi-test
 
 RUN mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm
 ENV LD_LIBRARY_PATH=/opt/chibi/lib
