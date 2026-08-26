@@ -5,20 +5,9 @@ FROM gcc:14-trixie AS build
 
 RUN apt-get update && apt-get install -y yacc
 
-ADD https://github.com/ashinn/chibi-scheme.git /chibi-scheme
-WORKDIR /chibi-scheme
-RUN make PREFIX=/opt/chibi
-RUN make PREFIX=/opt/chibi install
+COPY --from=schemers/snow-chibi:head /opt/chibi /opt/chibi
 ENV LD_LIBRARY_PATH=/opt/chibi/lib
 ENV PATH=/opt/chibi/bin:${PATH}
-
-ADD https://github.com/Duncaen/OpenDoas.git#v6.8.2 /opendoas
-WORKDIR /opendoas
-RUN ls
-RUN ./configure --prefix=/opt/doas
-RUN make PREFIX=/opt/doas
-RUN make PREFIX=/opt/doas install
-ENV PATH=/opt/doas/bin:${PATH}
 
 ADD https://github.com/srfi-explorations/srfi-test.git /opt/srfi-test
 WORKDIR /opt/srfi-test
@@ -30,7 +19,7 @@ FROM schemers/${SCHEME}:${TAG}
 ARG SCHEME=chibi
 ARG TAG=latest
 
-RUN apt-get update && apt-get install -y make
+RUN apt-get update && apt-get install -y make doas
 
 COPY --from=build /opt /opt
 
