@@ -155,7 +155,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                /* FIXME
                 stage('Guile') {
                     agent {
                         dockerfile {
@@ -173,7 +172,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 stage('Kawa') {
                     agent {
                         dockerfile {
