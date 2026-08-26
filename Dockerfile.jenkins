@@ -1,13 +1,8 @@
 ARG SCHEME=chibi
 ARG TAG=latest
 
-FROM gcc:14-trixie AS build
+FROM schemes/chibi AS build
 
-RUN apt-get update && apt-get install -y yacc
-
-COPY --from=schemers/snow-chibi:head /opt/snow-chibi /opt/snow-chibi
-ENV LD_LIBRARY_PATH=/opt/snow-chibi/lib
-ENV PATH=/opt/snow-chibi/bin:${PATH}
 
 ADD https://github.com/srfi-explorations/srfi-test.git /opt/srfi-test
 WORKDIR /opt/srfi-test
@@ -21,11 +16,10 @@ ARG TAG=latest
 
 RUN apt-get update && apt-get install -y make doas
 
-COPY --from=build /opt /opt
-
+COPY --from=schemers/snow-chibi:head /opt/snow-chibi /opt/snow-chibi
+ENV LD_LIBRARY_PATH=/opt/snow-chibi/lib
+ENV PATH=/opt/snow-chibi/bin:${PATH}
 RUN mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm
-ENV LD_LIBRARY_PATH=/opt/chibi/lib
-ENV PATH=/opt/chibi/bin:${PATH}
 
 RUN snow-chibi update
 RUN rm -rf /usr/local/bin/compile-r7rs
