@@ -57,7 +57,7 @@ pipeline {
                         dockerfile {
                             filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            args "${env.DOCKER_ARGS}"
+                            args "${env.DOCKER_ARGS} --tag=r7rs-srfi-chibi"
                             additionalBuildArgs "--build-arg SCHEME=chibi"
                         }
                     }
@@ -349,7 +349,7 @@ pipeline {
                         dockerfile {
                             filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            args "${env.DOCKER_ARGS}"
+                            args "${env.DOCKER_ARGS} --tag=r7rs-srfi-tr7"
                             additionalBuildArgs "--build-arg SCHEME=tr7"
                         }
                     }
