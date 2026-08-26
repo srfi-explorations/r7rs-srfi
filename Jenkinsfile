@@ -177,7 +177,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/guile"
+                            image "schemers/guile:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
