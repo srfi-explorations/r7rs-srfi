@@ -62,7 +62,5 @@ RUN echo "permit nopass someuser cmd chmod" >> /etc/doas.conf
 RUN echo "permit nopass someuser cmd ln" >> /etc/doas.conf
 RUN ln -sf /opt/doas/bin/doas /usr/bin/sudo
 WORKDIR /workdir
-USER someuser
 ENV PATH=/usr/bin:/opt/chibi/bin:/usr/local/bin
-RUN sudo ls
-RUN snow-chibi install --impls=chibi arvyy.mustache
+USER someuser
