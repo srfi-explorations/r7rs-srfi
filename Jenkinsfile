@@ -349,8 +349,8 @@ pipeline {
                         dockerfile {
                             filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            args "${env.DOCKER_ARGS} --tag=r7rs-srfi-tr7"
-                            additionalBuildArgs "--build-arg SCHEME=tr7"
+                            args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=tr7 --tag=r7rs-srfi-tr7"
                         }
                     }
                     steps {
