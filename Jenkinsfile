@@ -443,7 +443,7 @@ def scheme_stage(scheme) {
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
             stage("SRFI-${srfi}") {
-                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p ${resultdir}"
                     sh "PATH=/opt/chibi/bin:\${PATH} make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt; cat ${resultdir}/out.txt"
                     sh "cat ${resultdir}/out.txt"
