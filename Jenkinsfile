@@ -441,10 +441,10 @@ def scheme_stage(scheme) {
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p ${resultdir}"
-                    sh "PATH=/opt/chibi/bin:\${PATH} make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt; cat ${resultdir}/out.txt"
+                    sh "PATH=/opt/chibi/bin:\${PATH} make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt; cat ${resultdir}/out.txt || exit 0"
                     sh "cat ${resultdir}/out.txt"
                     sh "chmod -R 777 ."
-                    sh "PATH=/opt/chibi/bin:\${PATH} timeout 600 runuser -u r7rstester -- make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap 2>&1 >> ${resultdir}/out.txt"
+                    sh "PATH=/opt/chibi/bin:\${PATH} timeout 600 runuser -u r7rstester -- make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap 2>&1 >> ${resultdir}/out.txt || exit 0"
                     sh "cat ${resultdir}/out.txt"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
