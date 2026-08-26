@@ -2,7 +2,6 @@ ARG SCHEME=chibi
 ARG TAG=latest
 
 FROM gcc:14-trixie AS build
-USER root
 
 RUN apt-get update && apt-get install -y yacc
 
@@ -17,7 +16,6 @@ RUN chibi-scheme convert.scm
 ARG SCHEME=chibi
 ARG TAG=latest
 FROM schemers/${SCHEME}:${TAG}
-USER root
 ARG SCHEME=chibi
 ARG TAG=latest
 

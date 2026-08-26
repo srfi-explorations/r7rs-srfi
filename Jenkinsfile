@@ -406,7 +406,7 @@ def scheme_stage(scheme) {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p ${resultdir}"
                     sh "make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt"
-                    sh "timeout 600 runuser -u someuser -- make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap 2>&1 >> ${resultdir}/out.txt"
+                    sh "timeout 600 make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap 2>&1 >> ${resultdir}/out.txt"
                 }
                 sh "cat ${resultdir}/out.txt"
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
