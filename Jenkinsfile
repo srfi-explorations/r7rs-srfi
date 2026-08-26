@@ -1,9 +1,13 @@
+//Branch main at 17:00 on Monday
+String cron_string = (scm.branches[0].name == "main") ? '0 17 * * 1' : ''
+
 pipeline {
     agent {
         label 'debian-x86_64'
     }
 
     triggers {
+      cron cron_string
       GenericTrigger(
         genericVariables: [[key: 'ref', value: '$.ref']],
         causeString: 'Triggered on $ref',
