@@ -387,7 +387,6 @@ pipeline {
         success {
             sh "date --utc --iso-8601=minutes > timestamp.txt"
             archiveArtifacts artifacts: "timestamp.txt", allowEmptyArchive: 'true'
-            sh "docker system prune -a -f"
         }
         always {
             cleanWs()
