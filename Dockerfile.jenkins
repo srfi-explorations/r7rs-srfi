@@ -1,7 +1,7 @@
 ARG SCHEME=chibi
 ARG TAG=latest
 
-FROM schemes/chibi AS build
+FROM schemers/chibi AS build
 
 
 ADD https://github.com/srfi-explorations/srfi-test.git /opt/srfi-test
