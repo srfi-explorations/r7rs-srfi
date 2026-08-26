@@ -24,6 +24,15 @@ ADD https://github.com/srfi-explorations/srfi-test.git /opt/srfi-test
 WORKDIR /opt/srfi-test
 RUN chibi-scheme convert.scm
 
+WORKDIR /
+ADD --unpack=true https://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/make/make-4.4.tar.gz /
+RUN mv make* make
+WORKDIR /make
+RUN ./configure --prefix=/opt/make
+RUN make
+RUN make install
+
+
 ARG SCHEME=chibi
 ARG TAG=latest
 FROM schemers/${SCHEME}:${TAG}
@@ -34,7 +43,7 @@ COPY --from=build /opt /opt
 
 RUN mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm
 ENV LD_LIBRARY_PATH=/opt/chibi/lib
-ENV PATH=/opt/chibi/bin:${PATH}
+ENV PATH=/opt/chibi/bin:/opt/make/bin:${PATH}
 
 RUN snow-chibi update
 RUN rm -rf /usr/local/bin/compile-r7rs
