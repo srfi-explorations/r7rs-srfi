@@ -399,12 +399,6 @@ def scheme_stage(scheme) {
     def stages = []
     stages.plus(stage("${scheme}") {
         archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
-        try {
-            unstash 'tests'
-        } catch (error) {
-            echo "error unstashing tests: ${error}"
-            exit 1
-        }
         def srfis = readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
