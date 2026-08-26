@@ -69,13 +69,13 @@ pipeline {
                         cleanWs()
                     }
                 }
-                /*
                 stage('Chicken') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/chicken"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=chicken --tag=r7rs-srfi-chicken"
                         }
                     }
                     steps {
@@ -105,13 +105,13 @@ pipeline {
                     }
                 }
                 */
-                /*
                 stage('Foment') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/foment"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=foment --tag=r7rs-srfi-foment"
                         }
                     }
                     steps {
@@ -121,7 +121,6 @@ pipeline {
                         }
                     }
                 }
-                */
                 /* FIXME
                 stage('Gambit') {
                     agent {
@@ -140,13 +139,13 @@ pipeline {
                     }
                 }
                 */
-                /*
                 stage('Gauche') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/gauche"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=gauche --tag=r7rs-srfi-gauche"
                         }
                     }
                     steps {
@@ -159,10 +158,11 @@ pipeline {
                 }
                 stage('Guile') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/guile:head"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=guile --tag=r7rs-srfi-guile"
                         }
                     }
                     steps {
@@ -175,10 +175,11 @@ pipeline {
                 }
                 stage('Kawa') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/kawa"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=kawa --tag=r7rs-srfi-kawa"
                         }
                     }
                     steps {
@@ -191,10 +192,11 @@ pipeline {
                 }
                 stage('Loko') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/loko"
-                            args "${env.LOKO_DOCKER_ARGS}"
+                            args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=loko --tag=r7rs-srfi-loko"
                         }
                     }
                     steps {
@@ -206,7 +208,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 /* FIXME
                 stage('Meevax') {
                     agent {
@@ -243,13 +244,13 @@ pipeline {
                     }
                 }
                 */
-                /*
                 stage('Mosh') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/mosh"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=mosh --tag=r7rs-srfi-mosh"
                         }
                     }
                     steps {
@@ -260,7 +261,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 /* FIXME
                 stage('Larceny') {
                     agent {
@@ -278,13 +278,13 @@ pipeline {
                     }
                 }
                 */
-                /*
                 stage('Racket') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/racket"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=racket --tag=r7rs-srfi-racket"
                         }
                     }
                     steps {
@@ -297,10 +297,11 @@ pipeline {
                 }
                 stage('Sagittarius') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/sagittarius"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=sagittarius --tag=r7rs-srfi-sagittarius"
                         }
                     }
                     steps {
@@ -313,10 +314,11 @@ pipeline {
                 }
                 stage('Skint') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/skint"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=skint --tag=r7rs-srfi-skint"
                         }
                     }
                     steps {
@@ -329,10 +331,11 @@ pipeline {
                 }
                 stage('STklos') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/stklos"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=stklos --tag=r7rs-srfi-stklos"
                         }
                     }
                     steps {
@@ -343,7 +346,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
                 stage('tr7') {
                     agent {
                         dockerfile {
@@ -361,13 +363,13 @@ pipeline {
                         cleanWs()
                     }
                 }
-                /*
                 stage('Ypsilon') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/ypsilon"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=ypsilon --tag=r7rs-srfi-ypsilon"
                         }
                     }
                     steps {
@@ -378,7 +380,6 @@ pipeline {
                         cleanWs()
                     }
                 }
-                */
             }
         }
     }
