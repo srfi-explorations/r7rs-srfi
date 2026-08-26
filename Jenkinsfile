@@ -408,6 +408,7 @@ def scheme_stage(scheme) {
                     sh "mkdir -p ${resultdir} && echo '# running command: ${cmd}' > ${resultdir}/out.txt"
                     sh "timeout 600 ${cmd} | tee -a ${resultdir}/out.txt"
                 }
+                sh "rm -rf test-program"
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
         }

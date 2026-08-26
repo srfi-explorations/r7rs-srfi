@@ -116,4 +116,3 @@ clean:
 
 distclean: clean
 	rm -rf srfi-test
-
