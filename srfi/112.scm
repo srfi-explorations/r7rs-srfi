@@ -13,22 +13,19 @@
                  (string->list str))
             (list (list #\" #\)))))))))
 
-(cond-expand
-  (not (kawa)
 (define (string-starts-with? str starts-with)
   (let ((sw-len (string-length starts-with)))
     (and (>= (string-length str) sw-len)
          (string=? (string-copy str 0 sw-len) starts-with))))
 
-       (define (get-features-starting-with starts-with)
-         (apply append
-                (map
-                  (lambda (feature)
-                    (if (string-starts-with? (symbol->string feature) starts-with)
-                      (list feature)
-                      (list)))
-                  (features)))))
-  (else))
+(define (get-features-starting-with starts-with)
+  (apply append
+         (map
+           (lambda (feature)
+             (if (string-starts-with? (symbol->string feature) starts-with)
+               (list feature)
+               (list)))
+           (features))))
 
 (define (implementation-name)
   (cond-expand (capyscheme "capyscheme")
