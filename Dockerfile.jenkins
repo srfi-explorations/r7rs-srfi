@@ -30,7 +30,7 @@ FROM schemers/${SCHEME}:${TAG}
 ARG SCHEME=chibi
 ARG TAG=latest
 
-RUN apt-get update && apt-get install -y make
+RUN apt-get update && apt-get install -y make util-linux
 
 COPY --from=build /opt /opt
 
