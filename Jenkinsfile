@@ -26,39 +26,13 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
+        DOCKER_ARGS='-t --user=root --cpus=1 --memory=1G --memory-swap=1G --rm'
         LOKO_DOCKER_ARGS='-t --user=root --rm'
         LABEL='parallel'
         LD_LIBRARY_PATH="/opt/chibi/lib"
     }
 
     stages {
-        stage('Build stash') {
-            agent {
-                docker {
-                    image "gcc:14-trixie"
-                    reuseNode 'true'
-                    args "${env.DOCKER_ARGS}"
-                }
-            }
-            steps {
-                sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy & echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy & echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-                sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/* & rm -rf chibi-scheme"
-                sh "apt-get update && apt-get install -y zip"
-                sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
-                sh 'make PREFIX=/opt/chibi -j $(nproc) -C chibi-scheme'
-                sh "make PREFIX=/opt/chibi -C chibi-scheme install"
-                sh "ln -sf /opt/chibi/bin/chibi-scheme /usr/local/bin/chibi-scheme"
-                sh "zip -r chibi-scheme.zip /opt/chibi"
-                stash includes: 'chibi-scheme.zip', name: 'chibi'
-
-                sh "rm -rf srfi-test"
-                sh 'make srfi-test'
-                sh "zip -r srfi-test.zip srfi-test"
-                stash includes: 'srfi-test.zip', name: 'tests'
-            }
-        }
-
         stage('Parallel') {
             parallel {
                 /* FIXME
@@ -66,7 +40,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/capyscheme:head"
+                            image "schemers/capyscheme"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -80,10 +54,11 @@ pipeline {
                 */
                 stage('Chibi') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/chibi:head"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=chibi"
                         }
                     }
                     steps {
@@ -94,11 +69,12 @@ pipeline {
                         cleanWs()
                     }
                 }
+                /*
                 stage('Chicken') {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/chicken:head"
+                            image "schemers/chicken"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -110,12 +86,13 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 /* FIXME
                 stage('Cyclone') {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/cyclone:head"
+                            image "schemers/cyclone"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -127,6 +104,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 */
                 stage('Foment') {
                     agent {
@@ -143,6 +121,7 @@ pipeline {
                         }
                     }
                 }
+                */
                 /* FIXME
                 stage('Gambit') {
                     agent {
@@ -161,6 +140,7 @@ pipeline {
                     }
                 }
                 */
+                /*
                 stage('Gauche') {
                     agent {
                         docker {
@@ -226,12 +206,13 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 /* FIXME
                 stage('Meevax') {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/meevax:head"
+                            image "schemers/meevax"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -262,6 +243,7 @@ pipeline {
                     }
                 }
                 */
+                /*
                 stage('Mosh') {
                     agent {
                         docker {
@@ -278,6 +260,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 /* FIXME
                 stage('Larceny') {
                     agent {
@@ -295,6 +278,7 @@ pipeline {
                     }
                 }
                 */
+                /*
                 stage('Racket') {
                     agent {
                         docker {
@@ -347,7 +331,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/stklos:head"
+                            image "schemers/stklos"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -359,12 +343,14 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
                 stage('tr7') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/tr7:head"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=tr7"
                         }
                     }
                     steps {
@@ -375,6 +361,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                /*
                 stage('Ypsilon') {
                     agent {
                         docker {
@@ -391,6 +378,7 @@ pipeline {
                         cleanWs()
                     }
                 }
+                */
             }
         }
     }
@@ -399,6 +387,7 @@ pipeline {
         success {
             sh "date --utc --iso-8601=minutes > timestamp.txt"
             archiveArtifacts artifacts: "timestamp.txt", allowEmptyArchive: 'true'
+            sh "docker system prune -a -f"
         }
         always {
             cleanWs()
@@ -408,49 +397,24 @@ pipeline {
 
 def scheme_stage(scheme) {
     def stages = []
-    stages.plus(stage("Container init") {
+    stages.plus(stage("${scheme}") {
         archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
-        sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy & echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy & echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-        sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
-        sh "apt-get update && apt-get install -y make unzip && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
-        sh "mkdir -p /opt/chibi"
-        try {
-            unstash 'chibi'
-        } catch (error) {
-            echo "error unstashing chibi: ${error}"
-            exit 1
-        }
-        sh "unzip -o chibi-scheme.zip -d /"
-        sh "ln -sf /opt/chibi/bin/chibi-scheme /usr/local/bin/chibi-scheme"
-        sh "rm -rf /usr/local/bin/compile-r7rs"
-        sh '/opt/chibi/bin/snow-chibi install --impls=chibi retropikzel.compile-r7rs'
-        sh "compile-r7rs --list-r7rs"
-        sh 'useradd r7rstester -m'
-        sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
-        sh "runuser -u r7rstester -- /opt/chibi/bin/snow-chibi update"
         try {
             unstash 'tests'
         } catch (error) {
             echo "error unstashing tests: ${error}"
             exit 1
         }
-        sh "unzip -o srfi-test.zip"
-        sh "/opt/chibi/bin/snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && /opt/chibi/bin/snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
-    })
-
-    stages.plus(stage("${scheme}") {
         def srfis = readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p ${resultdir}"
-                    sh "PATH=/opt/chibi/bin:\${PATH} make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt; cat ${resultdir}/out.txt"
-                    sh "cat ${resultdir}/out.txt"
-                    sh "chmod -R 777 ."
-                    sh "PATH=/opt/chibi/bin:\${PATH} timeout 600 runuser -u r7rstester -- make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap 2>&1 >> ${resultdir}/out.txt"
-                    sh "cat ${resultdir}/out.txt"
+                    sh "make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt"
+                    sh "timeout 600 runuser -u r7rstester -- make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap 2>&1 >> ${resultdir}/out.txt"
                 }
+                sh "cat ${resultdir}/out.txt"
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
         }

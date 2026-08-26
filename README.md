@@ -75,8 +75,10 @@ Add files:
         - Current version of the library
     - srfi/N/AUTHORS
         - If there are multiple, separate them with ",". No spaces before or after ",".
+        - Propably best to not add emails, they can then be found in the code if needed
     - srfi/N/MAINTAINERS
         - If there are multiple, separate them with ",". No spaces before or after ",".
+        - Propably best to not add emails
     - Run: make SRFI=N index
         - Creates file srfi/N/index.html
         - Contains the number, title and link
