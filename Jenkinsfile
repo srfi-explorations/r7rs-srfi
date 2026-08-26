@@ -407,7 +407,7 @@ def scheme_stage(scheme) {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p ${resultdir}"
                     sh "echo '# running command ${cmd}' > ${resultdir}/out.txt"
-                    sh "timeout 600 make ${cmd} 2>&1 >> ${resultdir}/out.txt || exit 0"
+                    sh "timeout 600 ${cmd} 2>&1 >> ${resultdir}/out.txt || exit 0"
                 }
                 sh "cat ${resultdir}/out.txt"
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
