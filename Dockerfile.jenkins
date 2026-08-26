@@ -16,7 +16,7 @@ ARG TAG=latest
 
 RUN apt-get update && apt-get install -y make doas
 
-COPY --from=schemers/snow-chibi:head /opt/snow-chibi /opt/snow-chibi
+COPY --from=schemers/snow-chibi:head /opt /opt
 ENV LD_LIBRARY_PATH=/opt/snow-chibi/lib
 ENV PATH=/opt/snow-chibi/bin:${PATH}
 RUN mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm
