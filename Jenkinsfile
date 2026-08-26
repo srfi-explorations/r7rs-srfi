@@ -105,7 +105,7 @@ pipeline {
                     }
                 }
                 */
-                */
+                /*
                 stage('Foment') {
                     agent {
                         docker {
