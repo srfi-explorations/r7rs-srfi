@@ -30,7 +30,7 @@ FROM schemers/${SCHEME}:${TAG}
 ARG SCHEME=chibi
 ARG TAG=latest
 
-RUN apt-get update && apt-get install -y make util-linux
+RUN apt-get update && apt-get install -y make
 
 COPY --from=build /opt /opt
 
@@ -55,5 +55,5 @@ RUN echo "permit nopass someuser cmd chmod" >> /etc/doas.conf
 RUN echo "permit nopass someuser cmd ln" >> /etc/doas.conf
 RUN ln -sf /opt/doas/bin/doas /usr/bin/sudo
 WORKDIR /workdir
-ENV PATH=/usr/bin:/opt/chibi/bin:/usr/local/bin
+ENV PATH=/usr/bin:/usr/sbin:/opt/chibi/bin:/usr/local/bin
 USER someuser
