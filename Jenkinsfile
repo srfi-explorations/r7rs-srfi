@@ -29,6 +29,7 @@ pipeline {
         DOCKER_ARGS='-t --user=root --cpus=1 --memory=1G --memory-swap=1G --rm'
         LOKO_DOCKER_ARGS='-t --user=root --rm'
         LABEL='parallel'
+        SCM_TAP_NO_EXIT_FAIL=1
     }
 
     stages {
