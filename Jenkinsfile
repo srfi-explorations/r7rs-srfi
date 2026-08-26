@@ -62,7 +62,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/capyscheme"
+                            image "schemers/capyscheme:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -94,7 +94,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/chicken"
+                            image "schemers/chicken:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -111,7 +111,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/cyclone"
+                            image "schemers/cyclone:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -144,7 +144,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/gambit"
+                            image "schemers/gambit:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -227,7 +227,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/meevax"
+                            image "schemers/meevax:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -343,7 +343,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/stklos"
+                            image "schemers/stklos:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -443,7 +443,7 @@ def scheme_stage(scheme) {
                     sh "mkdir -p ${resultdir}"
                     sh "PATH=/opt/chibi/bin:\${PATH} make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt; cat ${resultdir}/out.txt"
                     sh "chmod -R 777 ."
-                    sh "timeout 600 runuser -u r7rstester -- PATH=/opt/chibi/bin:\${PATH} ${cmd} make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap 2>&1 >> ${resultdir}/out.txt; cat ${resultdir}/out.txt"
+                    sh "timeout 600 runuser -u r7rstester -- PATH=/opt/chibi/bin:\${PATH} make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap 2>&1 >> ${resultdir}/out.txt; cat ${resultdir}/out.txt"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
