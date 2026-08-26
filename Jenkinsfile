@@ -57,8 +57,8 @@ pipeline {
                         dockerfile {
                             filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            args "${env.DOCKER_ARGS} --tag=r7rs-srfi-chibi"
-                            additionalBuildArgs "--build-arg SCHEME=chibi"
+                            args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=chibi --tag=r7rs-srfi-chibi"
                         }
                     }
                     steps {
