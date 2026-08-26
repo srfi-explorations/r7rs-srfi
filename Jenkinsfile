@@ -405,8 +405,7 @@ def scheme_stage(scheme) {
             def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs-tap"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "mkdir -p ${resultdir}"
-                    sh "echo '# running command: ${cmd}' > ${resultdir}/out.txt"
+                    sh "mkdir -p ${resultdir} && echo '# running command: ${cmd}' > ${resultdir}/out.txt"
                     sh "timeout 600 ${cmd} 2>&1 >> ${resultdir}/out.txt || exit 0"
                 }
                 sh "cat ${resultdir}/out.txt"
