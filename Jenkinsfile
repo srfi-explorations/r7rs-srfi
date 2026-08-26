@@ -397,6 +397,7 @@ pipeline {
 def scheme_stage(scheme) {
     def stages = []
     stages.plus(stage("${scheme}") {
+        sh "cp -r /opt/srfi-test ."
         archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
         def srfis = readFile "test_srfis.txt"
         srfis.split().each { srfi ->

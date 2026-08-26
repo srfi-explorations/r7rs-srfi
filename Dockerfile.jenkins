@@ -55,6 +55,5 @@ RUN echo "permit nopass someuser cmd chmod" >> /etc/doas.conf
 RUN echo "permit nopass someuser cmd ln" >> /etc/doas.conf
 RUN ln -sf /opt/doas/bin/doas /usr/bin/sudo
 WORKDIR /workdir
-RUN cp -r /opt/srfi-test .
 ENV PATH=/usr/bin:/opt/chibi/bin:/usr/local/bin
 USER someuser
