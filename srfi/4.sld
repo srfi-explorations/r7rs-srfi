@@ -1,4 +1,3 @@
-; From https://github.com/scheme-requests-for-implementation/srfi-4/tree/master
 (define-library (srfi 4)
   (import (except (scheme base)
                   bytevector-copy

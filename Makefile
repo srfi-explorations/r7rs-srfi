@@ -4,6 +4,7 @@ SCHEME=chibi
 SRFI=64
 PKG=srfi-${SRFI}-${VERSION}.tgz
 TAPPKG=tap-${PKG}
+DOCKER_TAG=latest
 
 LICENSEFILE=srfi/${SRFI}/LICENSE
 LICENSE=$$(cat ${LICENSEFILE})
@@ -93,11 +94,13 @@ test-compile-r7rs-tap: ${TESTFILE} srfi-test
 	./test-program
 
 test-docker: srfi-test package testfile
+	DOCKER_TAG=${DOCKER_TAG} \
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TESTFILE}
 
 test-docker-tap: srfi-test package taptestfile
+	DOCKER_TAG=${DOCKER_TAG} \
 	SNOW_PACKAGES="srfi.64 retropikzel.tap ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TAPTESTFILE}

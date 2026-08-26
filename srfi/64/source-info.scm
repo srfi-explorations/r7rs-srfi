@@ -25,12 +25,12 @@
 
 (define (canonical-syntax form arg)
   (cond-expand
-    (kawa arg)
-    (guile form)
+    ;(kawa arg)
+    ;(guile form)
     (else #f)))
 
 (cond-expand
-  ((or kawa guile)
+  #;((or kawa guile)
    (define-syntax source-info
      (lambda (stx)
        (syntax-case stx ()
@@ -48,9 +48,9 @@
 
 (define (syntax-source-file stx)
   (cond-expand
-    (kawa
+    #;(kawa
       (syntax-source stx))
-    (guile
+    #;(guile
       (let ((source (syntax-source stx)))
         (and source (assq-ref source 'filename))))
     (else
@@ -58,9 +58,9 @@
 
 (define (syntax-source-line stx)
   (cond-expand
-    (kawa
+    #;(kawa
       (syntax-line stx))
-    (guile
+    #;(guile
       (let ((source (syntax-source stx)))
         (and source (assq-ref source 'line))))
     (else

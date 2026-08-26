@@ -80,7 +80,7 @@
              test-error/source-info))
     (else))
   ;; Source info
-   (cond-expand
+   #;(cond-expand
      (guile (import (only (guile) assq-ref syntax-source)))
      (else))
   (export test-begin
