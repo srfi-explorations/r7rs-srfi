@@ -6,8 +6,8 @@ FROM gcc:14-trixie AS build
 RUN apt-get update && apt-get install -y yacc
 
 COPY --from=schemers/snow-chibi:head /opt/chibi /opt/chibi
-ENV LD_LIBRARY_PATH=/opt/chibi/lib
-ENV PATH=/opt/chibi/bin:${PATH}
+ENV LD_LIBRARY_PATH=/opt/snow-chibi/lib
+ENV PATH=/opt/snow-chibi/bin:${PATH}
 
 ADD https://github.com/srfi-explorations/srfi-test.git /opt/srfi-test
 WORKDIR /opt/srfi-test
