@@ -33,7 +33,6 @@ ARG TAG=latest
 RUN apt-get update && apt-get install -y make
 
 COPY --from=build /opt /opt
-RUN cp -r /opt/srfi-test /workdir/srfi-test
 
 RUN mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm
 ENV LD_LIBRARY_PATH=/opt/chibi/lib
@@ -56,5 +55,6 @@ RUN echo "permit nopass someuser cmd chmod" >> /etc/doas.conf
 RUN echo "permit nopass someuser cmd ln" >> /etc/doas.conf
 RUN ln -sf /opt/doas/bin/doas /usr/bin/sudo
 WORKDIR /workdir
+RUN cp -r /opt/srfi-test .
 ENV PATH=/usr/bin:/opt/chibi/bin:/usr/local/bin
 USER someuser
