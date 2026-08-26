@@ -438,13 +438,12 @@ def scheme_stage(scheme) {
         def srfis = readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
-            def cmd = "PATH=/opt/chibi/bin:\${PATH} make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh "mkdir -p ${resultdir}"
-                    sh "make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt; cat ${resultdir}/out.txt"
+                    sh "PATH=/opt/chibi/bin:\${PATH} make SCHEME=${scheme} SRFI=${srfi} all install > ${resultdir}/out.txt; cat ${resultdir}/out.txt"
                     sh "chmod -R 777 ."
-                    sh "timeout 600 runuser -u r7rstester -- ${cmd} 2>&1 >> ${resultdir}/out.txt; cat ${resultdir}/out.txt"
+                    sh "timeout 600 runuser -u r7rstester -- PATH=/opt/chibi/bin:\${PATH} ${cmd} make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap 2>&1 >> ${resultdir}/out.txt; cat ${resultdir}/out.txt"
                 }
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
