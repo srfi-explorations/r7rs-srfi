@@ -4,6 +4,7 @@ SCHEME=chibi
 SRFI=64
 PKG=srfi-${SRFI}-${VERSION}.tgz
 TAPPKG=tap-${PKG}
+DOCKER_TAG=latest
 
 LICENSEFILE=srfi/${SRFI}/LICENSE
 LICENSE=$$(cat ${LICENSEFILE})
@@ -40,7 +41,7 @@ taptestfile:
 indexfile:
 	cp ${ORIGINDEXFILE} ${INDEXFILE}
 
-package: srfi-test testfile indexfile ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TESTFILE} ${INDEXFILE} ${DESCFILE}
+package: srfi-test testfile indexfile ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${ORIGTESTFILE} ${ORIGINDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
 		--license="${LICENSE}" \
@@ -52,7 +53,7 @@ package: srfi-test testfile indexfile ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFIL
 		--description="${DESCRIPTION}" \
 	srfi/${SRFI}.sld
 
-package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TAPTESTFILE} ${INDEXFILE} ${DESCFILE}
+package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TAPTESTFILE} ${ORIGINDEXFILE} ${DESCFILE}
 	snow-chibi package \
 		--always-yes \
 		--license=${LICENSE} \
@@ -93,11 +94,13 @@ test-compile-r7rs-tap: ${TESTFILE} srfi-test
 	./test-program
 
 test-docker: srfi-test package testfile
+	DOCKER_TAG=${DOCKER_TAG} \
 	SNOW_PACKAGES="srfi.64 ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TESTFILE}
 
 test-docker-tap: srfi-test package taptestfile
+	DOCKER_TAG=${DOCKER_TAG} \
 	SNOW_PACKAGES="srfi.64 retropikzel.tap ${PKG}" \
 	COMPILE_R7RS=${SCHEME} \
 	test-r7rs -o test-program ${TAPTESTFILE}
@@ -113,4 +116,3 @@ clean:
 
 distclean: clean
 	rm -rf srfi-test
-

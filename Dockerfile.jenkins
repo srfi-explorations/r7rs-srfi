@@ -1,8 +1,43 @@
-FROM docker.io/debian:trixie
-RUN apt-get update && apt-get install -y \
-    make gcc git ca-certificates libffi-dev docker.io git
-RUN git clone https://github.com/ashinn/chibi-scheme.git
-WORKDIR /chibi-scheme
-RUN make && make install
+ARG SCHEME=chibi
+ARG TAG=latest
+
+FROM schemers/chibi AS build
+
+
+ADD https://github.com/srfi-explorations/srfi-test.git /opt/srfi-test
+WORKDIR /opt/srfi-test
+RUN chibi-scheme convert.scm
+
+ARG SCHEME=chibi
+ARG TAG=latest
+FROM schemers/${SCHEME}:${TAG}
+ARG SCHEME=chibi
+ARG TAG=latest
+
+RUN apt-get update && apt-get install -y make doas
+
+COPY --from=build /opt/srfi-test /opt/srfi-test
+COPY --from=schemers/snow-chibi:head /opt/snow-chibi /opt/snow-chibi
+ENV LD_LIBRARY_PATH=/opt/snow-chibi/lib
+ENV PATH=/opt/snow-chibi/bin:${PATH}
+RUN mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm
+
 RUN snow-chibi update
-RUN snow-chibi install --impls=chibi --always-yes retropikzel.test-r7rs
+RUN rm -rf /usr/local/bin/compile-r7rs
+RUN snow-chibi install --impls=chibi retropikzel.compile-r7rs
+RUN snow-chibi install --impls=${SCHEME} --always-yes --skip-tests?=1 srfi.64
+RUN snow-chibi install --impls=${SCHEME} --always-yes --skip-tests?=1 retropikzel.tap
+RUN compile-r7rs --list-r7rs
+
+RUN useradd someuser -m
+RUN runuser -u someuser -- mkdir -p /home/someuser/.snow && echo '()' > /home/someuser/.snow/config.scm
+RUN runuser -u someuser -- snow-chibi update
+RUN echo "permit nopass someuser cmd ls" >> /etc/doas.conf
+RUN echo "permit nopass someuser cmd mkdir" >> /etc/doas.conf
+RUN echo "permit nopass someuser cmd cp" >> /etc/doas.conf
+RUN echo "permit nopass someuser cmd chmod" >> /etc/doas.conf
+RUN echo "permit nopass someuser cmd ln" >> /etc/doas.conf
+RUN ln -sf /opt/doas/bin/doas /usr/bin/sudo
+WORKDIR /workdir
+ENV PATH=/usr/bin:/usr/sbin:/opt/snow-chibi/bin:/usr/local/bin
+USER someuser

@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang=en-US>
+<!--
+SPDX-FileCopyrightText: 2014 Alex Shinn
+
+SPDX-License-Identifier: MIT
+-->
+  <head>
+<!-- This commented out text is for the brittle SRFI tools -->
+<!--
+</head>
+<body>
+<H1>Title</H1>
+
+Scheme Regular Expressions
+
+<H1>Author</H1>
+
+Alex Shinn
+
+<H1>Status</H1>
+
+This SRFI is currently in ``final'' status.
+-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="Scheme, regular expressions, programming language, SRFI">
+<title>SRFI 115: Scheme Regular Expressions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/srfi.css" type="text/css" />
+<style type="text/css">
+body {
+   width: 7in;
+   margin: 30pt;
+}
+thead {
+   font-variant: small-caps;
+}
+td {
+   padding-right: 20px;
+}
+code.proc-def {
+   font-weight: bold;
+   color: rgb(120,0,120);
+}
+.code-example {
+   background-color: beige;
+}
+var {
+   font-weight: bold;
+   color: rgb(20,20,120);
+}
+</style>
+
+  </head>
+
+<body>
+<h1><a name="Title">Title</a></h1>
+<div class="title-text">
+
+<p>
+  Scheme Regular Expressions
+</div>
+<h1><a name="Author">Author</a></h1>
+
+<p>
+  Alex Shinn
+
+<H1>Status</H1>
+
+<p>This SRFI is currently in <em>final</em> status.  Here is <a href="https://srfi.schemers.org/srfi-process.html">an explanation</a> of each status that a SRFI can hold.  To provide input on this SRFI, please send email to <code><a href="mailto:srfi+minus+115+at+srfi+dotschemers+dot+org">srfi-115@<span class="antispam">nospam</span>srfi.schemers.org</a></code>.  To subscribe to the list, follow <a href="https://srfi.schemers.org/srfi-list-subscribe.html">these instructions</a>.  You can access previous messages via the mailing list <a href="https://srfi-email.schemers.org/srfi-115/">archive</a>.</p>
+<ul>
+      <li>Received: <a href="https://srfi.schemers.org/srfi-115/srfi-115-1.1.html">2013-10-08</a></li>
+      <li>Revised: <a href="https://srfi.schemers.org/srfi-115/srfi-115-1.2.html">2013-11-17</a></li>
+      <li>Revised: <a href="https://srfi.schemers.org/srfi-115/srfi-115-1.3.html">2013-12-08</a></li>
+      <li>Revised: <a href="https://srfi.schemers.org/srfi-115/srfi-115-1.4.html">2014-04-24</a></li>
+      <li>Revised: <a href="https://srfi.schemers.org/srfi-115/srfi-115-1.5.html">2014-05-19</a></li>
+      <li>Revised: <a href="https://srfi.schemers.org/srfi-115/srfi-115-1.6.html">2014-06-03</a></li>
+      <li>Final: <a href="https://srfi.schemers.org/srfi-115/srfi-115-1.7.html">2014-07-14</a></li>
+      <li>Draft: 2013-10-12--2013-12-12</li>
+      <li>Revised to fix errata:
+	<ul>
+	  <li>2015-08-24 (Fix examples, grammar, etc.)</li>
+	  <li>2015-10-11 (Add clarifications and more examples.
+	    Update location of sample implementation.)</li>
+	  <li>2018-09-18 (Fix typo in sample grapheme definition.)</li>
+	  <li>2020-05-11 (Fix error in <code>regexp-split</code> example.)</li>
+	  <li>2020-08-21 (Fix code for handling regional indicator
+	    characters to account for a fix to Unicode TR29 itself.
+	    See <a
+		  href="https://www.unicode.org/mail-arch/unicode-ml/y2017-m12/0045.html">Unicode.org
+	    message</a> and <a href="https://srfi-email.schemers.org/srfi-115/msg/15038927/">Alex's
+	    SRFI message</a>.)</li>
+	  <li>2025-08-15 (Clarify arity of cset operations.
+	    See <a href="https://srfi-email.schemers.org/srfi-115/msg/31707359/">Sergei's message</a> and ensuing discussion.)</li>
+      <li><b>Post-finalization notes</b>:
+        <ul>
+          <li>Added 2020-04-13: In <code>regexp-replace</code> and
+	    <code>regexp-replace-all</code>, the <code>subst</code> is
+	    defined to be a string, integer or symbol.  However, the
+	    sample implementation as well as equivalent procedures in
+	    IrRegex and SCSH also allow a list of any of these, with the
+	    results concatenated.  In addition, the sample implementation
+	    accepts a procedure of one argument, which is applied to the
+	    corresponding <code>regexp-match</code> object to obtain
+	    the substituted string (as in Emacs <code>regexp-replace-in-string</code>).
+	    This can be used to avoid the ambiguity whereby <code>'pre</code> and
+	    <code>'post</code> have predefined meanings and can't
+	    refer to submatch names.  Implementors are encouraged to
+	    support these two extensions.</li>
+          <li>Added 2024-10-23: The design of this SRFI is intended to
+            allow implementors to compile SREs to their native regexp
+            libraries.  Therefore, the submatch semantics are left
+            unspecified.  The preferred semantics is leftmost-longest,
+            i.e. if multiple submatches are possible the leftmost is
+            preferred, choosing the longest submatch as the
+            tie-breaker among those starting at the same position.
+            The reference implementation, IrRegex, and the cited Re
+            implementations provide this semantics, however most
+            backtracking algorithms only approximate this behavior.
+            Similarly, the non-greedy-* patterns should provide
+            leftmost-shortest semantics.</li></ul></li></ul></li></ul>
+
+<h1>Table of Contents</h1>
+<ul id="toc-table">
+<li><a href="#Abstract">Abstract</a></li>
+<li><a href="#Rationale">Rationale</a></li>
+<li><a href="#Types-and-Naming-Conventions">Types and Naming Conventions</a></li>
+<li><a href="#Compatibility-Levels-and-Features">Compatibility Levels and Features</a></li>
+<li><a href="#Library-Procedures-and-Syntax">Library Procedures and Syntax</a></li>
+<li><a href="#SRE-Syntax">SRE Syntax</a></li>
+<li>
+  <ul>
+    <li><a href="#SRE_2dSyntax_Basic-Patterns">Basic Patterns</a></li>
+    <li><a href="#SRE_2dSyntax_Repeating-patterns">Repeating patterns</a></li>
+    <li><a href="#SRE_2dSyntax_Submatch-Patterns">Submatch Patterns</a></li>
+    <li><a href="#SRE_2dSyntax_Character-Sets">Character Sets</a></li>
+    <li><a href="#SRE_2dSyntax_Named-Character-Sets">Named Character Sets</a></li>
+    <li><a href="#SRE_2dSyntax_Boundary-Assertions">Boundary Assertions</a></li>
+    <li><a href="#SRE_2dSyntax_Non-Greedy-Patterns">Non-Greedy Patterns</a></li>
+    <li><a href="#SRE_2dSyntax_Look-Around-Patterns">Look Around Patterns</a></li>
+  </ul>
+</li>
+<li><a href="#Implementation">Implementation</a></li>
+<li><a href="#References">References</a></li>
+</ul>
+
+<h1><a name="Abstract">Abstract</a></h1>
+
+<p>
+  This SRFI provides a library for matching strings with regular
+  expressions described using the SRE "Scheme Regular Expression"
+  notation first introduced by <a href="#ref-SCSH">SCSH</a>, and
+  extended heavily by <a href="#ref-IrRegex">IrRegex</a>.
+
+<h1><a name="Rationale">Rationale</a></h1>
+
+<p> Regular expressions, coming from a long history of formal language
+  theory, are today the lingua franca of simple string matching.  A
+  regular expression is an expression describing a regular language,
+  the simplest level in the Chomsky hierarchy.  They have the nice
+  property that they can match in linear time, whereas parsers for the
+  next level in the hierarchy require cubic time.  This combined with
+  their conciseness led them to be a popular choice for searching in
+  editors, tools and search interfaces.  Other tools may be better
+  suited to specific purposes, but it is assumed any modern language
+  will provide regular expression support.
+
+<p> SREs were first introduced in SCSH as an s-expression based
+  alternative to the more common string based description.  This
+  format offers many advantages, including being easier to read and
+  write (notably with structured editors), easier to compose (with no
+  escaping issues), and faster and simpler to compile.  An efficient
+  reference implementation of this SRFI can be written in under 1000
+  lines of code, whereas in IrRegex the full PCRE parser alone
+  requires over 500 lines.
+
+<h1>Procedure Index</h1>
+<pre>
+<a href="#proc-regexp">regexp</a>   <a href="#proc-rx">rx</a>     <a href="#proc-regexp-sre">regexp-&gt;sre</a>       <a href="#proc-char-set-sre">char-set-&gt;sre</a>
+<a href="#proc-valid-sre_3f">valid-sre?</a>      <a href="#proc-regexp_3f">regexp?</a>           <a href="#proc-regexp-match_3f">regexp-match?</a>
+<a href="#proc-regexp-matches">regexp-matches</a>  <a href="#proc-regexp-matches_3f">regexp-matches?</a>   <a href="#proc-regexp-search">regexp-search</a>
+<a href="#proc-regexp-fold">regexp-fold</a>     <a href="#proc-regexp-extract">regexp-extract</a>    <a href="#proc-regexp-split">regexp-split</a>   <a href="#proc-regexp-partition">regexp-partition</a>
+<a href="#proc-regexp-replace">regexp-replace</a>          <a href="#proc-regexp-replace-all">regexp-replace-all</a>
+<a href="#proc-regexp-match-submatch">regexp-match-submatch</a>   <a href="#proc-regexp-match-submatch-start">regexp-match-submatch-start</a>   <a href="#proc-regexp-match-submatch-end">regexp-match-submatch-end</a>
+<a href="#proc-regexp-match-count">regexp-match-count</a>      <a href="#proc-regexp-match-_3elist">regexp-match-&gt;list</a>
+</pre>
+
+<h1>Sre Syntax Index</h1>
+<pre>
+Basic Patterns
+<a href="#proc-_3cstring_3e">&lt;string&gt;</a> <a href="#proc-seq">seq</a> <a href="#proc-_3a">:</a> <a href="#proc-or">or</a> <a href="#proc-_7c_5c_7c_7c">|</a>
+
+Options
+<a href="#proc-w_2fnocase">w/nocase</a> <a href="#proc-w_2fcase">w/case</a> <a href="#proc-w_2fascii">w/ascii</a> <a href="#proc-w_2funicode">w/unicode</a>
+<a href="#proc-w_2fnocapture">w/nocapture</a>
+
+Repetition
+<a href="#proc-_3f">optional</a> <a href="#proc-_3f">?</a>     <a href="#proc-_2a">zero-or-more</a> <a href="#proc-_2a">*</a>
+<a href="#proc-_2b">one-or-more</a> <a href="#proc-_2b">+</a>  <a href="#proc-_3e_3d">at-least</a> <a href="#proc-_3e_3d">&gt;=</a>
+<a href="#proc-_3d">exactly</a> <a href="#proc-_3d">=</a>      <a href="#proc-_2a_2a">repeated</a> <a href="#proc-_2a_2a">**</a>
+
+Submatches
+<a href="#proc-submatch">submatch</a> <a href="#proc-_24">$</a> <a href="#proc-submatch-named">submatch-named</a> <a href="#proc-_3d_3e">-&gt;</a>
+<a href="#proc-backref">backref</a>
+
+Character Sets
+<a href="#proc-_3cchar_3e">&lt;char&gt;</a> <a href="#proc-_28_3cstring_3e_29">(&lt;string&gt;)</a> <a href="#proc-char-set">char-set</a>
+<a href="#proc-_2f">char-range</a> <a href="#proc-_2f">/</a> <a href="#proc-union">or</a> <a href="#proc-union">|</a> <a href="#proc-and">and</a> <a href="#proc-_26">&amp;</a>
+<a href="#proc-_7e">complement</a> <a href="#proc-_7e">~</a> <a href="#proc--">difference</a> <a href="#proc--">-</a>
+
+Named Character Sets
+<a href="#proc-any">any</a> <a href="#proc-nonl">nonl</a> <a href="#proc-ascii">ascii</a>   <a href="#proc-lower-case">lower-case</a> <a href="#proc-lower">lower</a>
+<a href="#proc-upper-case">upper-case</a> <a href="#proc-upper">upper</a> <a href="#proc-title-case">title-case</a> <a href="#proc-title">title</a>
+<a href="#proc-alphabetic">alphabetic</a>       <a href="#proc-alpha">alpha</a> <a href="#proc-numeric">numeric</a> <a href="#proc-num">num</a>
+<a href="#proc-alphanumeric">alphanumeric</a>     <a href="#proc-alphanum">alphanum</a> <a href="#proc-alnum">alnum</a>
+<a href="#proc-punctuation">punctuation</a>      <a href="#proc-punct">punct</a> <a href="#proc-symbol">symbol</a>
+<a href="#proc-graphic">graphic</a> <a href="#proc-graph">graph</a>    <a href="#proc-printing">printing</a> <a href="#proc-print">print</a>
+<a href="#proc-whitespace">whitespace</a>       <a href="#proc-white">white</a> <a href="#proc-space">space</a>
+<a href="#proc-control">control</a> <a href="#proc-cntrl">cntrl</a>    <a href="#proc-hex-digit">hex-digit</a> <a href="#proc-xdigit">xdigit</a>
+
+Boundary Checks
+<a href="#proc-bos">bos</a>  <a href="#proc-eos">eos</a>   <a href="#proc-bol">bol</a> <a href="#proc-eol">eol</a>
+<a href="#proc-bow">bow</a>  <a href="#proc-eow">eow</a>   <a href="#proc-nwb">nwb</a>
+<a href="#proc-word">word</a> <a href="#proc-word_2b">word+</a> <a href="#proc-word">word</a>
+<a href="#proc-bog">bog</a>  <a href="#proc-eog">eog</a>   <a href="#proc-grapheme">grapheme</a>
+
+Non-greedy Patterns
+<a href="#proc-_3f_3f">non-greedy-optional</a>     <a href="#proc-_3f_3f">??</a>
+<a href="#proc-_2a_3f">non-greedy-zero-or-more</a> <a href="#proc-_2a_3f">*?</a>
+<a href="#proc-_2a_2a_3f">non-greedy-repeated</a>     <a href="#proc-_2a_2a_3f">**?</a>
+
+Look Around Patterns
+<a href="#proc-look-ahead">look-ahead</a> <a href="#proc-look-behind">look-behind</a> <a href="#proc-neg-look-ahead">neg-look-ahead</a> <a href="#proc-neg-look-behind">neg-look-behind</a>
+</pre>
+
+<h1><a name="Types-and-Naming-Conventions">Types and Naming Conventions</a></h1>
+
+<p>
+  We introduce two new types, <code>regexp</code> and
+  <code>regexp-match</code>, which are disjoint from all other types.  We
+  also introduce the concept of an "SRE," which is not a disjoint type
+  but is a Scheme object following the specification described below.
+
+<p>
+  SRFI 14 defines the <code>char-set</code> type, which can be used as
+  part of an SRE.
+
+<p>
+  In the prototypes below the following naming conventions imply type
+  restrictions:
+
+<ul>
+<li><var>char-set</var>: a SRFI 14 character set
+<li><var>cset-sre</var>: an sre which corresponds to matching a single character out of a set of characters
+<li><var>end</var>: an exact, non-negative integer, defaulting to the <code>(string-length str)</code>
+<li><var>finish</var>: a procedure <code>(lambda (i regexp-match str obj) ...)</code>
+<li><var>obj</var>: any object
+<li><var>knil</var>: any object
+<li><var>kons</var>: a procedure <code>(lambda (i regexp-match str obj) ...)</code>
+<li><var>re</var>: an SRE or pre-compiled regexp object
+<li><var>regexp-match</var>: a regexp-match object from a successful match
+<li><var>sre</var>: an SRE as described below
+<li><var>start</var>: an exact, non-negative integer, defaulting to 0
+<li><var>str</var>: a string
+<li><var>subst</var>: an sexp describing a substitution template
+<li><var>X-or-false</var>: either an object of type X or the false value
+</ul>
+<h1><a name="Compatibility-Levels-and-Features">Compatibility Levels and Features</a></h1>
+
+<p>
+  We specify a thorough, though not exhaustive, syntax with many
+  extensions popular in modern regular expression libraries such as
+  <a href="#ref-PCRE">PCRE</a>.  This is because it is assumed in many
+  cases said libraries will be used as the underlying implementation,
+  the features will be desirable, and if left unspecified people will
+  provide their own, often incompatible, extensions.
+
+<p> On the other hand it is acknowledged that not all implementations
+  will be able to support all extensions.  Some are difficult to
+  implement for DFA implementations, and some, like
+  <code>backref</code>, are prohibitively expensive for any
+  implementation.  Furthermore, even if an implementation has Unicode
+  support, its regexp library may not.
+
+<p>
+  To resolve these differences we divide the syntax into a minimal
+  core which all implementations are required to support, and
+  additional extensions.  In <a href="#ref-R7RS">R7RS</a> or other
+  implementations which support <a href="#ref-SRFI-0">SRFI 0</a>
+  <code>cond-expand</code> with library level features, the
+  availability can be tested with the following <code>cond-expand</code>
+  features:
+
+<ul>
+<li><code>regexp-non-greedy</code> - the non-greedy repetition patterns <code>??</code>, <code>*?</code>, and <code>**?</code> are supported
+<li><code>regexp-look-around</code> - the <code>[neg-]look-ahead</code> and <code>[neg-]look-behind</code> zero-width assertions are supported
+<li><code>regexp-backrefs</code> - the <code>backref</code> pattern is supported
+<li><code>regexp-unicode</code> - regexp character sets support Unicode
+</ul>
+
+<p>
+  The first three simply refer to support for certain SRE patterns.
+
+<p>
+  <code>regexp-unicode</code> indicates support for Unicode contexts.
+  Toggling between Unicode and ASCII can be done with the
+  <code>w/unicode</code> and <code>w/ascii</code> patterns.  In a
+  Unicode context, the named character sets have their full Unicode
+  definition as described below and grapheme boundaries are "extended
+  grapheme clusters" as defined in <a href="#ref-UAX29">UAX #29</a>
+  (Unicode Text Segmentation).  Implementations which provide this
+  feature may still support non-Unicode characters.
+
+<h1><a name="Library-Procedures-and-Syntax">Library Procedures and Syntax</a></h1>
+
+<dl>
+<dt>(<a name="proc-regexp"><code class="proc-def">regexp</code></a> <var>re</var>) => regexp</dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Compiles a regexp if given an object whose structure matches the
+  SRE syntax.  This may be written as a literal or partial literal
+  with <code>quote</code> or <code>quasiquote</code>, or may be
+  generated entirely programmatically.  Returns <var>re</var>
+  unmodified if it is already a regexp.  Raises an error if
+  <var>re</var> is neither a regexp nor a valid representation of an
+  SRE.
+
+<p> Mutating <var>re</var> may invalidate the resulting regexp,
+  causing unspecified results if subsequently used for matching.
+
+<dl>
+<dt>(<a name="proc-rx"><code class="proc-def">rx</code></a> <var>sre</var> <var>...</var>) => regexp</dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Macro shorthand for <code>(regexp `(: <var>sre</var> ...))</code>.
+  May be able to perform some or all computation at compile time if
+  <var>sre</var> is not unquoted.  Note because of this equivalence
+  with the procedural constructor <code>regexp</code>, the semantics
+  of <code>unquote</code> differs from the original SCSH
+  implementation in that unquoted expressions can expand into any
+  object matching the SRE syntax, but not a compiled regexp
+  object.  Further, <code>unquote</code> and
+  <code>unquote-splicing</code> both expand all matches.
+
+<blockquote style="background:lightgray"> Rationale: Providing a
+  procedural interface provides for greater flexibility, and without
+  loss of potential compile-time optimizations by preserving the
+  syntactic shorthand.  The alternative is to rely on
+  <code>eval</code> to dynamically generate regular expressions.
+  However regexps in many cases come from untrusted sources, such as
+  search parameters to a server, or from serialized sources such as
+  config files or command-line arguments.  Moreover many applications
+  may want to keep many thousands of regexps in memory at once.  Given
+  the relatively heavy cost and insecurity of <code>eval</code>, and
+  the frequency with which SREs are read and written as text, we
+  prefer the procedural interface.  </blockquote>
+
+<dl><dt>(<a name="proc-regexp-sre"><code class="proc-def">regexp-&gt;sre</code></a> <var>re</var>) => sre</dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Returns an SRE corresponding to the given regexp <var>re</var>.
+  The SRE will be equivalent to (will match the same strings) but not
+  necessarily <code>equal?</code> to the SRE originally used to compile
+  <var>re</var>.  Mutating the result may invalidate <var>re</var>,
+  causing unspecified results if subsequently used for matching.
+
+<dl><dt>(<a name="proc-char-set-sre"><code class="proc-def">char-set-&gt;sre</code></a> <var>char-set</var>) => sre</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Returns an SRE corresponding to the given SRFI 14 character set.
+  The resulting SRE expands the character set into notation which does
+  not make use of embedded SRFI 14 character sets, and so is suitable
+  for writing portably.
+
+<dl><dt>(<a name="proc-valid-sre_3f"><code class="proc-def">valid-sre?</code></a> <var>obj</var>) => boolean</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Returns true iff <var>obj</var> can be safely passed to <var>regexp</var>.
+
+<dl><dt>(<a name="proc-regexp_3f"><code class="proc-def">regexp?</code></a> <var>obj</var>) => boolean</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Returns true iff <var>obj</var> is a regexp.
+
+<dl><dt>(<a name="proc-regexp-matches"><code class="proc-def">regexp-matches</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Returns an regexp-match object if <var>re</var> successfully matches the entire
+  string <var>str</var> from <var>start</var> (inclusive) to <var>end</var> (exclusive), or #f is the
+  match fails.  The regexp-match object will contain information needed to
+  extract any submatches.
+
+<dl><dt>(<a name="proc-regexp-matches_3f"><code class="proc-def">regexp-matches?</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => boolean?</dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Returns <code>#t</code> if <var>re</var> matches <var>str</var> as
+  in regexp-matches, or <code>#f</code> otherwise.  May be faster than
+  <code>regexp-matches</code> since it doesn't need to return submatch
+  data.
+
+<dl><dt>(<a name="proc-regexp-search"><code class="proc-def">regexp-search</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => regexp-match-or-false</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Returns a regexp-match object if <var>re</var> successfully matches a substring
+  of <var>str</var> between <var>start</var> (inclusive) and <var>end</var> (exclusive), or
+  <code>#f</code> if the match fails.  The regexp-match object will contain
+  information needed to extract any submatches.
+
+<dl><dt>(<a name="proc-regexp-fold"><code class="proc-def">regexp-fold</code></a> <var>re</var> <var>kons</var> <var>knil</var> <var>str</var> <var>[finish</var> <var>[start</var> <var>[end]]]</var>) => obj</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  The fundamental regexp matching iterator.  Repeatedly searches <var>str</var>
+  for the regexp <var>re</var> so long as a match can be found.  On each
+  successful match, applies
+  <code>(<var>kons</var> <i>i</i> <i>regexp-match</i> <i>str</i> <i>acc</i>)</code>
+  where <i>i</i> is the index since the last match (beginning with <var>start</var>),
+  <i>regexp-match</i> is the resulting match, and <i>acc</i> is the result of the
+  previous <var>kons</var> application, beginning with <var>knil</var>.  When no more
+  matches can be found, calls <var>finish</var> with the same arguments, except
+  that <i>regexp-match</i> is <code>#f</code>.
+
+<p>
+  By default <var>finish</var> just returns <i>acc</i>.
+
+<pre class="code-example">
+   (regexp-fold 'word
+                (lambda (i m str acc)
+                  (let ((s (regexp-match-submatch m 0)))
+                   (cond ((assoc s acc)
+                          => (lambda (x) (set-cdr! x (+ 1 (cdr x))) acc))
+                         (else `((,s . 1) ,@acc)))))
+                '()
+                "to be or not to be")
+   =&gt; '(("not" . 1) ("or" . 1) ("be" . 2) ("to" . 2))
+</pre>
+
+<dl><dt>(<a name="proc-regexp-extract"><code class="proc-def">regexp-extract</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Extracts all non-empty substrings of <var>str</var> which match <var>re</var> between
+  <var>start</var> and <var>end</var> as a list of strings.
+
+<pre class="code-example">
+   (regexp-extract '(+ numeric) "192.168.0.1")
+   =&gt; ("192" "168" "0" "1")
+</pre>
+
+
+<dl><dt>(<a name="proc-regexp-split"><code class="proc-def">regexp-split</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Splits <var>str</var> into a list of (possibly empty) strings separated by non-empty matches of <var>re</var>.
+
+<pre class="code-example">
+   (regexp-split '(+ space) " fee fi  fo\tfum\n")
+   =&gt; ("" "fee" "fi" "fo" "fum" "")
+   (regexp-split '(",;") "a,,b,")
+   =&gt; ("a" "" "b" "")
+   (regexp-split '(* digit) "abc123def456ghi789")
+   =&gt; ("abc" "def" "ghi" "")
+</pre>
+
+
+<dl><dt>(<a name="proc-regexp-partition"><code class="proc-def">regexp-partition</code></a> <var>re</var> <var>str</var> <var>[start</var> <var>[end]]</var>) => list</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Partitions <var>str</var> into a list of non-empty strings matching <var>re</var>,
+  interspersed with the unmatched portions of the string.  The first
+  and every odd element is an unmatched substring, which will be the
+  empty string if <var>re</var> matches at the beginning of the string or end
+  of the previous match.  The second and every even element will be a
+  substring matching <var>re</var>.  If the final match ends at the end of the
+  string, no trailing empty string will be included.  Thus, in the
+  degenerate case where <var>str</var> is the empty string, the result is
+  <code>("")</code>.
+
+<p>
+  Note that <code>regexp-partition</code> is equivalent to
+  interleaving the results of <code>regexp-split</code> and
+  <code>regexp-extract</code>, starting with the former.
+
+<pre class="code-example">
+   (regexp-partition '(+ (or space punct)) "")
+   =&gt; ("")
+   (regexp-partition '(+ (or space punct)) "Hello, world!\n")
+   =&gt; ("Hello" ", " "world" "!\n")
+   (regexp-partition '(+ (or space punct)) "¿Dónde Estás?")
+   =&gt; ("" "¿" "Dónde" " " "Estás" "?")
+   (regexp-partition '(* digit) "abc123def456ghi789")
+   =&gt; ("abc" "123" "def" "456" "ghi" "789")
+</pre>
+
+
+<dl><dt>(<a name="proc-regexp-replace"><code class="proc-def">regexp-replace</code></a> <var>re</var> <var>str</var> <var>subst</var> [<var>start</var> [<var>end</var> [<var>count</var>]]) => string</dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Returns a new string replacing the <var>count</var>th match of
+  <var>re</var> in <var>str</var> the <var>subst</var>, where the
+  zero-indexed <var>count</var> defaults to zero (i.e. the first
+  match).  If there are not <var>count</var> matches, returns the
+  selected substring unmodified.
+
+<p> <var>subst</var> can be a string, an integer or symbol indicating
+  the contents of a numbered or named submatch of <var>re</var>,
+  <code>'pre</code> for the substring to the left of the match, or
+  <code>'post</code> for the substring to the right of the match.
+
+<p> The optional parameters <var>start</var> and <var>end</var>
+  restrict both the matching and the substitution, to the given
+  indices, such that the result is equivalent to omitting these
+  parameters and replacing on <code>(substring str start end)</code>.
+  As a convenience, a value of <code>#f</code> for <var>end</var>
+  is equivalent to <code>(string-length str)</code>.
+
+<pre class="code-example">
+   (regexp-replace '(+ space) "one two three" "_")
+   =&gt; "one_two three"
+   (regexp-replace '(+ space) "one two three" "_" 0 #f 0)
+   =&gt; "one_two three"
+   (regexp-replace '(+ space) "one two three" "_" 0 #f 1)
+   =&gt; "one two_three"
+   (regexp-replace '(+ space) "one two three" "_" 0 #f 2)
+   =&gt; "one two three"
+</pre>
+
+
+<dl><dt>(<a name="proc-regexp-replace-all"><code class="proc-def">regexp-replace-all</code></a> <var>re</var> <var>str</var> <var>subst</var> <var>[start</var> <var>[end]]</var>) => string</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Equivalent to <var>regexp-replace</var>, but replaces all occurrences of <var>re</var>
+  in <var>str</var>.
+
+<pre class="code-example">
+   (regexp-replace-all '(+ space) "one two three" "_")
+   =&gt; "one_two_three"
+</pre>
+
+
+<dl><dt>(<a name="proc-regexp-match_3f"><code class="proc-def">regexp-match?</code></a> <var>obj</var>) => boolean</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Returns true iff <var>obj</var> is a successful match from <code>regexp-matches</code> or
+  <code>regexp-search</code>.
+
+<pre class="code-example">
+   (regexp-match? (regexp-matches "x" "x"))  =&gt; #t
+   (regexp-match? (regexp-matches "x" "y"))  =&gt; #f
+</pre>
+
+<dl><dt>(<a name="proc-regexp-match-count"><code class="proc-def">regexp-match-count</code></a> <var>regexp-match</var>) => integer</dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Returns the number of submatches of regexp-match, regardless of
+  whether they matched or not.  Does not include the implicit zero
+  full match in the count.
+
+<pre class="code-example">
+   (regexp-match-count (regexp-matches "x" "x"))  =&gt; 0
+   (regexp-match-count (regexp-matches '($ "x") "x"))  =&gt; 1
+</pre>
+
+<dl><dt>(<a name="proc-regexp-match-submatch"><code class="proc-def">regexp-match-submatch</code></a> <var>regexp-match</var> <var>field</var>) => string-or-false</dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Returns the substring matched in <var>regexp-match</var>
+  corresponding to <var>field</var>, either an integer or a symbol for
+  a named submatch.  Index 0 refers to the entire match, index 1 to
+  the first lexicographic submatch, and so on.  If there are multiple
+  submatches with the same name, the first which matched is returned.
+  If passed an integer outside the range of matches, or a symbol which
+  does not correspond to a named submatch of the pattern, it is an
+  error.  If the corresponding submatch did not match, returns false.
+
+<p> The result of extracting a submatch after the original matched
+string has been mutated is unspecified.
+
+<pre class="code-example">
+   (regexp-match-submatch (regexp-search 'word "**foo**") 0)  =&gt; "foo"
+   (regexp-match-submatch
+    (regexp-search '(: "*" ($ word) "*") "**foo**") 0)  =&gt; "*foo*"
+   (regexp-match-submatch
+    (regexp-search '(: "*" ($ word) "*") "**foo**") 1)  =&gt; "foo"
+</pre>
+
+<dl><dt>(<a name="proc-regexp-match-submatch-start"><code class="proc-def">regexp-match-submatch-start</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Returns the start index <var>regexp-match</var> corresponding to
+  <var>field</var>, as in <var>regexp-match-submatch</var>.
+
+<pre class="code-example">
+   (regexp-match-submatch-start
+    (regexp-search 'word "**foo**") 0)  =&gt; 2
+   (regexp-match-submatch-start
+    (regexp-search '(: "*" ($ word) "*") "**foo**") 0)  =&gt; 1
+   (regexp-match-submatch-start
+    (regexp-search '(: "*" ($ word) "*") "**foo**") 1)  =&gt; 2
+</pre>
+
+<dl><dt>(<a name="proc-regexp-match-submatch-end"><code class="proc-def">regexp-match-submatch-end</code></a> <var>regexp-match</var> <var>field</var>) => integer-or-false</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Returns the end index in <var>regexp-match</var> corresponding to
+  <var>field</var>, as in <var>regexp-match-submatch</var>.
+
+<pre class="code-example">
+   (regexp-match-submatch-end
+    (regexp-search 'word "**foo**") 0)  =&gt; 5
+   (regexp-match-submatch-end
+    (regexp-search '(: "*" ($ word) "*") "**foo**") 0)  =&gt; 6
+   (regexp-match-submatch-end
+    (regexp-search '(: "*" ($ word) "*") "**foo**") 1)  =&gt; 5
+</pre>
+
+<dl><dt>(<a name="proc-regexp-match-_3elist"><code class="proc-def">regexp-match-&gt;list</code></a> <var>regexp-match</var>) => list</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Returns a list of all submatches in <var>regexp-match</var> as string or false,
+  beginning with the entire match 0.
+
+<pre class="code-example">
+   (regexp-match-&gt;list
+    (regexp-search '(: ($ word) (+ (or space punct)) ($ word)) "cats & dogs"))
+    =&gt; '("cats & dogs" "cats" "dogs")
+</pre>
+
+<h1><a name="SRE-Syntax">SRE Syntax</a></h1>
+
+<p> The grammar for SREs is summarized below.  Note that an SRE is a
+  first-class object consisting of nested lists of strings, chars,
+  char-sets, symbols and numbers.  Where the syntax is described as
+  <code>(foo bar)</code>, this can be constructed equivalently as
+  <code>'(foo bar)</code> or <code>(list 'foo 'bar)</code>, etc.
+
+  The following sections explain the semantics in greater detail.
+
+<pre class="code-example">
+    &lt;sre&gt; ::=
+     | &lt;string&gt;                    ; A literal string match.
+     | &lt;cset-sre&gt;                  ; A character set match.
+     | (* &lt;sre&gt; ...)               ; 0 or more matches.
+     | (zero-or-more &lt;sre&gt; ...)
+     | (+ &lt;sre&gt; ...)               ; 1 or more matches.
+     | (one-or-more &lt;sre&gt; ...)
+     | (? &lt;sre&gt; ...)               ; 0 or 1 matches.
+     | (optional &lt;sre&gt; ...)
+     | (= &lt;n&gt; &lt;sre&gt; ...)           ; &lt;n&gt; matches.
+     | (exactly &lt;n&gt; &lt;sre&gt; ...)
+     | (&gt;= &lt;n&gt; &lt;sre&gt; ...)          ; &lt;n&gt; or more matches.
+     | (at-least &lt;n&gt; &lt;sre&gt; ...)
+     | (** &lt;n&gt; &lt;m&gt; &lt;sre&gt; ...)      ; &lt;n&gt; to &lt;m&gt; matches.
+     | (repeated &lt;n&gt; &lt;m&gt; &lt;sre&gt; ...)
+
+     | (|  &lt;sre&gt; ...)              ; Alternation.
+     | (or &lt;sre&gt; ...)
+
+     | (:   &lt;sre&gt; ...)             ; Sequence.
+     | (seq &lt;sre&gt; ...)
+     | ($ &lt;sre&gt; ...)               ; Numbered submatch.
+     | (submatch &lt;sre&gt; ...)
+     | (-&gt; &lt;name&gt; &lt;sre&gt; ...)               ;  Named submatch.  &lt;name&gt; is
+     | (submatch-named &lt;name&gt; &lt;sre&gt; ...)   ;  a symbol.
+
+     | (w/case   &lt;sre&gt; ...)        ; Introduce a case-sensitive context.
+     | (w/nocase &lt;sre&gt; ...)        ; Introduce a case-insensitive context.
+
+     | (w/unicode   &lt;sre&gt; ...)     ; Introduce a unicode context.
+     | (w/ascii &lt;sre&gt; ...)         ; Introduce an ascii context.
+
+     | (w/nocapture &lt;sre&gt; ...)     ; Ignore all enclosed submatches.
+
+     | bos                         ; Beginning of string.
+     | eos                         ; End of string.
+
+     | bol                         ; Beginning of line.
+     | eol                         ; End of line.
+
+     | bog                         ; Beginning of grapheme cluster.
+     | eog                         ; End of grapheme cluster.
+     | grapheme                    ; A single grapheme cluster.
+
+     | bow                         ; Beginning of word.
+     | eow                         ; End of word.
+     | nwb                         ; A non-word boundary.
+     | (word &lt;sre&gt; ...)            ; An SRE wrapped in word boundaries.
+     | (word+ &lt;cset-sre&gt; ...)      ; A single word restricted to a cset.
+     | word                        ; A single word.
+
+     | (?? &lt;sre&gt; ...)              ; A non-greedy pattern, 0 or 1 match.
+     | (non-greedy-optional &lt;sre&gt; ...)
+     | (*? &lt;sre&gt; ...)              ; Non-greedy 0 or more matches.
+     | (non-greedy-zero-or-more &lt;sre&gt; ...)
+     | (**? &lt;m&gt; &lt;n&gt; &lt;sre&gt; ...)     ; Non-greedy &lt;m&gt; to &lt;n&gt; matches.
+     | (non-greedy-repeated &lt;sre&gt; ...)
+     | (look-ahead &lt;sre&gt; ...)      ; Zero-width look-ahead assertion.
+     | (look-behind &lt;sre&gt; ...)     ; Zero-width look-behind assertion.
+     | (neg-look-ahead &lt;sre&gt; ...)  ; Zero-width negative look-ahead assertion.
+     | (neg-look-behind &lt;sre&gt; ...) ; Zero-width negative look-behind assertion.
+
+     | (backref &lt;n-or-name&gt;)       ; Match a previous submatch.
+</pre>
+
+
+  The grammar for <code>cset-sre</code> is as follows.
+
+<pre class="code-example">
+    &lt;cset-sre&gt; ::=
+     | &lt;char&gt;                      ; literal char
+     | "&lt;char&gt;"                    ; string of one char
+     | &lt;char-set&gt;                  ; embedded SRFI 14 char set
+     | (&lt;string&gt;)                  ; literal char set
+     | (char-set &lt;string&gt;)
+     | (/ &lt;range-spec&gt; ...)        ; ranges
+     | (char-range &lt;range-spec&gt; ...)
+     | (or &lt;cset-sre&gt; ...)         ; union
+     | (|\|| &lt;cset-sre&gt; ...)
+     | (and &lt;cset-sre&gt; ...)        ; intersection
+     | (&amp; &lt;cset-sre&gt; ...)
+     | (difference &lt;base-cset&gt; &lt;cset-sre&gt; ...)  ; difference
+     | (- &lt;base-cset&gt; &lt;cset-sre&gt; ...)
+     | (~ &lt;cset-sre&gt; ...)          ; complement of union
+     | (complement &lt;cset-sre&gt; ...)
+     | (w/case &lt;cset-sre&gt;)         ; case and unicode toggling
+     | (w/nocase &lt;cset-sre&gt;)
+     | (w/ascii &lt;cset-sre&gt;)
+     | (w/unicode &lt;cset-sre&gt;)
+     | any | nonl | ascii | lower-case | lower
+     | upper-case | upper | title-case | title
+     | alphabetic | alpha | alphanumeric | alphanum | alnum
+     | numeric | num | punctuation | punct | symbol
+     | graphic | graph | whitespace | white | space
+     | printing | print | control | cntrl | hex-digit | xdigit
+</pre>
+
+
+<pre class="code-example">
+    &lt;range-spec&gt; ::= &lt;string&gt; | &lt;char&gt;
+</pre>
+
+
+<h3><a name="SRE_2dSyntax_Basic-Patterns">Basic Patterns</a></h3>
+
+<dl><dt><a name="proc-_3cstring_3e"><code class="proc-def">&lt;string&gt;</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  A literal string.
+
+<pre class="code-example">
+   (regexp-search "needle" "hayneedlehay") =&gt; #&lt;regexp-match&gt;
+   (regexp-search "needle" "haynEEdlehay") =&gt; #f
+</pre>
+
+
+<dl><dt>(<a name="proc-seq"><code class="proc-def">seq</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3a"><code class="proc-def">:</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Sequencing.  Matches if each of <var>sre</var> matches adjacently in order.
+
+<pre class="code-example">
+   (regexp-search '(: "one" space "two" space "three") "one two three") =&gt; #&lt;regexp-match&gt;
+</pre>
+
+
+<dl><dt>(<a name="proc-or"><code class="proc-def">or</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_7c_5c_7c_7c"><code class="proc-def">|\||</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Alternation.  Matches if any of <var>sre</var> match.
+
+<pre class="code-example">
+   (regexp-search '(or "eeney" "meeney" "miney") "meeney") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(or "eeney" "meeney" "miney") "moe") =&gt; #f
+</pre>
+
+
+<dl><dt>(<a name="proc-w_2fnocase"><code class="proc-def">w/nocase</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Enclosed <var>sres</var> are case-insensitive.  In a Unicode
+  context character and string literals match with the default simple
+  Unicode case-insensitive matching.  Implementations may, but are not
+  required to, handle variable length case conversions, such as
+  <code>#\x00DF</code> "ß" matching the two characters "SS".
+
+  <p>Character sets match if any character in the set matches
+  case-insensitively to the input.  Conceptually each
+  <code>cset-sre</code> is expanded to contain all case variants for
+  all of its characters.  In a compound <code>cset-sre</code> the
+  expansion is applied at the terminals consisting of characters,
+  strings, embedded SRFI 14 char-sets, and named character sets.  For
+  simple unions this would be equivalent to computing the full union
+  first and then expanding case variants, but the semantics can differ
+  when differences and intersections are applied.  For example,
+  <code>(w/nocase (~ ("Aab")))</code> is equivalent to
+  <code>(~ ("AaBb"))</code>, for which "B" is clearly not a member.
+  However if you were to compute <code>(~ ("Aab"))</code> first then
+  you would have a char-set containing "B", and after expanding case
+  variants both "B" and "b" would be members.
+
+  <p>In an ASCII context only the 52 ASCII letters <code>(/ "a-zA-Z")</code>
+  match case-insensitively to each other.
+
+  <p>In a Unicode context the only named <code>cset-sre</code> which
+  are affected by <code>w/nocase</code> are <code>upper</code> and
+  <code>lower</code>.  Note that the case insensitive versions of
+  these are not equivalent to <code>alpha</code> as there are
+  characters with the letter property but no case.
+
+  <p>For this and other <code>w/...</code> forms, multiple SREs may be
+  provided to match as a sequence.  However, if used directly inside a
+  cset, exactly one argument must be provided as noted in the grammar.
+
+<pre class="code-example">
+   (regexp-search "needle" "haynEEdlehay") =&gt; #f
+   (regexp-search '(w/nocase "needle") "haynEEdlehay") =&gt; #&lt;regexp-match&gt;
+
+   (regexp-search '(~ ("Aab")) "B") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(~ ("Aab")) "b") =&gt; #f
+   (regexp-search '(w/nocase (~ ("Aab"))) "B") =&gt; #f
+   (regexp-search '(w/nocase (~ ("Aab"))) "b") =&gt; #f
+   (regexp-search '(~ (w/nocase ("Aab"))) "B") =&gt; #f
+   (regexp-search '(~ (w/nocase ("Aab"))) "b") =&gt; #f
+</pre>
+
+
+<dl><dt>(<a name="proc-w_2fcase"><code class="proc-def">w/case</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Enclosed <var>sres</var> are case-sensitive.  This is the default,
+  and overrides any enclosing <code>w/nocase</code> setting.
+
+<pre class="code-example">
+   (regexp-search '(w/nocase "SMALL" (w/case "BIG")) "smallBIGsmall") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/nocase (~ (w/case ("Aab")))) "b") =&gt; #f
+</pre>
+
+
+<dl><dt>(<a name="proc-w_2fascii"><code class="proc-def">w/ascii</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Enclosed <var>sres</var> are interpreted in an ASCII context.  In practice
+  many regular expressions are used for simple parsing and only ASCII
+  characters are relevant.  Switching to ASCII mode can improve
+  performance in some implementations.
+
+<pre class="code-example">
+   (regexp-search '(w/ascii bos (* alpha) eos) "English") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/ascii bos (* alpha) eos) "Ελληνική") =&gt; #f
+</pre>
+
+
+<dl><dt>(<a name="proc-w_2funicode"><code class="proc-def">w/unicode</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Enclosed <var>sres</var> are interpreted in a Unicode context - character
+  sets with both an ASCII and Unicode definition take the latter.  Has
+  no effect if the <code>regexp-unicode</code> feature is not provided.  This
+  is the default.
+
+<pre class="code-example">
+   (regexp-search '(w/unicode bos (* alpha) eos) "English") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(w/unicode bos (* alpha) eos) "Ελληνική") =&gt; #&lt;regexp-match&gt;
+</pre>
+
+
+<dl><dt>(<a name="proc-w_2fnocapture"><code class="proc-def">w/nocapture</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Disables capturing for all submatches
+  (<code>$</code>, <code>submatch</code>,
+  <code>-&gt;</code> and <code>submatch-named</code>) in the
+  enclosed <var>sres</var>.  The resulting SRE matches exactly the
+  same strings, but without any associated submatch info.  Useful for
+  utility SREs which you want to incorporate without affecting your
+  submatch positions.
+
+<pre class="code-example">
+   (let ((number '($ (+ digit))))
+     (cdr
+      (regexp-match-&gt;list
+       (regexp-search `(: ,number "-" ,number "-" ,number)
+                      "555-867-5309")))  ; =&gt; '("555" "867" "5309")
+     (cdr
+      (regexp-match-&gt;list
+       (regexp-search `(: ,number "-" (w/nocapture ,number) "-" ,number)
+                      "555-867-5309"))))   =&gt; '("555" "5309")
+</pre>
+
+
+<h3><a name="SRE_2dSyntax_Repeating-patterns">Repeating patterns</a></h3>
+
+<dl><dt>(<code class="proc-def">optional</code> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3f"><code class="proc-def">?</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  An optional pattern - matches 1 or 0 times.
+
+<pre class="code-example">
+   (regexp-search '(: "match" (? "es") "!") "matches!") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "match" (? "es") "!") "match!") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "match" (? "es") "!") "matche!") =&gt; #f
+</pre>
+
+
+<dl><dt>(<code class="proc-def">zero-or-more</code> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2a"><code class="proc-def">*</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Kleene star, matches 0 or more times.
+
+<pre class="code-example">
+   (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (* (~ #\&gt;)) "&gt;") "&lt;html") =&gt; #f
+</pre>
+
+
+<dl><dt>(<code class="proc-def">one-or-more</code> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2b"><code class="proc-def">+</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  1 or more matches.  Like <code>*</code> but requires at least a single match.
+
+<pre class="code-example">
+   (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;a&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (+ (~ #\&gt;)) "&gt;") "&lt;&gt;") =&gt; #f
+</pre>
+
+
+<dl><dt>(<code class="proc-def">at-least</code> <var>n</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3e_3d"><code class="proc-def">&gt;=</code></a> <var>n</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  More generally, <var>n</var> or more matches.
+
+<pre class="code-example">
+   (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;table&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;pre&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (&gt;= 3 (~ #\&gt;)) "&gt;") "&lt;tr&gt;") =&gt; #f
+</pre>
+
+
+<dl><dt>(<code class="proc-def">exactly</code> <var>n</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3d"><code class="proc-def">=</code></a> <var>n</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Exactly <var>n</var> matches.
+
+<pre class="code-example">
+   (regexp-search '(: "&lt;" (= 4 (~ #\&gt;)) "&gt;") "&lt;html&gt;") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: "&lt;" (= 4 (~ #\&gt;)) "&gt;") "&lt;table&gt;") =&gt; #f
+</pre>
+
+
+<dl><dt>(<code class="proc-def">repeated</code> <var>from</var> <var>to</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2a_2a"><code class="proc-def">**</code></a> <var>from</var> <var>to</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  The most general form, from <var>from</var> to <var>to</var> matches, inclusive.  <var>to</var> may have an implementation-defined upper bound.
+
+<pre class="code-example">
+   (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.168.1.10") =&gt; #&lt;regexp-match&gt;
+   (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.168.1") =&gt; #f
+   (regexp-search '(: (= 3 (** 1 3 numeric) ".") (** 1 3 numeric)) "192.0168.1.10") =&gt; #f
+</pre>
+
+
+<h3><a name="SRE_2dSyntax_Submatch-Patterns">Submatch Patterns</a></h3>
+
+<dl><dt>(<a name="proc-submatch"><code class="proc-def">submatch</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_24"><code class="proc-def">$</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  A numbered submatch.  The contents matching the pattern
+  will be available in the resulting regexp-match.
+
+<dl><dt>(<a name="proc-submatch-named"><code class="proc-def">submatch-named</code></a> <var>name</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3d_3e"><code class="proc-def">-&gt;</code></a> <var>name</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  A named submatch.  Behaves just like <var>submatch</var>, but the field may
+  also be referred to by <var>name</var>.
+
+<dl><dt>(<a name="proc-backref"><code class="proc-def">backref</code></a> <var>n-or-name</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Optional: Match a previously matched submatch.  The feature
+  <code>regexp-backrefs</code> will be provided if this pattern is supported.
+  Backreferences are expensive, and can trivially be shown to be
+  NP-hard, so one should avoid their use even in implementations which
+  support them.
+
+<h3><a name="SRE_2dSyntax_Character-Sets">Character Sets</a></h3>
+
+<p>
+  A character set pattern matches a single character.
+
+<dl><dt><a name="proc-_3cchar_3e"><code class="proc-def">&lt;char&gt;</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  A singleton char set.
+
+<pre class="code-example">
+   (regexp-matches '(* #\-) "---") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* #\-) "-_-") =&gt; #f
+</pre>
+
+<dl><dt><a name="proc-_22_3cchar_3e_22"><code class="proc-def">"&lt;char&gt;"</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  A singleton char set written as a string of length one rather than a
+  character.  Equivalent to its interpretation as a literal string
+  match, but included to clarify it can be composed in
+  <code>cset-sre</code>s.
+
+<dl><dt><a name="proc-_3cchar-set_3e"><code class="proc-def">&lt;char-set&gt;</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  A SRFI 14 character set, which matches any character in the set.
+  Note that currently there is no portable written representation
+  of SRFI 14 character sets, which means that this pattern is
+  typically generated programmatically, such as with a quasiquoted
+  expression.
+
+<pre class="code-example">
+   (regexp-partition `(+ ,char-set:vowels) "vowels")
+   =&gt; ("v" "o" "w" "e" "ls")
+</pre>
+
+<blockquote style="background:lightgray"> Rationale: Many useful
+  character sets are likely to be available as SRFI 14
+  <code>char-set</code>s, so it is desirable to reuse them in regular
+  expressions.  Since many Unicode character sets are extremely large,
+  converting back and forth between an internal and external
+  representation can be expensive, so the option of direct embedding
+  is necessary.  When a readable external representation is needed,
+  <code>char-set-&gt;sre</code> can be used.  </blockquote>
+
+<dl><dt><a name="proc-char-set"><code class="proc-def">(char-set &lt;string&gt;)</code></a></dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_28_3cstring_3e_29"><code class="proc-def">&lt;string&gt;)</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  The set of chars as formed by SRFI 14 <code>(string-&gt;char-set <var>&lt;string&gt;</var>)</code>.
+
+<p>Note that char-sets contain code points, not grapheme clusters, so
+   any combining characters in <var>&lt;string&gt;</var> will be
+   inserted separately from any preceding base characters by
+   <code>string-&gt;char-set</code>.
+
+<pre class="code-example">
+   (regexp-matches '(* ("aeiou")) "oui") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* ("aeiou")) "ouais") =&gt; #f
+   (regexp-matches '(* ("e\x0301")) "e\x0301") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '("e\x0301") "e\x0301") =&gt; #f
+   (regexp-matches '("e\x0301") "e") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '("e\x0301") "\x0301") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '("e\x0301") "\x00E9") =&gt; #f
+</pre>
+
+
+<dl><dt>(<code class="proc-def">char-range</code> <var>&lt;range-spec&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2f"><code class="proc-def">/</code></a> <var>&lt;range-spec&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Ranged char set.  The <var>&lt;range-spec&gt;</var> is a list of strings and
+  characters.  These are flattened and grouped into pairs of
+  characters, and all ranges formed by the pairs are included in the
+  char set.
+
+<pre class="code-example">
+   (regexp-matches '(* (/ "AZ09")) "R2D2") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* (/ "AZ09")) "C-3PO") =&gt; #f
+</pre>
+
+
+<dl><dt>(<a name="proc-union"><code class="proc-def">or</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a><code class="proc-def">|\||</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Char set union.  The single vertical bar form is provided for
+  consistency and compatibility with SCSH, although it needs to
+  be escaped in R7RS.  With no arguments, is equivalent to the
+  empty set.
+
+<dl><dt>(<code class="proc-def">complement</code> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_7e"><code class="proc-def">~</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Char set complement (i.e. [^...] in PCRE notation).  <code>(~ x)</code>
+  is equivalent to <code>(- any x)</code>, thus in an ASCII context the
+  complement is always ASCII.
+
+<dl><dt>(<code class="proc-def">difference</code> <var>&lt;base-cset&gt;</var> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc--"><code class="proc-def">-</code></a> <var>&lt;base-cset&gt;</var> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Char set difference, returning <var>base-cset</var> with all characters
+  found in any of the <var>cset-sre</var>s removed.
+
+<pre class="code-example">
+   (regexp-matches '(* (- (/ "az") ("aeiou"))) "xyzzy") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* (- (/ "az") ("aeiou"))) "vowels") =&gt; #f
+</pre>
+
+
+<dl><dt>(<a name="proc-and"><code class="proc-def">and</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_26"><code class="proc-def">&amp;</code></a> <var>&lt;cset-sre&gt;</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Char set intersection.  With no arguments, is equivalent to the
+  set of all (or all ASCII) characters.
+
+<pre class="code-example">
+   (regexp-matches '(* (&amp; (/ "az") (~ ("aeiou")))) "xyzzy") =&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(* (&amp; (/ "az") (~ ("aeiou")))) "vowels") =&gt; #f
+</pre>
+
+
+<h3><a name="SRE_2dSyntax_Named-Character-Sets">Named Character Sets</a></h3>
+
+<dl><dt><a name="proc-any"><code class="proc-def">any</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Match any character.  Equivalent to <code>ascii</code> in an ASCII context.
+
+<dl><dt><a name="proc-nonl"><code class="proc-def">nonl</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Match any character other than <code>#\return</code> or
+  <code>#\newline</code>.
+
+<dl><dt><a name="proc-ascii"><code class="proc-def">ascii</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Match any ASCII character [0..127].
+
+<dl><dt><a name="proc-lower-case"><code class="proc-def">lower-case</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-lower"><code class="proc-def">lower</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Matches any character for which <code>char-lower-case?</code>
+  returns true.  In a Unicode context this corresponds to the
+  Lowercase (Ll + Other_Lowercase) property.  In an ASCII context
+  corresponds to <code>(/ "az")</code>.
+
+<dl><dt><a name="proc-upper-case"><code class="proc-def">upper-case</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-upper"><code class="proc-def">upper</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Matches any character for which <code>char-upper-case?</code>
+  returns true.  In a Unicode context this corresponds to the
+  Uppercase (Lu + Other_Uppercase) property.  In an ASCII context
+  corresponds to <code>(/ "AZ")</code>.
+
+<dl><dt><a name="proc-title-case"><code class="proc-def">title-case</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-title"><code class="proc-def">title</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Matches any character with the Unicode Titlecase (Lt) property.
+  This property only exists for the sake of ligature characters, of
+  which only 31 exist at time of writing.  In an ASCII context this is
+  empty.
+
+<dl><dt><a name="proc-alphabetic"><code class="proc-def">alphabetic</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-alpha"><code class="proc-def">alpha</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Matches any character for which <code>char-alphabetic?</code>
+  returns true.  In a Unicode context this corresponds to the
+  Alphabetic (L + Nl + Other_Alphabetic) property.  In an ASCII
+  context corresponds to <code>(w/nocase (/ "az"))</code>.
+
+<dl><dt><a name="proc-numeric"><code class="proc-def">numeric</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-num"><code class="proc-def">num</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches any character for which <code>char-numeric?</code> returns true.  For
+  In a Unicode context this corresponds to the Numeric_Digit (Nd)
+  property.  In an ASCII context corresponds to <code>(/ "09")</code>.
+
+<dl><dt><a name="proc-alphanumeric"><code class="proc-def">alphanumeric</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-alphanum"><code class="proc-def">alphanum</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-alnum"><code class="proc-def">alnum</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches any character which is either a letter or number.
+  Equivalent to:
+
+<pre class="code-example">
+   (or alphabetic numeric)
+</pre>
+
+
+<dl><dt><a name="proc-punctuation"><code class="proc-def">punctuation</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-punct"><code class="proc-def">punct</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches any punctuation character.  In a Unicode context this
+  corresponds to the Punctuation property (P).  In an ASCII context
+  this corresponds to <code>"!\"#%&amp;'()*,-./:;?@[\]_{}"</code>.
+
+<dl><dt><a name="proc-symbol"><code class="proc-def">symbol</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches any symbol character.  In a Unicode context this corresponds
+  to the Symbol property (Sm, Sc, Sk, or So).  In an ASCII this
+  corresponds to <code>"$+&lt;=&gt;^`|~"</code>.
+
+<dl><dt><a name="proc-graphic"><code class="proc-def">graphic</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-graph"><code class="proc-def">graph</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches any graphic character.  Equivalent to:
+
+<pre class="code-example">
+   (or alphanumeric punctuation symbol)
+</pre>
+
+
+<dl><dt><a name="proc-whitespace"><code class="proc-def">whitespace</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-white"><code class="proc-def">white</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-space"><code class="proc-def">space</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches any whitespace character.  In a Unicode context this
+  corresponds to the Separator property (Zs, Zl or Zp).  In an ASCII
+  context this corresponds to space, tab, line feed, form feed, and
+  carriage return.
+
+<dl><dt><a name="proc-printing"><code class="proc-def">printing</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-print"><code class="proc-def">print</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches any printing character.  Equivalent to:
+
+<pre class="code-example">
+   (or graphic whitespace)
+</pre>
+
+
+<dl><dt><a name="proc-control"><code class="proc-def">control</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-cntrl"><code class="proc-def">cntrl</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches any control or other character.  In a Unicode context this
+  corresponds to the Other property (Cc, Cf, Co, Cs or Cn).  In an
+  ASCII context this corresponds to:
+
+<pre class="code-example">
+   `(/ ,(integer-&gt;char 0) ,(integer-char 31))
+</pre>
+
+
+<dl><dt><a name="proc-hex-digit"><code class="proc-def">hex-digit</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-xdigit"><code class="proc-def">xdigit</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches any valid digit in hexadecimal notation.  Always ASCII-only.
+  Equivalent to:
+
+<pre class="code-example">
+   (w/ascii (w/nocase (or numeric "abcdef")))
+</pre>
+
+
+<h3><a name="SRE_2dSyntax_Boundary-Assertions">Boundary Assertions</a></h3>
+
+<dl><dt><a name="proc-bos"><code class="proc-def">bos</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-eos"><code class="proc-def">eos</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches at the beginning/end of string without consuming any
+  characters (a zero-width assertion).  If the search was initiated
+  with start/end parameters, these are considered the end points,
+  rather than the full string.
+
+<dl><dt><a name="proc-bol"><code class="proc-def">bol</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-eol"><code class="proc-def">eol</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches at the beginning/end of a line without consuming any
+  characters (a zero-width assertion).  A line is a possibly empty
+  sequence of characters followed by an end of line sequence as
+  understood by the R7RS <code>read-line</code> procedure,
+  specifically any of a linefeed character, carriage return character,
+  or a carriage return followed by a linefeed character.
+  The string is assumed to contain end of line sequences before the
+  start and after the end of the string, even if the search was made
+  on a substring and the actual surrounding characters differ.
+
+<dl><dt><a name="proc-bow"><code class="proc-def">bow</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-eow"><code class="proc-def">eow</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches at the beginning/end of a word without consuming any
+  characters (a zero-width assertion).  A word is a contiguous
+  sequence of characters that are either alphanumeric or the
+  underscore character, i.e. <code>(or alphanumeric "_")</code>,
+  with the definition of <code>alphanumeric</code> depending on
+  the Unicode or ASCII context.  The string is assumed to contain
+  non-word characters immediately before the start and after the end,
+  even if the search was made on a substring and word constituent
+  characters appear immediately before the beginning or after the end.
+
+<pre class="code-example">
+  (regexp-search '(: bow "foo") "foo") =&gt; #&lt;regexp-match&gt;
+  (regexp-search '(: bow "foo") "&lt;foo&gt;>") =&gt; #&lt;regexp-match&gt;
+  (regexp-search '(: bow "foo") "snafoo") =&gt; #f
+  (regexp-search '(: "foo" eow) "foo") =&gt; #&lt;regexp-match&gt;
+  (regexp-search '(: "foo" eow) "foo!") =&gt; #&lt;regexp-match&gt;
+  (regexp-search '(: "foo" eow) "foobar") =&gt; #f
+</pre>
+
+<dl><dt><a name="proc-nwb"><code class="proc-def">nwb</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches a non-word-boundary (i.e. \B in PCRE).  Equivalent to
+  <code>(neg-look-ahead (or bow eow))</code>.
+
+<dl><dt>(<a name="proc-word"><code class="proc-def">word</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Anchors a sequence to word boundaries.  Equivalent to:
+
+<pre class="code-example">
+   (: bow <var>sre</var> ... eow)
+</pre>
+
+
+<dl><dt>(<a name="proc-word_2b"><code class="proc-def">word+</code></a> <var>cset-sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches a single word composed of characters in the intersection of
+  the given <var>cset-sre</var> and the word constituent characters.
+  Equivalent to:
+
+<pre class="code-example">
+   (word (+ (and (or alphanumeric "_") (or <var>cset-sre</var> ...))))
+</pre>
+
+
+<dl><dt><a><code class="proc-def">word</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  A shorthand for <code>(word+ any)</code>.
+
+<dl><dt><a name="proc-bog"><code class="proc-def">bog</code></a> </dt>
+<dd class="proc-def"></dd>
+<dt><a name="proc-eog"><code class="proc-def">eog</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p> Matches at the beginning/end of a single extended grapheme cluster
+  without consuming any characters (a zero-width assertion).  Grapheme
+  cluster boundaries are defined in Unicode <a
+  href="#ref-UAX29">TR29</a>.  The string is assumed to contain
+  non-combining codepoints immediately before the start and after the
+  end.  These always succeed in an ASCII context.
+
+<dl><dt><a name="proc-grapheme"><code class="proc-def">grapheme</code></a> </dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Matches a single grapheme cluster (i.e. \X in PCRE).  This is what
+  the end-user typically thinks of as a single character, comprised of
+  a base non-combining codepoint followed by zero or more combining
+  marks.  In an ASCII context this is equivalent to <code>any</code>.
+
+<p> Assuming <code>char-set:mark</code> contains all characters with
+  the Extend or SpacingMark properties defined in TR29, and
+  <code>char-set:control</code>,
+  <code>char-set:regional-indicator</code> and
+  <code>char-set:hangul-*</code> are defined similarly, then the
+  following SRE can be used with <code>regexp-extract</code> to
+  define grapheme:
+
+<pre class="code-example">
+   `(or (: (* ,char-set:hangul-l) (+ ,char-set:hangul-v)
+           (* ,char-set:hangul-t))
+        (: (* ,char-set:hangul-l) ,char-set:hangul-v
+           (* ,char-set:hangul-v) (* ,char-set:hangul-t))
+        (: (* ,char-set:hangul-l) ,char-set:hangul-lvt
+           (* ,char-set:hangul-t))
+        (+ ,char-set:hangul-l)
+        (+ ,char-set:hangul-t)
+        (= 2 ,char-set:regional-indicator)
+        (: "\r\n")
+        (: (~ control ("\r\n"))
+           (* ,char-set:mark))
+        control)
+</pre>
+
+<h3><a name="SRE_2dSyntax_Non-Greedy-Patterns">Non-Greedy Patterns</a></h3>
+
+<p>
+  The following patterns are only supported if the feature
+  <code>regexp-non-greedy</code> is provided.
+
+<dl><dt>(<code class="proc-def">non-greedy-optional</code> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_3f_3f"><code class="proc-def">??</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Non-greedy pattern, matches 0 or 1 times, preferring the shorter
+  match.
+
+<dl><dt>(<code class="proc-def">non-greedy-zero-or-more</code> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2a_3f"><code class="proc-def">*?</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Non-greedy Kleene star, matches 0 or more times, preferring the
+  shorter match.
+
+<dl><dt>(<code class="proc-def">non-greedy-repeated</code> <var>m</var> <var>n</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd>
+<dt>(<a name="proc-_2a_2a_3f"><code class="proc-def">**?</code></a> <var>m</var> <var>n</var> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Non-greedy Kleene star, matches <var>m</var> to <var>n</var> times, preferring the
+  shorter match.
+
+<h3><a name="SRE_2dSyntax_Look-Around-Patterns">Look Around Patterns</a></h3>
+
+<p>
+  The following patterns are only supported if the feature
+  <code>regexp-look-around</code> is provided.
+
+<dl><dt>(<a name="proc-look-ahead"><code class="proc-def">look-ahead</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Zero-width look-ahead assertion.  Asserts the sequence matches from
+  the current position, without advancing the position.
+
+<pre class="code-example">
+   (regexp-matches '(: "regular" (look-ahead " expression") " expression") "regular expression")=&gt; #&lt;regexp-match&gt;
+   (regexp-matches '(: "regular" (look-ahead " ") "expression") "regular expression")=&gt; #f
+</pre>
+
+<dl><dt>(<a name="proc-look-behind"><code class="proc-def">look-behind</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Zero-width look-behind assertion.  Asserts the sequence matches
+  behind the current position, without advancing the position.  It is
+  an error if the sequence does not have a fixed length.
+
+<dl><dt>(<a name="proc-neg-look-ahead"><code class="proc-def">neg-look-ahead</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Zero-width negative look-ahead assertion.
+
+<dl><dt>(<a name="proc-neg-look-behind"><code class="proc-def">neg-look-behind</code></a> <var>sre</var> <var>...</var>)</dt>
+<dd class="proc-def"></dd></dl>
+
+<p>
+  Zero-width negative look-behind assertion.
+
+<h1><a name="Implementation">Implementation</a></h1>
+
+<p>
+  A sample implementation in portable R7RS is available at
+<pre>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/srfi/115.sld">https://github.com/ashinn/chibi-scheme/blob/master/lib/srfi/115.sld</a>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.sld">https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.sld</a>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.scm">https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/regexp.scm</a>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/char-set/boundary.sld">https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/char-set/boundary.sld</a>
+    <a href="https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/char-set/boundary.scm">https://github.com/ashinn/chibi-scheme/blob/master/lib/chibi/char-set/boundary.scm</a>
+</pre>
+  depending only on
+  <a href="https://srfi.schemers.org/srfi-14/srfi-14.html">SRFI 14</a>,
+  <a href="https://srfi.schemers.org/srfi-33/srfi-33.html">SRFI 33</a> and
+  <a href="https://srfi.schemers.org/srfi-69/srfi-69.html">SRFI 69</a>.
+  This is implemented as a Thompson-style non-backtracking NFA, a
+  discussion of which can be found at Russ Cox's
+  <a href="#ref-ImplementingRegexps">Implementing Regexps</a>.
+  At time of writing the implementation supports full unicode, but
+  does not yet support look-around patterns.  See
+  <a href="#ref-IrRegex">IrRegex</a> for an alternate implementation
+  supporting all features, providing both a backtracking algorithm
+  and DFA compilation.
+
+<h1><a name="References">References</a></h1>
+
+<dl>
+<dt class="biblio"><a name="ref-R7RS"><strong>R7RS</strong></a>
+<dd>
+<pre class="biblio">
+      Alex Shinn, John Cowan, Arthur Gleckler, Revised<sup>7</sup> Report on the Algorithmic Language Scheme
+      <a href="https://small.r7rs.org/attachment/r7rs.pdf">https://small.r7rs.org/attachment/r7rs.pdf</a>
+</pre>
+
+<dt class="biblio"><a name="ref-SCSH"><strong>SCSH</strong></a>
+<dd>
+<pre class="biblio">
+      Olin Shivers, A Scheme Shell
+      Massachusetts Institute of Technology Cambridge, MA, USA, 1994
+      <a href="https://dspace.mit.edu/bitstream/handle/1721.1/149780/MIT-LCS-TR-635.pdf">https://dspace.mit.edu/bitstream/handle/1721.1/149780/MIT-LCS-TR-635.pdf</a>
+</pre>
+
+
+<dt class="biblio"><a name="ref-IrRegex"><strong>IrRegex</strong></a>
+<dd>
+<pre class="biblio">
+      Alex Shinn, IrRegex - IrRegular Expressions
+      <a href="http://synthcode.com/scheme/irregex/">http://synthcode.com/scheme/irregex/</a>
+</pre>
+
+
+<dt class="biblio"><a name="ref-TR18"><strong>TR18</strong></a>
+<dd>
+<pre class="biblio">
+      Mark Davis, Andy Heninger, UTR #18: Unicode Regular Expressions
+      <a href="http://www.unicode.org/reports/tr18/">http://www.unicode.org/reports/tr18/</a>
+</pre>
+
+
+<dt class="biblio"><a name="ref-UAX29"><strong>UAX29</strong></a>
+<dd>
+<pre class="biblio">
+      Mark Davis, UAX #29: Unicode Text Segmentation
+      <a href="http://www.unicode.org/reports/tr29/">http://www.unicode.org/reports/tr29/</a>
+</pre>
+
+<dt class="biblio"><a name="ref-SRFI-0"><strong>SRFI 0</strong></a>
+<dd>
+<pre class="biblio">
+      Marc Feeley, Feature-based conditional expansion construct
+      <a href="https://srfi.schemers.org/srfi-0/srfi-0.html">http://srfi.schemers.org/srfi-0/srfi-0.html</a>
+</pre>
+
+<dt class="biblio"><a name="ref-SRFI-14"><strong>SRFI 14</strong></a>
+<dd>
+<pre class="biblio">
+      Olin Shivers, Character-set Library
+      <a href="https://srfi.schemers.org/srfi-14/srfi-14.html">http://srfi.schemers.org/srfi-14/srfi-14.html</a>
+</pre>
+
+
+<dt class="biblio"><a name="ref-ImplementingRegexps"><strong>ImplementingRegexps</strong></a>
+<dd>
+<pre class="biblio">
+      Russ Cox, Implementing Regular Expressions
+      <a href="https://swtch.com/~rsc/regexp/">https://swtch.com/~rsc/regexp/</a>
+</pre>
+
+
+<dt class="biblio"><a name="ref-Tcl"><strong>Tcl</strong></a>
+<dd>
+<pre class="biblio">
+      Russ Cox, Henry Spencer's Tcl Regex Library
+      <a href="https://compilers.iecc.com/comparch/article/07-10-026">https://compilers.iecc.com/comparch/article/07-10-026</a>
+</pre>
+
+
+<dt class="biblio"><a name="ref-Gauche"><strong>Gauche</strong></a>
+<dd>
+<pre class="biblio">
+      Shiro Kawai, Gauche Scheme - Regular Expressions
+      <a href="https://practical-scheme.net/gauche/man/gauche-refe/Regular-expressions.html">https://practical-scheme.net/gauche/man/gauche-refe/Regular-expressions.html</a>
+</pre>
+
+
+<dt class="biblio"><a name="ref-Perl6"><strong>Perl6</strong></a>
+<dd>
+<pre class="biblio">
+      Damian Conway, Perl6 Exegesis 5 - Regular Expressions
+      <a href="https://www.perl.com/pub/2002/08/22/exegesis5.html/">https://www.perl.com/pub/2002/08/22/exegesis5.html/</a>
+</pre>
+
+
+<dt class="biblio"><a name="ref-PCRE"><strong>PCRE</strong></a>
+<dd>
+<pre class="biblio">
+      Philip Hazel, PCRE - Perl Compatible Regular Expressions
+      <a href="https://www.pcre.org/">https://www.pcre.org/</a>
+</pre>
+</dl>
+
+<h1>Copyright</h1>
+
+<p>Copyright (C) Alex Shinn 2014. All Rights Reserved.
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.</p>
+
+    <hr />
+<address>Editor: <a href="mailto:srfi-editors+at+srfi+dot+schemers+dot+org">
+             Mike Sperber</a></address>
+
+</body>
+</html>

@@ -1,9 +1,13 @@
+//Branch main at 17:00 on Wednesday
+String cron_string = (scm.branches[0].name == "main") ? '0 17 * * 3' : ''
+
 pipeline {
     agent {
-        label 'parallel'
+        label 'debian-x86_64'
     }
 
     triggers {
+      cron cron_string
       GenericTrigger(
         genericVariables: [[key: 'ref', value: '$.ref']],
         causeString: 'Triggered on $ref',
@@ -22,38 +26,13 @@ pipeline {
     }
 
     environment {
-        DOCKER_ARGS='-t --user=root --cpus=1 --memory=512m --memory-swap=512m --rm'
+        DOCKER_ARGS='-t --user=root --cpus=1 --memory=1G --memory-swap=1G --rm'
         LOKO_DOCKER_ARGS='-t --user=root --rm'
         LABEL='parallel'
+        SCM_TAP_NO_EXIT_FAIL=1
     }
 
     stages {
-        stage('Build stash') {
-            agent {
-                docker {
-                    image "debian:trixie-slim"
-                    reuseNode 'true'
-                    args "${env.DOCKER_ARGS}"
-                }
-            }
-            steps {
-                sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
-                sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
-                sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-                sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
-                sh "apt-get update && apt-get install -y git ca-certificates gcc make"
-                sh "rm -rf chibi-scheme"
-                sh "git clone https://github.com/ashinn/chibi-scheme.git --depth=1"
-                sh "make -C chibi-scheme"
-                sh "make -C chibi-scheme install"
-                stash includes: 'chibi-scheme/**', name: 'chibi'
-
-                sh "rm -rf srfi-test"
-                sh "make srfi-test"
-                stash includes: 'srfi-test/**', name: 'tests'
-            }
-        }
-
         stage('Parallel') {
             parallel {
                 /* FIXME
@@ -75,10 +54,11 @@ pipeline {
                 */
                 stage('Chibi') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/chibi:head"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=chibi --tag=r7rs-srfi-chibi"
                         }
                     }
                     steps {
@@ -91,10 +71,11 @@ pipeline {
                 }
                 stage('Chicken') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/chicken"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=chicken --tag=r7rs-srfi-chicken"
                         }
                     }
                     steps {
@@ -125,10 +106,11 @@ pipeline {
                 */
                 stage('Foment') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/foment"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=foment --tag=r7rs-srfi-foment"
                         }
                     }
                     steps {
@@ -143,7 +125,7 @@ pipeline {
                     agent {
                         docker {
                             label "${env.LABEL}"
-                            image "schemers/gambit"
+                            image "schemers/gambit:head"
                             args "${env.DOCKER_ARGS}"
                         }
                     }
@@ -158,10 +140,11 @@ pipeline {
                 */
                 stage('Gauche') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/gauche"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=gauche --tag=r7rs-srfi-gauche"
                         }
                     }
                     steps {
@@ -174,10 +157,11 @@ pipeline {
                 }
                 stage('Guile') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/guile"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=guile --tag=r7rs-srfi-guile"
                         }
                     }
                     steps {
@@ -190,10 +174,11 @@ pipeline {
                 }
                 stage('Kawa') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/kawa"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=kawa --tag=r7rs-srfi-kawa"
                         }
                     }
                     steps {
@@ -206,10 +191,11 @@ pipeline {
                 }
                 stage('Loko') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/loko"
-                            args "${env.LOKO_DOCKER_ARGS}"
+                            args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=loko --tag=r7rs-srfi-loko"
                         }
                     }
                     steps {
@@ -259,10 +245,11 @@ pipeline {
                 */
                 stage('Mosh') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/mosh"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=mosh --tag=r7rs-srfi-mosh"
                         }
                     }
                     steps {
@@ -292,10 +279,11 @@ pipeline {
                 */
                 stage('Racket') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/racket"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=racket --tag=r7rs-srfi-racket"
                         }
                     }
                     steps {
@@ -308,10 +296,11 @@ pipeline {
                 }
                 stage('Sagittarius') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/sagittarius"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=sagittarius --tag=r7rs-srfi-sagittarius"
                         }
                     }
                     steps {
@@ -324,10 +313,11 @@ pipeline {
                 }
                 stage('Skint') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/skint"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=skint --tag=r7rs-srfi-skint"
                         }
                     }
                     steps {
@@ -340,10 +330,11 @@ pipeline {
                 }
                 stage('STklos') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/stklos"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=stklos --tag=r7rs-srfi-stklos"
                         }
                     }
                     steps {
@@ -356,10 +347,11 @@ pipeline {
                 }
                 stage('tr7') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/tr7:head"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=tr7 --tag=r7rs-srfi-tr7"
                         }
                     }
                     steps {
@@ -372,10 +364,11 @@ pipeline {
                 }
                 stage('Ypsilon') {
                     agent {
-                        docker {
+                        dockerfile {
+                            filename 'Dockerfile.jenkins'
                             label "${env.LABEL}"
-                            image "schemers/ypsilon"
                             args "${env.DOCKER_ARGS}"
+                            additionalBuildArgs "--build-arg SCHEME=ypsilon --tag=r7rs-srfi-ypsilon"
                         }
                     }
                     steps {
@@ -403,37 +396,19 @@ pipeline {
 
 def scheme_stage(scheme) {
     def stages = []
-    stages.plus(stage("Container init") {
-        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-            archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
-            sh "echo 'Acquire::http { Proxy \"http://rm-t490:3142\"; }' > /etc/apt/apt.conf.d/99proxy"
-            sh "echo 'Acquire::http { Proxy \"http://rm-thinkcentre:3142\"; }' > /etc/apt/apt.conf.d/98proxy"
-            sh "echo 'Acquire::http { Proxy \"http://rm-t400:3142\"; }' > /etc/apt/apt.conf.d/97proxy"
-            sh "sed -i 's/https/http/g' /etc/apt/sources.list.d/*"
-            sh "apt-get update && apt-get install -y make && mkdir -p /root/.snow && echo '()' > /root/.snow/config.scm"
-            unstash 'chibi'
-            sh "rm -rf /usr/local/bin/compile-r7rs"
-            sh 'make -C chibi-scheme install && snow-chibi install --impls=chibi retropikzel.compile-r7rs'
-            sh "compile-r7rs --list-r7rs"
-            sh 'useradd r7rstester -m'
-            sh "runuser -u r7rstester -- mkdir -p /home/r7rstester/.snow && echo '()' > /home/r7rstester/.snow/config.scm"
-            sh "runuser -u r7rstester -- snow-chibi update"
-            unstash 'tests'
-        }
-    })
-
     stages.plus(stage("${scheme}") {
+        sh "cp -r /opt/srfi-test ."
+        archiveArtifacts artifacts: "${scheme}_version.txt", allowEmptyArchive: 'true'
         def srfis = readFile "test_srfis.txt"
         srfis.split().each { srfi ->
             def resultdir = "results/${srfi}/${scheme}"
-            def cmd = "make SCHEME=${scheme} SRFI=${srfi} test-compile-r7rs-tap"
+            def cmd = "make SCHEME=${scheme} SRFI=${srfi} all install test-compile-r7rs-tap"
             stage("SRFI-${srfi}") {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "mkdir -p '${resultdir}' && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 srfi.64 && snow-chibi install --impls=${scheme} --always-yes --skip-tests?=1 retropikzel.tap"
-                    sh "make SCHEME=${scheme} SRFI=${srfi} all install | tee ${resultdir}/out.txt"
-                    sh "chmod -R 777 ."
-                    sh "timeout 600 runuser -u r7rstester -- ${cmd} 2>&1 | tee -a '${resultdir}/out.txt'"
+                    sh "mkdir -p ${resultdir} && echo '# running command: ${cmd}' > ${resultdir}/out.txt"
+                    sh "timeout 600 ${cmd} | tee -a ${resultdir}/out.txt"
                 }
+                sh "rm -rf test-program"
                 archiveArtifacts artifacts: "${scheme}_version.txt, ${resultdir}/out.txt", allowEmptyArchive: 'true'
             }
         }

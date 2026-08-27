@@ -8,6 +8,7 @@
           (scheme process-context))
   (cond-expand
     (gauche (import (only (gauche base) gauche-version)))
+    (guile (import (only (guile) version)))
     (loko (import (only (loko) loko-version)))
     (racket (import (only (racket base) version)))
     (else))

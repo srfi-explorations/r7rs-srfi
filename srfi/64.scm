@@ -571,7 +571,7 @@
         (run-list (if (test-runner? first)
                     (drop-right rest 1)
                     (cons first (drop-right rest 1))))
-        (proc (last rest)))
+        (proc (car (reverse rest))))
     (test-with-runner runner
                       (let ((saved-run-list (%test-runner-run-list runner)))
                         (%test-runner-run-list! runner run-list)

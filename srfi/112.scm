@@ -12,6 +12,7 @@
                      (list c)))
                  (string->list str))
             (list (list #\" #\)))))))))
+
 (define (string-starts-with? str starts-with)
   (let ((sw-len (string-length starts-with)))
     (and (>= (string-length str) sw-len)

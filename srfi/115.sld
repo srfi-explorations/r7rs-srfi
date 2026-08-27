@@ -1,7 +1,6 @@
 ;;> A regular expression engine implementing SRFI 115 using a
 ;;> non-backtracking Thompson NFA algorithm.
 ;; Copyright (c) 2013-2016 Alex Shinn.  All rights reserved.
-;; Copyright (c) 2025 Retropikzel All rights reserved.
 ;; BSD-style license: http://synthcode.com/license.txt
 
 (define-library
