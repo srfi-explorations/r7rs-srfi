@@ -52,6 +52,7 @@ package: srfi-test testfile indexfile ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFIL
 		--doc="${INDEXFILE}" \
 		--description="${DESCRIPTION}" \
 	srfi/${SRFI}.sld
+	snow-chibi git-index ${PKG}
 
 package-tap: srfi-test ${LICENSEFILE} ${VERSIONFILE} ${AUTHORSFILE} ${TAPTESTFILE} ${ORIGINDEXFILE} ${DESCFILE}
 	snow-chibi package \
