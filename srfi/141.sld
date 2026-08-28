@@ -1,4 +1,4 @@
-(define-library (srfi-141)
+(define-library (srfi 141)
   (import (scheme base))
   (export ceiling/ ceiling-quotient ceiling-remainder)
   (export floor/ floor-quotient floor-remainder)
