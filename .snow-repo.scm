@@ -1,6 +1,36 @@
 (repository
   (package
     (git
+      (hash "7c82e72574891436f900255172b3495eac2081da")
+      (url "https://github.com/srfi-explorations/r7rs-srfi.git"))
+    (maintainers "Retropikzel")
+    (authors "Taylor R. Campbell" "William D Clinger")
+    (version "0.1.0")
+    (license MIT)
+    (library
+      (name
+        (srfi 141))
+      (path "srfi/141.sld")
+      (foreign-depends)
+      (depends
+        (scheme base)))
+    (manual "index.html")
+    (description "SRFI-141 - SRFI 141: Integer division")
+    (test "test.scm")
+    (test-depends
+      (scheme base)
+      (scheme char)
+      (scheme inexact)
+      (scheme read)
+      (scheme write)
+      (scheme process-context)
+      (scheme file)
+      (scheme cxr)
+      (srfi 141)
+      (srfi 64))
+    (updated "2026-08-28T13:14:47+00:00"))
+  (package
+    (git
       (hash "023a8fee44599b8a7767bc26acebef1d5feefb38")
       (url "https://github.com/srfi-explorations/r7rs-srfi.git"))
     (maintainers "Retropikzel")
@@ -1459,36 +1489,6 @@
       (scheme file)
       (scheme cxr)
       (srfi 145)
-      (srfi 64))
-    (updated "2026-08-28T12:58:32+00:00"))
-  (package
-    (git
-      (hash "023a8fee44599b8a7767bc26acebef1d5feefb38")
-      (url "https://github.com/srfi-explorations/r7rs-srfi.git"))
-    (maintainers "Retropikzel")
-    (authors "Taylor R. Campbell" "William D Clinger")
-    (version "0.1.0")
-    (license MIT)
-    (library
-      (name
-        (srfi-141))
-      (path "141.sld")
-      (foreign-depends)
-      (depends
-        (scheme base)))
-    (manual "index.html")
-    (description "SRFI-141 - SRFI 141: Integer division")
-    (test "test.scm")
-    (test-depends
-      (scheme base)
-      (scheme char)
-      (scheme inexact)
-      (scheme read)
-      (scheme write)
-      (scheme process-context)
-      (scheme file)
-      (scheme cxr)
-      (srfi 141)
       (srfi 64))
     (updated "2026-08-28T12:58:32+00:00"))
   (package
