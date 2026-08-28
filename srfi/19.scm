@@ -700,22 +700,23 @@
 (define (tm:time->date time tz-offset ttype)
   (if (not (eq? (time-type time) ttype))
     (tm:time-error 'time->date 'incompatible-time-types  time))
-  (let* ( (offset (optional tz-offset (tm:local-tz-offset))) )
+  (let* ((offset (optional tz-offset (tm:local-tz-offset))))
     (receive (secs date month year)
              (tm:decode-julian-day-number
                (tm:time->julian-day-number (time-second time) offset))
-             (let* ((hours (quotient secs (* 60 60)))
-                    (rem (remainder secs (* 60 60)))
+             (let* ((secs-int (exact (floor secs)))
+                    (hours (quotient secs-int (* 60 60)))
+                    (rem (remainder secs-int (* 60 60)))
                     (minutes (quotient rem 60))
                     (seconds (remainder rem 60)))
                (make-date (time-nanosecond time)
-                          seconds
-                          minutes
-                          hours
-                          date
-                          month
-                          year
-                          offset)))))
+                          (exact seconds)
+                          (exact minutes)
+                          (exact hours)
+                          (exact date)
+                          (exact month)
+                          (exact year)
+                          (exact offset))))))
 
 (define (time-tai->date time . tz-offset)
   (if (tm:tai-before-leap-second? (time-second time))
@@ -908,7 +909,7 @@
 
 
 (define (julian-day->time-utc jdn)
-  (let ( (nanosecs (* tm:nano tm:sid (- jdn tm:tai-epoch-in-jd))) )
+  (let ((nanosecs (* tm:nano tm:sid (- jdn tm:tai-epoch-in-jd))))
     (make-time time-utc
                (remainder nanosecs tm:nano)
                (floor (/ nanosecs tm:nano)))))
