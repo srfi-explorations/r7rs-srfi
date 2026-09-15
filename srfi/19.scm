@@ -82,10 +82,26 @@
 
 
 ;; r7rs-srfi util begin
-(define (inexact->exact i) (exact i))
-(define (exact->inexact i) (inexact i))
-(define (current-seconds) (current-second))
-(define (current-milliseconds) (exact (floor (/ (current-second) 1000))))
+(define (current-seconds) (exact (floor (current-second))))
+(define start-seconds (current-seconds))
+(define start-jiffy (current-jiffy))
+(define (seconds-since-start) (- (current-seconds) start-seconds))
+(define (current-milliseconds)
+  (exact
+    (floor
+      (+ (* (current-seconds) 1000)
+         (if (>= (jiffies-per-second) 1000)
+           (/ (- (current-jiffy) (* (seconds-since-start) (jiffies-per-second)))
+              (/ (jiffies-per-second) 1000))
+           0)))))
+(define (current-nanoseconds)
+  (exact
+    (floor
+      (+ (* (current-seconds) 1000000000)
+         (if (>= (jiffies-per-second) 1000000000)
+           (/ (- (current-jiffy) (* (seconds-since-start) (jiffies-per-second)))
+              (/ (jiffies-per-second) 1000000000))
+           0)))))
 (define start-milliseconds (current-milliseconds))
 (define (current-process-milliseconds) (- start-milliseconds (current-milliseconds)))
 ;; r7rs-srfi util end
@@ -103,9 +119,6 @@
 (define time-thread 'time-thread)
 (define time-process 'time-process)
 (define time-duration 'time-duration)
-
-;; example of extension (MZScheme specific)
-(define time-gc 'time-gc)
 
 ;;-- LOCALE dependent constants
 
@@ -183,9 +196,9 @@
 
 (define (tm:read-tai-utc-data filename)
   (define (convert-jd jd)
-    (* (- (inexact->exact jd) tm:tai-epoch-in-jd) tm:sid))
+    (* (- (exact jd) tm:tai-epoch-in-jd) tm:sid))
   (define (convert-sec sec)
-    (inexact->exact sec))
+    (exact sec))
   (let ( (port (open-input-file filename))
         (table '()) )
     (let loop ((line (read-line port)))
@@ -274,8 +287,7 @@
 (define (copy-time time)
   (make-time (time-type time)
              (time-nanosecond time)
-             (time-second time)
-             ))
+             (time-second time)))
 
 
 ;;; current-time
@@ -291,20 +303,19 @@
 
 (define (tm:get-time-of-day)
   (values (current-seconds)
-          (abs (remainder (current-milliseconds) 1000))))
+          (if (>= (jiffies-per-second) 1000000000)
+            (current-nanoseconds)
+            (exact (floor (* (current-milliseconds) 1000000))))))
 
 (define (tm:current-time-utc)
   (receive (seconds ms) (tm:get-time-of-day)
-           (make-time  time-utc (* ms 10000) seconds )))
+           (make-time time-utc (* ms 10000) seconds )))
 
 (define (tm:current-time-tai)
   (receive (seconds ms) (tm:get-time-of-day)
            (make-time time-tai
                       (* ms 10000)
-                      (+ seconds (tm:leap-second-delta seconds))
-                      )))
-
-
+                      (+ seconds (tm:leap-second-delta seconds)))))
 
 (define (tm:current-time-ms-time time-type proc)
   (let ((current-ms (proc)))
@@ -329,18 +340,14 @@
 (define (tm:current-time-process)
   (tm:current-time-ms-time time-process current-process-milliseconds))
 
-;(define (tm:current-time-gc) (tm:current-time-ms-time time-gc current-gc-milliseconds))
-
 (define (current-time . clock-type)
   (let ((clock-type (optional clock-type time-utc)))
-    (cond
-      ((eq? clock-type time-tai) (tm:current-time-tai))
-      ((eq? clock-type time-utc) (tm:current-time-utc))
-      ((eq? clock-type time-monotonic) (tm:current-time-monotonic))
-      ((eq? clock-type time-thread) (tm:current-time-thread))
-      ((eq? clock-type time-process) (tm:current-time-process))
-      ;((eq? clock-type time-gc) (tm:current-time-gc))
-      (else (tm:time-error 'current-time 'invalid-clock-type clock-type)))))
+    (cond ((eq? clock-type time-tai) (tm:current-time-tai))
+          ((eq? clock-type time-utc) (tm:current-time-utc))
+          ((eq? clock-type time-monotonic) (tm:current-time-monotonic))
+          ((eq? clock-type time-thread) (tm:current-time-thread))
+          ((eq? clock-type time-process) (tm:current-time-process))
+          (else (tm:time-error 'current-time 'invalid-clock-type clock-type)))))
 
 
 
@@ -350,14 +357,12 @@
 
 (define (time-resolution . clock-type)
   (let ((clock-type (optional clock-type time-utc)))
-    (cond
-      ((eq? clock-type time-tai) 10000)
-      ((eq? clock-type time-utc) 10000)
-      ((eq? clock-type time-monotonic) 10000)
-      ((eq? clock-type time-thread) 10000)
-      ((eq? clock-type time-process) 10000)
-      ((eq? clock-type time-gc) 10000)
-      (else (tm:time-error 'time-resolution 'invalid-clock-type clock-type)))))
+    (cond ((eq? clock-type time-tai) 10000)
+          ((eq? clock-type time-utc) 10000)
+          ((eq? clock-type time-monotonic) 10000)
+          ((eq? clock-type time-thread) 10000)
+          ((eq? clock-type time-process) 10000)
+          (else (tm:time-error 'time-resolution 'invalid-clock-type clock-type)))))
 
 ;; -- time comparisons
 
@@ -645,7 +650,7 @@
 
 (define (tm:fractional-part r)
   (if (integer? r) "0"
-    (let ((str (number->string (exact->inexact r))))
+    (let ((str (number->string (inexact r))))
       (let ((ppos (tm:char-pos #\. str 0 (string-length str))))
         (substring str  (+ ppos 1) (string-length str))))))
 
@@ -1241,9 +1246,9 @@
                                        format-string str-len port))))))))))))
 
 
-(define (date->string date .  format-string)
-  (let ( (str-port (open-output-string))
-        (fmt-str (optional format-string "~c")) )
+(define (date->string date . format-string)
+  (let ((str-port (open-output-string))
+        (fmt-str (optional format-string "~c")))
     (tm:date-printer date 0 fmt-str (string-length fmt-str) str-port)
     (get-output-string str-port)))
 
